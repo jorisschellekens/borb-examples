@@ -1,0 +1,77 @@
+<component name="InspectionProjectProfileManager">
+  <profile version="1.0">
+    <option name="myName" value="Project Default" />
+    <inspection_tool class="PyPackageRequirementsInspection" enabled="true" level="WARNING" enabled_by_default="true">
+      <option name="ignoredPackages">
+        <value>
+          <list size="57">
+            <item index="0" class="java.lang.String" itemvalue="django-adminplus" />
+            <item index="1" class="java.lang.String" itemvalue="pylev" />
+            <item index="2" class="java.lang.String" itemvalue="googlemaps" />
+            <item index="3" class="java.lang.String" itemvalue="google-cloud-bigquery" />
+            <item index="4" class="java.lang.String" itemvalue="protobuf" />
+            <item index="5" class="java.lang.String" itemvalue="greenlet" />
+            <item index="6" class="java.lang.String" itemvalue="async-timeout" />
+            <item index="7" class="java.lang.String" itemvalue="cffi" />
+            <item index="8" class="java.lang.String" itemvalue="clamd" />
+            <item index="9" class="java.lang.String" itemvalue="pyopenssl" />
+            <item index="10" class="java.lang.String" itemvalue="django-extensions" />
+            <item index="11" class="java.lang.String" itemvalue="redis" />
+            <item index="12" class="java.lang.String" itemvalue="sqlparse" />
+            <item index="13" class="java.lang.String" itemvalue="google-resumable-media" />
+            <item index="14" class="java.lang.String" itemvalue="django-clamd" />
+            <item index="15" class="java.lang.String" itemvalue="django-resized" />
+            <item index="16" class="java.lang.String" itemvalue="certifi" />
+            <item index="17" class="java.lang.String" itemvalue="stripe" />
+            <item index="18" class="java.lang.String" itemvalue="lxml" />
+            <item index="19" class="java.lang.String" itemvalue="cached-property" />
+            <item index="20" class="java.lang.String" itemvalue="gevent" />
+            <item index="21" class="java.lang.String" itemvalue="urllib3" />
+            <item index="22" class="java.lang.String" itemvalue="zope.event" />
+            <item index="23" class="java.lang.String" itemvalue="google-api-core" />
+            <item index="24" class="java.lang.String" itemvalue="pygments" />
+            <item index="25" class="java.lang.String" itemvalue="pydantic" />
+            <item index="26" class="java.lang.String" itemvalue="django-websocket-redis" />
+            <item index="27" class="java.lang.String" itemvalue="asgiref" />
+            <item index="28" class="java.lang.String" itemvalue="cryptography" />
+            <item index="29" class="java.lang.String" itemvalue="reportlab" />
+            <item index="30" class="java.lang.String" itemvalue="zope.interface" />
+            <item index="31" class="java.lang.String" itemvalue="gunicorn" />
+            <item index="32" class="java.lang.String" itemvalue="attrs" />
+            <item index="33" class="java.lang.String" itemvalue="bcrypt" />
+            <item index="34" class="java.lang.String" itemvalue="channels-redis" />
+            <item index="35" class="java.lang.String" itemvalue="hiredis" />
+            <item index="36" class="java.lang.String" itemvalue="django" />
+            <item index="37" class="java.lang.String" itemvalue="aioredis" />
+            <item index="38" class="java.lang.String" itemvalue="filemagic" />
+            <item index="39" class="java.lang.String" itemvalue="django-redis" />
+            <item index="40" class="java.lang.String" itemvalue="proto-plus" />
+            <item index="41" class="java.lang.String" itemvalue="babel" />
+            <item index="42" class="java.lang.String" itemvalue="grpcio" />
+            <item index="43" class="java.lang.String" itemvalue="pytz" />
+            <item index="44" class="java.lang.String" itemvalue="ansicolors" />
+            <item index="45" class="java.lang.String" itemvalue="google-cloud-core" />
+            <item index="46" class="java.lang.String" itemvalue="msgpack" />
+            <item index="47" class="java.lang.String" itemvalue="google-auth" />
+            <item index="48" class="java.lang.String" itemvalue="setuptools" />
+            <item index="49" class="java.lang.String" itemvalue="Pillow" />
+            <item index="50" class="java.lang.String" itemvalue="Flask" />
+            <item index="51" class="java.lang.String" itemvalue="chardet" />
+            <item index="52" class="java.lang.String" itemvalue="tqdm" />
+            <item index="53" class="java.lang.String" itemvalue="regex" />
+            <item index="54" class="java.lang.String" itemvalue="joblib" />
+            <item index="55" class="java.lang.String" itemvalue="requests" />
+            <item index="56" class="java.lang.String" itemvalue="idna" />
+          </list>
+        </value>
+      </option>
+    </inspection_tool>
+    <inspection_tool class="PyStubPackagesAdvertiser" enabled="true" level="WARNING" enabled_by_default="true">
+      <option name="ignoredPackages">
+        <list>
+          <option value="pika-stubs==0.1.3" />
+        </list>
+      </option>
+    </inspection_tool>
+  </profile>
+</component>
