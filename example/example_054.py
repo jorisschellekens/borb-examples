@@ -12,7 +12,7 @@ def main():
         doc = PDF.loads(in_file_handle, [l])
 
     assert doc is not None
-    print(l.get_text(0))
+    print(l.get_text_for_page(0))
 
 
 if __name__ == "__main__":

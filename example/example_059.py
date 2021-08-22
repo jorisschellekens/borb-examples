@@ -38,7 +38,7 @@ def extract_fonts():
 
     assert doc is not None
 
-    print(l.get_font_names_per_page(0))
+    print(l.get_font_names_for_page(0))
 
 
 def main():

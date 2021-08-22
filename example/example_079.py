@@ -80,7 +80,7 @@ def read_modified_document():
     with open("output_002.pdf", "rb") as pdf_file_handle:
         doc = PDF.loads(pdf_file_handle, [l])
 
-    print(l.get_text(0))
+    print(l.get_text_for_page(0))
 
 
 def main():

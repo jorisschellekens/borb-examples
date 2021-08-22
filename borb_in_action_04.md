@@ -102,10 +102,10 @@ def recognize_table():
     p: Page = doc.get_page(0)
 
     # get Table(s)
-    tables: typing.List[Table] = l.get_tables_per_page(0)
+    tables: typing.List[Table] = l.get_tables_for_page(0)
     assert len(tables) > 0
 
-    for r in l.get_table_bounding_boxes_per_page(0):
+    for r in l.get_table_bounding_boxes_for_page(0):
         r = r.grow(Decimal(5))
         p.append_square_annotation(r,
                                    stroke_color=X11Color("Green"))
@@ -287,7 +287,7 @@ def read_modified_document():
     with open("output_002.pdf", "rb") as pdf_file_handle:
         doc = PDF.loads(pdf_file_handle, [l])
 
-    print(l.get_text(0))
+    print(l.get_text_for_page(0))
 
 
 def main():

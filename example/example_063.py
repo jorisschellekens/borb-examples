@@ -12,7 +12,7 @@ def main():
         doc = PDF.loads(pdf_file_handle, [l])
 
     assert doc is not None
-    for img in l.get_images_per_page(0):
+    for img in l.get_images_for_page(0):
         print(img)
 
 

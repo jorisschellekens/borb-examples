@@ -138,7 +138,7 @@ def generate_tetradic_square_color_scheme() -> None:
     cs: typing.List[Color] = HSVColor.tetradic_square(HexColor("f1cd2e"))
 
     t: FixedColumnWidthTable = FixedColumnWidthTable(
-        number_of_rows=4, number_of_columns=3, margin_top=Decimal(12)
+        number_of_rows=5, number_of_columns=3, margin_top=Decimal(12)
     )
     t.add(Paragraph("Color Sample", font="Helvetica-Bold"))
     t.add(Paragraph("Hex code", font="Helvetica-Bold"))
@@ -164,7 +164,40 @@ def generate_tetradic_square_color_scheme() -> None:
 
 
 def generate_tetradic_rectangular_color_scheme() -> None:
-    pass
+
+    d: Document = Document()
+
+    p: Page = Page()
+    d.append_page(p)
+
+    l: PageLayout = SingleColumnLayout(p)
+
+    cs: typing.List[Color] = HSVColor.tetradic_rectangle(HexColor("f1cd2e"))
+
+    t: FixedColumnWidthTable = FixedColumnWidthTable(
+        number_of_rows=5, number_of_columns=3, margin_top=Decimal(12)
+    )
+    t.add(Paragraph("Color Sample", font="Helvetica-Bold"))
+    t.add(Paragraph("Hex code", font="Helvetica-Bold"))
+    t.add(Paragraph("Nearest Pantone", font="Helvetica-Bold"))
+    for c in cs:
+        t.add(
+            Shape(
+                LineArtFactory.droplet(
+                    Rectangle(Decimal(0), Decimal(0), Decimal(32), Decimal(32))
+                ),
+                stroke_color=c,
+                fill_color=c,
+            )
+        )
+        t.add(Paragraph(c.to_rgb().to_hex_string()))
+        t.add(Paragraph(Pantone.find_nearest_pantone_color(c).get_name()))
+    t.set_padding_on_all_cells(Decimal(5), Decimal(5), Decimal(5), Decimal(5))
+    l.add(t)
+
+    # write
+    with open("output.pdf", "wb") as pdf_file_handle:
+        PDF.dumps(pdf_file_handle, d)
 
 
 def main():

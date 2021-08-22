@@ -53,7 +53,7 @@ def create_report():
         doc = PDF.loads(pdf_file_handle, [l])
 
     # extract colors
-    colors: typing.List[typing.Tuple[RGBColor, Decimal]] = l.get_colors_per_page(0)
+    colors: typing.List[typing.Tuple[RGBColor, Decimal]] = l.get_colors_for_page(0)
     colors = colors[0:32]
 
     # create output Document

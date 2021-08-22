@@ -2,10 +2,11 @@ from decimal import Decimal
 
 from borb.pdf.canvas.layout.page_layout.multi_column_layout import SingleColumnLayout
 from borb.pdf.canvas.layout.page_layout.page_layout import PageLayout
-from borb.pdf.canvas.layout.table.base_table import TableCell
+
 from borb.pdf.canvas.layout.table.flexible_column_width_table import (
     FlexibleColumnWidthTable,
 )
+from borb.pdf.canvas.layout.table.table import TableCell
 from borb.pdf.canvas.layout.text.paragraph import Paragraph
 from borb.pdf.document import Document
 from borb.pdf.page.page import Page

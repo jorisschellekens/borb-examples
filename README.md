@@ -3818,7 +3818,7 @@ def main():
         doc = PDF.loads(in_file_handle, [l])  
   
     assert doc is not None  
-    print(l.get_text(0))  
+    print(l.get_text_for_page(0))  
 
 
 if __name__ == "__main__":  
@@ -3876,7 +3876,7 @@ def main():
         doc = PDF.loads(in_file_handle, [l])  
   
     assert doc is not None  
-    for i, m in enumerate(l.get_all_matches(0)):  
+    for i, m in enumerate(l.get_matches_for_page(0)):  
         print("%d %s" % (i, m.group(0)))  
         for r in m.get_bounding_boxes():  
             print("\t%f %f %f %f" % (r.get_x(), r.get_y(), r.get_width(), r.get_height()))
@@ -3951,7 +3951,7 @@ def main():
         doc = PDF.loads(in_file_handle, [l1])  
   
     assert doc is not None  
-    print(l0.get_text(0))  
+    print(l0.get_text_for_page(0))  
 
 
 if __name__ == "__main__":  
@@ -4003,7 +4003,7 @@ def main():
     assert doc is not None  
   
     # 3. find match  
-    m: typing.Optional[PDFMatch] = next(iter(l0.get_all_matches(0)), None)  
+    m: typing.Optional[PDFMatch] = next(iter(l0.get_matches_for_page(0)), None)  
     assert m is not None  
   
     # 4. get page width  
@@ -4026,7 +4026,7 @@ def main():
     assert doc is not None  
   
     # 7. print text  
-    print(l2.get_text(0))  
+    print(l2.get_text_for_page(0))  
 
 
 if __name__ == "__main__":  
@@ -4383,7 +4383,7 @@ def extract_courier_text():
 
     assert doc is not None
 
-    print(l1.get_text(0))
+    print(l1.get_text_for_page(0))
 
 
 def main():
@@ -4471,7 +4471,7 @@ def extract_red_text():
 
     assert doc is not None
 
-    print(l1.get_text(0))
+    print(l1.get_text_for_page(0))
 
 
 def main():
@@ -5892,10 +5892,10 @@ def recognize_table():
     p: Page = doc.get_page(0)
 
     # get Table(s)
-    tables: typing.List[Table] = l.get_tables_per_page(0)
+    tables: typing.List[Table] = l.get_tables_for_page(0)
     assert len(tables) > 0
 
-    for r in l.get_table_bounding_boxes_per_page(0):
+    for r in l.get_table_bounding_boxes_for_page(0):
         r = r.grow(Decimal(5))
         p.append_square_annotation(r,
                                    stroke_color=X11Color("Green"))
@@ -6077,7 +6077,7 @@ def read_modified_document():
     with open("output_002.pdf", "rb") as pdf_file_handle:
         doc = PDF.loads(pdf_file_handle, [l])
 
-    print(l.get_text(0))
+    print(l.get_text_for_page(0))
 
 
 def main():
@@ -6911,7 +6911,7 @@ Speaking of which, let's add the company logo to the layout:
 
 ```python
 # New import
-from borb.pdf.canvas.layout.image import Image
+from borb.pdf.canvas.layout.image.image import Image
 
 page_layout.add(    
         Image(        
@@ -6931,7 +6931,8 @@ Let's create a separate helper method to build the invoice information in a tabl
 ```python
 # New imports
 from borb.pdf.canvas.layout.table.fixed_column_width_table import FixedColumnWidthTable
-from borb.pdf.canvas.layout.paragraph import Paragraph, Alignment
+from borb.pdf.canvas.layout.text.paragraph import Paragraph
+from borb.pdf.canvas.layout.layout_element import Alignment
 from datetime import datetime
 import random
 
@@ -6998,7 +6999,7 @@ Now, let's build this PDF document real quick to see what it looks like. For thi
 from borb.pdf.pdf import PDF
 
 with open("showcase_001.pdf", "wb") as pdf_file_handle:
-    PDF.dumps(pdf_file_handle, document)
+    PDF.dumps(pdf_file_handle, pdf)
 ```
 
 Great! Now we'll want to add the billing and shipping information as well. 
@@ -7297,11 +7298,11 @@ def _build_itemized_description_table(products: typing.List[Product] = []):
 def main():
 
     # create Document
-    doc: Document = Document()
+    pdf: Document = Document()
 
     # add Page
     page: Page = Page()
-    doc.append_page(page)
+    pdf.append_page(page)
 
     # set PageLayout
     page_layout: PageLayout = SingleColumnLayout(page,
@@ -7336,7 +7337,7 @@ def main():
 
     # store
     with open("showcase_001.pdf", "wb") as out_file_handle:
-        PDF.dumps(out_file_handle, doc)
+        PDF.dumps(out_file_handle, pdf)
 
         
 if __name__ == "__main__":
@@ -7953,7 +7954,7 @@ def main():
 
     assert d is not None
 
-    print(l1.get_text(0))
+    print(l1.get_text_for_page(0))
 
 
 if __name__ == "__main__":

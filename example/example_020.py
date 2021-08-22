@@ -13,10 +13,11 @@ def main():
     page: Page = Page()
     doc.append_page(page)
 
+    # assert is expected in the following code
     layout: PageLayout = SingleColumnLayout(page)
     layout.add(
         Image(
-            "https://images.unsplash.com/photo-1625604029887-45f9c2f7cbc9?ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8"
+            "https://images.unsplash.com/photo-1625604029887-45f9c2f7cbc9?ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8",
         )
     )
 

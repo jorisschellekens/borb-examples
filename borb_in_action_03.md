@@ -208,7 +208,7 @@ def main():
         doc = PDF.loads(in_file_handle, [l])  
   
     assert doc is not None  
-    print(l.get_text(0))  
+    print(l.get_text_for_page(0))  
 
 
 if __name__ == "__main__":  
@@ -266,7 +266,7 @@ def main():
         doc = PDF.loads(in_file_handle, [l])  
   
     assert doc is not None  
-    for i, m in enumerate(l.get_all_matches(0)):  
+    for i, m in enumerate(l.get_matches_for_page(0)):  
         print("%d %s" % (i, m.group(0)))  
         for r in m.get_bounding_boxes():  
             print("\t%f %f %f %f" % (r.get_x(), r.get_y(), r.get_width(), r.get_height()))
@@ -341,7 +341,7 @@ def main():
         doc = PDF.loads(in_file_handle, [l1])  
   
     assert doc is not None  
-    print(l0.get_text(0))  
+    print(l0.get_text_for_page(0))  
 
 
 if __name__ == "__main__":  
@@ -393,7 +393,7 @@ def main():
     assert doc is not None  
   
     # 3. find match  
-    m: typing.Optional[PDFMatch] = next(iter(l0.get_all_matches(0)), None)  
+    m: typing.Optional[PDFMatch] = next(iter(l0.get_matches_for_page(0)), None)  
     assert m is not None  
   
     # 4. get page width  
@@ -416,7 +416,7 @@ def main():
     assert doc is not None  
   
     # 7. print text  
-    print(l2.get_text(0))  
+    print(l2.get_text_for_page(0))  
 
 
 if __name__ == "__main__":  
@@ -773,7 +773,7 @@ def extract_courier_text():
 
     assert doc is not None
 
-    print(l1.get_text(0))
+    print(l1.get_text_for_page(0))
 
 
 def main():
@@ -861,7 +861,7 @@ def extract_red_text():
 
     assert doc is not None
 
-    print(l1.get_text(0))
+    print(l1.get_text_for_page(0))
 
 
 def main():

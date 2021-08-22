@@ -21,7 +21,7 @@ def main():
 
     assert d is not None
 
-    print(l1.get_text(0))
+    print(l1.get_text_for_page(0))
 
 
 if __name__ == "__main__":
