@@ -956,7 +956,7 @@ import typing
 from borb.pdf.canvas.color.color import HSVColor, HexColor, Color
 from borb.pdf.canvas.color.pantone import Pantone
 from borb.pdf.canvas.geometry.rectangle import Rectangle
-from borb.pdf.canvas.layout.image.shape import Shape
+from borb.pdf.canvas.layout.shape import Shape
 from borb.pdf.canvas.layout.page_layout.multi_column_layout import SingleColumnLayout
 from borb.pdf.canvas.layout.page_layout.page_layout import PageLayout
 from borb.pdf.canvas.layout.table.fixed_column_width_table import FixedColumnWidthTable
@@ -1023,7 +1023,7 @@ import typing
 from borb.pdf.canvas.color.color import HSVColor, HexColor, Color
 from borb.pdf.canvas.color.pantone import Pantone
 from borb.pdf.canvas.geometry.rectangle import Rectangle
-from borb.pdf.canvas.layout.image.shape import Shape
+from borb.pdf.canvas.layout.shape import Shape
 from borb.pdf.canvas.layout.page_layout.multi_column_layout import SingleColumnLayout
 from borb.pdf.canvas.layout.page_layout.page_layout import PageLayout
 from borb.pdf.canvas.layout.table.fixed_column_width_table import FixedColumnWidthTable
@@ -1092,7 +1092,7 @@ import typing
 from borb.pdf.canvas.color.color import HSVColor, HexColor, Color
 from borb.pdf.canvas.color.pantone import Pantone
 from borb.pdf.canvas.geometry.rectangle import Rectangle
-from borb.pdf.canvas.layout.image.shape import Shape
+from borb.pdf.canvas.layout.shape import Shape
 from borb.pdf.canvas.layout.page_layout.multi_column_layout import SingleColumnLayout
 from borb.pdf.canvas.layout.page_layout.page_layout import PageLayout
 from borb.pdf.canvas.layout.table.fixed_column_width_table import FixedColumnWidthTable
@@ -1159,7 +1159,7 @@ import typing
 from borb.pdf.canvas.color.color import HSVColor, HexColor, Color
 from borb.pdf.canvas.color.pantone import Pantone
 from borb.pdf.canvas.geometry.rectangle import Rectangle
-from borb.pdf.canvas.layout.image.shape import Shape
+from borb.pdf.canvas.layout.shape import Shape
 from borb.pdf.canvas.layout.page_layout.multi_column_layout import SingleColumnLayout
 from borb.pdf.canvas.layout.page_layout.page_layout import PageLayout
 from borb.pdf.canvas.layout.table.fixed_column_width_table import FixedColumnWidthTable
@@ -1228,7 +1228,7 @@ import typing
 from borb.pdf.canvas.color.color import HSVColor, HexColor, Color
 from borb.pdf.canvas.color.pantone import Pantone
 from borb.pdf.canvas.geometry.rectangle import Rectangle
-from borb.pdf.canvas.layout.image.shape import Shape
+from borb.pdf.canvas.layout.shape import Shape
 from borb.pdf.canvas.layout.page_layout.multi_column_layout import SingleColumnLayout
 from borb.pdf.canvas.layout.page_layout.page_layout import PageLayout
 from borb.pdf.canvas.layout.table.fixed_column_width_table import FixedColumnWidthTable
@@ -1967,7 +1967,7 @@ from decimal import Decimal
   
 from borb.pdf.canvas.color.color import X11Color  
 from borb.pdf.canvas.geometry.rectangle import Rectangle  
-from borb.pdf.canvas.layout.image.shape import Shape  
+from borb.pdf.canvas.layout.shape import Shape
 from borb.pdf.canvas.layout.page_layout.multi_column_layout import SingleColumnLayout  
 from borb.pdf.canvas.layout.page_layout.page_layout import PageLayout  
 from borb.pdf.canvas.line_art.line_art_factory import LineArtFactory  
@@ -4177,7 +4177,7 @@ from decimal import Decimal
 import typing
 from borb.pdf.canvas.color.color import RGBColor
 from borb.pdf.canvas.geometry.rectangle import Rectangle
-from borb.pdf.canvas.layout.image.shape import Shape
+from borb.pdf.canvas.layout.shape import Shape
 from borb.pdf.canvas.layout.layout_element import Alignment
 from borb.pdf.canvas.layout.page_layout.multi_column_layout import SingleColumnLayout
 from borb.pdf.canvas.layout.page_layout.page_layout import PageLayout
@@ -4255,7 +4255,7 @@ from decimal import Decimal
 import typing
 from borb.pdf.canvas.color.color import RGBColor
 from borb.pdf.canvas.geometry.rectangle import Rectangle
-from borb.pdf.canvas.layout.image.shape import Shape
+from borb.pdf.canvas.layout.shape import Shape
 from borb.pdf.canvas.layout.layout_element import Alignment
 from borb.pdf.canvas.layout.page_layout.multi_column_layout import SingleColumnLayout
 from borb.pdf.canvas.layout.page_layout.page_layout import PageLayout
