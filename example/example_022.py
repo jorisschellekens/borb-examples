@@ -2,7 +2,7 @@ from decimal import Decimal
 
 from borb.pdf.canvas.color.color import X11Color
 from borb.pdf.canvas.geometry.rectangle import Rectangle
-from borb.pdf.canvas.layout.image.shape import Shape
+from borb.pdf.canvas.layout.shape.shape import Shape
 from borb.pdf.canvas.layout.page_layout.multi_column_layout import SingleColumnLayout
 from borb.pdf.canvas.layout.page_layout.page_layout import PageLayout
 from borb.pdf.canvas.line_art.line_art_factory import LineArtFactory

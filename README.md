@@ -956,7 +956,7 @@ import typing
 from borb.pdf.canvas.color.color import HSVColor, HexColor, Color
 from borb.pdf.canvas.color.pantone import Pantone
 from borb.pdf.canvas.geometry.rectangle import Rectangle
-from borb.pdf.canvas.layout.image.shape import Shape
+from borb.pdf.canvas.layout.shape.shape import Shape
 from borb.pdf.canvas.layout.page_layout.multi_column_layout import SingleColumnLayout
 from borb.pdf.canvas.layout.page_layout.page_layout import PageLayout
 from borb.pdf.canvas.layout.table.fixed_column_width_table import FixedColumnWidthTable
@@ -1023,7 +1023,7 @@ import typing
 from borb.pdf.canvas.color.color import HSVColor, HexColor, Color
 from borb.pdf.canvas.color.pantone import Pantone
 from borb.pdf.canvas.geometry.rectangle import Rectangle
-from borb.pdf.canvas.layout.image.shape import Shape
+from borb.pdf.canvas.layout.shape.shape import Shape
 from borb.pdf.canvas.layout.page_layout.multi_column_layout import SingleColumnLayout
 from borb.pdf.canvas.layout.page_layout.page_layout import PageLayout
 from borb.pdf.canvas.layout.table.fixed_column_width_table import FixedColumnWidthTable
@@ -1092,7 +1092,7 @@ import typing
 from borb.pdf.canvas.color.color import HSVColor, HexColor, Color
 from borb.pdf.canvas.color.pantone import Pantone
 from borb.pdf.canvas.geometry.rectangle import Rectangle
-from borb.pdf.canvas.layout.image.shape import Shape
+from borb.pdf.canvas.layout.shape.shape import Shape
 from borb.pdf.canvas.layout.page_layout.multi_column_layout import SingleColumnLayout
 from borb.pdf.canvas.layout.page_layout.page_layout import PageLayout
 from borb.pdf.canvas.layout.table.fixed_column_width_table import FixedColumnWidthTable
@@ -1159,7 +1159,7 @@ import typing
 from borb.pdf.canvas.color.color import HSVColor, HexColor, Color
 from borb.pdf.canvas.color.pantone import Pantone
 from borb.pdf.canvas.geometry.rectangle import Rectangle
-from borb.pdf.canvas.layout.image.shape import Shape
+from borb.pdf.canvas.layout.shape.shape import Shape
 from borb.pdf.canvas.layout.page_layout.multi_column_layout import SingleColumnLayout
 from borb.pdf.canvas.layout.page_layout.page_layout import PageLayout
 from borb.pdf.canvas.layout.table.fixed_column_width_table import FixedColumnWidthTable
@@ -1228,7 +1228,7 @@ import typing
 from borb.pdf.canvas.color.color import HSVColor, HexColor, Color
 from borb.pdf.canvas.color.pantone import Pantone
 from borb.pdf.canvas.geometry.rectangle import Rectangle
-from borb.pdf.canvas.layout.image.shape import Shape
+from borb.pdf.canvas.layout.shape.shape import Shape
 from borb.pdf.canvas.layout.page_layout.multi_column_layout import SingleColumnLayout
 from borb.pdf.canvas.layout.page_layout.page_layout import PageLayout
 from borb.pdf.canvas.layout.table.fixed_column_width_table import FixedColumnWidthTable
@@ -1967,7 +1967,7 @@ from decimal import Decimal
   
 from borb.pdf.canvas.color.color import X11Color  
 from borb.pdf.canvas.geometry.rectangle import Rectangle  
-from borb.pdf.canvas.layout.image.shape import Shape  
+from borb.pdf.canvas.layout.shape.shape import Shape  
 from borb.pdf.canvas.layout.page_layout.multi_column_layout import SingleColumnLayout  
 from borb.pdf.canvas.layout.page_layout.page_layout import PageLayout  
 from borb.pdf.canvas.line_art.line_art_factory import LineArtFactory  
@@ -3558,9 +3558,114 @@ if __name__ == "__main__":
 
 #### 2.11.3.6 Adding a `CheckBox` to a PDF
 
+:mega: todo :mega:
+
 #### 2.11.3.7 Adding a `RadioButton` to a PDF
 
-### 2.11.4 Changing the value of a `FormField` in an existing PDF
+:mega: todo :mega:
+
+### 2.11.4 Getting the value of a `FormField` in an existing PDF
+
+In this section you'll learn how to retrieve the values that a user filled in from a PDF AcroForm.
+You'll be using the PDF created earlier. 
+Be sure to open it, fill in some values, and save it in order to get everything ready for this example.
+
+We'll start by creating a PDF with a form in it:
+
+```python
+import typing
+from decimal import Decimal
+
+from borb.pdf.canvas.color.color import HexColor
+from borb.pdf.canvas.layout.forms.country_drop_down_list import CountryDropDownList
+from borb.pdf.canvas.layout.forms.text_field import TextField
+from borb.pdf.canvas.layout.page_layout.multi_column_layout import SingleColumnLayout
+from borb.pdf.canvas.layout.page_layout.page_layout import PageLayout
+from borb.pdf.canvas.layout.table.fixed_column_width_table import FixedColumnWidthTable
+from borb.pdf.canvas.layout.text.paragraph import Paragraph
+from borb.pdf.document import Document
+from borb.pdf.page.page import Page
+from borb.pdf.pdf import PDF
+
+
+def build_pdf():
+
+    # Document
+    d: Document = Document()
+
+    # Page
+    p: Page = Page()
+    d.append_page(p)
+
+    # PageLayout
+    l: PageLayout = SingleColumnLayout(p)
+
+    # add fields
+    l.add(
+        FixedColumnWidthTable(number_of_columns=2, number_of_rows=3)
+        .add(Paragraph("Name:"))
+        .add(TextField(field_name="name", font_color=HexColor("f1cd2e")))
+        .add(Paragraph("Firstname:"))
+        .add(TextField(field_name="firstname", font_color=HexColor("f1cd2e")))
+        .add(Paragraph("Country"))
+        .add(CountryDropDownList(field_name="country"))
+        .set_padding_on_all_cells(Decimal(2), Decimal(2), Decimal(2), Decimal(2))
+        .no_borders()
+    )
+
+    # store
+    with open("output_form.pdf", "wb") as pdf_file_handle:
+        PDF.dumps(pdf_file_handle, d)
+
+def main():
+    build_pdf()
+
+if __name__ == "__main__":
+    main()
+```
+
+Now we can either set the values in the form by opening the PDF and typing something (make sure to save the PDF when Adobe asks you to do so).
+We could also just set the values using `borb` of course.
+
+Finally, we can get the filled in values in the PDF:
+
+```python
+def get_values_from_form():
+
+    # open document
+    doc: typing.Optional[Document] = None
+    with open("output_form_filled.pdf", "rb") as pdf_file_handle:
+        doc = PDF.loads(pdf_file_handle)
+    assert doc is not None
+
+    # print all key/value pairs
+    for k in ["name", "firstname", "country"]:
+        v: str = str(doc.get_page(0).get_form_field_value(k))
+        while len(k) < 16:
+            k += " "
+        print(k + " : " + v)
+
+def main():
+    build_pdf()
+    set_values()
+    get_values_from_form()
+
+if __name__ == "__main__":
+    main()
+```
+
+This should print something like:
+
+```commandline
+/usr/bin/python3.8 /home/joris/Code/borb-examples-dev/example/example_053.py
+name             : Schellekens
+firstname        : Joris
+country          : Belgium
+```
+
+of course, the exact values depend on what you filled in (either manually or programmatically).
+
+### 2.11.5 Changing the value of a `FormField` in an existing PDF
 
 This is another very common usecase.
 You have designed a wonderful PDF, complete with `FormField` objects (perhaps in another PDF software suite),
@@ -3573,20 +3678,34 @@ In the next example you'll be using an existing PDF (the one you created earlier
 Later you'll learn how to remove interactivity by flattening the `Document`.
 
 ```python
+def set_values():
 
-```
+    # open document
+    doc: typing.Optional[Document] = None
+    with open("output_form.pdf", "rb") as pdf_file_handle:
+        doc = PDF.loads(pdf_file_handle)
+    assert doc is not None
 
-### 2.11.5 Getting the value of a `FormField` in an existing PDF
+    # set
+    doc.get_page(0).set_form_field_value("name", "Schellekens")
+    doc.get_page(0).set_form_field_value("firstname", "Joris")
+    doc.get_page(0).set_form_field_value("country", "Belgium")
 
-In this section you'll learn how to retrieve the values that a user filled in from a PDF AcroForm.
-You'll be using the PDF created earlier. 
-Be sure to open it, fill in some values, and save it in order to get everything ready for this example.
+    # store
+    with open("output_form_filled.pdf", "wb") as pdf_file_handle:
+        PDF.dumps(pdf_file_handle, doc)
 
-```python
+def main():
+    build_pdf()
+    set_values()
 
+if __name__ == "__main__":
+    main()
 ```
 
 ### 2.11.6 Flattening a `FormField`
+
+:mega: todo :mega:
 
 <div style="page-break-before: always;"></div>
 
@@ -4177,7 +4296,7 @@ from decimal import Decimal
 import typing
 from borb.pdf.canvas.color.color import RGBColor
 from borb.pdf.canvas.geometry.rectangle import Rectangle
-from borb.pdf.canvas.layout.image.shape import Shape
+from borb.pdf.canvas.layout.shape.shape import Shape
 from borb.pdf.canvas.layout.layout_element import Alignment
 from borb.pdf.canvas.layout.page_layout.multi_column_layout import SingleColumnLayout
 from borb.pdf.canvas.layout.page_layout.page_layout import PageLayout
@@ -4255,7 +4374,7 @@ from decimal import Decimal
 import typing
 from borb.pdf.canvas.color.color import RGBColor
 from borb.pdf.canvas.geometry.rectangle import Rectangle
-from borb.pdf.canvas.layout.image.shape import Shape
+from borb.pdf.canvas.layout.shape.shape import Shape
 from borb.pdf.canvas.layout.layout_element import Alignment
 from borb.pdf.canvas.layout.page_layout.multi_column_layout import SingleColumnLayout
 from borb.pdf.canvas.layout.page_layout.page_layout import PageLayout
@@ -6101,9 +6220,13 @@ Hello World!
 
 ## 4.3 Exporting PDF as a (PIL) image
 
+:mega: todo :mega:
+
 <div style="page-break-before: always;"></div>
 
 ## 4.4 Exporting PDF as an SVG image
+
+:mega: todo :mega:
 
 <div style="page-break-before: always;"></div>
 
@@ -6536,8 +6659,16 @@ In this example, you'll be creating a PDF from scratch, containing "Hello World!
 <div style="page-break-before: always;"></div>
 
 ## 5.6 Fonts in PDF
+
+:mega: todo :mega:
+
 ### 5.6.1 Simple fonts
+
+:mega: todo :mega:
+
 ### 5.6.2 Composite fonts
+
+:mega: todo :mega:
 
 <div style="page-break-before: always;"></div>
 
@@ -6713,6 +6844,8 @@ finally, `SimpleTextExtraction` stores the reconstituted text (to ensure fast lo
 ```
 
 ### 5.7.2 Paragraph extraction and disjoint set
+
+:mega: todo :mega:
 
 <div style="page-break-before: always;"></div>
 

@@ -129,9 +129,9 @@ def insert_img_at(n: int) -> None:
 
 
 def main() -> None:
-    n: int = 50
+    n: int = 54
     insert_example_at(n)
-    insert_img_at(n)
+    #insert_img_at(n)
 
 
 if __name__ == "__main__":

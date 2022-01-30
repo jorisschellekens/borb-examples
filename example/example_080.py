@@ -1,8 +1,6 @@
-import typing
 from decimal import Decimal
 
-from borb.io.read.types import Name
-from borb.io.read.types import Decimal as pDecimal
+import typing
 from borb.pdf.canvas.color.color import HexColor
 from borb.pdf.canvas.layout.page_layout.multi_column_layout import MultiColumnLayout
 from borb.pdf.canvas.layout.page_layout.page_layout import PageLayout
@@ -10,7 +8,6 @@ from borb.pdf.canvas.layout.text.paragraph import Paragraph
 from borb.pdf.document import Document
 from borb.pdf.page.page import Page
 from borb.pdf.pdf import PDF
-from borb.toolkit.text.simple_text_extraction import SimpleTextExtraction
 
 
 def create_document():
@@ -55,7 +52,7 @@ def create_document():
         PDF.dumps(pdf_file_handle, d)
 
 
-def rotate_page_in_document():
+def remove_page_from_document():
 
     doc: typing.Optional[Document] = None
     with open("output.pdf", "rb") as pdf_file_handle:
@@ -63,8 +60,8 @@ def rotate_page_in_document():
 
     assert doc is not None
 
-    # rotate Page
-    doc.get_page(0)[Name("Rotate")] = pDecimal(90)
+    # remove Page
+    doc.pop_page(1)
 
     # store Document
     with open("output.pdf", "wb") as pdf_file_handle:
@@ -73,7 +70,7 @@ def rotate_page_in_document():
 
 def main():
     create_document()
-    rotate_page_in_document()
+    remove_page_from_document()
 
 
 if __name__ == "__main__":

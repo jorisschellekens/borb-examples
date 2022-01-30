@@ -567,7 +567,7 @@ from decimal import Decimal
 import typing
 from borb.pdf.canvas.color.color import RGBColor
 from borb.pdf.canvas.geometry.rectangle import Rectangle
-from borb.pdf.canvas.layout.image.shape import Shape
+from borb.pdf.canvas.layout.shape.shape import Shape
 from borb.pdf.canvas.layout.layout_element import Alignment
 from borb.pdf.canvas.layout.page_layout.multi_column_layout import SingleColumnLayout
 from borb.pdf.canvas.layout.page_layout.page_layout import PageLayout
@@ -645,7 +645,7 @@ from decimal import Decimal
 import typing
 from borb.pdf.canvas.color.color import RGBColor
 from borb.pdf.canvas.geometry.rectangle import Rectangle
-from borb.pdf.canvas.layout.image.shape import Shape
+from borb.pdf.canvas.layout.shape.shape import Shape
 from borb.pdf.canvas.layout.layout_element import Alignment
 from borb.pdf.canvas.layout.page_layout.multi_column_layout import SingleColumnLayout
 from borb.pdf.canvas.layout.page_layout.page_layout import PageLayout

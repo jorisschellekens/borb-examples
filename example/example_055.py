@@ -1,27 +1,37 @@
-import typing
+from borb.io.read.types import Name, String, Dictionary
+from borb.pdf.canvas.layout.page_layout.multi_column_layout import SingleColumnLayout
+from borb.pdf.canvas.layout.page_layout.page_layout import PageLayout
+from borb.pdf.canvas.layout.text.paragraph import Paragraph
 from borb.pdf.document import Document
+from borb.pdf.page.page import Page
 from borb.pdf.pdf import PDF
-from borb.toolkit.text.regular_expression_text_extraction import (
-    RegularExpressionTextExtraction,
-)
 
 
 def main():
+    doc: Document = Document()
+    page: Page = Page()
+    doc.append_page(page)
 
-    doc: typing.Optional[Document] = None
-    l: RegularExpressionTextExtraction = RegularExpressionTextExtraction(
-        "[lL]orem .* [dD]olor"
+    layout: PageLayout = SingleColumnLayout(page)
+    layout.add(
+        Paragraph(
+            """
+                        Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. 
+                        Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. 
+                        Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. 
+                        Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
+                         """
+        )
     )
-    with open("output.pdf", "rb") as in_file_handle:
-        doc = PDF.loads(in_file_handle, [l])
 
-    assert doc is not None
-    for i, m in enumerate(l.get_matches_for_page(0)):
-        print("%d %s" % (i, m.group(0)))
-        for r in m.get_bounding_boxes():
-            print(
-                "\t%f %f %f %f" % (r.get_x(), r.get_y(), r.get_width(), r.get_height())
-            )
+    # set the /Info dictionary
+    doc["XRef"]["Trailer"][Name("Info")] = Dictionary()
+
+    # set the /Author
+    doc["XRef"]["Trailer"]["Info"][Name("Author")] = String("Joris Schellekens")
+
+    with open("output.pdf", "wb") as out_file_handle:
+        PDF.dumps(out_file_handle, doc)
 
 
 if __name__ == "__main__":

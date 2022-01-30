@@ -1,42 +1,52 @@
 import typing
+from borb.toolkit.text.font_name_filter import FontNameFilter
+from borb.pdf.canvas.layout.page_layout.multi_column_layout import SingleColumnLayout
+from borb.pdf.canvas.layout.page_layout.page_layout import PageLayout
+from borb.pdf.canvas.layout.text.paragraph import Paragraph
 from borb.pdf.document import Document
+from borb.pdf.page.page import Page
 from borb.pdf.pdf import PDF
-from PIL import Image as PILImage
+from borb.toolkit.text.simple_text_extraction import SimpleTextExtraction
 
 
-def modify_image(image: PILImage.Image):
-    w = image.width
-    h = image.height
-    pixels = image.load()
-    for i in range(0, w):
-        for j in range(0, h):
-            r, g, b = pixels[i, j]
+def create_document():
 
-            # convert to sepia
-            new_r = r * 0.393 + g * 0.769 + b * 0.189
-            new_g = r * 0.349 + g * 0.686 + b * 0.168
-            new_b = r * 0.272 + g * 0.534 + b * 0.131
+    # create Document
+    doc: Document = Document()
 
-            # set
-            pixels[i, j] = (int(new_r), int(new_g), int(new_b))
+    # create Page
+    page: Page = Page()
+    doc.append_page(page)
+
+    # create PageLayout
+    layout: PageLayout = SingleColumnLayout(page)
+
+    # add Paragraph for each font (name)
+    for font_name in ["Helvetica", "Helvetica-Bold", "Courier"]:
+        layout.add(Paragraph("Hello World, from %s!" % font_name, font=font_name))
+
+    # write
+    with open("output.pdf", "wb") as pdf_file_handle:
+        PDF.dumps(pdf_file_handle, doc)
 
 
-def main():
+def extract_fonts():
 
     doc: typing.Optional[Document] = None
+    l0: FontNameFilter = FontNameFilter("Courier")
+    l1: SimpleTextExtraction = SimpleTextExtraction()
+    l0.add_listener(l1)
     with open("output.pdf", "rb") as pdf_file_handle:
-        doc = PDF.loads(pdf_file_handle)
+        doc = PDF.loads(pdf_file_handle, [l0])
 
     assert doc is not None
 
-    # modify each image
-    for k, v in doc.get_page(0)["Resources"]["XObject"].items():
-        print("%s\t%s" % (k, str(v)))
-        modify_image(v)
+    print(l1.get_text_for_page(0))
 
-    # store PDF
-    with open("output.pdf", "wb") as out_file_handle:
-        PDF.dumps(out_file_handle, doc)
+
+def main():
+    create_document()
+    extract_fonts()
 
 
 if __name__ == "__main__":

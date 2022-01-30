@@ -1,52 +1,28 @@
 import typing
-from borb.toolkit.text.font_name_filter import FontNameFilter
-from borb.pdf.canvas.layout.page_layout.multi_column_layout import SingleColumnLayout
-from borb.pdf.canvas.layout.page_layout.page_layout import PageLayout
-from borb.pdf.canvas.layout.text.paragraph import Paragraph
+from decimal import Decimal
+
+from borb.pdf.canvas.geometry.rectangle import Rectangle
 from borb.pdf.document import Document
-from borb.pdf.page.page import Page
 from borb.pdf.pdf import PDF
+from borb.toolkit.location.location_filter import LocationFilter
 from borb.toolkit.text.simple_text_extraction import SimpleTextExtraction
 
 
-def create_document():
-
-    # create Document
-    doc: Document = Document()
-
-    # create Page
-    page: Page = Page()
-    doc.append_page(page)
-
-    # create PageLayout
-    layout: PageLayout = SingleColumnLayout(page)
-
-    # add Paragraph for each font (name)
-    for font_name in ["Helvetica", "Helvetica-Bold", "Courier"]:
-        layout.add(Paragraph("Hello World, from %s!" % font_name, font=font_name))
-
-    # write
-    with open("output.pdf", "wb") as pdf_file_handle:
-        PDF.dumps(pdf_file_handle, doc)
-
-
-def extract_fonts():
+def main():
 
     doc: typing.Optional[Document] = None
-    l0: FontNameFilter = FontNameFilter("Courier")
-    l1: SimpleTextExtraction = SimpleTextExtraction()
-    l0.add_listener(l1)
-    with open("output.pdf", "rb") as pdf_file_handle:
-        doc = PDF.loads(pdf_file_handle, [l0])
+    l0: SimpleTextExtraction = SimpleTextExtraction()
+
+    r: Rectangle = Rectangle(Decimal(59), Decimal(731), Decimal(99), Decimal(11))
+
+    l1: LocationFilter = LocationFilter(r)
+    l1.add_listener(l0)
+
+    with open("output.pdf", "rb") as in_file_handle:
+        doc = PDF.loads(in_file_handle, [l1])
 
     assert doc is not None
-
-    print(l1.get_text_for_page(0))
-
-
-def main():
-    create_document()
-    extract_fonts()
+    print(l0.get_text_for_page(0))
 
 
 if __name__ == "__main__":

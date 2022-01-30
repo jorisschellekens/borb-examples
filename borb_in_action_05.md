@@ -282,8 +282,16 @@ In this example, you'll be creating a PDF from scratch, containing "Hello World!
 <div style="page-break-before: always;"></div>
 
 ## 5.6 Fonts in PDF
+
+:mega: todo :mega:
+
 ### 5.6.1 Simple fonts
+
+:mega: todo :mega:
+
 ### 5.6.2 Composite fonts
+
+:mega: todo :mega:
 
 <div style="page-break-before: always;"></div>
 
@@ -459,6 +467,8 @@ finally, `SimpleTextExtraction` stores the reconstituted text (to ensure fast lo
 ```
 
 ### 5.7.2 Paragraph extraction and disjoint set
+
+:mega: todo :mega:
 
 <div style="page-break-before: always;"></div>
 

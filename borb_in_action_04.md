@@ -311,9 +311,13 @@ Hello World!
 
 ## 4.3 Exporting PDF as a (PIL) image
 
+:mega: todo :mega:
+
 <div style="page-break-before: always;"></div>
 
 ## 4.4 Exporting PDF as an SVG image
+
+:mega: todo :mega:
 
 <div style="page-break-before: always;"></div>
 

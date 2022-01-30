@@ -1,6 +1,9 @@
+from decimal import Decimal
+
+import typing
+from borb.pdf.canvas.layout.image.image import Image
 from borb.pdf.canvas.layout.page_layout.multi_column_layout import SingleColumnLayout
 from borb.pdf.canvas.layout.page_layout.page_layout import PageLayout
-from borb.pdf.canvas.layout.text.paragraph import Paragraph
 from borb.pdf.document import Document
 from borb.pdf.page.page import Page
 from borb.pdf.pdf import PDF
@@ -8,42 +11,24 @@ from borb.pdf.pdf import PDF
 
 def main():
 
-    # create empty Document
-    d: Document = Document()
+    doc: Document = Document()
+    page: Page = Page()
+    doc.append_page(page)
 
-    # add Page
-    p: Page = Page()
-    d.append_page(p)
+    layout: PageLayout = SingleColumnLayout(page)
 
-    # create PageLayout
-    l: PageLayout = SingleColumnLayout(p)
+    image_urls: typing.List[str] = [
+        "https://images.unsplash.com/photo-1589606663923-283bbd309229?ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8",
+        "https://images.unsplash.com/photo-1496637721836-f46d116e6d34?ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8",
+        "https://images.unsplash.com/photo-1611873101970-dfa544c23494?ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8",
+    ]
 
-    # add Paragraph
-    l.add(
-        Paragraph(
-            """
-                    Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. 
-                    Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. 
-                    Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. 
-                    Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.    
-                    """
-        )
-    )
+    # the following code adds each image
+    for image_url in image_urls:
+        layout.add(Image(image_url, width=Decimal(128), height=Decimal(128)))
 
-    # create bytes for embedded file
-    file_bytes = b"""
-    {
-        "lorem": "ipsum",
-        "dolor": "sit"
-    }
-    """
-
-    # add embedded file
-    d.append_embedded_file("lorem_ipsum.json", file_bytes)
-
-    # store
-    with open("output.pdf", "wb") as pdf_file_handle:
-        PDF.dumps(pdf_file_handle, d)
+    with open("output.pdf", "wb") as out_file_handle:
+        PDF.dumps(out_file_handle, doc)
 
 
 if __name__ == "__main__":

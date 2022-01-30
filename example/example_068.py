@@ -1,51 +1,40 @@
-from decimal import Decimal
-
-from borb.pdf.canvas.color.color import HexColor
-from borb.pdf.canvas.geometry.rectangle import Rectangle
-from borb.pdf.canvas.layout.page_layout.multi_column_layout import SingleColumnLayout
-from borb.pdf.canvas.layout.page_layout.page_layout import PageLayout
-from borb.pdf.canvas.layout.text.paragraph import Paragraph
-from borb.pdf.canvas.line_art.line_art_factory import LineArtFactory
+import typing
 from borb.pdf.document import Document
-from borb.pdf.page.page import Page
-from borb.pdf.page.page_size import PageSize
 from borb.pdf.pdf import PDF
+from PIL import Image as PILImage
+
+
+def modify_image(image: PILImage.Image):
+    w = image.width
+    h = image.height
+    pixels = image.load()
+    for i in range(0, w):
+        for j in range(0, h):
+            r, g, b = pixels[i, j]
+
+            # convert to sepia
+            new_r = r * 0.393 + g * 0.769 + b * 0.189
+            new_g = r * 0.349 + g * 0.686 + b * 0.168
+            new_b = r * 0.272 + g * 0.534 + b * 0.131
+
+            # set
+            pixels[i, j] = (int(new_r), int(new_g), int(new_b))
 
 
 def main():
 
-    doc: Document = Document()
-    page: Page = Page()
-    doc.append_page(page)
+    doc: typing.Optional[Document] = None
+    with open("output.pdf", "rb") as pdf_file_handle:
+        doc = PDF.loads(pdf_file_handle)
 
-    layout: PageLayout = SingleColumnLayout(page)
+    assert doc is not None
 
-    layout.add(
-        Paragraph(
-            """
-                        Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. 
-                        Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. 
-                        Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. 
-                        Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
-                        """
-        )
-    )
+    # modify each image
+    for k, v in doc.get_page(0)["Resources"]["XObject"].items():
+        print("%s\t%s" % (k, str(v)))
+        modify_image(v)
 
-    page_width: Decimal = PageSize.A4_PORTRAIT.value[0]
-    page_height: Decimal = PageSize.A4_PORTRAIT.value[1]
-    s: Decimal = Decimal(100)
-    page.append_polygon_annotation(
-        LineArtFactory.cartoon_diamond(
-            Rectangle(
-                page_width / Decimal(2) - s / Decimal(2),
-                page_height / Decimal(2) - s / Decimal(2),
-                s,
-                s,
-            )
-        ),
-        stroke_color=HexColor("f1cd2e"),
-    )
-
+    # store PDF
     with open("output.pdf", "wb") as out_file_handle:
         PDF.dumps(out_file_handle, doc)
 
