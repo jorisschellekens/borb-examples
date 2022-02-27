@@ -1,158 +1,170 @@
 # Table of Contents
 
-1. [borb in action](#1-borb-in-action)  
-    1.1 [About this book](#11-about-this-book)  
-    1.2 [About the author](#12-about-the-author)  
-    1.3 [Who should read this book?](#13-who-should-read-this-book)  
-    1.4 [How to use this book](#14-how-to-use-this-book)  
-    1.5 [What you'll be able to do after reading this book](#15-what-youll-be-able-to-do-after-reading-this-book)  
-        1.5.1 [Creating PDF documents](#151-creating-pdf-documents)  
-        1.5.2 [Manipulate existing PDF documents](#152-manipulate-existing-pdf-documents)  
-        1.5.3 [Heuristics for PDF documents](#153-heuristics-for-pdf-documents)  
-        1.5.4 [Deep-dive](#154-deep-dive)  
-        1.5.5 [Showcases](#155-showcases)    
-    1.6 [The goal of this book](#16-the-goal-of-this-book)  
-    1.7 [Software requirements and downloads](#17-software-requirements-and-downloads)  
-        1.7.1 [Installation using `pip`](#171-installation-using-pip)  
-    1.8 [Acknowledgements](#18-acknowledgements)
-           
-2. [Creating PDF documents from scratch](#2-creating-pdf-documents-from-scratch)  
-    2.1 [Introducing `borb` and PDF](#21-introducing-borb-and-pdf)  
-    2.2 [Steps to creating a PDF using `borb`](#22-steps-to-creating-a-pdf-using-borb)  
-        2.2.1 [Creating an empty `Document` instance](#221-creating-an-empty-document-instance)  
-        2.2.2 [Creating and adding a `Page`](#222-creating-and-adding-a-page)  
-        2.2.3 [Setting a `PageLayout`](#223-setting-a-pagelayout)  
-        2.2.4 [Adding a `Paragraph` to the `Page` using `PageLayout`](#224-adding-a-paragraph-to-the-page-using-pagelayout)    
-        2.2.5 [Writing the `Document` to disk](#225-writing-the-document-to-disk)        
-    2.3 [Using `LayoutElement` sub-classes to represent various types of content](#23-using-layoutelement-sub-classes-to-represent-various-types-of-content)     
-    2.4 [Adding text to a PDF](#24-adding-text-to-a-pdf)  
-        2.4.1 [Setting the `font` of a `Paragraph`](#241-setting-the-font-of-a-paragraph)  
-        2.4.2 [Setting the `font_color` of a `Paragraph`](#242-setting-the-font_color-of-a-paragraph)  
-            2.4.2.1 [Using `HSVColor` to create a rainbow of text](#2421-using-hsvcolor-to-create-a-rainbow-of-text)  
-            2.4.2.2 [Using `X11Color` to specify color in a more human-legible way](#2422-using-x11color-to-specify-color-in-a-more-human-legible-way)  
-            2.4.2.3 [Using `Pantone` to specify color in a more human-legible way](#2423-using-pantone-to-specify-color-in-a-more-human-legible-way)  
-            2.4.2.4 [Making the most of the `Color` classes](#2424-making-the-most-of-the-color-classes)  
-                2.4.2.4.1 [Generating a triad `Color` scheme](#24241-generating-a-triad-color-scheme)  
-                2.4.2.4.2 [Generating a split-complementary `Color` scheme](#24242-generating-a-split-complementary-color-scheme)  
-                2.4.2.4.3 [Generating an analogous `Color` scheme](#24243-generating-an-analogous-color-scheme)  
-                2.4.2.4.4 [Generating a tetradic square `Color` scheme](#24244-generating-a-tetradic-square-color-scheme)  
-                2.4.2.4.5 [Generating a tetradic rectangular `Color` scheme](#24245-generating-a-tetradic-rectangular-color-scheme)  
-        2.4.3 [Using alignment on `Paragraph` objects](#243-using-alignment-on-paragraph-objects)  
-            2.4.3.1 [`horizontal_alignment`](#2431-horizontal-alignment)  
-            2.4.3.2 [`vertical_alignment`](#2432-vertical-alignment)  
-            2.4.3.3 [`text_alignment`](#2433-text-alignment)  
-        2.4.4 [Using borders on `Paragraph` objects](#244-using-borders-on-paragraph-objects)  
-        2.4.5 [Using margin and padding on `Paragraph` objects](#245-using-margin-and-padding-on-paragraph-objects)         
-    2.5 [Adding `Image` objects to a PDF](#25-adding-image-objects-to-a-pdf)      
-    2.6 [Adding line-art to a PDF using `Shape` objects](#26-adding-line-art-to-a-pdf-using-shape-objects)      
-    2.7 [Adding barcodes and qr-codes to a PDF](#27-adding-barcodes-and-qr-codes-to-a-pdf)  
-        2.7.1 [Adding a `Barcode` to a `Page`](#271-adding-a-barcode-to-a-page)  
-            2.7.1.1 [Setting the `stroke_color` and `fill_color` of a `Barcode`](#2711-setting-the-stroke_color-and-fill_color-of-a-barcode)  
-        2.7.2 [Adding a QR-code to a `Page`](#272-adding-a-qr-code-to-the-page)          
-    2.8 [Adding `Chart` objects to a PDF](#28-adding-chart-objects-to-a-pdf)  
-    2.9 [Adding `Emoji` to a PDF](#29-adding-emoji-to-a-pdf)  
-    2.10 [Container `LayoutElement` objects](#210-container-layoutelement-objects)  
-        2.10.1 [Lists](#2101-lists)  
-            2.10.1.1 [Working with `OrderedList`](#21011-working-with-orderedlist)  
-            2.10.1.2 [Working with `RomanNumeralOrderedList`](#21012-working-with-romannumeralorderedlist)  
-            2.10.1.3 [Working with `UnorderedList`](#21013-working-with-unorderedlist)  
-            2.10.1.4 [Nesting `List` objects](#21014-nesting-list-objects)  
-        2.10.2 [Tables](#2102-tables)  
-            2.10.2.1 [`FixedColumnWidthTable`](#21021-fixedcolumnwidthtable)  
-            2.10.2.2 [`FlexibleColumnWidthTable`](#21022-flexiblecolumnwidthtable)  
-            2.10.2.3 [Setting layout properties on individual cells of a `Table`](#21023-setting-layout-properties-on-individual-cells-of-a-table)  
-            2.10.2.4 [Incomplete `Table`](#21024-incomplete-table)  
-            2.10.2.5 [Setting `column_span` and `row_span`](#21025-setting-col_span-and-row_span)  
-    2.11 [Forms](#211-forms)  
-        2.11.1 [Acroforms vs XFA](#2111-acroforms-vs-xfa)  
-        2.11.2 [The `FormField` object](#2112-the-formfield-object)  
-        2.11.3 [Adding `FormField` objects to a PDF](#2113-adding-formfield-objects-to-a-pdf)  
-            2.11.3.1 [Adding a `TextField` to a PDF](#21131-adding-a-textfield-to-a-pdf)  
-            2.11.3.2 [Customizing a `TextField` object](#21132-customizing-a-textfield-object)  
-            2.11.3.3 [Pre-filling a `TextField` object](#21133-pre-filling-a-textfield-object)  
-            2.11.3.4 [Adding a `DropDownList` to a PDF](#21134-adding-a-dropdownlist-to-a-pdf)  
-            2.11.3.5 [Adding a `CountryDropDownList` to a PDF](#21135-adding-a-countrydropdownlist-to-a-pdf)  
-            2.11.3.6 [Adding a `CheckBox` to a PDF](#21136-adding-a-checkbox-to-a-pdf)  
-            2.11.3.7 [Adding a `RadioButton` to a PDF](#21137-adding-a-radiobutton-to-a-pdf)  
-        2.11.4 [Changing the value of a `FormField` in an existing PDF](#2114-changing-the-value-of-a-formfield-in-an-existing-pdf)  
-        2.11.5 [Getting the value of a `FormField` in an existing PDF](#2115-getting-the-value-of-a-formfield-in-an-existing-pdf)  
-        2.11.6 [Flattening a `FormField`](#2116-flattening-a-formfield)  
-    2.12 [Conclusion](#212-conclusion)            
+1 [`borb` in action](#1-borb-in-action)  
+  1.1 [About this book](#11-about-this-book)  
+  1.2 [About the author](#12-about-the-author)  
+  1.3 [Who should read this book?](#13-who-should-read-this-book)  
+  1.4 [How to use this book](#14-how-to-use-this-book)  
+  1.5 [What you'll be able to do after reading this book](#15-what-youll-be-able-to-do-after-reading-this-book)  
+    1.5.1 [Creating PDF documents](#151-creating-pdf-documents)  
+    1.5.2 [Manipulate existing PDF documents](#152-manipulate-existing-pdf-documents)  
+    1.5.3 [Heuristics for PDF documents](#153-heuristics-for-pdf-documents)  
+    1.5.4 [Deep-dive](#154-deep-dive)  
+    1.5.5 [Showcases](#155-showcases)  
+  1.6 [The goal of this book](#16-the-goal-of-this-book)  
+  1.7 [Software requirements and downloads](#17-software-requirements-and-downloads)  
+    1.7.1 [Installation using `pip`](#171-installation-using-pip)  
+  1.8 [Acknowledgements](#18-acknowledgements)  
+2 [Creating PDF documents from scratch](#2-creating-pdf-documents-from-scratch)  
+  2.1 [Introducing `borb` and PDF](#21-introducing-borb-and-pdf)  
+  2.2 [Steps to creating a PDF using `borb`](#22-steps-to-creating-a-pdf-using-borb)  
+    2.2.1 [Creating an empty `Document` instance](#221-creating-an-empty-document-instance)  
+    2.2.2 [Creating and adding a `Page`](#222-creating-and-adding-a-page)  
+    2.2.3 [Setting a `PageLayout`](#223-setting-a-pagelayout)  
+    2.2.4 [Adding a `Paragraph` to the `Page` using `PageLayout`](#224-adding-a-paragraph-to-the-page-using-pagelayout)  
+      2.2.5 [Writing the `Document` to disk](#225-writing-the-document-to-disk)  
+  2.3 [Using `LayoutElement` sub-classes to represent various types of content](#23-using-layoutelement-sub-classes-to-represent-various-types-of-content)  
+  2.4 [Adding text to a PDF](#24-adding-text-to-a-pdf)  
+    2.4.1 [Setting the `Font` of a `Paragraph`](#241-setting-the-font-of-a-paragraph)  
+    2.4.2 [Setting the `font_color` of a `Paragraph`](#242-setting-the-font_color-of-a-paragraph)  
+      2.4.2.1 [Using `HSVColor` to create a rainbow of text](#2421-using-hsvcolor-to-create-a-rainbow-of-text)  
+      2.4.2.2 [Using `X11Color` to specify color in a more human-legible way](#2422-using-xcolor-to-specify-color-in-a-more-human-legible-way)  
+      2.4.2.3 [Using `Pantone` to specify color in a more human-legible way](#2423-using-pantone-to-specify-color-in-a-more-human-legible-way)  
+      2.4.2.4 [Making the most of the `Color` classes](#2424-making-the-most-of-the-color-classes)  
+        2.4.2.4.1 [Generating a triad `Color` scheme](#24241-generating-a-triad-color-scheme)  
+        2.4.2.4.2 [Generating a split complementary `Color` scheme](#24242-generating-a-split-complementary-color-scheme)  
+        2.4.2.4.3 [Generating an analogous `Color` scheme](#24243-generating-an-analogous-color-scheme)  
+        2.4.2.4.4 [Generating a tetradic square `Color` scheme](#24244-generating-a-tetradic-square-color-scheme)  
+        2.4.2.4.5 [Generating a tetradic rectangular `Color` scheme](#24245-generating-a-tetradic-rectangular-color-scheme)  
+      2.4.2.5 [Implementation details](#2425-implementation-details)  
+    2.4.3 [Using `Alignment` on `Paragraph` objects](#243-using-alignment-on-paragraph-objects)  
+      2.4.3.1 [horizontal alignment](#2431-horizontal-alignment)  
+      2.4.3.2 [vertical alignment](#2432-vertical-alignment)  
+      2.4.3.3 [text alignment](#2433-text-alignment)  
+    2.4.4 [Using borders on `Paragraph` objects](#244-using-borders-on-paragraph-objects)  
+    2.4.5 [Using margin and padding on `Paragraph` objects](#245-using-margin-and-padding-on-paragraph-objects)  
+  2.5 [Adding `Image` objects to a PDF](#25-adding-image-objects-to-a-pdf)  
+  2.6 [Adding line-art to a PDF using `Shape` objects](#26-adding-line-art-to-a-pdf-using-shape-objects)  
+  2.7 [Adding barcodes and QR-codes to a PDF](#27-adding-barcodes-and-qr-codes-to-a-pdf)  
+    2.7.1 [Adding a `Barcode` to a `Page`](#271-adding-a-barcode-to-a-page)  
+      2.7.1.1 [Setting the `stroke_color` and `fill_color` of a `Barcode`](#2711-setting-the-stroke_color-and-fill_color-of-a-barcode)  
+    2.7.2 [Adding a QR-code to the `Page`](#272-adding-a-qr-code-to-the-page)  
+    2.7.3 [Other supported barcodes](#273-other-supported-barcodes)  
+  2.8 [Adding `Chart` objects to a PDF](#28-adding-chart-objects-to-a-pdf)  
+  2.9 [Adding emoji to a PDF](#29-adding-emoji-to-a-pdf)  
+  2.10 [Conclusion](#210-conclusion)  
+3 [Container `LayoutElement` objects](#3-container-layoutelement-objects)  
+  3.1 [Lists](#31-lists)  
+    3.1.1 [Working with `OrderedList`](#311-working-with-orderedlist)  
+    3.1.2 [Working with `RomanNumeralOrderedList`](#312-working-with-romannumeralorderedlist)  
+    3.1.3 [Working with `UnorderedList`](#313-working-with-unorderedlist)  
+    3.1.4 [Nesting `List` objects](#314-nesting-list-objects)  
+  3.2 [Tables](#32-tables)  
+    3.2.1 [FixedColumnWidthTable](#321-fixedcolumnwidthtable)  
+    3.2.2 [FlexibleColumnWidthTable](#322-flexiblecolumnwidthtable)  
+    3.2.3 [Setting layout properties on individual cells of a `Table`](#323-setting-layout-properties-on-individual-cells-of-a-table)  
+    3.2.4 [Incomplete `Table`](#324-incomplete-table)  
+    3.2.5 [Setting `col_span` and `row_span`](#325-setting-col_span-and-row_span)  
+  3.3 [Nesting `Table` in `List` and vice-versa](#33-nesting-table-in-list-and-vice-versa)  
+    3.3.1 [Nesting a `Table` in a `List`](#331-nesting-a-table-in-a-list)  
+    3.3.2 [Nesting a `List` in a `Table`](#332-nesting-a-list-in-a-table)  
+  3.4 [Conclusion](#34-conclusion)  
+4 [Forms](#4-forms)  
+  4.1 [Acroforms vs XFA](#41-acroforms-vs-xfa)  
+  4.2 [The `FormField` object](#42-the-formfield-object)  
+  4.3 [Adding `FormField` objects to a PDF](#43-adding-formfield-objects-to-a-pdf)  
+    4.3.1 [Adding a `TextField` to a PDF](#431-adding-a-textfield-to-a-pdf)  
+    4.3.2 [Customizing a `TextField` object](#432-customizing-a-textfield-object)  
+    4.3.3 [Pre-filling a `TextField` object](#433-pre-filling-a-textfield-object)  
+    4.3.4 [Adding a `DropDownList` to a PDF](#434-adding-a-dropdownlist-to-a-pdf)  
+    4.3.5 [Adding a `CountryDropDownList` to a PDF](#435-adding-a-countrydropdownlist-to-a-pdf)  
+    4.3.6 [Adding a `CheckBox` to a PDF](#436-adding-a-checkbox-to-a-pdf)  
+    4.3.7 [Adding a `RadioButton` to a PDF](#437-adding-a-radiobutton-to-a-pdf)  
+    4.3.8 [Adding a `PushButton` to a PDF](#438-adding-a-pushbutton-to-a-pdf)  
+    4.3.9 [Adding a `JavaScriptPushButton` to a PDF](#439-adding-a-javascriptpushbutton-to-a-pdf)  
+  4.4 [Getting the value of a `FormField` in an existing PDF](#44-getting-the-value-of-a-formfield-in-an-existing-pdf)  
+  4.5 [Changing the value of a `FormField` in an existing PDF](#45-changing-the-value-of-a-formfield-in-an-existing-pdf)  
+    4.5.1 [Changing the value of a `FormField` in an existing PDF using `borb`](#451-changing-the-value-of-a-formfield-in-an-existing-pdf-using-borb)  
+    4.5.2 [Changing the value of a `FormField` in an existing PDF using `JavaScript`](#452-changing-the-value-of-a-formfield-in-an-existing-pdf-using-javascript)  
+  4.6 [Flattening a `FormField`](#46-flattening-a-formfield)  
+  4.7 [Conclusion](#47-conclusion)  
+5 [Working with existing PDFs](#5-working-with-existing-pdfs)  
+  5.1 [Extracting meta-information](#51-extracting-meta-information)  
+    5.1.1 [Extracting the author from a PDF](#511-extracting-the-author-from-a-pdf)  
+    5.1.2 [Extracting the producer from a PDF](#512-extracting-the-producer-from-a-pdf)  
+    5.1.3 [using XMP meta information](#513-using-xmp-meta-information)  
+  5.2 [Extracting text from a PDF](#52-extracting-text-from-a-pdf)  
+  5.3 [Extracting text using regular expressions](#53-extracting-text-using-regular-expressions)  
+  5.4 [Extracting text using its bounding box](#54-extracting-text-using-its-bounding-box)  
+  5.5 [Combining regular expressions and bounding boxes](#55-combining-regular-expressions-and-bounding-boxes)  
+  5.6 [Extracting keywords from a PDF](#56-extracting-keywords-from-a-pdf)  
+    5.6.1 [Extracting keywords from a PDF using TF-IDF](#561-extracting-keywords-from-a-pdf-using-tf-idf)  
+      5.6.1.1 [Term Frequency](#5611-term-frequency)  
+      5.6.1.2 [Inverse document frequency](#5612-inverse-document-frequency)  
+      5.6.1.3 [Using TF-IDF in `borb`](#5613-using-tf-idf-in-borb)  
+    5.6.2 [Extracting keywords from a PDF using  textrank](#562-extracting-keywords-from-a-pdf-using--textrank)  
+  5.7 [Extracting color-information](#57-extracting-color-information)  
+  5.8 [Extracting font-information](#58-extracting-font-information)  
+    5.8.1 [Filtering by `font`](#581-filtering-by-font)  
+    5.8.2 [Filtering by `font_color`](#582-filtering-by-font_color)  
+  5.9 [Extracting images from a PDF](#59-extracting-images-from-a-pdf)  
+    5.9.1 [Modifying images in an existing PDF](#591-modifying-images-in-an-existing-pdf)  
+    5.9.2 [Subsampling images in an existing PDF](#592-subsampling-images-in-an-existing-pdf)  
+  5.10 [Working with embedded files](#510-working-with-embedded-files)  
+    5.10.1 [Embedding files in a PDF](#5101-embedding-files-in-a-pdf)  
+    5.10.2 [Extracting embedded files from a PDF](#5102-extracting-embedded-files-from-a-pdf)  
+  5.11 [Merging PDF documents](#511-merging-pdf-documents)  
+  5.12 [Removing pages from  PDF documents](#512-removing-pages-from--pdf-documents)  
+  5.13 [Rotating pages in PDF documents](#513-rotating-pages-in-pdf-documents)  
+  5.14 [Conclusion](#514-conclusion)  
+  6 [Adding annotations to a PDF](#6-adding-annotations-to-a-pdf)  
+  6.1 [Adding geometric shapes](#61-adding-geometric-shapes)  
+  6.2 [Adding text annotations](#62-adding-text-annotations)  
+  6.3 [Adding link annotations](#63-adding-link-annotations)  
+  6.4 [Adding remote go-to annotations](#64-adding-remote-go-to-annotations)  
+  6.5 [Adding rubber stamp annotations](#65-adding-rubber-stamp-annotations)  
+  6.6 [Adding redaction (annotations)](#66-adding-redaction-annotations)  
+    6.6.1 [Adding redaction annotations](#661-adding-redaction-annotations)  
+    6.6.2 [Applying redaction annotations](#662-applying-redaction-annotations)  
+  6.7 [Adding invisible `JavaScript` buttons](#67-adding-invisible-javascript-buttons)  
+  6.8 [Adding sound annotations](#68-adding-sound-annotations)  
+  6.9 [Adding movie annotations](#69-adding-movie-annotations)  
+  6.10 [Conclusion](#610-conclusion)  
+7 [Heuristics for PDF documents](#7-heuristics-for-pdf-documents)  
+  7.1 [Extracting tables from a PDF](#71-extracting-tables-from-a-pdf)  
+  7.2 [Performing OCR on a PDF](#72-performing-ocr-on-a-pdf)  
+  7.3 [Exporting PDF as a (PIL) image](#73-exporting-pdf-as-a-pil-image)  
+  7.4 [Exporting PDF as an SVG image](#74-exporting-pdf-as-an-svg-image)  
+  7.5 [Exporting Markdown as PDF](#75-exporting-markdown-as-pdf)  
+  7.6 [Exporting HTML as PDF](#76-exporting-html-as-pdf)  
+  7.7 [Conclusion](#77-conclusion)  
+8 [Deep Dive into `borb`](#8-deep-dive-into-borb)  
+  8.1 [About PDF](#81-about-pdf)  
+  8.2 [The XREF table](#82-the-xref-table)  
+  8.3 [Page content streams](#83-page-content-streams)  
+  8.4 [Postscript syntax](#84-postscript-syntax)  
+  8.5 [Creating a `Document` using low-level syntax](#85-creating-a-document-using-low-level-syntax)  
+  8.6 [Fonts in PDF](#86-fonts-in-pdf)  
+    8.6.1 [Simple fonts](#861-simple-fonts)  
+    8.6.2 [Composite fonts](#862-composite-fonts)  
+  8.7 [About structured vs. unstructured document formats](#87-about-structured-vs-unstructured-document-formats)  
+    8.7.1 [Text extraction: using heuristics to bridge the gap](#871-text-extraction-using-heuristics-to-bridge-the-gap)  
+    8.7.2 [Paragraph extraction and disjoint set](#872-paragraph-extraction-and-disjoint-set)  
+  8.8 [Hyphenation](#88-hyphenation)  
+    5.8.1 [The hyphenation problem](#581-the-hyphenation-problem)  
+    8.8.2 [A fast and scalable hyphenation algorithm](#882-a-fast-and-scalable-hyphenation-algorithm)  
+    8.8.3 [Using hyphenation in `borb`](#883-using-hyphenation-in-borb)  
+9 [Showcases](#9-showcases)  
+  9.1 [Building a sudoku puzzle](#91-building-a-sudoku-puzzle)  
+  9.2 [Building a realistic invoice](#92-building-a-realistic-invoice)  
+  9.3 [Creating a stunning flyer](#93-creating-a-stunning-flyer)  
+  9.4 [Conclusion](#94-conclusion)  
 
-3. [Working with existing PDFs](#3-working-with-existing-pdfs)  
-    3.1 [Extracting meta-information](#31-extracting-meta-information)  
-        3.1.1 [Extracting the author from a PDF](#311-extracting-the-author-from-a-pdf)  
-        3.1.2 [Extracting the producer from a PDF](#312-extracting-the-producer-from-a-pdf)  
-        3.1.3 [Using XMP meta-information](#313-using-xmp-meta-information)  
-    3.2 [Extracting text from a PDF](#32-extracting-text-from-a-pdf)      
-    3.3 [Extracting text using regular expressions](#33-extracting-text-using-regular-expressions)  
-    3.4 [Extracting text using its bounding box](#34-extracting-text-using-its-bounding-box)  
-    3.5 [Combining regular expressions and bounding boxes](#35-combining-regular-expressions-and-bounding-boxes)  
-    3.6 [Extracting keywords from a PDF]()  
-        3.6.1 [Extracting keywords from a PDF using tf-idf]()    
-        3.6.2 [Extracting keywords from a PDF using textrank]()  
-    3.7 [Extracting color information](#37-extracting-color-information)  
-    3.8 [Extracting font information](#38-extracting-font-information)  
-    3.9 [Extracting images from a PDF](#39-extracting-images-from-a-pdf)  
-        3.9.1 [Modifying images in an existing PDF](#391-modifying-images-in-an-existing-pdf)  
-        3.9.2 [Subsampling images in an existing PDF](#392-subsampling-images-in-an-existing-pdf)  
-    3.10 [Working with embedded files](#310-working-with-embedded-files)  
-        3.10.1 [Embedding files in a PDF](#3101-embedding-files-in-a-pdf)  
-        3.10.2 [Extracting embedded files from a PDF](#3102-extracting-embedded-files-from-a-pdf)  
-    3.11 [Adding annotations to a PDF](#311-adding-annotations-to-a-pdf)  
-        3.11.1 [Adding geometric shapes](#3111-adding-geometric-shapes)  
-        3.11.2 [Adding text annotations](#3112-adding-text-annotations)  
-        3.11.3 [Adding link annotations](#3113-adding-link-annotations)  
-        3.11.4 [Adding rubber stamp annotations](#3114-adding-rubber-stamp-annotations)  
-    3.12 [Adding redaction (annotations)](#312-adding-redaction-annotations)  
-        3.12.1 [Adding redaction annotations](#3121-adding-redaction-annotations)  
-        3.12.2 [Applying redaction annotations](#3122-applying-redaction-annotations)  
-    3.13 [Merging PDF documents](#313-merging-pdf-documents)  
-    3.14 [Removing pages from PDF documents](#314-removing-pages-from--pdf-documents)  
-    3.15 [Rotating pages in PDF documents](#315-rotating-pages-in-pdf-documents)        
-    3.16 [Conclusion](#316-conclusion)  
-
-4. [Heuristics for PDF documents](#4-heuristics-for-pdf-documents)  
-    4.1 [Extracting tables from a PDF](#41-extracting-tables-from-a-pdf)  
-    4.2 [Performing OCR on a PDF](#42-performing-ocr-on-a-pdf)  
-    4.3 [Exporting PDF as a PIL Image](#43-exporting-pdf-as-a-pil-image)  
-    4.4 [Exporting PDF as an SVG Image](#44-exporting-pdf-as-an-svg-image)    
-    4.5 [Exporting Markdown as PDF](#45-exporting-markdown-as-pdf)  
-    4.6 [Exporting HTML as PDF](#46-exporting-html-as-pdf)  
-
-5. [Deep dive](#5-deep-dive)  
-    5.1 [About PDF](#51-about-pdf)  
-    5.2 [The XREF table](#52-the-xref-table)    
-    5.3 [`Page` content streams](#53-page-content-streams)  
-    5.4 [Postscript syntax](#54-postscript-syntax)  
-    5.5 [Creating a `Document` using low-level syntax](#55-creating-a-document-using-low-level-syntax)  
-    5.6 [Fonts in PDF](#56-fonts-in-pdf)  
-        5.6.1 [Simple fonts](#561-simple-fonts)  
-        5.6.2 [Composite fonts](#562-composite-fonts)  
-    5.7 [About structured versus unstructered document formats](#57-about-structured-vs-unstructured-document-formats)  
-        5.7.1 [Text extraction using heuristics to bridge the gap](#571-text-extraction-using-heuristics-to-bridge-the-gap)  
-        5.7.2 [paragraph extraction and disjoint set](#572-paragraph-extraction-and-disjoint-set)  
-    5.8 [Hyphenation](#58-hyphenation)  
-        5.8.1 [The hyphenation problem](#581-the-hyphenation-problem)  
-        5.8.2 [A fast and scalable hyphenation algorithm](#582-a-fast-and-scalable-hyphenation-algorithm)  
-        5.8.3 [Using hyphenation in `borb`](#583-using-hyphenation-in-borb)  
-
-6. [Showcases](#6-showcases)  
-    6.1 [Creating an invoice](#61-showcase-creating-an-invoice)  
-    6.2 [Creating a Sudoku puzzle](#62-showcase-creating-a-sudoku-puzzle)  
-    6.3 [Creating a nonogram puzzle](#63-showcase-creating-a-nonogram-puzzle)  
-    6.4 [Creating a tents-and-trees puzzle](#64-showcase-creating-a-tents-and-trees-puzzle)  
-    6.5 [Using multiple `PageLayout` instances on the same `Page`](#65-showcase-using-multiple-pagelayout-instances-on-the-same-page)  
-    6.6 [Creating a poem with custom `PageLayout`](#66-showcase-creating-a-poem-with-custom-pagelayout)  
-    6.7 [Automatically processing an invoice](#67-showcase-automatically-processing-an-invoice)  
-
-7. [Appendix](#7-appendix)
-        
 <div style="page-break-before: always;"></div>
 
-# 1. `borb` in action
+# 1 `borb` in action
 
-![enter image description here](img/chapter_illustrations/borb_001.jpg)
+![enter image description here](chapter_001/img/chapter_illustration.jpg)
 
 <div style="page-break-before: always;"></div>
 
@@ -162,7 +174,7 @@ This book will take you on an exploratory journey through the PDF format, and th
 
 ## 1.2 About the author
 
-![enter image description here](img/chapter_illustrations/about_the_author.jpg)
+![enter image description here](chapter_001/img/joris_schellekens.jpg)
 
 I'm Joris Schellekens, the author of both this book and the `borb` library.
 I've been a software engineer/architect for most of my professional career.
@@ -210,7 +222,15 @@ There is so much information in this book, not just about `borb` but PDF in gene
 This book consists of 5 major parts:
 
 - Creating PDF documents from scratch
+  - basic `LayoutElement` objects
+  - container `LayoutElement` objects
+  - Forms
+  
 - Manipulating existing PDF documents
+  - Getting information out of a PDF
+  - Adding annotations to a PDF
+  - splitting, merging, rotating
+  
 - Heuristics for PDF documents
 - Deep dive(s)
 - Showcase(s)
@@ -337,13 +357,13 @@ A sincere "thank you", to the king of PDF.
 I would also like to thank (in no particular order); Daphne, Dietrich, Benoit, Michael, Diane and Aleks.
 You're all awesome, and you've helped me out tremendously.
 
-![enter image description here](img/signature_joris_schellekens.png)
+![enter image description here](chapter_001/img/signature_joris_schellekens.png)
 
 <div style="page-break-before: always;"></div>
 
-# 2. Creating PDF documents from scratch
+# 2 Creating PDF documents from scratch
 
-![enter image description here](img/chapter_illustrations/borb_002.jpg)
+![enter image description here](chapter_002/img/chapter_illustration.jpg)
 
 <div style="page-break-before: always;"></div>
 
@@ -384,12 +404,14 @@ I'll explore all these steps in more detail in the coming sections.
 `borb` represents a PDF as a JSON-like object, a collection of nested dictionaries, arrays and primitives. Creating and empty `Document` amounts to creating an empty `dict` and filling it with the right keys to ensure the serialization will not hang.
 
 ```python
-from borb.pdf.document import Document
+#!chapter_002/src/snippet_001.py
+from borb.pdf.document.document import Document
+
 
 def main():
     doc: Document = Document()
 
-    
+
 if __name__ == "__main__":
     main()
 ```
@@ -426,15 +448,22 @@ These methods are not something you will typically have to deal with, you can fo
 The next step in creating a PDF document is adding a `Page` to the `Document` object:
 
 ```python
-from borb.pdf.document import Document
+#!chapter_002/src/snippet_002.py
+from borb.pdf.document.document import Document
 from borb.pdf.page.page import Page
 
+
 def main():
+    # create Document
     doc: Document = Document()
+
+    # create Page
     page: Page = Page()
-    doc.append_page(page)    
-    
-    
+
+    # add Page to Document
+    doc.append_page(page)
+
+
 if __name__ == "__main__":
     main()
 ```
@@ -475,18 +504,26 @@ Typically, you'd like to be able to just add content, and have `borb` figure out
 For this first example, you'll use `SingleColumnLayout`
 
 ```python
-from borb.pdf.document import Document
+#!chapter_002/src/snippet_003.py
+from borb.pdf.document.document import Document
 from borb.pdf.page.page import Page
 from borb.pdf.canvas.layout.page_layout.multi_column_layout import SingleColumnLayout
 from borb.pdf.canvas.layout.page_layout.page_layout import PageLayout
 
 
 def main():
+    # create Document
     doc: Document = Document()
+
+    # create Page
     page: Page = Page()
-    doc.append_page(page)    
+
+    # add Page to Document
+    doc.append_page(page)
+
+    # set a PageLayout
     layout: PageLayout = SingleColumnLayout(page)
-    
+
 
 if __name__ == "__main__":
     main()
@@ -499,7 +536,8 @@ if __name__ == "__main__":
 Finally, you can add some content to the `Page` (or rather the `PageLayout`) and wrap up this example:
 
 ```python
-from borb.pdf.document import Document
+#!chapter_002/src/snippet_004.py
+from borb.pdf.document.document import Document
 from borb.pdf.page.page import Page
 from borb.pdf.canvas.layout.page_layout.multi_column_layout import SingleColumnLayout
 from borb.pdf.canvas.layout.page_layout.page_layout import PageLayout
@@ -507,13 +545,21 @@ from borb.pdf.canvas.layout.text.paragraph import Paragraph
 
 
 def main():
+    # create Document
     doc: Document = Document()
+
+    # create Page
     page: Page = Page()
-    doc.append_page(page)    
-    
+
+    # add Page to Document
+    doc.append_page(page)
+
+    # set a PageLayout
     layout: PageLayout = SingleColumnLayout(page)
+
+    # add a Paragraph
     layout.add(Paragraph("Hello World!"))
-    
+
 
 if __name__ == "__main__":
     main()
@@ -534,7 +580,8 @@ For now, suffice to say the default parameters are:
 #### 2.2.5 Writing the `Document` to disk
 
 ```python
-from borb.pdf.document import Document
+#!chapter_002/src/snippet_005.py
+from borb.pdf.document.document import Document
 from borb.pdf.page.page import Page
 from borb.pdf.canvas.layout.page_layout.multi_column_layout import SingleColumnLayout
 from borb.pdf.canvas.layout.page_layout.page_layout import PageLayout
@@ -543,22 +590,31 @@ from borb.pdf.pdf import PDF
 
 
 def main():
+    # create Document
     doc: Document = Document()
-    page: Page = Page()
-    doc.append_page(page)    
-    
-    layout: PageLayout = SingleColumnLayout(page)
-    layout.add(Paragraph("Hello World!"))
-    
-    with open("output.pdf", "wb") as out_file_handle:  
-        PDF.dumps(out_file_handle, doc)   
 
-        
+    # create Page
+    page: Page = Page()
+
+    # add Page to Document
+    doc.append_page(page)
+
+    # set a PageLayout
+    layout: PageLayout = SingleColumnLayout(page)
+
+    # add a Paragraph
+    layout.add(Paragraph("Hello World!"))
+
+    # store
+    with open("output.pdf", "wb") as pdf_file_handle:
+        PDF.dumps(pdf_file_handle, doc)
+
+
 if __name__ == "__main__":
     main()
 ```
 
-![enter image description here](img/borb_in_action_example_001.png)
+![enter image description here](chapter_002/img/snippet_005.png)
 
 <div style="page-break-before: always;"></div>
 
@@ -566,13 +622,14 @@ if __name__ == "__main__":
 
 In the previous example, you learned the bare minimum of adding text to a `Document` using the `Paragraph` class. Let's have a more in-depth look at the various options in the `borb` library.
 
-![figure 1. the LayoutElement hierarchy](img/borb_in_action_layout_elements_class_diagram.png)
+![figure 1. the LayoutElement hierarchy](chapter_002/img/layout_element_class_diagram.png)
 
-Figure 1 shows the `LayoutElement` hierarchy. The abstract base class `LayoutElement` represents 3 major groups of content:
+This figure shows the `LayoutElement` hierarchy. The abstract base class `LayoutElement` represents 4 major groups of content:
 
-- Elements that display text (marked in yellow)
-- Elements that display images (marked in orange)
-- Elements that act as a container, grouping other `LayoutElement` implementations (marked in blue)
+- Elements that display text (marked in red)
+- Elements that display images (marked in blue)
+- Elements that act as a container, grouping other `LayoutElement` implementations (marked in green)
+- Elements that enable interactivity, so called `FormField` objects (marked in yellow) 
 
 You'll explore most of these `LayoutElement` implementations in the coming examples. 
 The deep-dive will take you on a journey through the entire process from `str` to `PDF`.
@@ -604,8 +661,9 @@ One of the things that can really make a document stand out is a custom `Font`. 
 
 You'll start with the same boilerplate code you used last time:
 
-```python 
-from borb.pdf.document import Document
+```python
+#!chapter_002/src/snippet_006.py
+from borb.pdf.document.document import Document
 from borb.pdf.page.page import Page
 from borb.pdf.canvas.layout.page_layout.multi_column_layout import SingleColumnLayout
 from borb.pdf.canvas.layout.page_layout.page_layout import PageLayout
@@ -614,17 +672,26 @@ from borb.pdf.pdf import PDF
 
 
 def main():
+    # create Document
     doc: Document = Document()
+
+    # create Page
     page: Page = Page()
-    doc.append_page(page)    
-    
+
+    # add Page to Document
+    doc.append_page(page)
+
+    # set a PageLayout
     layout: PageLayout = SingleColumnLayout(page)
+
+    # add a Paragraph
     layout.add(Paragraph("Hello World!"))
-    
-    with open("output.pdf", "wb") as out_file_handle:  
-        PDF.dumps(out_file_handle, doc)   
- 
- 
+
+    # store
+    with open("output.pdf", "wb") as pdf_file_handle:
+        PDF.dumps(pdf_file_handle, doc)
+
+
 if __name__ == "__main__":
     main()
 ```
@@ -657,8 +724,9 @@ And 2 fonts used for things like list-symbols and the likes:
 
 Now that you know, you can easily change the (implicit) `Helvetica` for something like `Courier` or `Helvetica-bold`
 
-```python 
-from borb.pdf.document import Document
+```python
+#!chapter_002/src/snippet_007.py
+from borb.pdf.document.document import Document
 from borb.pdf.page.page import Page
 from borb.pdf.canvas.layout.page_layout.multi_column_layout import SingleColumnLayout
 from borb.pdf.canvas.layout.page_layout.page_layout import PageLayout
@@ -667,57 +735,77 @@ from borb.pdf.pdf import PDF
 
 
 def main():
+    # create Document
     doc: Document = Document()
+
+    # create Page
     page: Page = Page()
+
+    # add Page to Document
     doc.append_page(page)
+
+    # set a PageLayout
     layout: PageLayout = SingleColumnLayout(page)
+
+    # add a Paragraph
     layout.add(Paragraph("Hello World!", font="Courier"))
-    with open("output.pdf", "wb") as out_file_handle:  
-        PDF.dumps(out_file_handle, doc)   
- 
- 
+
+    # store
+    with open("output.pdf", "wb") as pdf_file_handle:
+        PDF.dumps(pdf_file_handle, doc)
+
+
 if __name__ == "__main__":
     main()
 ```
 
-![enter image description here](img/borb_in_action_example_002.png)
+![enter image description here](chapter_002/img/snippet_007.png)
 
 Alternatively, you can construct a new `Font` object, based on a TTF file.
 
-```python 
-from pathlib import Path  
-  
-from borb.pdf.document import Document  
-from borb.pdf.page.page import Page  
-from borb.pdf.canvas.layout.page_layout.multi_column_layout import SingleColumnLayout  
-from borb.pdf.canvas.layout.page_layout.page_layout import PageLayout  
-from borb.pdf.canvas.layout.text.paragraph import Paragraph  
-from borb.pdf.pdf import PDF  
-from borb.pdf.canvas.font.simple_font.true_type_font import TrueTypeFont  
-from borb.pdf.canvas.font.font import Font
+```python
+#!chapter_002/src/snippet_008.py
+from borb.pdf.document.document import Document
+from borb.pdf.page.page import Page
+from borb.pdf.canvas.layout.page_layout.multi_column_layout import SingleColumnLayout
+from borb.pdf.canvas.layout.page_layout.page_layout import PageLayout
+from borb.pdf.canvas.layout.text.paragraph import Paragraph
+from borb.pdf.pdf import PDF
+from borb.pdf.canvas.font.simple_font.true_type_font import TrueTypeFont
+
+from pathlib import Path
 
 
 def main():
+    # create Document
     doc: Document = Document()
+
+    # create Page
     page: Page = Page()
+
+    # add Page to Document
     doc.append_page(page)
-    
+
+    # set a PageLayout
     layout: PageLayout = SingleColumnLayout(page)
 
     # construct the Font object
     font_path: Path = Path(__file__).parent / "Jsfont-Regular.ttf"
-    font: Font = TrueTypeFont.true_type_font_from_file(font_path)
+    custom_font: Font = TrueTypeFont.true_type_font_from_file(font_path)
 
-    layout.add(Paragraph("Hello World!", font=font))
-    with open("output.pdf", "wb") as out_file_handle:  
-        PDF.dumps(out_file_handle, doc)   
- 
- 
+    # add a Paragraph
+    layout.add(Paragraph("Hello World!", font=custom_font))
+
+    # store
+    with open("output.pdf", "wb") as pdf_file_handle:
+        PDF.dumps(pdf_file_handle, doc)
+
+
 if __name__ == "__main__":
-    main()    
+    main()
 ```
 
-![enter image description here](img/borb_in_action_example_003.png)
+![enter image description here](chapter_002/img/snippet_008.png)
 
 <div style="page-break-before: always;"></div>
 
@@ -755,33 +843,43 @@ But, enough theory, let's put this into practice.
 
 In this example, you're creating the base Hello World, with a different color than the standard black. You'll be doing so by using the `HexColor` object.
 
-```python 
-from borb.pdf.document import Document  
-from borb.pdf.page.page import Page  
-from borb.pdf.canvas.layout.page_layout.multi_column_layout import SingleColumnLayout  
-from borb.pdf.canvas.layout.page_layout.page_layout import PageLayout  
-from borb.pdf.canvas.layout.text.paragraph import Paragraph  
-from borb.pdf.pdf import PDF  
-from borb.pdf.canvas.color.color import HexColor  
-  
-  
-def main():  
-    doc: Document = Document()  
-    page: Page = Page()  
-    doc.append_page(page)  
-      
-    layout: PageLayout = SingleColumnLayout(page)  
-    layout.add(Paragraph("Hello World!", font_color=HexColor("#86CD82")))  
-  
-    with open("output.pdf", "wb") as out_file_handle:  
-        PDF.dumps(out_file_handle, doc)  
-  
-  
-if __name__ == "__main__":  
+```python
+#!chapter_002/src/snippet_009.py
+from borb.pdf.document.document import Document
+from borb.pdf.page.page import Page
+from borb.pdf.canvas.layout.page_layout.multi_column_layout import SingleColumnLayout
+from borb.pdf.canvas.layout.page_layout.page_layout import PageLayout
+from borb.pdf.canvas.layout.text.paragraph import Paragraph
+from borb.pdf.pdf import PDF
+from borb.pdf.canvas.color.color import HexColor
+
+
+def main():
+    # create Document
+    doc: Document = Document()
+
+    # create Page
+    page: Page = Page()
+
+    # add Page to Document
+    doc.append_page(page)
+
+    # set a PageLayout
+    layout: PageLayout = SingleColumnLayout(page)
+
+    # add a Paragraph
+    layout.add(Paragraph("Hello World!", font_color=HexColor("#86CD82")))
+
+    # store
+    with open("output.pdf", "wb") as pdf_file_handle:
+        PDF.dumps(pdf_file_handle, doc)
+
+
+if __name__ == "__main__":
     main()
 ```
 
-![enter image description here](img/borb_in_action_example_004.png)
+![enter image description here](chapter_002/img/snippet_009.png)
 
 #### 2.4.2.1 Using `HSVColor` to create a rainbow of text
 
@@ -789,43 +887,52 @@ The HSV color model arranges colors on a wheel (rather a cone if you take into a
 
 In the next example, you'll start from the boilerplate Hello World example, and tweak it to generate a `Document` with a rainbow of text.
 
-```python 
-from decimal import Decimal  
-  
-from borb.pdf.canvas.layout.text.paragraph import Paragraph  
-from borb.pdf.document import Document  
-from borb.pdf.page.page import Page  
-from borb.pdf.canvas.layout.page_layout.multi_column_layout import SingleColumnLayout  
-from borb.pdf.canvas.layout.page_layout.page_layout import PageLayout  
-from borb.pdf.pdf import PDF  
-from borb.pdf.canvas.color.color import HSVColor  
-  
-  
-def main():  
-    doc: Document = Document()  
-    page: Page = Page()  
-    doc.append_page(page)  
-  
-    layout: PageLayout = SingleColumnLayout(page)  
-  
-    # the following code generates 20 colors, evenly spaced in the HSV spectrum  
-    colors = [  
-        HSVColor(Decimal(x / 360), Decimal(1), Decimal(1))  
-        for x in range(0, 360, int(360 / 20))  
-    ]  
-  
-    for c in colors:  
-        layout.add(Paragraph("Hello World!", font_color=c))  
-  
-    with open("output.pdf", "wb") as out_file_handle:  
-        PDF.dumps(out_file_handle, doc)  
-  
-  
-if __name__ == "__main__":  
+```python
+#!chapter_002/src/snippet_010.py
+from borb.pdf.document.document import Document
+from borb.pdf.page.page import Page
+from borb.pdf.canvas.layout.page_layout.multi_column_layout import SingleColumnLayout
+from borb.pdf.canvas.layout.page_layout.page_layout import PageLayout
+from borb.pdf.canvas.layout.text.paragraph import Paragraph
+from borb.pdf.pdf import PDF
+from borb.pdf.canvas.color.color import HSVColor
+
+from decimal import Decimal
+
+
+def main():
+    # create Document
+    doc: Document = Document()
+
+    # create Page
+    page: Page = Page()
+
+    # add Page to Document
+    doc.append_page(page)
+
+    # set a PageLayout
+    layout: PageLayout = SingleColumnLayout(page)
+
+    # the following code generates 20 colors, evenly spaced in the HSV spectrum
+    colors = [
+        HSVColor(Decimal(x / 360), Decimal(1), Decimal(1))
+        for x in range(0, 360, int(360 / 20))
+    ]
+
+    # add a Paragraph for each Color
+    for c in colors:
+        layout.add(Paragraph("Hello World!", font_color=c))
+
+    # store
+    with open("output.pdf", "wb") as pdf_file_handle:
+        PDF.dumps(pdf_file_handle, doc)
+
+
+if __name__ == "__main__":
     main()
 ```
 
-![enter image description here](img/borb_in_action_example_005.png)
+![enter image description here](chapter_002/img/snippet_010.png)
 
 #### 2.4.2.2 Using `X11Color` to specify color in a more human-legible way
 
@@ -855,33 +962,43 @@ COLOR_DEFINITION = {
 
 In the next example you'll change the Hello World example to use an `X11Color`
 
-```python 
-from borb.pdf.document import Document  
-from borb.pdf.page.page import Page  
-from borb.pdf.canvas.layout.page_layout.multi_column_layout import SingleColumnLayout  
-from borb.pdf.canvas.layout.page_layout.page_layout import PageLayout  
-from borb.pdf.canvas.layout.text.paragraph import Paragraph  
-from borb.pdf.pdf import PDF  
-from borb.pdf.canvas.color.color import X11Color  
-  
+```python
+#!chapter_002/src/snippet_011.py
+from borb.pdf.document.document import Document
+from borb.pdf.page.page import Page
+from borb.pdf.canvas.layout.page_layout.multi_column_layout import SingleColumnLayout
+from borb.pdf.canvas.layout.page_layout.page_layout import PageLayout
+from borb.pdf.canvas.layout.text.paragraph import Paragraph
+from borb.pdf.pdf import PDF
+from borb.pdf.canvas.color.color import X11Color
 
-def main():  
-    doc: Document = Document()  
-    page: Page = Page()  
-    doc.append_page(page)  
-  
-    layout: PageLayout = SingleColumnLayout(page)  
-    layout.add(Paragraph("Hello World!", font_color=X11Color("SpringGreen")))  
-  
-    with open("output.pdf", "wb") as out_file_handle:  
-        PDF.dumps(out_file_handle, doc)  
-  
-  
-if __name__ == "__main__":  
+
+def main():
+    # create Document
+    doc: Document = Document()
+
+    # create Page
+    page: Page = Page()
+
+    # add Page to Document
+    doc.append_page(page)
+
+    # set a PageLayout
+    layout: PageLayout = SingleColumnLayout(page)
+
+    # add a Paragraph
+    layout.add(Paragraph("Hello World!", font_color=X11Color("SpringGreen")))
+
+    # store
+    with open("output.pdf", "wb") as pdf_file_handle:
+        PDF.dumps(pdf_file_handle, doc)
+
+
+if __name__ == "__main__":
     main()
 ```
 
-![enter image description here](img/borb_in_action_example_006.png)
+![enter image description here](chapter_002/img/snippet_011.png)
 
 #### 2.4.2.3 Using `Pantone` to specify color in a more human-legible way
 
@@ -893,33 +1010,43 @@ The (one) advantage of using `Pantone` however is that you get a human-legible n
 
 In the next example you'll create the boilerplate Hello World example, using a `Pantone`.
 
-```python 
-from borb.pdf.canvas.color.pantone import Pantone  
-from borb.pdf.canvas.layout.text.paragraph import Paragraph  
-from borb.pdf.document import Document  
-from borb.pdf.page.page import Page  
-from borb.pdf.canvas.layout.page_layout.multi_column_layout import SingleColumnLayout  
-from borb.pdf.canvas.layout.page_layout.page_layout import PageLayout  
-from borb.pdf.pdf import PDF  
-  
-  
-def main():  
-    doc: Document = Document()  
-    page: Page = Page()  
-    doc.append_page(page)  
-  
-    layout: PageLayout = SingleColumnLayout(page)  
-    layout.add(Paragraph("Hello World!", font_color=Pantone("agate-green")))  
-  
-    with open("output.pdf", "wb") as out_file_handle:  
-        PDF.dumps(out_file_handle, doc)  
-  
-  
-if __name__ == "__main__":  
+```python
+#!chapter_002/src/snippet_012.py
+from borb.pdf.document.document import Document
+from borb.pdf.page.page import Page
+from borb.pdf.canvas.layout.page_layout.multi_column_layout import SingleColumnLayout
+from borb.pdf.canvas.layout.page_layout.page_layout import PageLayout
+from borb.pdf.canvas.layout.text.paragraph import Paragraph
+from borb.pdf.pdf import PDF
+from borb.pdf.canvas.color.pantone import Pantone
+
+
+def main():
+    # create Document
+    doc: Document = Document()
+
+    # create Page
+    page: Page = Page()
+
+    # add Page to Document
+    doc.append_page(page)
+
+    # set a PageLayout
+    layout: PageLayout = SingleColumnLayout(page)
+
+    # add a Paragraph
+    layout.add(Paragraph("Hello World!", font_color=Pantone("agate-green")))
+
+    # store
+    with open("output.pdf", "wb") as pdf_file_handle:
+        PDF.dumps(pdf_file_handle, doc)
+
+
+if __name__ == "__main__":
     main()
 ```
 
-![enter image description here](img/borb_in_action_example_007.png)
+![enter image description here](chapter_002/img/snippet_012.png)
 
 If you wanted to, you could also turn any other `Color` object into its (closest matching) `Pantone` color by using the `find_nearest_pantone` method in the `Pantone` class.
 
@@ -941,7 +1068,7 @@ These examples are quick and fun ways to explore the `Color` API.
 
 ##### 2.4.2.4.1 Generating a triad `Color` scheme
 
-![enter image description here](img/borb_in_action_example_008_001.gif)
+![enter image description here](chapter_002/img/triadic_color_scheme.gif)
 
 A triadic color scheme uses colors that are evenly spaced around the color wheel.
 
@@ -950,40 +1077,50 @@ Triadic color harmonies tend to be quite vibrant, even if you use pale or unsatu
 To use a triadic harmony successfully, the colors should be carefully balanced - let one color dominate and use the two others for accent.
 
 ```python
-from decimal import Decimal
-
-import typing
-from borb.pdf.canvas.color.color import HSVColor, HexColor, Color
-from borb.pdf.canvas.color.pantone import Pantone
-from borb.pdf.canvas.geometry.rectangle import Rectangle
-from borb.pdf.canvas.layout.shape.shape import Shape
+#!chapter_002/src/snippet_013.py
+from borb.pdf.document.document import Document
+from borb.pdf.page.page import Page
 from borb.pdf.canvas.layout.page_layout.multi_column_layout import SingleColumnLayout
 from borb.pdf.canvas.layout.page_layout.page_layout import PageLayout
-from borb.pdf.canvas.layout.table.fixed_column_width_table import FixedColumnWidthTable
 from borb.pdf.canvas.layout.text.paragraph import Paragraph
-from borb.pdf.canvas.line_art.line_art_factory import LineArtFactory
-from borb.pdf.document import Document
-from borb.pdf.page.page import Page
 from borb.pdf.pdf import PDF
+from borb.pdf.canvas.color.color import HSVColor, HexColor
+from borb.pdf.canvas.color.pantone import Pantone
+from borb.pdf.canvas.layout.table.fixed_column_width_table import FixedColumnWidthTable
+from borb.pdf.canvas.layout.shape.shape import Shape
+from borb.pdf.canvas.line_art.line_art_factory import LineArtFactory
+from borb.pdf.canvas.geometry.rectangle import Rectangle
+
+from decimal import Decimal
 
 
-def generate_triad_color_scheme() -> None:
-    
-    d: Document = Document()
+def main():
+    # create Document
+    doc: Document = Document()
 
-    p: Page = Page()
-    d.append_page(p)
+    # create Page
+    page: Page = Page()
 
-    l: PageLayout = SingleColumnLayout(p)
+    # add Page to Document
+    doc.append_page(page)
 
+    # set a PageLayout
+    layout: PageLayout = SingleColumnLayout(page)
+
+    # generate triadic color scheme
     cs: typing.List[Color] = HSVColor.triadic(HexColor("f1cd2e"))
 
+    # generate FixedColumnWidthTable
     t: FixedColumnWidthTable = FixedColumnWidthTable(
         number_of_rows=4, number_of_columns=3, margin_top=Decimal(12)
     )
+
+    # add table heading
     t.add(Paragraph("Color Sample", font="Helvetica-Bold"))
     t.add(Paragraph("Hex code", font="Helvetica-Bold"))
     t.add(Paragraph("Nearest Pantone", font="Helvetica-Bold"))
+
+    # add row for each color
     for c in cs:
         t.add(
             Shape(
@@ -996,19 +1133,27 @@ def generate_triad_color_scheme() -> None:
         )
         t.add(Paragraph(c.to_rgb().to_hex_string()))
         t.add(Paragraph(Pantone.find_nearest_pantone_color(c).get_name()))
-    t.set_padding_on_all_cells(Decimal(5), Decimal(5), Decimal(5), Decimal(5))
-    l.add(t)
 
-    # write
+    # set properties on all table cells
+    t.set_padding_on_all_cells(Decimal(5), Decimal(5), Decimal(5), Decimal(5))
+
+    # add FixedColumnWidthTable to PageLayout
+    layout.add(t)
+
+    # store
     with open("output.pdf", "wb") as pdf_file_handle:
-        PDF.dumps(pdf_file_handle, d)
+        PDF.dumps(pdf_file_handle, doc)
+
+
+if __name__ == "__main__":
+    main()
 ```
 
-![enter image description here](img/borb_in_action_example_008_001.png)
+![enter image description here](chapter_002/img/snippet_013.png)
 
 ##### 2.4.2.4.2 Generating a split complementary `Color` scheme
 
-![enter image description here](img/borb_in_action_example_008_002.gif)
+![enter image description here](chapter_002/img/split_complementary_color_scheme.gif)
 
 The split-complementary color scheme is a variation of the complementary color scheme. In addition to the base color, it uses the two colors adjacent to its complement.
 
@@ -1017,40 +1162,50 @@ This color scheme has the same strong visual contrast as the complementary color
 The split-complimentary color scheme is often a good choice for beginners, because it is difficult to mess up.
 
 ```python
-from decimal import Decimal
-
-import typing
-from borb.pdf.canvas.color.color import HSVColor, HexColor, Color
-from borb.pdf.canvas.color.pantone import Pantone
-from borb.pdf.canvas.geometry.rectangle import Rectangle
-from borb.pdf.canvas.layout.shape.shape import Shape
+#!chapter_002/src/snippet_014.py
+from borb.pdf.document.document import Document
+from borb.pdf.page.page import Page
 from borb.pdf.canvas.layout.page_layout.multi_column_layout import SingleColumnLayout
 from borb.pdf.canvas.layout.page_layout.page_layout import PageLayout
-from borb.pdf.canvas.layout.table.fixed_column_width_table import FixedColumnWidthTable
 from borb.pdf.canvas.layout.text.paragraph import Paragraph
-from borb.pdf.canvas.line_art.line_art_factory import LineArtFactory
-from borb.pdf.document import Document
-from borb.pdf.page.page import Page
 from borb.pdf.pdf import PDF
+from borb.pdf.canvas.color.color import HSVColor, HexColor
+from borb.pdf.canvas.color.pantone import Pantone
+from borb.pdf.canvas.layout.table.fixed_column_width_table import FixedColumnWidthTable
+from borb.pdf.canvas.layout.shape.shape import Shape
+from borb.pdf.canvas.line_art.line_art_factory import LineArtFactory
+from borb.pdf.canvas.geometry.rectangle import Rectangle
+
+from decimal import Decimal
 
 
-def generate_split_complementary_color_scheme() -> None:
-    
-    d: Document = Document()
+def main():
+    # create Document
+    doc: Document = Document()
 
-    p: Page = Page()
-    d.append_page(p)
+    # create Page
+    page: Page = Page()
 
-    l: PageLayout = SingleColumnLayout(p)
+    # add Page to Document
+    doc.append_page(page)
 
+    # set a PageLayout
+    layout: PageLayout = SingleColumnLayout(page)
+
+    # generate split complementary color scheme
     cs: typing.List[Color] = HSVColor.split_complementary(HexColor("f1cd2e"))
 
+    # generate FixedColumnWidthTable
     t: FixedColumnWidthTable = FixedColumnWidthTable(
         number_of_rows=4, number_of_columns=3, margin_top=Decimal(12)
     )
+
+    # add table heading
     t.add(Paragraph("Color Sample", font="Helvetica-Bold"))
     t.add(Paragraph("Hex code", font="Helvetica-Bold"))
     t.add(Paragraph("Nearest Pantone", font="Helvetica-Bold"))
+
+    # add row for each color
     for c in cs:
         t.add(
             Shape(
@@ -1063,19 +1218,27 @@ def generate_split_complementary_color_scheme() -> None:
         )
         t.add(Paragraph(c.to_rgb().to_hex_string()))
         t.add(Paragraph(Pantone.find_nearest_pantone_color(c).get_name()))
-    t.set_padding_on_all_cells(Decimal(5), Decimal(5), Decimal(5), Decimal(5))
-    l.add(t)
 
-    # write
+    # set properties on all table cells
+    t.set_padding_on_all_cells(Decimal(5), Decimal(5), Decimal(5), Decimal(5))
+
+    # add FixedColumnWidthTable to PageLayout
+    layout.add(t)
+
+    # store
     with open("output.pdf", "wb") as pdf_file_handle:
-        PDF.dumps(pdf_file_handle, d)
+        PDF.dumps(pdf_file_handle, doc)
+
+
+if __name__ == "__main__":
+    main()
 ```
 
-![enter image description here](img/borb_in_action_example_008_002.png)
+![enter image description here](chapter_002/img/snippet_014.png)
 
 ##### 2.4.2.4.3 Generating an analogous `Color` scheme
 
-![enter image description here](img/borb_in_action_example_008_003.gif)
+![enter image description here](chapter_002/img/analogous_color_scheme.gif)
 
 Analogous color schemes use colors that are next to each other on the color wheel. They usually match well and create serene and comfortable designs.
 
@@ -1086,40 +1249,50 @@ Make sure you have enough contrast when choosing an analogous color scheme.
 Choose one color to dominate, a second to support. The third color is used (along with black, white or gray) as an accent.
 
 ```python
-from decimal import Decimal
-
-import typing
-from borb.pdf.canvas.color.color import HSVColor, HexColor, Color
-from borb.pdf.canvas.color.pantone import Pantone
-from borb.pdf.canvas.geometry.rectangle import Rectangle
-from borb.pdf.canvas.layout.shape.shape import Shape
+#!chapter_002/src/snippet_015.py
+from borb.pdf.document.document import Document
+from borb.pdf.page.page import Page
 from borb.pdf.canvas.layout.page_layout.multi_column_layout import SingleColumnLayout
 from borb.pdf.canvas.layout.page_layout.page_layout import PageLayout
-from borb.pdf.canvas.layout.table.fixed_column_width_table import FixedColumnWidthTable
 from borb.pdf.canvas.layout.text.paragraph import Paragraph
-from borb.pdf.canvas.line_art.line_art_factory import LineArtFactory
-from borb.pdf.document import Document
-from borb.pdf.page.page import Page
 from borb.pdf.pdf import PDF
+from borb.pdf.canvas.color.color import HSVColor, HexColor
+from borb.pdf.canvas.color.pantone import Pantone
+from borb.pdf.canvas.layout.table.fixed_column_width_table import FixedColumnWidthTable
+from borb.pdf.canvas.layout.shape.shape import Shape
+from borb.pdf.canvas.line_art.line_art_factory import LineArtFactory
+from borb.pdf.canvas.geometry.rectangle import Rectangle
+
+from decimal import Decimal
 
 
-def generate_analogous_color_scheme() -> None:
-    
-    d: Document = Document()
+def main():
+    # create Document
+    doc: Document = Document()
 
-    p: Page = Page()
-    d.append_page(p)
+    # create Page
+    page: Page = Page()
 
-    l: PageLayout = SingleColumnLayout(p)
+    # add Page to Document
+    doc.append_page(page)
 
+    # set a PageLayout
+    layout: PageLayout = SingleColumnLayout(page)
+
+    # generate analogous color scheme
     cs: typing.List[Color] = HSVColor.analogous(HexColor("f1cd2e"))
 
+    # generate FixedColumnWidthTable
     t: FixedColumnWidthTable = FixedColumnWidthTable(
         number_of_rows=4, number_of_columns=3, margin_top=Decimal(12)
     )
+
+    # add table heading
     t.add(Paragraph("Color Sample", font="Helvetica-Bold"))
     t.add(Paragraph("Hex code", font="Helvetica-Bold"))
     t.add(Paragraph("Nearest Pantone", font="Helvetica-Bold"))
+
+    # add row for each color
     for c in cs:
         t.add(
             Shape(
@@ -1132,19 +1305,27 @@ def generate_analogous_color_scheme() -> None:
         )
         t.add(Paragraph(c.to_rgb().to_hex_string()))
         t.add(Paragraph(Pantone.find_nearest_pantone_color(c).get_name()))
-    t.set_padding_on_all_cells(Decimal(5), Decimal(5), Decimal(5), Decimal(5))
-    l.add(t)
 
-    # write
+    # set properties on all table cells
+    t.set_padding_on_all_cells(Decimal(5), Decimal(5), Decimal(5), Decimal(5))
+
+    # add FixedColumnWidthTable to PageLayout
+    layout.add(t)
+
+    # store
     with open("output.pdf", "wb") as pdf_file_handle:
-        PDF.dumps(pdf_file_handle, d)
+        PDF.dumps(pdf_file_handle, doc)
+
+
+if __name__ == "__main__":
+    main()
 ```
 
-![enter image description here](img/borb_in_action_example_008_003.png)
+![enter image description here](chapter_002/img/snippet_015.png)
 
 ##### 2.4.2.4.4 Generating a tetradic square `Color` scheme
 
-![enter image description here](img/borb_in_action_example_008_004.gif)
+![enter image description here](chapter_002/img/tetradic_square_color_scheme.gif)
 
 The square color scheme is similar to the rectangle, but with all four colors spaced evenly around the color circle.
 
@@ -1153,40 +1334,50 @@ The square color scheme works best if you let one color be dominant.
 You should also pay attention to the balance between warm and cool colors in your design.
 
 ```python
-from decimal import Decimal
-
-import typing
-from borb.pdf.canvas.color.color import HSVColor, HexColor, Color
-from borb.pdf.canvas.color.pantone import Pantone
-from borb.pdf.canvas.geometry.rectangle import Rectangle
-from borb.pdf.canvas.layout.shape.shape import Shape
+#!chapter_002/src/snippet_016.py
+from borb.pdf.document.document import Document
+from borb.pdf.page.page import Page
 from borb.pdf.canvas.layout.page_layout.multi_column_layout import SingleColumnLayout
 from borb.pdf.canvas.layout.page_layout.page_layout import PageLayout
-from borb.pdf.canvas.layout.table.fixed_column_width_table import FixedColumnWidthTable
 from borb.pdf.canvas.layout.text.paragraph import Paragraph
-from borb.pdf.canvas.line_art.line_art_factory import LineArtFactory
-from borb.pdf.document import Document
-from borb.pdf.page.page import Page
 from borb.pdf.pdf import PDF
+from borb.pdf.canvas.color.color import HSVColor, HexColor
+from borb.pdf.canvas.color.pantone import Pantone
+from borb.pdf.canvas.layout.table.fixed_column_width_table import FixedColumnWidthTable
+from borb.pdf.canvas.layout.shape.shape import Shape
+from borb.pdf.canvas.line_art.line_art_factory import LineArtFactory
+from borb.pdf.canvas.geometry.rectangle import Rectangle
+
+from decimal import Decimal
 
 
-def generate_tetradic_square_color_scheme() -> None:
-    
-    d: Document = Document()
+def main():
+    # create Document
+    doc: Document = Document()
 
-    p: Page = Page()
-    d.append_page(p)
+    # create Page
+    page: Page = Page()
 
-    l: PageLayout = SingleColumnLayout(p)
+    # add Page to Document
+    doc.append_page(page)
 
+    # set a PageLayout
+    layout: PageLayout = SingleColumnLayout(page)
+
+    # generate tetradic square color scheme
     cs: typing.List[Color] = HSVColor.tetradic_square(HexColor("f1cd2e"))
 
+    # generate FixedColumnWidthTable
     t: FixedColumnWidthTable = FixedColumnWidthTable(
         number_of_rows=5, number_of_columns=3, margin_top=Decimal(12)
     )
+
+    # add table heading
     t.add(Paragraph("Color Sample", font="Helvetica-Bold"))
     t.add(Paragraph("Hex code", font="Helvetica-Bold"))
     t.add(Paragraph("Nearest Pantone", font="Helvetica-Bold"))
+
+    # add row for each color
     for c in cs:
         t.add(
             Shape(
@@ -1199,19 +1390,27 @@ def generate_tetradic_square_color_scheme() -> None:
         )
         t.add(Paragraph(c.to_rgb().to_hex_string()))
         t.add(Paragraph(Pantone.find_nearest_pantone_color(c).get_name()))
-    t.set_padding_on_all_cells(Decimal(5), Decimal(5), Decimal(5), Decimal(5))
-    l.add(t)
 
-    # write
+    # set properties on all table cells
+    t.set_padding_on_all_cells(Decimal(5), Decimal(5), Decimal(5), Decimal(5))
+
+    # add FixedColumnWidthTable to PageLayout
+    layout.add(t)
+
+    # store
     with open("output.pdf", "wb") as pdf_file_handle:
-        PDF.dumps(pdf_file_handle, d)
+        PDF.dumps(pdf_file_handle, doc)
+
+
+if __name__ == "__main__":
+    main()
 ```
 
-![enter image description here](img/borb_in_action_example_008_004.png)
+![enter image description here](chapter_002/img/snippet_016.png)
 
 ##### 2.4.2.4.5 Generating a tetradic rectangular `Color` scheme
 
-![enter image description here](img/borb_in_action_example_008_005.gif)
+![enter image description here](chapter_002/img/tetradic_rectangular_color_scheme.gif)
 
 The rectangle or tetradic color scheme uses four colors arranged into two complementary pairs.
 
@@ -1222,40 +1421,50 @@ The tetradic color scheme works best if you let one color be dominant.
 You should also pay attention to the balance between warm and cool colors in your design.
 
 ```python
-from decimal import Decimal
-
-import typing
-from borb.pdf.canvas.color.color import HSVColor, HexColor, Color
-from borb.pdf.canvas.color.pantone import Pantone
-from borb.pdf.canvas.geometry.rectangle import Rectangle
-from borb.pdf.canvas.layout.shape.shape import Shape
+#!chapter_002/src/snippet_017.py
+from borb.pdf.document.document import Document
+from borb.pdf.page.page import Page
 from borb.pdf.canvas.layout.page_layout.multi_column_layout import SingleColumnLayout
 from borb.pdf.canvas.layout.page_layout.page_layout import PageLayout
-from borb.pdf.canvas.layout.table.fixed_column_width_table import FixedColumnWidthTable
 from borb.pdf.canvas.layout.text.paragraph import Paragraph
-from borb.pdf.canvas.line_art.line_art_factory import LineArtFactory
-from borb.pdf.document import Document
-from borb.pdf.page.page import Page
 from borb.pdf.pdf import PDF
+from borb.pdf.canvas.color.color import HSVColor, HexColor
+from borb.pdf.canvas.color.pantone import Pantone
+from borb.pdf.canvas.layout.table.fixed_column_width_table import FixedColumnWidthTable
+from borb.pdf.canvas.layout.shape.shape import Shape
+from borb.pdf.canvas.line_art.line_art_factory import LineArtFactory
+from borb.pdf.canvas.geometry.rectangle import Rectangle
+
+from decimal import Decimal
 
 
-def generate_tetradic_rectangle_color_scheme() -> None:
-    
-    d: Document = Document()
+def main():
+    # create Document
+    doc: Document = Document()
 
-    p: Page = Page()
-    d.append_page(p)
+    # create Page
+    page: Page = Page()
 
-    l: PageLayout = SingleColumnLayout(p)
+    # add Page to Document
+    doc.append_page(page)
 
+    # set a PageLayout
+    layout: PageLayout = SingleColumnLayout(page)
+
+    # generate tetradic rectangle scheme
     cs: typing.List[Color] = HSVColor.tetradic_rectangle(HexColor("f1cd2e"))
 
+    # generate FixedColumnWidthTable
     t: FixedColumnWidthTable = FixedColumnWidthTable(
         number_of_rows=5, number_of_columns=3, margin_top=Decimal(12)
     )
+
+    # add table heading
     t.add(Paragraph("Color Sample", font="Helvetica-Bold"))
     t.add(Paragraph("Hex code", font="Helvetica-Bold"))
     t.add(Paragraph("Nearest Pantone", font="Helvetica-Bold"))
+
+    # add row for each color
     for c in cs:
         t.add(
             Shape(
@@ -1268,15 +1477,23 @@ def generate_tetradic_rectangle_color_scheme() -> None:
         )
         t.add(Paragraph(c.to_rgb().to_hex_string()))
         t.add(Paragraph(Pantone.find_nearest_pantone_color(c).get_name()))
-    t.set_padding_on_all_cells(Decimal(5), Decimal(5), Decimal(5), Decimal(5))
-    l.add(t)
 
-    # write
+    # set properties on all table cells
+    t.set_padding_on_all_cells(Decimal(5), Decimal(5), Decimal(5), Decimal(5))
+
+    # add FixedColumnWidthTable to PageLayout
+    layout.add(t)
+
+    # store
     with open("output.pdf", "wb") as pdf_file_handle:
-        PDF.dumps(pdf_file_handle, d)
+        PDF.dumps(pdf_file_handle, doc)
+
+
+if __name__ == "__main__":
+    main()
 ```
 
-![enter image description here](img/borb_in_action_example_008_005.png)
+![enter image description here](chapter_002/img/snippet_017.png)
 
 #### 2.4.2.5 Implementation details
 
@@ -1305,39 +1522,50 @@ In order to get a better idea of the influence of these parameters, you'll be do
 
 You'll be adding content at an exact location, and specifying the bounding box. By doing so, you'll get a better understanding of how the alignment influences the position of the Paragraph inside the bounding box.
 
-```python 
-from decimal import Decimal  
-  
-from borb.pdf.canvas.geometry.rectangle import Rectangle  
-from borb.pdf.canvas.layout.text.paragraph import Paragraph  
-from borb.pdf.document import Document  
-from borb.pdf.page.page import Page  
-from borb.pdf.pdf import PDF  
-  
-  
-def main():  
-    doc: Document = Document()  
-    page: Page = Page()  
-    doc.append_page(page)  
-      
-    p: Paragraph = Paragraph("Hello World!")  
-  
-    # the next line of code uses absolute positioning  
-    r: Rectangle = Rectangle(Decimal(59),               # x: 0 + page_margin  
-                             Decimal(848 - 84 - 100),   # y: page_height - page_margin - height_of_textbox  
-                             Decimal(595 - 59 * 2),     # width: page_width - 2 * page_margin  
-                             Decimal(100))              # height  
-    p.layout(page, r)  
-  
-    with open("output.pdf", "wb") as out_file_handle:  
-        PDF.dumps(out_file_handle, doc)  
-  
-  
-if __name__ == "__main__":  
+```python
+#!chapter_002/src/snippet_018.py
+from borb.pdf.document.document import Document
+from borb.pdf.page.page import Page
+from borb.pdf.canvas.layout.text.paragraph import Paragraph
+from borb.pdf.pdf import PDF
+from borb.pdf.canvas.geometry.rectangle import Rectangle
+
+from decimal import Decimal
+
+
+def main():
+    # create Document
+    doc: Document = Document()
+
+    # create Page
+    page: Page = Page()
+
+    # add Page to Document
+    doc.append_page(page)
+
+    # define layout rectangle
+    # fmt: off
+    r: Rectangle = Rectangle(
+        Decimal(59),                # x: 0 + page_margin
+        Decimal(848 - 84 - 100),    # y: page_height - page_margin - height_of_textbox
+        Decimal(595 - 59 * 2),      # width: page_width - 2 * page_margin
+        Decimal(100),               # height
+    )
+    # fmt: on
+
+    # the next line of code uses absolute positioning
+    Paragraph("Hello World!").layout(page, r)
+
+    # store
+    with open("output.pdf", "wb") as pdf_file_handle:
+        PDF.dumps(pdf_file_handle, doc)
+
+
+if __name__ == "__main__":
     main()
 ```
 
-![enter image description here](img/borb_in_action_example_009.png)
+![enter image description here](chapter_002/img/snippet_018.png)
 
 Important to notice here is the PDF coordinate system. `borb` expects these positions in user-space units, and as Decimal objects.
 
@@ -1349,132 +1577,165 @@ For the next example, you'll be setting the horizontal_alignment parameter to it
 
 You'll start by trying out `Alignment.LEFT`
 
-```python 
-from decimal import Decimal  
-  
-from borb.pdf.canvas.color.color import X11Color  
-from borb.pdf.canvas.geometry.rectangle import Rectangle  
-from borb.pdf.canvas.layout.layout_element import Alignment  
-from borb.pdf.canvas.layout.text.paragraph import Paragraph  
-from borb.pdf.document import Document  
-from borb.pdf.page.page import Page  
-from borb.pdf.pdf import PDF  
-  
-  
-def main():  
-    doc: Document = Document()  
-    page: Page = Page()  
-    doc.append_page(page)  
-  
-    p: Paragraph = Paragraph("Hello World!", horizontal_alignment=Alignment.LEFT)  
-  
-    # the next line of code uses absolute positioning  
-    r: Rectangle = Rectangle(Decimal(59),               # x: 0 + page_margin  
-                             Decimal(848 - 84 - 100),   # y: page_height - page_margin - height_of_textbox  
-                             Decimal(595 - 59 * 2),     # width: page_width - 2 * page_margin  
-                             Decimal(100))              # height  
-  
-    # this is a quick and dirty way to draw a rectangle on the page  
-    page.append_square_annotation(r, stroke_color=X11Color("Red"))  
-  
-    # add the paragraph to the page  
-    p.layout(page, r)  
-  
-    with open("output.pdf", "wb") as out_file_handle:  
-        PDF.dumps(out_file_handle, doc)  
-  
-  
-if __name__ == "__main__":  
+```python
+#!chapter_002/src/snippet_019.py
+from borb.pdf.document.document import Document
+from borb.pdf.page.page import Page
+from borb.pdf.canvas.layout.text.paragraph import Paragraph
+from borb.pdf.pdf import PDF
+from borb.pdf.canvas.geometry.rectangle import Rectangle
+from borb.pdf.canvas.layout.layout_element import Alignment
+from borb.pdf.canvas.layout.annotation.square_annotation import SquareAnnotation
+from borb.pdf.canvas.color.color import HexColor
+
+from decimal import Decimal
+
+
+def main():
+    # create Document
+    doc: Document = Document()
+
+    # create Page
+    page: Page = Page()
+
+    # add Page to Document
+    doc.append_page(page)
+
+    # define layout rectangle
+    # fmt: off
+    r: Rectangle = Rectangle(
+        Decimal(59),                # x: 0 + page_margin
+        Decimal(848 - 84 - 100),    # y: page_height - page_margin - height_of_textbox
+        Decimal(595 - 59 * 2),      # width: page_width - 2 * page_margin
+        Decimal(100),               # height
+    )
+    # fmt: on
+
+    # this is a quick hack to easily get a rectangle on the page
+    # which can be very useful for debugging
+    page.append_annotation(SquareAnnotation(r, stroke_color=HexColor("#ff0000")))
+
+    # the next line of code uses absolute positioning
+    Paragraph("Hello World!", horizontal_alignment=Alignment.LEFT).layout(page, r)
+
+    # store
+    with open("output.pdf", "wb") as pdf_file_handle:
+        PDF.dumps(pdf_file_handle, doc)
+
+
+if __name__ == "__main__":
     main()
 ```
 
-![enter image description here](img/borb_in_action_example_010.png)
+![enter image description here](chapter_002/img/snippet_019.png)
 
 Now you can try `Alignment.CENTERED`
 
-```python 
-from decimal import Decimal  
-  
-from borb.pdf.canvas.color.color import X11Color  
-from borb.pdf.canvas.geometry.rectangle import Rectangle  
-from borb.pdf.canvas.layout.layout_element import Alignment  
-from borb.pdf.canvas.layout.text.paragraph import Paragraph  
-from borb.pdf.document import Document  
-from borb.pdf.page.page import Page  
-from borb.pdf.pdf import PDF  
-  
-  
-def main():  
-    doc: Document = Document()  
-    page: Page = Page()  
-    doc.append_page(page)  
-  
-    p: Paragraph = Paragraph("Hello World!", horizontal_alignment=Alignment.CENTERED)  
-  
-    # the next line of code uses absolute positioning  
-    r: Rectangle = Rectangle(Decimal(59),               # x: 0 + page_margin  
-                             Decimal(848 - 84 - 100),   # y: page_height - page_margin - height_of_textbox  
-                             Decimal(595 - 59 * 2),     # width: page_width - 2 * page_margin  
-                             Decimal(100))              # height  
-  
-    # this is a quick and dirty way to draw a rectangle on the page  
-    page.append_square_annotation(r, stroke_color=X11Color("Red"))  
-  
-    # add the paragraph to the page  
-    p.layout(page, r)  
-  
-    with open("output.pdf", "wb") as out_file_handle:  
-        PDF.dumps(out_file_handle, doc)  
-  
+```python
+#!chapter_002/src/snippet_020.py
+from borb.pdf.document.document import Document
+from borb.pdf.page.page import Page
+from borb.pdf.canvas.layout.text.paragraph import Paragraph
+from borb.pdf.pdf import PDF
+from borb.pdf.canvas.geometry.rectangle import Rectangle
+from borb.pdf.canvas.layout.layout_element import Alignment
+from borb.pdf.canvas.layout.annotation.square_annotation import SquareAnnotation
+from borb.pdf.canvas.color.color import HexColor
 
-if __name__ == "__main__":  
+from decimal import Decimal
+
+
+def main():
+    # create Document
+    doc: Document = Document()
+
+    # create Page
+    page: Page = Page()
+
+    # add Page to Document
+    doc.append_page(page)
+
+    # define layout rectangle
+    # fmt: off
+    r: Rectangle = Rectangle(
+        Decimal(59),                # x: 0 + page_margin
+        Decimal(848 - 84 - 100),    # y: page_height - page_margin - height_of_textbox
+        Decimal(595 - 59 * 2),      # width: page_width - 2 * page_margin
+        Decimal(100),               # height
+    )
+    # fmt: on
+
+    # this is a quick hack to easily get a rectangle on the page
+    # which can be very useful for debugging
+    page.append_annotation(SquareAnnotation(r, stroke_color=HexColor("#ff0000")))
+
+    # the next line of code uses absolute positioning
+    Paragraph("Hello World!", horizontal_alignment=Alignment.CENTERED).layout(page, r)
+
+    # store
+    with open("output.pdf", "wb") as pdf_file_handle:
+        PDF.dumps(pdf_file_handle, doc)
+
+
+if __name__ == "__main__":
     main()
 ```
 
-![enter image description here](img/borb_in_action_example_011.png)
+![enter image description here](chapter_002/img/snippet_020.png)
 
 and finally `Alignment.RIGHT`
 
-```python 
-from decimal import Decimal  
-  
-from borb.pdf.canvas.color.color import X11Color  
-from borb.pdf.canvas.geometry.rectangle import Rectangle  
-from borb.pdf.canvas.layout.layout_element import Alignment  
-from borb.pdf.canvas.layout.text.paragraph import Paragraph  
-from borb.pdf.document import Document  
-from borb.pdf.page.page import Page  
-from borb.pdf.pdf import PDF  
-  
-  
-def main():  
-    doc: Document = Document()  
-    page: Page = Page()  
-    doc.append_page(page)  
-  
-    p: Paragraph = Paragraph("Hello World!", horizontal_alignment=Alignment.RIGHT)  
-  
-    # the next line of code uses absolute positioning  
-    r: Rectangle = Rectangle(Decimal(59),               # x: 0 + page_margin  
-                             Decimal(848 - 84 - 100),   # y: page_height - page_margin - height_of_textbox  
-                             Decimal(595 - 59 * 2),     # width: page_width - 2 * page_margin  
-                             Decimal(100))              # height  
-  
-    # this is a quick and dirty way to draw a rectangle on the page  
-    page.append_square_annotation(r, stroke_color=X11Color("Red"))  
-  
-    # add the paragraph to the page  
-    p.layout(page, r)  
-  
-    with open("output.pdf", "wb") as out_file_handle:  
-        PDF.dumps(out_file_handle, doc)  
-  
+```python
+#!chapter_002/src/snippet_021.py
+from borb.pdf.document.document import Document
+from borb.pdf.page.page import Page
+from borb.pdf.canvas.layout.text.paragraph import Paragraph
+from borb.pdf.pdf import PDF
+from borb.pdf.canvas.geometry.rectangle import Rectangle
+from borb.pdf.canvas.layout.layout_element import Alignment
+from borb.pdf.canvas.layout.annotation.square_annotation import SquareAnnotation
+from borb.pdf.canvas.color.color import HexColor
 
-if __name__ == "__main__":  
+from decimal import Decimal
+
+
+def main():
+    # create Document
+    doc: Document = Document()
+
+    # create Page
+    page: Page = Page()
+
+    # add Page to Document
+    doc.append_page(page)
+
+    # define layout rectangle
+    # fmt: off
+    r: Rectangle = Rectangle(
+        Decimal(59),                # x: 0 + page_margin
+        Decimal(848 - 84 - 100),    # y: page_height - page_margin - height_of_textbox
+        Decimal(595 - 59 * 2),      # width: page_width - 2 * page_margin
+        Decimal(100),               # height
+    )
+    # fmt: on
+
+    # this is a quick hack to easily get a rectangle on the page
+    # which can be very useful for debugging
+    page.append_annotation(SquareAnnotation(r, stroke_color=HexColor("#ff0000")))
+
+    # the next line of code uses absolute positioning
+    Paragraph("Hello World!", horizontal_alignment=Alignment.RIGHT).layout(page, r)
+
+    # store
+    with open("output.pdf", "wb") as pdf_file_handle:
+        PDF.dumps(pdf_file_handle, doc)
+
+
+if __name__ == "__main__":
     main()
 ```
 
-![enter image description here](img/borb_in_action_example_012.png)
+![enter image description here](chapter_002/img/snippet_021.png)
 
 You'll also try setting the horizontal_alignment to an invalid value, just to see how `borb` reacts.
 
@@ -1486,131 +1747,165 @@ In the next example you'll start by setting the vertical_alignment to `Alignment
 To ensure you can see the difference the various alignment settings make, you'll be adding a red rectangle to the page. 
 This should make it clear where and how the paragraph is being laid out.
 
-```python 
-from decimal import Decimal  
-  
-from borb.pdf.canvas.color.color import X11Color  
-from borb.pdf.canvas.geometry.rectangle import Rectangle  
-from borb.pdf.canvas.layout.layout_element import Alignment  
-from borb.pdf.canvas.layout.text.paragraph import Paragraph  
-from borb.pdf.document import Document  
-from borb.pdf.page.page import Page  
-from borb.pdf.pdf import PDF  
-  
-  
-def main():  
-    doc: Document = Document()  
-    page: Page = Page()  
-    doc.append_page(page)  
-  
-    p: Paragraph = Paragraph("Hello World!", vertical_alignment=Alignment.TOP)  
-  
-    # the next line of code uses absolute positioning  
-    r: Rectangle = Rectangle(Decimal(59),               # x: 0 + page_margin  
-                             Decimal(848 - 84 - 100),   # y: page_height - page_margin - height_of_textbox  
-                             Decimal(595 - 59 * 2),     # width: page_width - 2 * page_margin  
-                             Decimal(100))              # height  
-     # this is a quick and dirty way to draw a rectangle on the page  
-    page.append_square_annotation(r, stroke_color=X11Color("Red"))  
-  
-    # add the paragraph to the page  
-    p.layout(page, r)  
-  
-    with open("output.pdf", "wb") as out_file_handle:  
-        PDF.dumps(out_file_handle, doc)  
-  
-  
-if __name__ == "__main__":  
+```python
+#!chapter_002/src/snippet_022.py
+from borb.pdf.document.document import Document
+from borb.pdf.page.page import Page
+from borb.pdf.canvas.layout.text.paragraph import Paragraph
+from borb.pdf.pdf import PDF
+from borb.pdf.canvas.geometry.rectangle import Rectangle
+from borb.pdf.canvas.layout.layout_element import Alignment
+from borb.pdf.canvas.layout.annotation.square_annotation import SquareAnnotation
+from borb.pdf.canvas.color.color import HexColor
+
+from decimal import Decimal
+
+
+def main():
+    # create Document
+    doc: Document = Document()
+
+    # create Page
+    page: Page = Page()
+
+    # add Page to Document
+    doc.append_page(page)
+
+    # define layout rectangle
+    # fmt: off
+    r: Rectangle = Rectangle(
+        Decimal(59),                # x: 0 + page_margin
+        Decimal(848 - 84 - 100),    # y: page_height - page_margin - height_of_textbox
+        Decimal(595 - 59 * 2),      # width: page_width - 2 * page_margin
+        Decimal(100),               # height
+    )
+    # fmt: on
+
+    # this is a quick hack to easily get a rectangle on the page
+    # which can be very useful for debugging
+    page.append_annotation(SquareAnnotation(r, stroke_color=HexColor("#ff0000")))
+
+    # the next line of code uses absolute positioning
+    Paragraph("Hello World!", vertical_alignment=Alignment.TOP).layout(page, r)
+
+    # store
+    with open("output.pdf", "wb") as pdf_file_handle:
+        PDF.dumps(pdf_file_handle, doc)
+
+
+if __name__ == "__main__":
     main()
 ```
 
-![enter image description here](img/borb_in_action_example_013.png)
+![enter image description here](chapter_002/img/snippet_022.png)
 
 Now you'll try the same for `Alignment.MIDDLE`.
 
 ```python
-from decimal import Decimal  
-  
-from borb.pdf.canvas.color.color import X11Color  
-from borb.pdf.canvas.geometry.rectangle import Rectangle  
-from borb.pdf.canvas.layout.layout_element import Alignment  
-from borb.pdf.canvas.layout.text.paragraph import Paragraph  
-from borb.pdf.document import Document  
-from borb.pdf.page.page import Page  
-from borb.pdf.pdf import PDF  
-  
-  
-def main():  
-    doc: Document = Document()  
-    page: Page = Page()  
-    doc.append_page(page)  
-  
-    p: Paragraph = Paragraph("Hello World!", vertical_alignment=Alignment.MIDDLE)  
-  
-    # the next line of code uses absolute positioning  
-    r: Rectangle = Rectangle(Decimal(59),               # x: 0 + page_margin  
-                             Decimal(848 - 84 - 100),   # y: page_height - page_margin - height_of_textbox  
-                             Decimal(595 - 59 * 2),     # width: page_width - 2 * page_margin  
-                             Decimal(100))              # height  
-  
-    # this is a quick and dirty way to draw a rectangle on the page  
-    page.append_square_annotation(r, stroke_color=X11Color("Red"))  
-  
-    # add the paragraph to the page  
-    p.layout(page, r)  
-    
-    with open("output.pdf", "wb") as out_file_handle:  
-        PDF.dumps(out_file_handle, doc)  
-  
-        
-if __name__ == "__main__":  
+#!chapter_002/src/snippet_023.py
+from borb.pdf.document.document import Document
+from borb.pdf.page.page import Page
+from borb.pdf.canvas.layout.text.paragraph import Paragraph
+from borb.pdf.pdf import PDF
+from borb.pdf.canvas.geometry.rectangle import Rectangle
+from borb.pdf.canvas.layout.layout_element import Alignment
+from borb.pdf.canvas.layout.annotation.square_annotation import SquareAnnotation
+from borb.pdf.canvas.color.color import HexColor
+
+from decimal import Decimal
+
+
+def main():
+    # create Document
+    doc: Document = Document()
+
+    # create Page
+    page: Page = Page()
+
+    # add Page to Document
+    doc.append_page(page)
+
+    # define layout rectangle
+    # fmt: off
+    r: Rectangle = Rectangle(
+        Decimal(59),                # x: 0 + page_margin
+        Decimal(848 - 84 - 100),    # y: page_height - page_margin - height_of_textbox
+        Decimal(595 - 59 * 2),      # width: page_width - 2 * page_margin
+        Decimal(100),               # height
+    )
+    # fmt: on
+
+    # this is a quick hack to easily get a rectangle on the page
+    # which can be very useful for debugging
+    page.append_annotation(SquareAnnotation(r, stroke_color=HexColor("#ff0000")))
+
+    # the next line of code uses absolute positioning
+    Paragraph("Hello World!", vertical_alignment=Alignment.MIDDLE).layout(page, r)
+
+    # store
+    with open("output.pdf", "wb") as pdf_file_handle:
+        PDF.dumps(pdf_file_handle, doc)
+
+
+if __name__ == "__main__":
     main()
 ```
 
-![enter image description here](img/borb_in_action_example_014.png)
+![enter image description here](chapter_002/img/snippet_023.png)
 
 And lastly, you can try setting the alignment to `Alignment.BOTTOM`.
 
-```python 
-from decimal import Decimal  
-  
-from borb.pdf.canvas.color.color import X11Color  
-from borb.pdf.canvas.geometry.rectangle import Rectangle  
-from borb.pdf.canvas.layout.layout_element import Alignment  
-from borb.pdf.canvas.layout.text.paragraph import Paragraph  
-from borb.pdf.document import Document  
-from borb.pdf.page.page import Page  
-from borb.pdf.pdf import PDF  
-  
-  
-def main():  
-    doc: Document = Document()  
-    page: Page = Page()  
-    doc.append_page(page)  
-  
-    p: Paragraph = Paragraph("Hello World!", vertical_alignment=Alignment.BOTTOM)  
-  
-    # the next line of code uses absolute positioning  
-    r: Rectangle = Rectangle(Decimal(59),               # x: 0 + page_margin  
-                             Decimal(848 - 84 - 100),   # y: page_height - page_margin - height_of_textbox  
-                             Decimal(595 - 59 * 2),     # width: page_width - 2 * page_margin  
-                             Decimal(100))              # height  
-  
-    # this is a quick and dirty way to draw a rectangle on the page  
-    page.append_square_annotation(r, stroke_color=X11Color("Red"))  
-  
-    # add the paragraph to the page  
-    p.layout(page, r)  
-  
-    with open("output.pdf", "wb") as out_file_handle:  
-        PDF.dumps(out_file_handle, doc)  
-  
-  
-if __name__ == "__main__":  
+```python
+#!chapter_002/src/snippet_024.py
+from borb.pdf.document.document import Document
+from borb.pdf.page.page import Page
+from borb.pdf.canvas.layout.text.paragraph import Paragraph
+from borb.pdf.pdf import PDF
+from borb.pdf.canvas.geometry.rectangle import Rectangle
+from borb.pdf.canvas.layout.layout_element import Alignment
+from borb.pdf.canvas.layout.annotation.square_annotation import SquareAnnotation
+from borb.pdf.canvas.color.color import HexColor
+
+from decimal import Decimal
+
+
+def main():
+    # create Document
+    doc: Document = Document()
+
+    # create Page
+    page: Page = Page()
+
+    # add Page to Document
+    doc.append_page(page)
+
+    # define layout rectangle
+    # fmt: off
+    r: Rectangle = Rectangle(
+        Decimal(59),                # x: 0 + page_margin
+        Decimal(848 - 84 - 100),    # y: page_height - page_margin - height_of_textbox
+        Decimal(595 - 59 * 2),      # width: page_width - 2 * page_margin
+        Decimal(100),               # height
+    )
+    # fmt: on
+
+    # this is a quick hack to easily get a rectangle on the page
+    # which can be very useful for debugging
+    page.append_annotation(SquareAnnotation(r, stroke_color=HexColor("#ff0000")))
+
+    # the next line of code uses absolute positioning
+    Paragraph("Hello World!", vertical_alignment=Alignment.BOTTOM).layout(page, r)
+
+    # store
+    with open("output.pdf", "wb") as pdf_file_handle:
+        PDF.dumps(pdf_file_handle, doc)
+
+
+if __name__ == "__main__":
     main()
 ```
 
-![enter image description here](img/borb_in_action_example_015.png)
+![enter image description here](chapter_002/img/snippet_024.png)
 
 #### 2.4.3.3 text alignment
 
@@ -1645,49 +1940,66 @@ Enough theory, let's practice!
 In the next example, you'll be creating a `Paragraph` with text_alignment set to `Alignment.JUSTIFIED`.
 
 ```python
-from decimal import Decimal  
-  
-from borb.pdf.canvas.color.color import X11Color  
-from borb.pdf.canvas.geometry.rectangle import Rectangle  
-from borb.pdf.canvas.layout.layout_element import Alignment  
-from borb.pdf.canvas.layout.text.paragraph import Paragraph  
-from borb.pdf.document import Document  
-from borb.pdf.page.page import Page  
-from borb.pdf.pdf import PDF  
-  
-  
-def main():  
-    doc: Document = Document()  
-    page: Page = Page()  
-    doc.append_page(page)  
-  
-    p: Paragraph = Paragraph("""  
-                            Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.                            Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.   
-                            Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur.   
-                            Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.  
-                            """, text_alignment=Alignment.JUSTIFIED)  
-  
-    # the next line of code uses absolute positioning  
-    r: Rectangle = Rectangle(Decimal(59),               # x: 0 + page_margin  
-                             Decimal(848 - 84 - 100),   # y: page_height - page_margin - height_of_textbox  
-                             Decimal(595 - 59 * 2),     # width: page_width - 2 * page_margin  
-                             Decimal(100))              # height  
-  
-    # this is a quick and dirty way to draw a rectangle on the page  
-    page.append_square_annotation(r, stroke_color=X11Color("Red"))  
-  
-    # add the paragraph to the page  
-    p.layout(page, r)  
-  
-    with open("output.pdf", "wb") as out_file_handle:  
-        PDF.dumps(out_file_handle, doc)  
-  
-        
-if __name__ == "__main__":  
+#!chapter_002/src/snippet_025.py
+from decimal import Decimal
+
+from borb.pdf.canvas.layout.annotation.square_annotation import SquareAnnotation
+from borb.pdf.canvas.color.color import X11Color
+from borb.pdf.canvas.geometry.rectangle import Rectangle
+from borb.pdf.canvas.layout.layout_element import Alignment
+from borb.pdf.canvas.layout.text.paragraph import Paragraph
+from borb.pdf.document.document import Document
+from borb.pdf.page.page import Page
+from borb.pdf.pdf import PDF
+from borb.pdf.canvas.layout.annotation.square_annotation import SquareAnnotation
+from borb.pdf.canvas.color.color import HexColor
+
+
+def main():
+
+    # create Document
+    doc: Document = Document()
+
+    # create Page
+    page: Page = Page()
+
+    # add Page to Document
+    doc.append_page(page)
+
+    # define layout rectangle
+    # fmt: off
+    r: Rectangle = Rectangle(
+        Decimal(59),  # x: 0 + page_margin
+        Decimal(848 - 84 - 100),  # y: page_height - page_margin - height_of_textbox
+        Decimal(595 - 59 * 2),  # width: page_width - 2 * page_margin
+        Decimal(100),  # height
+    )
+    # fmt: on
+
+    # this is a quick hack to easily get a rectangle on the page
+    # which can be very useful for debugging
+    page.append_annotation(SquareAnnotation(r, stroke_color=HexColor("#ff0000")))
+
+    # add the paragraph to the page
+    Paragraph(
+        """
+        Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. 
+        Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. 
+        Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. 
+        Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
+        """,
+        text_alignment=Alignment.JUSTIFIED,
+    ).layout(page, r)
+
+    with open("output.pdf", "wb") as out_file_handle:
+        PDF.dumps(out_file_handle, doc)
+
+
+if __name__ == "__main__":
     main()
 ```
 
-![enter image description here](img/borb_in_action_example_016.png)
+![enter image description here](chapter_002/img/snippet_025.png)
 
 <div style="page-break-before: always;"></div>
 
@@ -1697,47 +2009,61 @@ It can be useful to set borders on `LayoutElement` objects, for `borb` this is a
 
 In the next example, you'll explore how to set borders on a `Paragraph`;
 
-```python 
-from decimal import Decimal  
-  
-from borb.pdf.canvas.color.color import X11Color  
-from borb.pdf.canvas.geometry.rectangle import Rectangle  
-from borb.pdf.canvas.layout.text.paragraph import Paragraph  
-from borb.pdf.document import Document  
-from borb.pdf.page.page import Page  
-from borb.pdf.pdf import PDF  
-  
-  
-def main():  
-    doc: Document = Document()  
-    page: Page = Page()  
-    doc.append_page(page)  
-  
-    p: Paragraph = Paragraph("Hello World!",  
-                             border_top=True,  
-                             border_right=True,  
-                             border_bottom=True,  
-                             border_color=X11Color("Green"),  
-                             border_width=Decimal(0.1))  
-  
-    # the next line of code uses absolute positioning  
-    r: Rectangle = Rectangle(Decimal(59),               # x: 0 + page_margin  
-                             Decimal(848 - 84 - 100),   # y: page_height - page_margin - height_of_textbox  
-                             Decimal(595 - 59 * 2),     # width: page_width - 2 * page_margin  
-                             Decimal(100))              # height  
-  
-    # add the paragraph to the page  
-    p.layout(page, r)  
-  
-    with open("output.pdf", "wb") as out_file_handle:  
-        PDF.dumps(out_file_handle, doc)  
-  
-  
-if __name__ == "__main__":  
+```python
+#!chapter_002/src/snippet_026.py
+from borb.pdf.document.document import Document
+from borb.pdf.page.page import Page
+from borb.pdf.canvas.layout.text.paragraph import Paragraph
+from borb.pdf.pdf import PDF
+from borb.pdf.canvas.geometry.rectangle import Rectangle
+from borb.pdf.canvas.layout.layout_element import Alignment
+from borb.pdf.canvas.layout.annotation.square_annotation import SquareAnnotation
+from borb.pdf.canvas.color.color import X11Color
+
+from decimal import Decimal
+
+
+def main():
+    # create Document
+    doc: Document = Document()
+
+    # create Page
+    page: Page = Page()
+
+    # add Page to Document
+    doc.append_page(page)
+
+    # define layout rectangle
+    # fmt: off
+    r: Rectangle = Rectangle(
+        Decimal(59),                # x: 0 + page_margin
+        Decimal(848 - 84 - 100),    # y: page_height - page_margin - height_of_textbox
+        Decimal(595 - 59 * 2),      # width: page_width - 2 * page_margin
+        Decimal(100),               # height
+    )
+    # fmt: on
+
+    # the next line of code uses absolute positioning
+    Paragraph(
+        "Hello World!",
+        border_top=True,
+        border_right=True,
+        border_bottom=True,
+        border_left=True,
+        border_color=X11Color("Green"),
+        border_width=Decimal(0.1),
+    ).layout(page, r)
+
+    # store
+    with open("output.pdf", "wb") as pdf_file_handle:
+        PDF.dumps(pdf_file_handle, doc)
+
+
+if __name__ == "__main__":
     main()
 ```
 
-![enter image description here](img/borb_in_action_example_017.png)
+![enter image description here](chapter_002/img/snippet_026.png)
 
 <div style="page-break-before: always;"></div>
 
@@ -1745,67 +2071,84 @@ if __name__ == "__main__":
 
 I always mix up margin and padding. Personally, I find this illustration rather helpful:
 
-![enter image description here](https://blog.hubspot.com/hs-fs/hubfs/Google%20Drive%20Integration/Update%20css%20margin%20vs%20padding-2.png?width=650&name=Update%20css%20margin%20vs%20padding-2.png)
+![enter image description here](chapter_002/img/margin_vs_padding.png)
 
 `borb` allows you to set both `margin` and `padding` on `LayoutElement` instances.
 In the next example you'll be doing just that:
 
-```python 
-from decimal import Decimal  
-  
-from borb.pdf.canvas.color.color import X11Color  
-from borb.pdf.canvas.geometry.rectangle import Rectangle  
-from borb.pdf.canvas.layout.text.paragraph import Paragraph  
-from borb.pdf.document import Document  
-from borb.pdf.page.page import Page  
-from borb.pdf.pdf import PDF  
-  
-  
-def main():  
-    doc: Document = Document()  
-    page: Page = Page()  
-    doc.append_page(page)  
-  
-    m: Decimal = Decimal(5)  
-  
-    p: Paragraph = Paragraph("Hello World!",  
-                             # margin  
-                             margin_top=m,  
-                             margin_left=m,  
-                             margin_bottom=m,  
-                             margin_right=m,  
-                             # padding  
-                             padding_top=m,  
-                             padding_left=m,  
-                             padding_bottom=m,  
-                             padding_right=m,  
-                             # border  
-                             border_top=True,  
-                             border_right=True,  
-                             border_bottom=True,  
-                             border_left=True,  
-                             border_color=X11Color("Green"),  
-                             border_width=Decimal(0.1))  
-  
-    # the next line of code uses absolute positioning  
-    r: Rectangle = Rectangle(Decimal(59),               # x: 0 + page_margin  
-                             Decimal(848 - 84 - 100),   # y: page_height - page_margin - height_of_textbox  
-                             Decimal(595 - 59 * 2),     # width: page_width - 2 * page_margin  
-                             Decimal(100))              # height  
-  
-    # add the paragraph to the page  
-    page.append_square_annotation(r, stroke_color=X11Color("Red"))  
-    p.layout(page, r)  
-  
-    with open("output.pdf", "wb") as out_file_handle:  
-        PDF.dumps(out_file_handle, doc)  
-  
-  
-if __name__ == "__main__":  
+```python
+#!chapter_002/src/snippet_027.py
+from borb.pdf.document.document import Document
+from borb.pdf.page.page import Page
+from borb.pdf.canvas.layout.text.paragraph import Paragraph
+from borb.pdf.pdf import PDF
+from borb.pdf.canvas.geometry.rectangle import Rectangle
+from borb.pdf.canvas.layout.layout_element import Alignment
+from borb.pdf.canvas.layout.annotation.square_annotation import SquareAnnotation
+from borb.pdf.canvas.color.color import X11Color, HexColor
+
+from decimal import Decimal
+
+
+def main():
+    # create Document
+    doc: Document = Document()
+
+    # create Page
+    page: Page = Page()
+
+    # add Page to Document
+    doc.append_page(page)
+
+    # define layout rectangle
+    # fmt: off
+    r: Rectangle = Rectangle(
+        Decimal(59),                # x: 0 + page_margin
+        Decimal(848 - 84 - 100),    # y: page_height - page_margin - height_of_textbox
+        Decimal(595 - 59 * 2),      # width: page_width - 2 * page_margin
+        Decimal(100),               # height
+    )
+    # fmt: on
+
+    # define the margin/padding
+    m: Decimal = Decimal(5)
+
+    # the next line of code uses absolute positioning
+    Paragraph(
+        "Hello World!",
+        # margin
+        margin_top=m,
+        margin_left=m,
+        margin_bottom=m,
+        margin_right=m,
+        # padding
+        padding_top=m,
+        padding_left=m,
+        padding_bottom=m,
+        padding_right=m,
+        # border
+        border_top=True,
+        border_right=True,
+        border_bottom=True,
+        border_left=True,
+        border_color=X11Color("Green"),
+        border_width=Decimal(0.1),
+    ).layout(page, r)
+
+    # this is a quick hack to easily get a rectangle on the page
+    # which can be very useful for debugging
+    page.append_annotation(SquareAnnotation(r, stroke_color=HexColor("#ff0000")))
+
+    # store
+    with open("output.pdf", "wb") as pdf_file_handle:
+        PDF.dumps(pdf_file_handle, doc)
+
+
+if __name__ == "__main__":
     main()
 ```
 
-![enter image description here](img/borb_in_action_example_018.png)
+![enter image description here](chapter_002/img/snippet_027.png)
 
 You will have noticed the final PDF does not seem to have any margin on the `Paragraph` element. This is of course because you explicitly laid out the `Paragraph` manually. `margin` is not considered to be *part of the element*. 
 
@@ -1839,36 +2182,50 @@ There are convenience classes to enable you to easily add:
 
 In the next example, you'll be adding an `Image` to a `Page`, by specifying its URL.
 
-```python 
-from decimal import Decimal  
-  
-from borb.pdf.canvas.layout.image.image import Image  
-from borb.pdf.canvas.layout.page_layout.multi_column_layout import SingleColumnLayout  
-from borb.pdf.canvas.layout.page_layout.page_layout import PageLayout  
-from borb.pdf.document import Document  
-from borb.pdf.page.page import Page  
-from borb.pdf.pdf import PDF  
-  
-  
-def main():  
-    doc: Document = Document()  
-    page: Page = Page()  
-    doc.append_page(page)  
-  
-    layout: PageLayout = SingleColumnLayout(page)  
-    layout.add(Image("https://images.unsplash.com/photo-1625604029887-45f9c2f7cbc9?ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8",  
-                     width=Decimal(128),  
-                     height=Decimal(128)))  
-  
-    with open("output.pdf", "wb") as out_file_handle:  
-        PDF.dumps(out_file_handle, doc)  
-  
-  
-if __name__ == "__main__":  
+```python
+#!chapter_002/src/snippet_028.py
+from borb.pdf.document.document import Document
+from borb.pdf.page.page import Page
+from borb.pdf.canvas.layout.page_layout.multi_column_layout import SingleColumnLayout
+from borb.pdf.canvas.layout.page_layout.page_layout import PageLayout
+from borb.pdf.pdf import PDF
+from borb.pdf.canvas.layout.image.image import Image
+
+from decimal import Decimal
+
+
+def main():
+    # create Document
+    doc: Document = Document()
+
+    # create Page
+    page: Page = Page()
+
+    # add Page to Document
+    doc.append_page(page)
+
+    # set a PageLayout
+    layout: PageLayout = SingleColumnLayout(page)
+
+    # add an Image
+    layout.add(
+        Image(
+            "https://images.unsplash.com/photo-1625604029887-45f9c2f7cbc9?ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8",
+            width=Decimal(128),
+            height=Decimal(128),
+        )
+    )
+
+    # store
+    with open("output.pdf", "wb") as pdf_file_handle:
+        PDF.dumps(pdf_file_handle, doc)
+
+
+if __name__ == "__main__":
     main()
 ```
 
-![enter image description here](img/borb_in_action_example_019.png)
+![enter image description here](chapter_002/img/snippet_028.png)
 
 You'll notice a few things here:
 
@@ -1877,30 +2234,44 @@ You'll notice a few things here:
 
 You can verify that `borb` gives you a nice assert if you try to add something that's too large to a `Page`.
 
-```python 
-from decimal import Decimal  
-  
-from borb.pdf.canvas.layout.image.image import Image  
-from borb.pdf.canvas.layout.page_layout.multi_column_layout import SingleColumnLayout  
-from borb.pdf.canvas.layout.page_layout.page_layout import PageLayout  
-from borb.pdf.document import Document  
-from borb.pdf.page.page import Page  
-from borb.pdf.pdf import PDF  
-  
-  
-def main():  
-    doc: Document = Document()  
-    page: Page = Page()  
-    doc.append_page(page)  
-  
-    layout: PageLayout = SingleColumnLayout(page)  
-    layout.add(Image("https://images.unsplash.com/photo-1625604029887-45f9c2f7cbc9?ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8"))  
-  
-    with open("output.pdf", "wb") as out_file_handle:  
-        PDF.dumps(out_file_handle, doc)  
-  
-  
-if __name__ == "__main__":  
+```python
+#!chapter_002/src/snippet_029.py
+from borb.pdf.document.document import Document
+from borb.pdf.page.page import Page
+from borb.pdf.canvas.layout.page_layout.multi_column_layout import SingleColumnLayout
+from borb.pdf.canvas.layout.page_layout.page_layout import PageLayout
+from borb.pdf.pdf import PDF
+from borb.pdf.canvas.layout.image.image import Image
+
+from decimal import Decimal
+
+
+def main():
+    # create Document
+    doc: Document = Document()
+
+    # create Page
+    page: Page = Page()
+
+    # add Page to Document
+    doc.append_page(page)
+
+    # set a PageLayout
+    layout: PageLayout = SingleColumnLayout(page)
+
+    # add an Image
+    layout.add(
+        Image(
+            "https://images.unsplash.com/photo-1625604029887-45f9c2f7cbc9?ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8"
+        )
+    )
+
+    # store
+    with open("output.pdf", "wb") as pdf_file_handle:
+        PDF.dumps(pdf_file_handle, doc)
+
+
+if __name__ == "__main__":
     main()
 ```
 
@@ -1912,37 +2283,50 @@ AssertionError: Image is too wide to fit inside column / page.
 
 In the next example, you'll insert an `Image` by using its path (on disk).
 
-```python 
-from decimal import Decimal  
-from pathlib import Path  
-  
-from borb.pdf.canvas.layout.image.image import Image  
-from borb.pdf.canvas.layout.page_layout.multi_column_layout import SingleColumnLayout  
-from borb.pdf.canvas.layout.page_layout.page_layout import PageLayout  
-from borb.pdf.document import Document  
-from borb.pdf.page.page import Page  
-from borb.pdf.pdf import PDF  
-  
-  
-def main():  
-    doc: Document = Document()  
-    page: Page = Page()  
-    doc.append_page(page)  
-  
-    layout: PageLayout = SingleColumnLayout(page)  
-    layout.add(Image(Path("my_image.jpg"),  
-                     width=Decimal(128),  
-                     height=Decimal(128)))  
-  
-    with open("output.pdf", "wb") as out_file_handle:  
-        PDF.dumps(out_file_handle, doc)  
-  
-  
-if __name__ == "__main__":  
+```python
+#!chapter_002/src/snippet_030.py
+from borb.pdf.document.document import Document
+from borb.pdf.page.page import Page
+from borb.pdf.canvas.layout.page_layout.multi_column_layout import SingleColumnLayout
+from borb.pdf.canvas.layout.page_layout.page_layout import PageLayout
+from borb.pdf.pdf import PDF
+from borb.pdf.canvas.layout.image.image import Image
+
+from decimal import Decimal
+
+
+def main():
+    # create Document
+    doc: Document = Document()
+
+    # create Page
+    page: Page = Page()
+
+    # add Page to Document
+    doc.append_page(page)
+
+    # set a PageLayout
+    layout: PageLayout = SingleColumnLayout(page)
+
+    # add an Image
+    layout.add(
+        Image(
+            Path("photo-1517260911058-0fcfd733702f.jpeg"),
+            width=Decimal(128),
+            height=Decimal(128),
+        )
+    )
+
+    # store
+    with open("output.pdf", "wb") as pdf_file_handle:
+        PDF.dumps(pdf_file_handle, doc)
+
+
+if __name__ == "__main__":
     main()
 ```
 
-![enter image description here](img/borb_in_action_example_021.png)
+![enter image description here](chapter_002/img/snippet_030.png)
 
 <div style="page-break-before: always;"></div>
 
@@ -1962,46 +2346,58 @@ This is a quick overview (although I would recommend inspecting the code to chec
 
 In the next example, you'll create a PDF with a sticky note shape in it.
 
-```python 
-from decimal import Decimal  
-  
-from borb.pdf.canvas.color.color import X11Color  
-from borb.pdf.canvas.geometry.rectangle import Rectangle  
-from borb.pdf.canvas.layout.shape.shape import Shape  
-from borb.pdf.canvas.layout.page_layout.multi_column_layout import SingleColumnLayout  
-from borb.pdf.canvas.layout.page_layout.page_layout import PageLayout  
-from borb.pdf.canvas.line_art.line_art_factory import LineArtFactory  
-from borb.pdf.document import Document  
-from borb.pdf.page.page import Page  
-from borb.pdf.pdf import PDF  
-  
-  
-def main():  
-    doc: Document = Document()  
-    page: Page = Page()  
-    doc.append_page(page)  
-  
-    layout: PageLayout = SingleColumnLayout(page)  
-  
-    r: Rectangle = Rectangle(Decimal(0),  
-                             Decimal(0),  
-                             Decimal(100),  
-                             Decimal(100))  
-    layout.add(Shape(LineArtFactory.sticky_note(r),  
-                     stroke_color=X11Color("Yellow"),  
-                     fill_color=X11Color("White"),  
-                     line_width=Decimal(1)  
-                     ))  
-  
-    with open("output.pdf", "wb") as out_file_handle:  
-        PDF.dumps(out_file_handle, doc)  
-  
+```python
+#!chapter_002/src/snippet_031.py
+from borb.pdf.document.document import Document
+from borb.pdf.page.page import Page
+from borb.pdf.canvas.layout.page_layout.multi_column_layout import SingleColumnLayout
+from borb.pdf.canvas.layout.page_layout.page_layout import PageLayout
+from borb.pdf.pdf import PDF
+from borb.pdf.canvas.layout.image.image import Image
+from borb.pdf.canvas.geometry.rectangle import Rectangle
+from borb.pdf.canvas.layout.shape.shape import Shape
+from borb.pdf.canvas.line_art.line_art_factory import LineArtFactory
+from borb.pdf.canvas.color.color import X11Color
 
-if __name__ == "__main__":  
+from decimal import Decimal
+
+
+def main():
+    # create Document
+    doc: Document = Document()
+
+    # create Page
+    page: Page = Page()
+
+    # add Page to Document
+    doc.append_page(page)
+
+    # set a PageLayout
+    layout: PageLayout = SingleColumnLayout(page)
+
+    # define size of sticky note
+    r: Rectangle = Rectangle(Decimal(0), Decimal(0), Decimal(100), Decimal(100))
+
+    # add sticky note
+    layout.add(
+        Shape(
+            LineArtFactory.sticky_note(r),
+            stroke_color=X11Color("Yellow"),
+            fill_color=X11Color("White"),
+            line_width=Decimal(1),
+        )
+    )
+
+    # store
+    with open("output.pdf", "wb") as pdf_file_handle:
+        PDF.dumps(pdf_file_handle, doc)
+
+
+if __name__ == "__main__":
     main()
 ```
 
-![enter image description here](img/borb_in_action_example_022.png)
+![enter image description here](chapter_002/img/snippet_031.png)
 
 The initial bounding box you pass to the `LineArtFactory.sticky_note` function is only used to determine how wide/tall the `Shape´ should be.
 
@@ -2026,37 +2422,52 @@ In the final example of this section, you'll create and add a QR code to a `Page
 In the next example you'll be adding an `EAN_14` code to a `Page`.
 The python script is very straightforward:
 
-```python  
-from decimal import Decimal  
-  
-from borb.pdf.canvas.layout.image.barcode import Barcode, BarcodeType  
-from borb.pdf.canvas.layout.page_layout.multi_column_layout import SingleColumnLayout  
-from borb.pdf.canvas.layout.page_layout.page_layout import PageLayout  
-from borb.pdf.document import Document  
-from borb.pdf.page.page import Page  
-from borb.pdf.pdf import PDF  
-  
-  
-def main():  
-    doc: Document = Document()  
-    page: Page = Page()  
-    doc.append_page(page)  
-  
-    layout: PageLayout = SingleColumnLayout(page)  
-    layout.add(Barcode("1234567896120",  
-                       width=Decimal(128),  
-                       height=Decimal(128),  
-                       type=BarcodeType.EAN_14))  
-  
-    with open("output.pdf", "wb") as out_file_handle:  
-        PDF.dumps(out_file_handle, doc)  
-  
+```python
+#!chapter_002/src/snippet_032.py
+from borb.pdf.document.document import Document
+from borb.pdf.page.page import Page
+from borb.pdf.canvas.layout.page_layout.multi_column_layout import SingleColumnLayout
+from borb.pdf.canvas.layout.page_layout.page_layout import PageLayout
+from borb.pdf.canvas.layout.text.paragraph import Paragraph
+from borb.pdf.pdf import PDF
+from borb.pdf.canvas.layout.image.barcode import Barcode, BarcodeType
 
-if __name__ == "__main__":  
+from decimal import Decimal
+
+
+def main():
+    # create Document
+    doc: Document = Document()
+
+    # create Page
+    page: Page = Page()
+
+    # add Page to Document
+    doc.append_page(page)
+
+    # set a PageLayout
+    layout: PageLayout = SingleColumnLayout(page)
+
+    # add a Paragraph
+    layout.add(
+        Barcode(
+            "1234567896120",
+            width=Decimal(128),
+            height=Decimal(128),
+            type=BarcodeType.EAN_14,
+        )
+    )
+
+    # store
+    with open("output.pdf", "wb") as pdf_file_handle:
+        PDF.dumps(pdf_file_handle, doc)
+
+
+if __name__ == "__main__":
     main()
 ```
 
-![enter image description here](img/borb_in_action_example_023.png)
+![enter image description here](chapter_002/img/snippet_032.png)
 
 #### 2.7.1.1 Setting the `stroke_color` and `fill_color` of a `Barcode`
 
@@ -2064,40 +2475,55 @@ Of course, if your company's brand color happens to be something other than blac
 
 In the next example, you'll be tweaking the `stroke_color` and `fill_color` of a `Barcode` to make sure it pops.
 
-```python 
-from decimal import Decimal  
-  
-from borb.pdf.canvas.color.color import HexColor  
-from borb.pdf.canvas.layout.image.barcode import Barcode, BarcodeType  
-from borb.pdf.canvas.layout.page_layout.multi_column_layout import SingleColumnLayout  
-from borb.pdf.canvas.layout.page_layout.page_layout import PageLayout  
-from borb.pdf.document import Document  
-from borb.pdf.page.page import Page  
-from borb.pdf.pdf import PDF  
-  
-  
-def main():  
-    doc: Document = Document()  
-    page: Page = Page()  
-    doc.append_page(page)  
-  
-    layout: PageLayout = SingleColumnLayout(page)  
-    layout.add(Barcode("1234567896120",  
-                       stroke_color=HexColor("E2C044"),  
-                       fill_color=HexColor("587B7F"),  
-                       width=Decimal(128),  
-                       height=Decimal(128),  
-                       type=BarcodeType.EAN_14))  
-  
-    with open("output.pdf", "wb") as out_file_handle:  
-        PDF.dumps(out_file_handle, doc)  
-  
+```python
+#!chapter_002/src/snippet_033.py
+from borb.pdf.document.document import Document
+from borb.pdf.page.page import Page
+from borb.pdf.canvas.layout.page_layout.multi_column_layout import SingleColumnLayout
+from borb.pdf.canvas.layout.page_layout.page_layout import PageLayout
+from borb.pdf.canvas.layout.text.paragraph import Paragraph
+from borb.pdf.pdf import PDF
+from borb.pdf.canvas.layout.image.barcode import Barcode, BarcodeType
+from borb.pdf.canvas.color.color import HexColor
 
-if __name__ == "__main__":  
+from decimal import Decimal
+
+
+def main():
+    # create Document
+    doc: Document = Document()
+
+    # create Page
+    page: Page = Page()
+
+    # add Page to Document
+    doc.append_page(page)
+
+    # set a PageLayout
+    layout: PageLayout = SingleColumnLayout(page)
+
+    # add a Paragraph
+    layout.add(
+        Barcode(
+            "1234567896120",
+            width=Decimal(128),
+            height=Decimal(128),
+            stroke_color=HexColor("E2C044"),
+            fill_color=HexColor("587B7F"),
+            type=BarcodeType.EAN_14,
+        )
+    )
+
+    # store
+    with open("output.pdf", "wb") as pdf_file_handle:
+        PDF.dumps(pdf_file_handle, doc)
+
+
+if __name__ == "__main__":
     main()
 ```
 
-![enter image description here](img/borb_in_action_example_024.png)
+![enter image description here](chapter_002/img/snippet_033.png)
 
 ### 2.7.2 Adding a QR-code to the `Page`
 
@@ -2110,37 +2536,52 @@ In practice, QR codes often contain data for a locator, identifier, or tracker t
 `borb` also supports QR-codes.
 The code from the previous example doesn't really change that much, other than setting a different `type`
 
-```python 
-from decimal import Decimal  
-  
-from borb.pdf.canvas.layout.image.barcode import Barcode, BarcodeType  
-from borb.pdf.canvas.layout.page_layout.multi_column_layout import SingleColumnLayout  
-from borb.pdf.canvas.layout.page_layout.page_layout import PageLayout  
-from borb.pdf.document import Document  
-from borb.pdf.page.page import Page  
-from borb.pdf.pdf import PDF  
-  
-  
-def main():  
-    doc: Document = Document()  
-    page: Page = Page()  
-    doc.append_page(page)  
-  
-    layout: PageLayout = SingleColumnLayout(page)  
-    layout.add(Barcode("1234567896120",  
-                       width=Decimal(128),  
-                       height=Decimal(128),  
-                       type=BarcodeType.QR))  
-  
-    with open("output.pdf", "wb") as out_file_handle:  
-        PDF.dumps(out_file_handle, doc)  
-  
+```python
+#!chapter_002/src/snippet_034.py
+from borb.pdf.document.document import Document
+from borb.pdf.page.page import Page
+from borb.pdf.canvas.layout.page_layout.multi_column_layout import SingleColumnLayout
+from borb.pdf.canvas.layout.page_layout.page_layout import PageLayout
+from borb.pdf.canvas.layout.text.paragraph import Paragraph
+from borb.pdf.pdf import PDF
+from borb.pdf.canvas.layout.image.barcode import Barcode, BarcodeType
 
-if __name__ == "__main__":  
+from decimal import Decimal
+
+
+def main():
+    # create Document
+    doc: Document = Document()
+
+    # create Page
+    page: Page = Page()
+
+    # add Page to Document
+    doc.append_page(page)
+
+    # set a PageLayout
+    layout: PageLayout = SingleColumnLayout(page)
+
+    # add a Paragraph
+    layout.add(
+        Barcode(
+            "1234567896120",
+            width=Decimal(128),
+            height=Decimal(128),
+            type=BarcodeType.QR,
+        )
+    )
+
+    # store
+    with open("output.pdf", "wb") as pdf_file_handle:
+        PDF.dumps(pdf_file_handle, doc)
+
+
+if __name__ == "__main__":
     main()
 ```
 
-![enter image description here](img/borb_in_action_example_025.png)
+![enter image description here](chapter_002/img/snippet_034.png)
 
 ### 2.7.3 Other supported barcodes
 
@@ -2182,61 +2623,69 @@ This example does have some extra dependencies:
 - `matplotlib`
 
 
-```python 
-from decimal import Decimal  
-  
-from borb.pdf.canvas.layout.image.barcode import Barcode, BarcodeType  
-from borb.pdf.canvas.layout.image.chart import Chart  
-from borb.pdf.canvas.layout.page_layout.multi_column_layout import SingleColumnLayout  
-from borb.pdf.canvas.layout.page_layout.page_layout import PageLayout  
-from borb.pdf.document import Document  
-from borb.pdf.page.page import Page  
-from borb.pdf.pdf import PDF  
-  
-import matplotlib.pyplot as MatPlotLibPlot  
-import numpy as np  
-import pandas as pd  
+```python
+#!chapter_002/src/snippet_035.py
+from borb.pdf.document.document import Document
+from borb.pdf.page.page import Page
+from borb.pdf.canvas.layout.page_layout.multi_column_layout import SingleColumnLayout
+from borb.pdf.canvas.layout.page_layout.page_layout import PageLayout
+from borb.pdf.canvas.layout.text.paragraph import Paragraph
+from borb.pdf.pdf import PDF
+from borb.pdf.canvas.layout.image.chart import Chart
+
+from decimal import Decimal
+
+import matplotlib.pyplot as MatPlotLibPlot
+import numpy as np
+import pandas as pd
 
 
-def create_plot() -> None:  
-    # generate dataset  
-    df = pd.DataFrame(  
-        {  
-            "X": range(1, 101),  
-            "Y": np.random.randn(100) * 15 + range(1, 101),  
-            "Z": (np.random.randn(100) * 15 + range(1, 101)) * 2,  
-        }  
-    )  
-  
-    # plot  
-    fig = MatPlotLibPlot.figure()  
-    ax = fig.add_subplot(111, projection="3d")  
-    ax.scatter(df["X"], df["Y"], df["Z"], c="skyblue", s=60)  
-    ax.view_init(30, 185)  
-    
+def create_plot() -> None:
+    # build DataFrame
+    df = pd.DataFrame(
+        {
+            "X": range(1, 101),
+            "Y": np.random.randn(100) * 15 + range(1, 101),
+            "Z": (np.random.randn(100) * 15 + range(1, 101)) * 2,
+        }
+    )
+
+    # plot
+    fig = MatPlotLibPlot.figure()
+    ax = fig.add_subplot(111, projection="3d")
+    ax.scatter(df["X"], df["Y"], df["Z"], c="skyblue", s=60)
+    ax.view_init(30, 185)
+
     # return
-    return MatPlotLibPlot.gcf()  
+    return MatPlotLibPlot.gcf()
 
-  
-def main():  
-    doc: Document = Document()  
-    page: Page = Page()  
-    doc.append_page(page)  
-  
-    layout: PageLayout = SingleColumnLayout(page)  
-    layout.add(Chart(create_plot(),  
-                     width=Decimal(256),  
-                     height=Decimal(256)))  
-  
-    with open("output.pdf", "wb") as out_file_handle:  
-        PDF.dumps(out_file_handle, doc)  
-  
 
-if __name__ == "__main__":  
+def main():
+    # create Document
+    doc: Document = Document()
+
+    # create Page
+    page: Page = Page()
+
+    # add Page to Document
+    doc.append_page(page)
+
+    # set a PageLayout
+    layout: PageLayout = SingleColumnLayout(page)
+
+    # add a Paragraph
+    layout.add(Chart(create_plot(), width=Decimal(256), height=Decimal(256)))
+
+    # store
+    with open("output.pdf", "wb") as pdf_file_handle:
+        PDF.dumps(pdf_file_handle, doc)
+
+
+if __name__ == "__main__":
     main()
 ```
 
-![enter image description here](img/borb_in_action_example_026.png)
+![enter image description here](chapter_002/img/snippet_035.png)
 
 <div style="page-break-before: always;"></div>
 
@@ -2251,38 +2700,72 @@ These can easily be inserted into any `Document` or `Page`.
 In the next example you'll be using `BrowserLayout` to make it easy to place `Image` objects as inline `LayoutElement`.
 Of course, you can achieve the same effect using `SingleColumnLayout` (or `MultiColumnLayout`) by adding the `Emoji` to a `HeterogeneousParagraph`.
 
-```python 
-from borb.pdf.canvas.layout.emoji.emoji import Emojis  
-from borb.pdf.canvas.layout.page_layout.browser_layout import BrowserLayout  
-from borb.pdf.canvas.layout.text.chunk_of_text import ChunkOfText  
-from borb.pdf.document import Document  
-from borb.pdf.page.page import Page  
-from borb.pdf.pdf import PDF  
-  
-  
-def main():  
-    doc: Document = Document()  
-    page: Page = Page()  
-    doc.append_page(page)  
-  
-    layout: BrowserLayout = BrowserLayout(page)  
-    layout.add(ChunkOfText("Hello"))  
-    layout.add(Emojis.EARTH_AMERICAS.value)  
-    layout.add(ChunkOfText("!"))  
-  
-    with open("output.pdf", "wb") as out_file_handle:  
-        PDF.dumps(out_file_handle, doc)  
-  
+```python
+#!chapter_002/src/snippet_036.py
+from borb.pdf.document.document import Document
+from borb.pdf.page.page import Page
+from borb.pdf.canvas.layout.page_layout.browser_layout import BrowserLayout
+from borb.pdf.canvas.layout.page_layout.page_layout import PageLayout
+from borb.pdf.canvas.layout.text.paragraph import Paragraph
+from borb.pdf.pdf import PDF
+from borb.pdf.canvas.layout.emoji.emoji import Emojis
+from borb.pdf.canvas.layout.text.chunk_of_text import ChunkOfText
 
-if __name__ == "__main__":  
+
+def main():
+    # create Document
+    doc: Document = Document()
+
+    # create Page
+    page: Page = Page()
+
+    # add Page to Document
+    doc.append_page(page)
+
+    # set a PageLayout
+    layout: PageLayout = BrowserLayout(page)
+
+    # add a Paragraph
+    layout.add(ChunkOfText("Hello"))
+    layout.add(Emojis.EARTH_AMERICAS.value)
+    layout.add(ChunkOfText("!"))
+
+    # store
+    with open("output.pdf", "wb") as pdf_file_handle:
+        PDF.dumps(pdf_file_handle, doc)
+
+
+if __name__ == "__main__":
     main()
 ```
 
-![enter image description here](img/borb_in_action_example_027.png)
+![enter image description here](chapter_002/img/snippet_036.png)
 
 <div style="page-break-before: always;"></div>
 
-## 2.10 Container `LayoutElement` objects
+## 2.10 Conclusion
+
+In this section you've learned the basics of creating a new PDF using `borb`. 
+In this section you've learned how various pieces of content are represented by the different `LayoutElement` implementations in `borb`. 
+You've worked with text, images, barcodes, qr-codes, emoji, and geometric shapes.
+
+You've briefly explored classes like; `Paragraph`, `Image`, `Shape`, `Emoji`, `OrderedList`, `UnorderedList`, `FlexibleColumnWidthTable` and `FixedColumnWidthTable`.
+
+You've learned how to set various properties like `font_color`, or `background_color` 
+and even used `horizontal_alignment` , `vertical_alignment` and `text_alignment`.
+
+You've briefly explored `PageLayout`, `BrowserLayout` and even manual layout.
+
+To see how you can use all of those techniques together, 
+check out some of the deep-dives, where I'll show you how to create an invoice from start to finish.
+
+<div style="page-break-before: always;"></div>
+
+# 3 Container `LayoutElement` objects
+
+![enter image description here](chapter_003/img/chapter_illustration.jpg)
+
+<div style="page-break-before: always;"></div>
 
 Now that you have a firm grasp on the basic `LayoutElement` objects, you can start combining them in lists and tables.
 
@@ -2304,204 +2787,264 @@ There are quite a few deep-dive examples that make use of `Table` if you're up f
 
 <div style="page-break-before: always;"></div>
 
-### 2.10.1 Lists
+## 3.1 Lists
 
 `List` is the abstract base class that performs the layout of anything resembling a sequence of `LayoutElement` objects.
 
 Different sub-classes of `List` can refine this behavior, for instance by adding bullets or numbers in front of each list-item.
 
-#### 2.10.1.1 Working with `OrderedList`
+### 3.1.1 Working with `OrderedList`
 
 In this first list-related example, you'll be creating a list with 3 items. The list will be numbered.
 
-```python 
-from borb.pdf.canvas.layout.list.ordered_list import OrderedList  
-from borb.pdf.canvas.layout.page_layout.multi_column_layout import SingleColumnLayout  
-from borb.pdf.canvas.layout.page_layout.page_layout import PageLayout  
-from borb.pdf.canvas.layout.text.paragraph import Paragraph  
-from borb.pdf.document import Document  
-from borb.pdf.page.page import Page  
-from borb.pdf.pdf import PDF  
-  
-  
-def main():  
-    doc: Document = Document()  
-    page: Page = Page()  
-    doc.append_page(page)  
-  
-    layout: PageLayout = SingleColumnLayout(page)  
-    layout.add(OrderedList()  
-               .add(Paragraph("Lorem"))  
-               .add(Paragraph("Ipsum"))  
-               .add(Paragraph("Dolor"))  
-               )  
-  
-    with open("output.pdf", "wb") as out_file_handle:  
-        PDF.dumps(out_file_handle, doc)  
-  
+```python
+#!chapter_003/src/snippet_001.py
+from borb.pdf.canvas.layout.list.ordered_list import OrderedList
+from borb.pdf.canvas.layout.page_layout.multi_column_layout import SingleColumnLayout
+from borb.pdf.canvas.layout.page_layout.page_layout import PageLayout
+from borb.pdf.canvas.layout.text.paragraph import Paragraph
+from borb.pdf.document.document import Document
+from borb.pdf.page.page import Page
+from borb.pdf.pdf import PDF
 
-if __name__ == "__main__":  
+
+def main():
+
+    # create Document
+    doc: Document = Document()
+
+    # create Page
+    page: Page = Page()
+
+    # add Page to Document
+    doc.append_page(page)
+
+    # set a PageLayout
+    layout: PageLayout = SingleColumnLayout(page)
+
+    # add OrderedList of 3 Paragraph objects
+    layout.add(
+        OrderedList()
+        .add(Paragraph("Lorem"))
+        .add(Paragraph("Ipsum"))
+        .add(Paragraph("Dolor"))
+    )
+
+    # store
+    with open("output.pdf", "wb") as out_file_handle:
+        PDF.dumps(out_file_handle, doc)
+
+
+if __name__ == "__main__":
     main()
 ```
 
-![enter image description here](img/borb_in_action_example_028.png)
+![enter image description here](chapter_003/img/snippet_001.png)
 
 Of course, objects inside a `List` don't all need to look the same.
 Try out the next example, where each item in the `List` has a different color.
 
-```python 
-from borb.pdf.canvas.color.color import HexColor  
-from borb.pdf.canvas.layout.list.ordered_list import OrderedList  
-from borb.pdf.canvas.layout.page_layout.multi_column_layout import SingleColumnLayout  
-from borb.pdf.canvas.layout.page_layout.page_layout import PageLayout  
-from borb.pdf.canvas.layout.text.paragraph import Paragraph  
-from borb.pdf.document import Document  
-from borb.pdf.page.page import Page  
-from borb.pdf.pdf import PDF  
-  
-  
-def main():  
-    doc: Document = Document()  
-    page: Page = Page()  
-    doc.append_page(page)  
-  
-    layout: PageLayout = SingleColumnLayout(page)  
-    layout.add(OrderedList()  
-               .add(Paragraph("Lorem", font_color=HexColor("45CB85")))  
-               .add(Paragraph("Ipsum", font_color=HexColor("E08DAC")))  
-               .add(Paragraph("Dolor", font_color=HexColor("6A7FDB")))  
-               )  
-  
-    with open("output.pdf", "wb") as out_file_handle:  
-        PDF.dumps(out_file_handle, doc)  
-  
+```python
+#!chapter_003/src/snippet_002.py
+from borb.pdf.canvas.color.color import HexColor
+from borb.pdf.canvas.layout.list.ordered_list import OrderedList
+from borb.pdf.canvas.layout.page_layout.multi_column_layout import SingleColumnLayout
+from borb.pdf.canvas.layout.page_layout.page_layout import PageLayout
+from borb.pdf.canvas.layout.text.paragraph import Paragraph
+from borb.pdf.document.document import Document
+from borb.pdf.page.page import Page
+from borb.pdf.pdf import PDF
 
-if __name__ == "__main__":  
+
+def main():
+    # create Document
+    doc: Document = Document()
+
+    # create Page
+    page: Page = Page()
+
+    # add Page to Document
+    doc.append_page(page)
+
+    # set a PageLayout
+    layout: PageLayout = SingleColumnLayout(page)
+
+    # add OrderedList of 3 Paragraph objects
+    layout.add(
+        OrderedList()
+        .add(Paragraph("Lorem", font_color=HexColor("45CB85")))
+        .add(Paragraph("Ipsum", font_color=HexColor("E08DAC")))
+        .add(Paragraph("Dolor", font_color=HexColor("6A7FDB")))
+    )
+
+    # store
+    with open("output.pdf", "wb") as out_file_handle:
+        PDF.dumps(out_file_handle, doc)
+
+
+if __name__ == "__main__":
     main()
 ```
 
-![enter image description here](img/borb_in_action_example_029.png)
+![enter image description here](chapter_003/img/snippet_002.png)
 
 In fact, the items in  a `List` don't even need to be of the same type.
-In the next example you'll create a list containing a `Paragraph`, `Emoji` and an `Image`.
+In the next example you'll create a list containing a `Paragraph`, an `Image` and an `Emoji`.
 
-```python 
-from decimal import Decimal  
-  
-from borb.pdf.canvas.color.color import HexColor  
-from borb.pdf.canvas.layout.emoji.emoji import Emojis  
-from borb.pdf.canvas.layout.image.image import Image  
-from borb.pdf.canvas.layout.list.ordered_list import OrderedList  
-from borb.pdf.canvas.layout.page_layout.multi_column_layout import SingleColumnLayout  
-from borb.pdf.canvas.layout.page_layout.page_layout import PageLayout  
-from borb.pdf.canvas.layout.text.paragraph import Paragraph  
-from borb.pdf.document import Document  
-from borb.pdf.page.page import Page  
-from borb.pdf.pdf import PDF  
-  
-  
-def main():  
-    doc: Document = Document()  
-    page: Page = Page()  
-    doc.append_page(page)  
-  
-    layout: PageLayout = SingleColumnLayout(page)  
-    layout.add(OrderedList()  
-               .add(Paragraph("Lorem", font_color=HexColor("45CB85")))  
-               .add(Image("https://images.unsplash.com/photo-1496637721836-f46d116e6d34?ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8",  
-                          width=Decimal(64),  
-                          height=Decimal(64)))  
-               .add(Emojis.PINEAPPLE.value)  
-               )  
-  
-    with open("output.pdf", "wb") as out_file_handle:  
-        PDF.dumps(out_file_handle, doc)  
-  
+```python
+#!chapter_003/src/snippet_003.py
+from decimal import Decimal
 
-if __name__ == "__main__":  
+from borb.pdf.canvas.color.color import HexColor
+from borb.pdf.canvas.layout.emoji.emoji import Emojis
+from borb.pdf.canvas.layout.image.image import Image
+from borb.pdf.canvas.layout.list.ordered_list import OrderedList
+from borb.pdf.canvas.layout.page_layout.multi_column_layout import SingleColumnLayout
+from borb.pdf.canvas.layout.page_layout.page_layout import PageLayout
+from borb.pdf.canvas.layout.text.paragraph import Paragraph
+from borb.pdf.document.document import Document
+from borb.pdf.page.page import Page
+from borb.pdf.pdf import PDF
+
+
+def main():
+    # create Document
+    doc: Document = Document()
+
+    # create Page
+    page: Page = Page()
+
+    # add Page to Document
+    doc.append_page(page)
+
+    # set a PageLayout
+    layout: PageLayout = SingleColumnLayout(page)
+
+    # add OrderedList of 3 objects, a Paragraph, an Image and an Emoji
+    layout.add(
+        OrderedList()
+        .add(Paragraph("Lorem", font_color=HexColor("45CB85")))
+        .add(
+            Image(
+                "https://images.unsplash.com/photo-1496637721836-f46d116e6d34?ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8",
+                width=Decimal(64),
+                height=Decimal(64),
+            )
+        )
+        .add(Emojis.PINEAPPLE.value)
+    )
+
+    # store
+    with open("output.pdf", "wb") as out_file_handle:
+        PDF.dumps(out_file_handle, doc)
+
+
+if __name__ == "__main__":
     main()
 ```
 
-![enter image description here](img/borb_in_action_example_030.png)
+![enter image description here](chapter_003/img/snippet_003.png)
 
-#### 2.10.1.2 Working with `RomanNumeralOrderedList`
+### 3.1.2 Working with `RomanNumeralOrderedList`
 
 `borb` also supports lists with roman numerals. It works exactly the same as the regular `OrderedList`. 
 In the next example you'll be creating a simple `Document` featuring a `RomanNumeralOrderedList`:
 
-```python 
-from borb.pdf.canvas.layout.list.roman_list import RomanNumeralOrderedList  
-from borb.pdf.canvas.layout.page_layout.multi_column_layout import SingleColumnLayout  
-from borb.pdf.canvas.layout.page_layout.page_layout import PageLayout  
-from borb.pdf.canvas.layout.text.paragraph import Paragraph  
-from borb.pdf.document import Document  
-from borb.pdf.page.page import Page  
-from borb.pdf.pdf import PDF  
-  
-  
-def main():  
-    doc: Document = Document()  
-    page: Page = Page()  
-    doc.append_page(page)  
-  
-    layout: PageLayout = SingleColumnLayout(page)  
-    layout.add(RomanNumeralOrderedList()  
-               .add(Paragraph("Lorem"))  
-               .add(Paragraph("Ipsum"))  
-               .add(Paragraph("Dolor"))  
-               .add(Paragraph("Sit"))  
-               .add(Paragraph("Amet"))  
-               )  
-  
-    with open("output.pdf", "wb") as out_file_handle:  
-        PDF.dumps(out_file_handle, doc)  
-  
+```python
+#!chapter_003/src/snippet_004.py
+from borb.pdf.canvas.layout.list.roman_list import RomanNumeralOrderedList
+from borb.pdf.canvas.layout.page_layout.multi_column_layout import SingleColumnLayout
+from borb.pdf.canvas.layout.page_layout.page_layout import PageLayout
+from borb.pdf.canvas.layout.text.paragraph import Paragraph
+from borb.pdf.document.document import Document
+from borb.pdf.page.page import Page
+from borb.pdf.pdf import PDF
 
-if __name__ == "__main__":  
+
+def main():
+    # create Document
+    doc: Document = Document()
+
+    # create Page
+    page: Page = Page()
+
+    # add Page to Document
+    doc.append_page(page)
+
+    # set a PageLayout
+    layout: PageLayout = SingleColumnLayout(page)
+
+    # add RomanNumeralOrderedList of 5 Paragraph objects
+    layout.add(
+        RomanNumeralOrderedList()
+        .add(Paragraph("Lorem"))
+        .add(Paragraph("Ipsum"))
+        .add(Paragraph("Dolor"))
+        .add(Paragraph("Sit"))
+        .add(Paragraph("Amet"))
+    )
+
+    # store
+    with open("output.pdf", "wb") as out_file_handle:
+        PDF.dumps(out_file_handle, doc)
+
+
+if __name__ == "__main__":
     main()
 ```
 
-![enter image description here](img/borb_in_action_example_031.png)
+![enter image description here](chapter_003/img/snippet_004.png)
 
-#### 2.10.1.3 Working with `UnorderedList`
+### 3.1.3 Working with `UnorderedList`
 
 `UnorderedList` works exactly like `OrderedList`, the key difference being that in stead of displaying numbers before each list item, bullet-characters are displayed.
 
-```python 
-from borb.pdf.canvas.layout.list.unordered_list import UnorderedList  
-from borb.pdf.canvas.layout.page_layout.multi_column_layout import SingleColumnLayout  
-from borb.pdf.canvas.layout.page_layout.page_layout import PageLayout  
-from borb.pdf.canvas.layout.text.paragraph import Paragraph  
-from borb.pdf.document import Document  
-from borb.pdf.page.page import Page  
-from borb.pdf.pdf import PDF  
-  
-  
-def main():  
-    doc: Document = Document()  
-    page: Page = Page()  
-    doc.append_page(page)  
-  
-    layout: PageLayout = SingleColumnLayout(page)  
-    layout.add(UnorderedList()  
-               .add(Paragraph("Lorem"))  
-               .add(Paragraph("Ipsum"))  
-               .add(Paragraph("Dolor"))  
-               .add(Paragraph("Sit"))  
-               .add(Paragraph("Amet"))  
-               )  
-  
-    with open("output.pdf", "wb") as out_file_handle:  
-        PDF.dumps(out_file_handle, doc)  
-  
+```python
+#!chapter_003/src/snippet_005.py
+from borb.pdf.canvas.layout.list.unordered_list import UnorderedList
+from borb.pdf.canvas.layout.page_layout.multi_column_layout import SingleColumnLayout
+from borb.pdf.canvas.layout.page_layout.page_layout import PageLayout
+from borb.pdf.canvas.layout.text.paragraph import Paragraph
+from borb.pdf.document.document import Document
+from borb.pdf.page.page import Page
+from borb.pdf.pdf import PDF
 
-if __name__ == "__main__":  
+
+def main():
+    # create Document
+    doc: Document = Document()
+
+    # create Page
+    page: Page = Page()
+
+    # add Page to Document
+    doc.append_page(page)
+
+    # set a PageLayout
+    layout: PageLayout = SingleColumnLayout(page)
+
+    # add UnorderedList of 3 Paragraph objects
+    layout.add(
+        UnorderedList()
+        .add(Paragraph("Lorem"))
+        .add(Paragraph("Ipsum"))
+        .add(Paragraph("Dolor"))
+        .add(Paragraph("Sit"))
+        .add(Paragraph("Amet"))
+    )
+
+    # store
+    with open("output.pdf", "wb") as out_file_handle:
+        PDF.dumps(out_file_handle, doc)
+
+
+if __name__ == "__main__":
     main()
 ```
 
-![enter image description here](img/borb_in_action_example_032.png)
+![enter image description here](chapter_003/img/snippet_005.png)
 
-#### 2.10.1.4 Nesting `List` objects
+### 3.1.4 Nesting `List` objects
 
 Of course, sometimes you'd like to display a `List` of `Lists`. 
 As you already know, the content of a `List` can be just about anything. 
@@ -2510,109 +3053,129 @@ So naturally, `borb` supports nested Lists.
 In the next example you'll be creating a nested unordered list.
 
 ```python
-from borb.pdf.canvas.layout.list.unordered_list import UnorderedList  
-from borb.pdf.canvas.layout.page_layout.multi_column_layout import SingleColumnLayout  
-from borb.pdf.canvas.layout.page_layout.page_layout import PageLayout  
-from borb.pdf.canvas.layout.text.paragraph import Paragraph  
-from borb.pdf.document import Document  
-from borb.pdf.page.page import Page  
-from borb.pdf.pdf import PDF  
-  
-  
-def main():  
-    doc: Document = Document()  
-    page: Page = Page()  
-    doc.append_page(page)  
-  
-    layout: PageLayout = SingleColumnLayout(page)  
-    layout.add(  
-        UnorderedList()  
-        .add(Paragraph("Lorem"))  
-        .add(Paragraph("Ipsum"))  
-        .add(  
-            UnorderedList()  
-            .add(Paragraph("One"))  
-            .add(Paragraph("Two"))  
-            .add(  
-                UnorderedList()  
-                .add(Paragraph("1"))  
-                .add(Paragraph("2"))  
-                .add(Paragraph("3"))  
-            )  
-            .add(Paragraph("Three"))  
-        )  
-        .add(Paragraph("Dolor"))  
-        .add(Paragraph("Sit"))  
-        .add(Paragraph("Amet"))  
-    )  
-  
-    with open("output.pdf", "wb") as out_file_handle:  
-        PDF.dumps(out_file_handle, doc)  
-  
-  
-if __name__ == "__main__":  
-    main()    
+#!chapter_003/src/snippet_006.py
+from borb.pdf.canvas.layout.list.unordered_list import UnorderedList
+from borb.pdf.canvas.layout.page_layout.multi_column_layout import SingleColumnLayout
+from borb.pdf.canvas.layout.page_layout.page_layout import PageLayout
+from borb.pdf.canvas.layout.text.paragraph import Paragraph
+from borb.pdf.document.document import Document
+from borb.pdf.page.page import Page
+from borb.pdf.pdf import PDF
+
+
+def main():
+    # create Document
+    doc: Document = Document()
+
+    # create Page
+    page: Page = Page()
+
+    # add Page to Document
+    doc.append_page(page)
+
+    # set a PageLayout
+    layout: PageLayout = SingleColumnLayout(page)
+
+    # add UnorderedList containing a (twice nested) UnorderedList
+    layout.add(
+        UnorderedList()
+        .add(Paragraph("Lorem"))
+        .add(Paragraph("Ipsum"))
+        .add(
+            UnorderedList()
+            .add(Paragraph("One"))
+            .add(Paragraph("Two"))
+            .add(
+                UnorderedList()
+                .add(Paragraph("1"))
+                .add(Paragraph("2"))
+                .add(Paragraph("3"))
+            )
+            .add(Paragraph("Three"))
+        )
+        .add(Paragraph("Dolor"))
+        .add(Paragraph("Sit"))
+        .add(Paragraph("Amet"))
+    )
+
+    # store
+    with open("output.pdf", "wb") as out_file_handle:
+        PDF.dumps(out_file_handle, doc)
+
+
+if __name__ == "__main__":
+    main()
 ```
 
-![enter image description here](img/borb_in_action_example_033.png)
+![enter image description here](chapter_003/img/snippet_006.png)
 
 And now, you may understand why the font Zapfdingbats is required to be embedded. All those wonderful list-bullets are actually characters from the Zapfdingbats font.
 
 Of course, you can do the same for ordered lists as well.
 
 ```python
-from borb.pdf.canvas.layout.list.ordered_list import OrderedList  
-from borb.pdf.canvas.layout.page_layout.multi_column_layout import SingleColumnLayout  
-from borb.pdf.canvas.layout.page_layout.page_layout import PageLayout  
-from borb.pdf.canvas.layout.text.paragraph import Paragraph  
-from borb.pdf.document import Document  
-from borb.pdf.page.page import Page  
-from borb.pdf.pdf import PDF  
-  
-  
-def main():  
-    doc: Document = Document()  
-    page: Page = Page()  
-    doc.append_page(page)  
-  
-    layout: PageLayout = SingleColumnLayout(page)  
-    layout.add(  
-        OrderedList()  
-        .add(Paragraph("Lorem"))  
-        .add(Paragraph("Ipsum"))  
-        .add(  
-            OrderedList()  
-            .add(Paragraph("One"))  
-            .add(Paragraph("Two"))  
-            .add(  
-                OrderedList()  
-                .add(Paragraph("1"))  
-                .add(Paragraph("2"))  
-                .add(Paragraph("3"))  
-            )  
-            .add(Paragraph("Three"))  
-        )  
-        .add(Paragraph("Dolor"))  
-        .add(Paragraph("Sit"))  
-        .add(Paragraph("Amet"))  
-    )  
-  
-    with open("output.pdf", "wb") as out_file_handle:  
-        PDF.dumps(out_file_handle, doc)  
-  
-  
-if __name__ == "__main__":  
+#!chapter_003/src/snippet_007.py
+from borb.pdf.canvas.layout.list.ordered_list import OrderedList
+from borb.pdf.canvas.layout.page_layout.multi_column_layout import SingleColumnLayout
+from borb.pdf.canvas.layout.page_layout.page_layout import PageLayout
+from borb.pdf.canvas.layout.text.paragraph import Paragraph
+from borb.pdf.document.document import Document
+from borb.pdf.page.page import Page
+from borb.pdf.pdf import PDF
+
+
+def main():
+    # create Document
+    doc: Document = Document()
+
+    # create Page
+    page: Page = Page()
+
+    # add Page to Document
+    doc.append_page(page)
+
+    # set a PageLayout
+    layout: PageLayout = SingleColumnLayout(page)
+
+    # add OrderedList containing a (twice nested) OrderedList
+    layout.add(
+        OrderedList()
+        .add(Paragraph("Lorem"))
+        .add(Paragraph("Ipsum"))
+        .add(
+            OrderedList()
+            .add(Paragraph("One"))
+            .add(Paragraph("Two"))
+            .add(
+                OrderedList()
+                .add(Paragraph("1"))
+                .add(Paragraph("2"))
+                .add(Paragraph("3"))
+            )
+            .add(Paragraph("Three"))
+        )
+        .add(Paragraph("Dolor"))
+        .add(Paragraph("Sit"))
+        .add(Paragraph("Amet"))
+    )
+
+    # store
+    with open("output.pdf", "wb") as out_file_handle:
+        PDF.dumps(out_file_handle, doc)
+
+
+if __name__ == "__main__":
     main()
 ```
 
-![enter image description here](img/borb_in_action_example_034.png)
+![enter image description here](chapter_003/img/snippet_007.png)
 
 Finally, you can also mix and match, embedding ordered lists into unordered lists or vice-versa.
 I'll leave that as an exercise ;-)
 
 <div style="page-break-before: always;"></div>
 
-### 2.10.2 Tables
+## 3.2 Tables
 
 Tables offer another opportunity to present data in a format that is easily processed by the reader of your PDF's. 
 You can create tables to represent invoices, itemized bills, forms, Sudoku's and much more.
@@ -2634,87 +3197,110 @@ Each `Table` supports:
     - `padding_top`, `padding_right`, `padding_bottom` and `padding_left` on all `TableCell` objects in the `Table`
     - Etc
 
-#### 2.10.2.1 FixedColumnWidthTable
+### 3.2.1 FixedColumnWidthTable
 
 In the next example, you'll be creating a simple `Table` with 3 columns and 2 rows.
 
 ```python
-from borb.pdf.canvas.layout.page_layout.multi_column_layout import SingleColumnLayout  
-from borb.pdf.canvas.layout.page_layout.page_layout import PageLayout  
-from borb.pdf.canvas.layout.table.fixed_column_width_table import FixedColumnWidthTable  
-from borb.pdf.canvas.layout.text.paragraph import Paragraph  
-from borb.pdf.document import Document  
-from borb.pdf.page.page import Page  
-from borb.pdf.pdf import PDF  
-  
-  
-def main():  
-    doc: Document = Document()  
-    page: Page = Page()  
-    doc.append_page(page)  
-  
-    layout: PageLayout = SingleColumnLayout(page)  
-    layout.add(  
-        FixedColumnWidthTable(number_of_columns=3, number_of_rows=2)  
-        .add(Paragraph("Lorem"))  
-        .add(Paragraph("Ipsum"))  
-        .add(Paragraph("Dolor"))  
-        .add(Paragraph("Sit"))  
-        .add(Paragraph("Amet"))  
-        .add(Paragraph("Consectetur"))  
-    )  
-  
-    with open("output.pdf", "wb") as out_file_handle:  
-        PDF.dumps(out_file_handle, doc)  
-  
-  
-if __name__ == "__main__":  
+#!chapter_003/src/snippet_008.py
+from decimal import Decimal
+
+from borb.pdf.canvas.layout.page_layout.multi_column_layout import SingleColumnLayout
+from borb.pdf.canvas.layout.page_layout.page_layout import PageLayout
+from borb.pdf.canvas.layout.table.fixed_column_width_table import FixedColumnWidthTable
+from borb.pdf.canvas.layout.text.paragraph import Paragraph
+from borb.pdf.document.document import Document
+from borb.pdf.page.page import Page
+from borb.pdf.pdf import PDF
+
+
+def main():
+    # create Document
+    doc: Document = Document()
+
+    # create Page
+    page: Page = Page()
+
+    # add Page to Document
+    doc.append_page(page)
+
+    # set a PageLayout
+    layout: PageLayout = SingleColumnLayout(page)
+
+    # create a FixedColumnWidthTable
+    layout.add(
+        FixedColumnWidthTable(number_of_columns=3, number_of_rows=2)
+        .add(Paragraph("Lorem"))
+        .add(Paragraph("Ipsum"))
+        .add(Paragraph("Dolor"))
+        .add(Paragraph("Sit"))
+        .add(Paragraph("Amet"))
+        .add(Paragraph("Consectetur"))
+    )
+
+    # store
+    with open("output.pdf", "wb") as out_file_handle:
+        PDF.dumps(out_file_handle, doc)
+
+
+if __name__ == "__main__":
     main()
 ```
 
-![enter image description here](img/borb_in_action_example_035.png)
+![enter image description here](chapter_003/img/snippet_008.png)
 
 This is not exactly the best looking table in the world. 
 Let's add some padding to all cells to ensure the text doesn't *stick* to the cell borders so much.
 
 ```python
-from decimal import Decimal  
-  
-from borb.pdf.canvas.layout.page_layout.multi_column_layout import SingleColumnLayout  
-from borb.pdf.canvas.layout.page_layout.page_layout import PageLayout  
-from borb.pdf.canvas.layout.table.fixed_column_width_table import FixedColumnWidthTable  
-from borb.pdf.canvas.layout.text.paragraph import Paragraph  
-from borb.pdf.document import Document  
-from borb.pdf.page.page import Page  
-from borb.pdf.pdf import PDF  
-  
-  
-def main():  
-    doc: Document = Document()  
-    page: Page = Page()  
-    doc.append_page(page)  
-  
-    layout: PageLayout = SingleColumnLayout(page)  
-    layout.add(  
-        FixedColumnWidthTable(number_of_columns=3, number_of_rows=2)  
-        .add(Paragraph("Lorem"))  
-        .add(Paragraph("Ipsum"))  
-        .add(Paragraph("Dolor"))  
-        .add(Paragraph("Sit"))  
-        .add(Paragraph("Amet"))  
-        .add(Paragraph("Consectetur"))  
-        .set_padding_on_all_cells(Decimal(2), Decimal(2), Decimal(2), Decimal(2))  
-    )  
-  
-    with open("output.pdf", "wb") as out_file_handle:  
-        PDF.dumps(out_file_handle, doc)  
-  
-  
-if __name__ == "__main__":  
+#!chapter_003/src/snippet_009.py
+from decimal import Decimal
+
+from borb.pdf.canvas.layout.page_layout.multi_column_layout import SingleColumnLayout
+from borb.pdf.canvas.layout.page_layout.page_layout import PageLayout
+from borb.pdf.canvas.layout.table.fixed_column_width_table import FixedColumnWidthTable
+from borb.pdf.canvas.layout.text.paragraph import Paragraph
+from borb.pdf.document.document import Document
+from borb.pdf.page.page import Page
+from borb.pdf.pdf import PDF
+
+
+def main():
+    # create Document
+    doc: Document = Document()
+
+    # create Page
+    page: Page = Page()
+
+    # add Page to Document
+    doc.append_page(page)
+
+    # set a PageLayout
+    layout: PageLayout = SingleColumnLayout(page)
+
+    # create a FixedColumnWidthTable
+    layout.add(
+        FixedColumnWidthTable(number_of_columns=3, number_of_rows=2)
+        .add(Paragraph("Lorem"))
+        .add(Paragraph("Ipsum"))
+        .add(Paragraph("Dolor"))
+        .add(Paragraph("Sit"))
+        .add(Paragraph("Amet"))
+        .add(Paragraph("Consectetur"))
+        # set padding on all (implicit) TableCell objects in the FixedColumnWidthTable
+        .set_padding_on_all_cells(Decimal(2), Decimal(2), Decimal(2), Decimal(2))
+    )
+
+    # store
+    with open("output.pdf", "wb") as out_file_handle:
+        PDF.dumps(out_file_handle, doc)
+
+
+if __name__ == "__main__":
     main()
 ```
 
-![enter image description here](img/borb_in_action_example_036.png)
+![enter image description here](chapter_003/img/snippet_009.png)
 
 That's a lot better already. 
 
@@ -2723,184 +3309,233 @@ In the next example you'll be setting one column to take up 50% of the `page_wid
 and divide the remaining space among the other 2.
 
 ```python
-from decimal import Decimal  
-  
-from borb.pdf.canvas.layout.page_layout.multi_column_layout import SingleColumnLayout  
-from borb.pdf.canvas.layout.page_layout.page_layout import PageLayout  
-from borb.pdf.canvas.layout.table.fixed_column_width_table import FixedColumnWidthTable  
-from borb.pdf.canvas.layout.text.paragraph import Paragraph  
-from borb.pdf.document import Document  
-from borb.pdf.page.page import Page  
-from borb.pdf.pdf import PDF  
-  
-  
-def main():  
-    doc: Document = Document()  
-    page: Page = Page()  
-    doc.append_page(page)  
-  
-    layout: PageLayout = SingleColumnLayout(page)  
-    layout.add(  
-        FixedColumnWidthTable(  
-            number_of_columns=3,  
-            number_of_rows=2,  
-            column_widths=[Decimal(2), Decimal(1), Decimal(1)],  
-        )  
-        .add(Paragraph("Lorem"))  
-        .add(Paragraph("Ipsum"))  
-        .add(Paragraph("Dolor"))  
-        .add(Paragraph("Sit"))  
-        .add(Paragraph("Amet"))  
-        .add(Paragraph("Consectetur"))  
-        .set_padding_on_all_cells(Decimal(2), Decimal(2), Decimal(2), Decimal(2))  
-    )  
-  
-    with open("output.pdf", "wb") as out_file_handle:  
-        PDF.dumps(out_file_handle, doc)  
-  
-  
-if __name__ == "__main__":  
+#!chapter_003/src/snippet_010.py
+from decimal import Decimal
+
+from borb.pdf.canvas.layout.page_layout.multi_column_layout import SingleColumnLayout
+from borb.pdf.canvas.layout.page_layout.page_layout import PageLayout
+from borb.pdf.canvas.layout.table.fixed_column_width_table import FixedColumnWidthTable
+from borb.pdf.canvas.layout.text.paragraph import Paragraph
+from borb.pdf.document.document import Document
+from borb.pdf.page.page import Page
+from borb.pdf.pdf import PDF
+
+
+def main():
+    # create Document
+    doc: Document = Document()
+
+    # create Page
+    page: Page = Page()
+
+    # add Page to Document
+    doc.append_page(page)
+
+    # set a PageLayout
+    layout: PageLayout = SingleColumnLayout(page)
+
+    # create a FixedColumnWidthTable
+    layout.add(
+        FixedColumnWidthTable(
+            number_of_columns=3,
+            number_of_rows=2,
+            # adjust the ratios of column widths for this FixedColumnWidthTable
+            column_widths=[Decimal(2), Decimal(1), Decimal(1)],
+        )
+        .add(Paragraph("Lorem"))
+        .add(Paragraph("Ipsum"))
+        .add(Paragraph("Dolor"))
+        .add(Paragraph("Sit"))
+        .add(Paragraph("Amet"))
+        .add(Paragraph("Consectetur"))
+        # set padding on all (implicit) TableCell objects in the FixedColumnWidthTable
+        .set_padding_on_all_cells(Decimal(2), Decimal(2), Decimal(2), Decimal(2))
+    )
+
+    # store
+    with open("output.pdf", "wb") as out_file_handle:
+        PDF.dumps(out_file_handle, doc)
+
+
+if __name__ == "__main__":
     main()
 ```
 
-![enter image description here](img/borb_in_action_example_037.png)
+![enter image description here](chapter_003/img/snippet_010.png)
 
 There are some other minor tweaks you can apply. 
 To really visualize the next tweak, we should add some more data.
 
 ```python
-from decimal import Decimal  
-  
-from borb.pdf.canvas.color.color import X11Color  
-from borb.pdf.canvas.layout.page_layout.multi_column_layout import SingleColumnLayout  
-from borb.pdf.canvas.layout.page_layout.page_layout import PageLayout  
-from borb.pdf.canvas.layout.table.fixed_column_width_table import FixedColumnWidthTable  
-from borb.pdf.canvas.layout.text.paragraph import Paragraph  
-from borb.pdf.document import Document  
-from borb.pdf.page.page import Page  
-from borb.pdf.pdf import PDF  
-  
-  
-def main():  
-    doc: Document = Document()  
-    page: Page = Page()  
-    doc.append_page(page)  
-  
-    layout: PageLayout = SingleColumnLayout(page)  
-    layout.add(  
-        FixedColumnWidthTable(number_of_columns=3, number_of_rows=4)  
-        .add(Paragraph("Lorem"))  
-        .add(Paragraph("Ipsum"))  
-        .add(Paragraph("Dolor"))  
-        .add(Paragraph("Sit"))  
-        .add(Paragraph("Amet"))  
-        .add(Paragraph("Consectetur"))  
-        .add(Paragraph("Adipiscing"))  
-        .add(Paragraph("Elit"))  
-        .add(Paragraph("Sed"))  
-        .add(Paragraph("Do"))  
-        .add(Paragraph("Eiusmod"))  
-        .add(Paragraph("Tempor"))  
-        .set_padding_on_all_cells(Decimal(2), Decimal(2), Decimal(2), Decimal(2))  
-        .even_odd_row_colors(X11Color("LightGray"), X11Color("White"))  
-    )  
-  
-    with open("output.pdf", "wb") as out_file_handle:  
-        PDF.dumps(out_file_handle, doc)  
-  
-  
-if __name__ == "__main__":  
+#!chapter_003/src/snippet_011.py
+from decimal import Decimal
+
+from borb.pdf.canvas.color.color import X11Color
+from borb.pdf.canvas.layout.page_layout.multi_column_layout import SingleColumnLayout
+from borb.pdf.canvas.layout.page_layout.page_layout import PageLayout
+from borb.pdf.canvas.layout.table.fixed_column_width_table import FixedColumnWidthTable
+from borb.pdf.canvas.layout.text.paragraph import Paragraph
+from borb.pdf.document.document import Document
+from borb.pdf.page.page import Page
+from borb.pdf.pdf import PDF
+
+
+def main():
+    # create Document
+    doc: Document = Document()
+
+    # create Page
+    page: Page = Page()
+
+    # add Page to Document
+    doc.append_page(page)
+
+    # set a PageLayout
+    layout: PageLayout = SingleColumnLayout(page)
+
+    # create a FixedColumnWidthTable
+    layout.add(
+        FixedColumnWidthTable(number_of_columns=3, number_of_rows=4)
+        .add(Paragraph("Lorem"))
+        .add(Paragraph("Ipsum"))
+        .add(Paragraph("Dolor"))
+        .add(Paragraph("Sit"))
+        .add(Paragraph("Amet"))
+        .add(Paragraph("Consectetur"))
+        .add(Paragraph("Adipiscing"))
+        .add(Paragraph("Elit"))
+        .add(Paragraph("Sed"))
+        .add(Paragraph("Do"))
+        .add(Paragraph("Eiusmod"))
+        .add(Paragraph("Tempor"))
+        # set padding on all (implicit) TableCell objects in the FixedColumnWidthTable
+        .set_padding_on_all_cells(Decimal(2), Decimal(2), Decimal(2), Decimal(2))
+        # apply 'zebra striping' to the FixedColumnWidthTable
+        .even_odd_row_colors(X11Color("LightGray"), X11Color("White"))
+    )
+
+    # store
+    with open("output.pdf", "wb") as out_file_handle:
+        PDF.dumps(out_file_handle, doc)
+
+
+if __name__ == "__main__":
     main()
 ```
 
-![enter image description here](img/borb_in_action_example_038.png)
+![enter image description here](chapter_003/img/snippet_011.png)
 
-#### 2.10.2.2 FlexibleColumnWidthTable
+### 3.2.2 FlexibleColumnWidthTable
 
 In the next example you're going to create a `Table` similar to the ones you created earlier. 
 The difference between both kinds of `Table` will become obvious.
 
 ```python
-from borb.pdf.canvas.layout.page_layout.multi_column_layout import SingleColumnLayout  
-from borb.pdf.canvas.layout.page_layout.page_layout import PageLayout  
-from borb.pdf.canvas.layout.table.flexible_column_width_table import FlexibleColumnWidthTable  
-from borb.pdf.canvas.layout.text.paragraph import Paragraph  
-from borb.pdf.document import Document  
-from borb.pdf.page.page import Page  
-from borb.pdf.pdf import PDF  
-  
-  
-def main():  
-    doc: Document = Document()  
-    page: Page = Page()  
-    doc.append_page(page)  
-  
-    layout: PageLayout = SingleColumnLayout(page)  
-    layout.add(  
-        FlexibleColumnWidthTable(number_of_columns=3, number_of_rows=2)  
-        .add(Paragraph("Lorem"))  
-        .add(Paragraph("Ipsum"))  
-        .add(Paragraph("Dolor"))  
-        .add(Paragraph("Sit"))  
-        .add(Paragraph("Amet"))  
-        .add(Paragraph("Consectetur"))  
-    )  
-  
-    with open("output.pdf", "wb") as out_file_handle:  
-        PDF.dumps(out_file_handle, doc)  
-  
-  
-if __name__ == "__main__":  
+#!chapter_003/src/snippet_012.py
+from borb.pdf.canvas.layout.page_layout.multi_column_layout import SingleColumnLayout
+from borb.pdf.canvas.layout.page_layout.page_layout import PageLayout
+from borb.pdf.canvas.layout.table.flexible_column_width_table import (
+    FlexibleColumnWidthTable,
+)
+from borb.pdf.canvas.layout.text.paragraph import Paragraph
+from borb.pdf.document.document import Document
+from borb.pdf.page.page import Page
+from borb.pdf.pdf import PDF
+
+
+def main():
+    # create Document
+    doc: Document = Document()
+
+    # create Page
+    page: Page = Page()
+
+    # add Page to Document
+    doc.append_page(page)
+
+    # set a PageLayout
+    layout: PageLayout = SingleColumnLayout(page)
+
+    # create a FlexibleColumnWidthTable
+    layout.add(
+        FlexibleColumnWidthTable(number_of_columns=3, number_of_rows=2)
+        .add(Paragraph("Lorem"))
+        .add(Paragraph("Ipsum"))
+        .add(Paragraph("Dolor"))
+        .add(Paragraph("Sit"))
+        .add(Paragraph("Amet"))
+        .add(Paragraph("Consectetur"))
+    )
+
+    # store
+    with open("output.pdf", "wb") as out_file_handle:
+        PDF.dumps(out_file_handle, doc)
+
+
+if __name__ == "__main__":
     main()
 ```
 
-![enter image description here](img/borb_in_action_example_039.png)
+![enter image description here](chapter_003/img/snippet_012.png)
 
 Let's set the padding. That'll make this `Table` look a bit better.
 
 ```python
-from decimal import Decimal  
-  
-from borb.pdf.canvas.layout.page_layout.multi_column_layout import SingleColumnLayout  
-from borb.pdf.canvas.layout.page_layout.page_layout import PageLayout  
-from borb.pdf.canvas.layout.table.flexible_column_width_table import FlexibleColumnWidthTable  
-from borb.pdf.canvas.layout.text.paragraph import Paragraph  
-from borb.pdf.document import Document  
-from borb.pdf.page.page import Page  
-from borb.pdf.pdf import PDF  
-  
-  
-def main():  
-    doc: Document = Document()  
-    page: Page = Page()  
-    doc.append_page(page)  
-  
-    layout: PageLayout = SingleColumnLayout(page)  
-    layout.add(  
-        FlexibleColumnWidthTable(number_of_columns=3, number_of_rows=2)  
-        .add(Paragraph("Lorem"))  
-        .add(Paragraph("Ipsum"))  
-        .add(Paragraph("Dolor"))  
-        .add(Paragraph("Sit"))  
-        .add(Paragraph("Amet"))  
-        .add(Paragraph("Consectetur"))  
-        .set_padding_on_all_cells(Decimal(2), Decimal(2), Decimal(2), Decimal(2))  
-    )  
-  
-    with open("output.pdf", "wb") as out_file_handle:  
-        PDF.dumps(out_file_handle, doc)  
-  
-  
-if __name__ == "__main__":  
+#!chapter_003/src/snippet_013.py
+from decimal import Decimal
+
+from borb.pdf.canvas.layout.page_layout.multi_column_layout import SingleColumnLayout
+from borb.pdf.canvas.layout.page_layout.page_layout import PageLayout
+from borb.pdf.canvas.layout.table.flexible_column_width_table import (
+    FlexibleColumnWidthTable,
+)
+from borb.pdf.canvas.layout.text.paragraph import Paragraph
+from borb.pdf.document.document import Document
+from borb.pdf.page.page import Page
+from borb.pdf.pdf import PDF
+
+
+def main():
+    # create Document
+    doc: Document = Document()
+
+    # create Page
+    page: Page = Page()
+
+    # add Page to Document
+    doc.append_page(page)
+
+    # set a PageLayout
+    layout: PageLayout = SingleColumnLayout(page)
+
+    # create a FlexibleColumnWidthTable
+    layout.add(
+        FlexibleColumnWidthTable(number_of_columns=3, number_of_rows=2)
+        .add(Paragraph("Lorem"))
+        .add(Paragraph("Ipsum"))
+        .add(Paragraph("Dolor"))
+        .add(Paragraph("Sit"))
+        .add(Paragraph("Amet"))
+        .add(Paragraph("Consectetur"))
+        # set padding on all (implicit) TableCell objects in the FlexibleColumnWidthTable
+        .set_padding_on_all_cells(Decimal(2), Decimal(2), Decimal(2), Decimal(2))
+    )
+
+    # store
+    with open("output.pdf", "wb") as out_file_handle:
+        PDF.dumps(out_file_handle, doc)
+
+
+if __name__ == "__main__":
     main()
 ```
 
-![enter image description here](img/borb_in_action_example_040.png)
+![enter image description here](chapter_003/img/snippet_013.png)
 
 As you can see, this `Table` only takes up as much space as is needed to render the content in each `TableCell`.
 This is more in line with the behavior you'd expect from an `HTML` `<table>` element.
 
-#### 2.10.2.3 Setting layout properties on individual cells of a `Table`
+### 3.2.3 Setting layout properties on individual cells of a `Table`
 
 In the previous examples you've already set some layout properties. You've set padding and applied alternating background colors. Of course, there are use-cases where you'd like to set these properties on individual cell objects. 
 
@@ -2910,55 +3545,74 @@ Every time you've added anything to a `Table` that isn't `TableCell` it was auto
 
 In the next example, you'll be setting the background color of an individual cell to `X11Color('Red')` and removing two of its borders.
 
-```
-from decimal import Decimal  
-  
-from borb.pdf.canvas.color.color import X11Color  
-from borb.pdf.canvas.layout.page_layout.multi_column_layout import SingleColumnLayout  
-from borb.pdf.canvas.layout.page_layout.page_layout import PageLayout  
-from borb.pdf.canvas.layout.table.table import TableCell  
-from borb.pdf.canvas.layout.table.flexible_column_width_table import FlexibleColumnWidthTable  
-from borb.pdf.canvas.layout.text.paragraph import Paragraph  
-from borb.pdf.document import Document  
-from borb.pdf.page.page import Page  
-from borb.pdf.pdf import PDF  
-  
-  
-def main():  
-    doc: Document = Document()  
-    page: Page = Page()  
-    doc.append_page(page)  
-  
-    layout: PageLayout = SingleColumnLayout(page)  
-    layout.add(  
-        FlexibleColumnWidthTable(number_of_columns=3, number_of_rows=2)  
-        .add(TableCell(Paragraph("Lorem"),  
-                       background_color=X11Color("Red"),  
-                       border_top=False,  
-                       border_left=False))  
-        .add(Paragraph("Ipsum"))  
-        .add(Paragraph("Dolor"))  
-        .add(Paragraph("Sit"))  
-        .add(Paragraph("Amet"))  
-        .add(Paragraph("Consectetur"))  
-        .set_padding_on_all_cells(Decimal(2), Decimal(2), Decimal(2), Decimal(2))  
-    )  
-  
-    with open("output.pdf", "wb") as out_file_handle:  
-        PDF.dumps(out_file_handle, doc)  
-  
-  
-if __name__ == "__main__":  
+```python
+#!chapter_003/src/snippet_014.py
+from decimal import Decimal
+
+from borb.pdf.canvas.color.color import X11Color
+from borb.pdf.canvas.layout.page_layout.multi_column_layout import SingleColumnLayout
+from borb.pdf.canvas.layout.page_layout.page_layout import PageLayout
+from borb.pdf.canvas.layout.table.table import TableCell
+from borb.pdf.canvas.layout.table.flexible_column_width_table import (
+    FlexibleColumnWidthTable,
+)
+from borb.pdf.canvas.layout.text.paragraph import Paragraph
+from borb.pdf.document.document import Document
+from borb.pdf.page.page import Page
+from borb.pdf.pdf import PDF
+
+
+def main():
+    # create Document
+    doc: Document = Document()
+
+    # create Page
+    page: Page = Page()
+
+    # add Page to Document
+    doc.append_page(page)
+
+    # set a PageLayout
+    layout: PageLayout = SingleColumnLayout(page)
+
+    # create a FlexibleColumnWidthTable
+    layout.add(
+        FlexibleColumnWidthTable(number_of_columns=3, number_of_rows=2)
+        .add(
+            # explictly create a TableCell so we can set the properties of this cell individually
+            TableCell(
+                Paragraph("Lorem"),
+                background_color=X11Color("Red"),
+                border_top=False,
+                border_left=False,
+            )
+        )
+        .add(Paragraph("Ipsum"))
+        .add(Paragraph("Dolor"))
+        .add(Paragraph("Sit"))
+        .add(Paragraph("Amet"))
+        .add(Paragraph("Consectetur"))
+        # set padding on all (implicit) TableCell objects in the FlexibleColumnWidthTable
+        .set_padding_on_all_cells(Decimal(2), Decimal(2), Decimal(2), Decimal(2))
+    )
+
+    # store
+    with open("output.pdf", "wb") as out_file_handle:
+        PDF.dumps(out_file_handle, doc)
+
+
+if __name__ == "__main__":
     main()
 ```
 
-![enter image description here](img/borb_in_action_example_041.png)
+![enter image description here](chapter_003/img/snippet_014.png)
 
 This is particularly useful when you're building a comparison matrix, and you'd like to *remove* the `TableCell` at the top-left corner.
 
 In the next example you'll build a feature-comparison matrix for several mobile tourist guides;
 
 ```python
+#!chapter_003/src/snippet_015.py
 from decimal import Decimal
 
 from borb.pdf.canvas.layout.emoji.emoji import Emojis
@@ -2970,18 +3624,26 @@ from borb.pdf.canvas.layout.table.flexible_column_width_table import (
     FlexibleColumnWidthTable,
 )
 from borb.pdf.canvas.layout.text.paragraph import Paragraph
-from borb.pdf.document import Document
+from borb.pdf.document.document import Document
 from borb.pdf.page.page import Page
 from borb.pdf.page.page_size import PageSize
 from borb.pdf.pdf import PDF
 
 
 def main():
+    # create Document
     doc: Document = Document()
-    page: Page = Page(PageSize.A4_LANDSCAPE.value[0], PageSize.A4_LANDSCAPE.value[1])
+
+    # create Page
+    page: Page = Page()
+
+    # add Page to Document
     doc.append_page(page)
 
+    # set a PageLayout
     layout: PageLayout = SingleColumnLayout(page)
+
+    # create a FlexibleColumnWidthTable
     layout.add(
         FlexibleColumnWidthTable(number_of_columns=11, number_of_rows=5)
         # row 1
@@ -3057,18 +3719,18 @@ def main():
         .set_padding_on_all_cells(Decimal(5), Decimal(5), Decimal(5), Decimal(5))
     )
 
+    # store
     with open("output.pdf", "wb") as out_file_handle:
         PDF.dumps(out_file_handle, doc)
 
 
 if __name__ == "__main__":
     main()
-
 ```
 
-![enter image description here](img/borb_in_action_example_042.png)
+![enter image description here](chapter_003/img/snippet_015.png)
 
-#### 2.10.2.4 Incomplete `Table`
+### 3.2.4 Incomplete `Table`
 
 `Table` requires you to specify the number of rows and columns up front. Sometimes however, the amount of data does not really match `rows x columns`, and the final few cells of your `Table` are not needed.
 
@@ -3079,37 +3741,49 @@ Whenever a `Table` does not have `rows x columns` objects in it, the remaining c
 In the next example you'll create an incomplete `Table` and watch how the `Table` is filled by `borb`.
 
 ```python
-from decimal import Decimal  
-  
-from borb.pdf.canvas.layout.page_layout.multi_column_layout import SingleColumnLayout  
-from borb.pdf.canvas.layout.page_layout.page_layout import PageLayout  
-from borb.pdf.canvas.layout.table.flexible_column_width_table import FlexibleColumnWidthTable  
-from borb.pdf.canvas.layout.text.paragraph import Paragraph  
-from borb.pdf.document import Document  
-from borb.pdf.page.page import Page  
-from borb.pdf.pdf import PDF  
-  
-  
-def main():  
-    doc: Document = Document()  
-    page: Page = Page()  
-    doc.append_page(page)  
-  
-    layout: PageLayout = SingleColumnLayout(page)  
-    layout.add(  
-        FlexibleColumnWidthTable(number_of_columns=3, number_of_rows=2)  
-        .add(Paragraph("Lorem"))  
-        .add(Paragraph("Ipsum"))  
-        .add(Paragraph("Dolor"))  
-        .add(Paragraph("Sit"))  
-        .set_padding_on_all_cells(Decimal(2), Decimal(2), Decimal(2), Decimal(2))  
-    )  
-  
-    with open("output.pdf", "wb") as out_file_handle:  
-        PDF.dumps(out_file_handle, doc)  
-  
-  
-if __name__ == "__main__":  
+#!chapter_003/src/snippet_016.py
+from decimal import Decimal
+
+from borb.pdf.canvas.layout.page_layout.multi_column_layout import SingleColumnLayout
+from borb.pdf.canvas.layout.page_layout.page_layout import PageLayout
+from borb.pdf.canvas.layout.table.flexible_column_width_table import (
+    FlexibleColumnWidthTable,
+)
+from borb.pdf.canvas.layout.text.paragraph import Paragraph
+from borb.pdf.document.document import Document
+from borb.pdf.page.page import Page
+from borb.pdf.pdf import PDF
+
+
+def main():
+    # create Document
+    doc: Document = Document()
+
+    # create Page
+    page: Page = Page()
+
+    # add Page to Document
+    doc.append_page(page)
+
+    # set a PageLayout
+    layout: PageLayout = SingleColumnLayout(page)
+
+    # create a FlexibleColumnWidthTable
+    layout.add(
+        FlexibleColumnWidthTable(number_of_columns=3, number_of_rows=2)
+        .add(Paragraph("Lorem"))
+        .add(Paragraph("Ipsum"))
+        .add(Paragraph("Dolor"))
+        .add(Paragraph("Sit"))
+        .set_padding_on_all_cells(Decimal(2), Decimal(2), Decimal(2), Decimal(2))
+    )
+
+    # store
+    with open("output.pdf", "wb") as out_file_handle:
+        PDF.dumps(out_file_handle, doc)
+
+
+if __name__ == "__main__":
     main()
 ```
 
@@ -3117,13 +3791,13 @@ You'll have noticed that you created a `Table` that expects 6 pieces of content.
 Yet, you added only 4. 
 The remainder will be dealt with by `borb` automatically.
 
-![enter image description here](img/borb_in_action_example_043.png)
+![enter image description here](chapter_003/img/snippet_016.png)
 
 **Keep in mind the style will be the default style.** 
 If that's not what you want, you should add each TableCell individually, 
 or write a convenience method that builds empty cells with the appropriate style.
 
-#### 2.10.2.5 Setting `col_span` and `row_span`
+### 3.2.5 Setting `col_span` and `row_span`
 
 Sometimes, you'd like to shake things up a bit. 
 For instance using a `TableCell` that spans multiple rows or columns. 
@@ -3132,90 +3806,260 @@ For instance using a `TableCell` that spans multiple rows or columns.
 In the next example you'll be using `col_span` on a `TableCell` object.
 
 ```python
-from decimal import Decimal  
-  
-from borb.pdf.canvas.layout.page_layout.multi_column_layout import SingleColumnLayout  
-from borb.pdf.canvas.layout.page_layout.page_layout import PageLayout  
-from borb.pdf.canvas.layout.table.table import TableCell  
-from borb.pdf.canvas.layout.table.flexible_column_width_table import FlexibleColumnWidthTable  
-from borb.pdf.canvas.layout.text.paragraph import Paragraph  
-from borb.pdf.document import Document  
-from borb.pdf.page.page import Page  
-from borb.pdf.pdf import PDF  
-  
-  
-def main():  
-    doc: Document = Document()  
-    page: Page = Page()  
-    doc.append_page(page)  
-  
-    layout: PageLayout = SingleColumnLayout(page)  
-    layout.add(  
-        FlexibleColumnWidthTable(number_of_columns=3, number_of_rows=2)  
-        .add(Paragraph("Lorem"))  
-        .add(Paragraph("Ipsum"))  
-        .add(Paragraph("Dolor"))  
-        .add(TableCell(Paragraph("Sit"), col_span=2))  
-        .add(Paragraph("Amet"))  
-        .set_padding_on_all_cells(Decimal(2), Decimal(2), Decimal(2), Decimal(2))  
-    )  
-  
-    with open("output.pdf", "wb") as out_file_handle:  
-        PDF.dumps(out_file_handle, doc)  
-  
-  
-if __name__ == "__main__":  
+#!chapter_003/src/snippet_017.py
+from decimal import Decimal
+
+from borb.pdf.canvas.layout.page_layout.multi_column_layout import SingleColumnLayout
+from borb.pdf.canvas.layout.page_layout.page_layout import PageLayout
+from borb.pdf.canvas.layout.table.flexible_column_width_table import (
+    FlexibleColumnWidthTable,
+)
+from borb.pdf.canvas.layout.table.table import TableCell
+from borb.pdf.canvas.layout.text.paragraph import Paragraph
+from borb.pdf.document.document import Document
+from borb.pdf.page.page import Page
+from borb.pdf.pdf import PDF
+
+
+def main():
+    # create Document
+    doc: Document = Document()
+
+    # create Page
+    page: Page = Page()
+
+    # add Page to Document
+    doc.append_page(page)
+
+    # set a PageLayout
+    layout: PageLayout = SingleColumnLayout(page)
+
+    # create a FlexibleColumnWidthTable
+    layout.add(
+        FlexibleColumnWidthTable(number_of_columns=3, number_of_rows=2)
+        .add(Paragraph("Lorem"))
+        .add(Paragraph("Ipsum"))
+        .add(Paragraph("Dolor"))
+        # set col_span to 2
+        .add(TableCell(Paragraph("Sit"), col_span=2))
+        .add(Paragraph("Amet"))
+        .set_padding_on_all_cells(Decimal(2), Decimal(2), Decimal(2), Decimal(2))
+    )
+
+    # store
+    with open("output.pdf", "wb") as out_file_handle:
+        PDF.dumps(out_file_handle, doc)
+
+
+if __name__ == "__main__":
     main()
 ```
 
-![enter image description here](img/borb_in_action_example_044.png)
+![enter image description here](chapter_003/img/snippet_017.png)
 
 Of course, you can do the same for `row_span`:
 
 ```python
-from decimal import Decimal  
-  
-from borb.pdf.canvas.layout.page_layout.multi_column_layout import SingleColumnLayout  
-from borb.pdf.canvas.layout.page_layout.page_layout import PageLayout  
-from borb.pdf.canvas.layout.table.table import TableCell  
-from borb.pdf.canvas.layout.table.flexible_column_width_table import FlexibleColumnWidthTable  
-from borb.pdf.canvas.layout.text.paragraph import Paragraph  
-from borb.pdf.document import Document  
-from borb.pdf.page.page import Page  
-from borb.pdf.pdf import PDF  
-  
-  
-def main():  
-    doc: Document = Document()  
-    page: Page = Page()  
-    doc.append_page(page)  
-  
-    layout: PageLayout = SingleColumnLayout(page)  
-    layout.add(  
-        FlexibleColumnWidthTable(number_of_columns=3, number_of_rows=2)  
-        .add(TableCell(Paragraph("Lorem"), row_span=2))  
-        .add(Paragraph("Ipsum"))  
-        .add(Paragraph("Dolor"))  
-        .add(Paragraph("Sit"))  
-        .add(Paragraph("Amet"))  
-        .set_padding_on_all_cells(Decimal(2), Decimal(2), Decimal(2), Decimal(2))  
-    )  
-  
-    with open("output.pdf", "wb") as out_file_handle:  
-        PDF.dumps(out_file_handle, doc)  
-  
-  
-if __name__ == "__main__":  
+#!chapter_003/src/snippet_018.py
+from decimal import Decimal
+
+from borb.pdf.canvas.layout.page_layout.multi_column_layout import SingleColumnLayout
+from borb.pdf.canvas.layout.page_layout.page_layout import PageLayout
+
+from borb.pdf.canvas.layout.table.flexible_column_width_table import (
+    FlexibleColumnWidthTable,
+)
+from borb.pdf.canvas.layout.table.table import TableCell
+from borb.pdf.canvas.layout.text.paragraph import Paragraph
+from borb.pdf.document.document import Document
+from borb.pdf.page.page import Page
+from borb.pdf.pdf import PDF
+
+
+def main():
+    # create Document
+    doc: Document = Document()
+
+    # create Page
+    page: Page = Page()
+
+    # add Page to Document
+    doc.append_page(page)
+
+    # set a PageLayout
+    layout: PageLayout = SingleColumnLayout(page)
+
+    # create a FlexibleColumnWidthTable
+    layout.add(
+        FlexibleColumnWidthTable(number_of_columns=3, number_of_rows=2)
+        # set row_span to 2
+        .add(TableCell(Paragraph("Lorem"), row_span=2))
+        .add(Paragraph("Ipsum"))
+        .add(Paragraph("Dolor"))
+        .add(Paragraph("Sit"))
+        .add(Paragraph("Amet"))
+        .set_padding_on_all_cells(Decimal(2), Decimal(2), Decimal(2), Decimal(2))
+    )
+
+    # store
+    with open("output.pdf", "wb") as out_file_handle:
+        PDF.dumps(out_file_handle, doc)
+
+
+if __name__ == "__main__":
     main()
 ```
 
-![enter image description here](img/borb_in_action_example_045.png)
+![enter image description here](chapter_003/img/snippet_018.png)
 
 <div style="page-break-before: always;"></div>
 
-## 2.11 Forms
+## 3.3 Nesting `Table` in `List` and vice-versa
 
-### 2.11.1 Acroforms vs XFA
+### 3.3.1 Nesting a `Table` in a `List`
+
+You can add a `Table` to a `List`, since `List` accepts any `LayoutElement` as content,
+and `Table` implements the `LayoutElement` interface.
+
+```python
+#!chapter_003/src/snippet_019.py
+from decimal import Decimal
+
+from borb.pdf.canvas.layout.page_layout.multi_column_layout import SingleColumnLayout
+from borb.pdf.canvas.layout.page_layout.page_layout import PageLayout
+from borb.pdf.canvas.layout.list.ordered_list import OrderedList
+from borb.pdf.canvas.layout.table.flexible_column_width_table import (
+    FlexibleColumnWidthTable,
+)
+from borb.pdf.canvas.layout.table.table import TableCell
+from borb.pdf.canvas.layout.text.paragraph import Paragraph
+from borb.pdf.document.document import Document
+from borb.pdf.page.page import Page
+from borb.pdf.pdf import PDF
+
+
+def main():
+    # create Document
+    doc: Document = Document()
+
+    # create Page
+    page: Page = Page()
+
+    # add Page to Document
+    doc.append_page(page)
+
+    # set a PageLayout
+    layout: PageLayout = SingleColumnLayout(page)
+
+    # create a FlexibleColumnWidthTable
+    table: FlexibleColumnWidthTable = (
+        FlexibleColumnWidthTable(number_of_columns=3, number_of_rows=2)
+        .add(Paragraph("Lorem"))
+        .add(Paragraph("Ipsum"))
+        .add(Paragraph("Dolor"))
+        .add(Paragraph("Sit"))
+        .add(Paragraph("Amet"))
+        .add(Paragraph("Nunc"))
+        .set_padding_on_all_cells(Decimal(2), Decimal(2), Decimal(2), Decimal(2))
+    )
+
+    layout.add(
+        OrderedList()
+        .add(Paragraph("Item 1"))
+        .add(Paragraph("Item 2"))
+        .add(table)
+        .add(Paragraph("Item 4"))
+    )
+
+    # store
+    with open("output.pdf", "wb") as out_file_handle:
+        PDF.dumps(out_file_handle, doc)
+
+
+if __name__ == "__main__":
+    main()
+```
+
+![enter image description here](chapter_003/img/snippet_019.png)
+
+### 3.3.2 Nesting a `List` in a `Table`
+
+Conversely, you can also use `List` inside a `Table`.
+
+```python
+#!chapter_003/src/snippet_020.py
+from decimal import Decimal
+
+from borb.pdf.canvas.layout.page_layout.multi_column_layout import SingleColumnLayout
+from borb.pdf.canvas.layout.page_layout.page_layout import PageLayout
+from borb.pdf.canvas.layout.list.ordered_list import OrderedList
+from borb.pdf.canvas.layout.table.flexible_column_width_table import (
+    FlexibleColumnWidthTable,
+)
+from borb.pdf.canvas.layout.table.table import TableCell
+from borb.pdf.canvas.layout.text.paragraph import Paragraph
+from borb.pdf.document.document import Document
+from borb.pdf.page.page import Page
+from borb.pdf.pdf import PDF
+
+
+def main():
+    # create Document
+    doc: Document = Document()
+
+    # create Page
+    page: Page = Page()
+
+    # add Page to Document
+    doc.append_page(page)
+
+    # set a PageLayout
+    layout: PageLayout = SingleColumnLayout(page)
+
+    # create an OrderedList
+    list: OrderedList = (
+        OrderedList()
+        .add(Paragraph("Item 1"))
+        .add(Paragraph("Item 2"))
+        .add(Paragraph("Item 4"))
+    )
+
+    # create a FlexibleColumnWidthTable
+    table: FlexibleColumnWidthTable = (
+        FlexibleColumnWidthTable(number_of_columns=3, number_of_rows=2)
+        .add(Paragraph("Lorem"))
+        .add(Paragraph("Ipsum"))
+        .add(list)
+        .add(Paragraph("Sit"))
+        .add(Paragraph("Amet"))
+        .add(Paragraph("Nunc"))
+        .set_padding_on_all_cells(Decimal(2), Decimal(2), Decimal(2), Decimal(2))
+    )
+
+    layout.add(table)
+
+    # store
+    with open("output.pdf", "wb") as out_file_handle:
+        PDF.dumps(out_file_handle, doc)
+
+
+if __name__ == "__main__":
+    main()
+```
+
+![enter image description here](chapter_003/img/snippet_020.png)
+
+## 3.4 Conclusion
+
+In this chapter you've learnt how to use the basic `LayoutElement` objects inside larger container-`LayoutElement` objects such as `Table` and `List`.
+You've seen some pratical differences between the various implementations of `Table` and `List` and you've coded up some examples for each of them.
+# 4 Forms
+
+![enter image description here](chapter_004/img/chapter_illustration.jpg)
+
+<div style="page-break-before: always;"></div>
+
+## 4.1 Acroforms vs XFA
 
 From wikipedia:
 
@@ -3224,7 +4068,7 @@ From wikipedia:
 > The XFA specification is referenced as an external specification necessary for full application of the ISO 32000-1 specification (PDF 1.7). 
 > The XML Forms Architecture was not standardized as an ISO standard, and has been deprecated in PDF 2.0.
 
-### 2.11.2 The `FormField` object
+## 4.2 The `FormField` object
 
 From the PDF specification:
 
@@ -3249,16 +4093,17 @@ To the user, the technical side of forms (especially to the level of how the `Di
 You can add a `FormField` object to a `Page` or `PageLayout` in the same way you'd add a `Paragraph` and everything will be taken care of.
 `borb` will create the `Dictionary` objects, add them to the `Page`, perform all the calculations needed for layout, etc
 
-### 2.11.3 Adding `FormField` objects to a PDF
+## 4.3 Adding `FormField` objects to a PDF
 
 `FormField` represents the common base implementation of form fields. 
 It handles the logic that is common to `TextField`, `CheckBox`, `DropDownList` and other classes.
 
-#### 2.11.3.1 Adding a `TextField` to a PDF
+### 4.3.1 Adding a `TextField` to a PDF
 
 In the next example you'll be using a `Table` in conjunction with `TextField` objects to build a very rudimentary form.
 
 ```python
+#!chapter_004/src/snippet_001.py
 from decimal import Decimal
 
 from borb.pdf.canvas.layout.forms.text_field import TextField
@@ -3266,25 +4111,26 @@ from borb.pdf.canvas.layout.page_layout.multi_column_layout import SingleColumnL
 from borb.pdf.canvas.layout.page_layout.page_layout import PageLayout
 from borb.pdf.canvas.layout.table.fixed_column_width_table import FixedColumnWidthTable
 from borb.pdf.canvas.layout.text.paragraph import Paragraph
-from borb.pdf.document import Document
+from borb.pdf.document.document import Document
 from borb.pdf.page.page import Page
 from borb.pdf.pdf import PDF
 
 
 def main():
+    # create Document
+    doc: Document = Document()
 
-    # Document
-    d: Document = Document()
+    # create Page
+    page: Page = Page()
 
-    # Page
-    p: Page = Page()
-    d.append_page(p)
+    # add Page to Document
+    doc.append_page(page)
 
-    # PageLayout
-    l: PageLayout = SingleColumnLayout(p)
+    # set a PageLayout
+    layout: PageLayout = SingleColumnLayout(page)
 
-    # add fields
-    l.add(
+    # add FixedColumnWidthTable containing Paragraph and TextField objects
+    layout.add(
         FixedColumnWidthTable(number_of_columns=2, number_of_rows=3)
         .add(Paragraph("Name:"))
         .add(TextField(field_name="name"))
@@ -3298,39 +4144,39 @@ def main():
 
     # store
     with open("output.pdf", "wb") as pdf_file_handle:
-        PDF.dumps(pdf_file_handle, d)
+        PDF.dumps(pdf_file_handle, doc)
 
 
 if __name__ == "__main__":
     main()
-
 ```
 
 The output `Document` should look like this.
 Notice the little warning ribbon atop the `Document` (which may appear differently depending on the PDF reader you are using).
 
-![enter image description here](img/borb_in_action_example_046_001.png)
+![enter image description here](chapter_004/img/snippet_001_001.png)
 
 Let's show the forms, and see what you've made:
 
-![enter image description here](img/borb_in_action_example_046_002.png)
+![enter image description here](chapter_004/img/snippet_001_002.png)
 
 We can of course fill in values in these textboxes:
 
-![enter image description here](img/borb_in_action_example_046_003.png)
+![enter image description here](chapter_004/img/snippet_001_003.png)
 
 And now, when we hide the forms again, the text becomes uneditable:
 
-![enter image description here](img/borb_in_action_example_046_004.png)
+![enter image description here](chapter_004/img/snippet_001_004.png)
 
 Your PDF reader may ask you whether you'd like to save the values in the form before closing the `Document`.
 
-#### 2.11.3.2 Customizing a `TextField` object
+### 4.3.2 Customizing a `TextField` object
 
 `TextField` accepts the same arguments as `Paragraph` when it comes to styling.
 For instance, you can also set the `font_color`.
 
 ```python
+#!chapter_004/src/snippet_002.py
 from decimal import Decimal
 
 from borb.pdf.canvas.color.color import HexColor
@@ -3339,25 +4185,27 @@ from borb.pdf.canvas.layout.page_layout.multi_column_layout import SingleColumnL
 from borb.pdf.canvas.layout.page_layout.page_layout import PageLayout
 from borb.pdf.canvas.layout.table.fixed_column_width_table import FixedColumnWidthTable
 from borb.pdf.canvas.layout.text.paragraph import Paragraph
-from borb.pdf.document import Document
+from borb.pdf.document.document import Document
 from borb.pdf.page.page import Page
 from borb.pdf.pdf import PDF
 
 
 def main():
 
-    # Document
-    d: Document = Document()
+    # create Document
+    doc: Document = Document()
 
-    # Page
-    p: Page = Page()
-    d.append_page(p)
+    # create Page
+    page: Page = Page()
 
-    # PageLayout
-    l: PageLayout = SingleColumnLayout(p)
+    # add Page to Document
+    doc.append_page(page)
 
-    # add fields
-    l.add(
+    # set a PageLayout
+    layout: PageLayout = SingleColumnLayout(page)
+
+    # add FixedColumnWidthTable containing Paragraph and TextField objects
+    layout.add(
         FixedColumnWidthTable(number_of_columns=2, number_of_rows=3)
         .add(Paragraph("Name:"))
         .add(TextField(field_name="name", font_color=HexColor("f1cd2e")))
@@ -3370,24 +4218,23 @@ def main():
     )
 
     # store
-    with open("output.pdf", "wb") as pdf_file_handle:
-        PDF.dumps(pdf_file_handle, d)
+    with open("output_form.pdf", "wb") as pdf_file_handle:
+        PDF.dumps(pdf_file_handle, doc)
 
 
 if __name__ == "__main__":
     main()
-
 ```
 
 This does not really have an impact on the form when it's editable:
 
-![enter image description here](img/borb_in_action_example_046_003.png)
+![enter image description here](chapter_004/img/snippet_002_001.png)
 
 But it does change the appearance of the form once it's uneditable:
 
-![enter image description here](img/borb_in_action_example_047.png)
+![enter image description here](chapter_004/img/snippet_002_002.png)
 
-#### 2.11.3.3 Pre-filling a `TextField` object
+### 4.3.3 Pre-filling a `TextField` object
 
 You can of course pre-fill a `TextField`. This can be quite useful when you already know some of the values,
 or when one particular answer occurs most of the time (it might save your reader some time if the most likely answer is pre-filled).
@@ -3395,6 +4242,7 @@ or when one particular answer occurs most of the time (it might save your reader
 In the next example you'll be updating the code you wrote earlier to generate a simple form, and pre-fill some of its values;
 
 ```python
+#!chapter_004/src/snippet_003.py
 from decimal import Decimal
 
 from borb.pdf.canvas.color.color import HexColor
@@ -3403,31 +4251,33 @@ from borb.pdf.canvas.layout.page_layout.multi_column_layout import SingleColumnL
 from borb.pdf.canvas.layout.page_layout.page_layout import PageLayout
 from borb.pdf.canvas.layout.table.fixed_column_width_table import FixedColumnWidthTable
 from borb.pdf.canvas.layout.text.paragraph import Paragraph
-from borb.pdf.document import Document
+from borb.pdf.document.document import Document
 from borb.pdf.page.page import Page
 from borb.pdf.pdf import PDF
 
 
 def main():
+    # create Document
+    doc: Document = Document()
 
-    # Document
-    d: Document = Document()
+    # create Page
+    page: Page = Page()
 
-    # Page
-    p: Page = Page()
-    d.append_page(p)
+    # add Page to Document
+    doc.append_page(page)
 
-    # PageLayout
-    l: PageLayout = SingleColumnLayout(p)
+    # set a PageLayout
+    layout: PageLayout = SingleColumnLayout(page)
 
-    # add fields
-    l.add(
+    # add FixedColumnWidthTable containing Paragraph and TextField objects
+    layout.add(
         FixedColumnWidthTable(number_of_columns=2, number_of_rows=3)
         .add(Paragraph("Name:"))
         .add(TextField(field_name="name", font_color=HexColor("f1cd2e")))
         .add(Paragraph("Firstname:"))
         .add(TextField(field_name="firstname", font_color=HexColor("f1cd2e")))
         .add(Paragraph("Country"))
+        # add TextField already pre-filled with 'Belgium'
         .add(TextField(field_name="country", value="Belgium"))
         .set_padding_on_all_cells(Decimal(2), Decimal(2), Decimal(2), Decimal(2))
         .no_borders()
@@ -3435,22 +4285,23 @@ def main():
 
     # store
     with open("output_form.pdf", "wb") as pdf_file_handle:
-        PDF.dumps(pdf_file_handle, d)
+        PDF.dumps(pdf_file_handle, doc)
 
 
 if __name__ == "__main__":
     main()
 ```
 
-![enter image description here](img/borb_in_action_example_048.png)
+![enter image description here](chapter_004/img/snippet_003.png)
 
-#### 2.11.3.4 Adding a `DropDownList` to a PDF
+### 4.3.4 Adding a `DropDownList` to a PDF
 
 You've seen how to add a `TextField`, but what if you'd like to restrict the reader to only allow certain inputs.
 This is typically where you could also use a `DropDownList`.
 A `DropDownList` can be constructed with `typing.List[str]` and will allow the user to select one of the options.
 
 ```python
+#!chapter_004/src/snippet_004.py
 from decimal import Decimal
 
 from borb.pdf.canvas.color.color import HexColor
@@ -3460,53 +4311,62 @@ from borb.pdf.canvas.layout.page_layout.multi_column_layout import SingleColumnL
 from borb.pdf.canvas.layout.page_layout.page_layout import PageLayout
 from borb.pdf.canvas.layout.table.fixed_column_width_table import FixedColumnWidthTable
 from borb.pdf.canvas.layout.text.paragraph import Paragraph
-from borb.pdf.document import Document
+from borb.pdf.document.document import Document
 from borb.pdf.page.page import Page
 from borb.pdf.pdf import PDF
 
 
 def main():
 
-    # Document
-    d: Document = Document()
+    # create Document
+    doc: Document = Document()
 
-    # Page
-    p: Page = Page()
-    d.append_page(p)
+    # create Page
+    page: Page = Page()
 
-    # PageLayout
-    l: PageLayout = SingleColumnLayout(p)
+    # add Page to Document
+    doc.append_page(page)
 
-    # add fields
-    l.add(
+    # set a PageLayout
+    layout: PageLayout = SingleColumnLayout(page)
+
+    # add FixedColumnWidthTable containing Paragraph and TextField objects
+    layout.add(
         FixedColumnWidthTable(number_of_columns=2, number_of_rows=3)
         .add(Paragraph("Name:"))
         .add(TextField(field_name="name", font_color=HexColor("f1cd2e")))
         .add(Paragraph("Firstname:"))
         .add(TextField(field_name="firstname", font_color=HexColor("f1cd2e")))
         .add(Paragraph("Country"))
-        .add(DropDownList(field_name="country", possible_values=["Belgium", "Canada", "Denmark", "Estonia"]))
+        .add(
+            DropDownList(
+                field_name="country",
+                possible_values=["Belgium", "Canada", "Denmark", "Estonia"],
+            )
+        )
         .set_padding_on_all_cells(Decimal(2), Decimal(2), Decimal(2), Decimal(2))
         .no_borders()
     )
 
     # store
     with open("output_form.pdf", "wb") as pdf_file_handle:
-        PDF.dumps(pdf_file_handle, d)
+        PDF.dumps(pdf_file_handle, doc)
 
 
 if __name__ == "__main__":
     main()
-
 ```
 
-#### 2.11.3.5 Adding a `CountryDropDownList` to a PDF
+![enter image description here](chapter_004/img/snippet_004.png)
+
+### 4.3.5 Adding a `CountryDropDownList` to a PDF
 
 It would be rather nonsensical to have every developer that uses `borb` code up the same `DropDownList` over and over again.
 One of the key usecases of `DropDownList` is when you're using it to allow the user to select a country from a  list of all countries in the world.
 `borb` comes to the resque with its `CountryDropDownList`, which comes pre-loaded with all the country-names.
 
 ```python
+#!chapter_004/src/snippet_005.py
 from decimal import Decimal
 
 from borb.pdf.canvas.color.color import HexColor
@@ -3516,25 +4376,27 @@ from borb.pdf.canvas.layout.page_layout.multi_column_layout import SingleColumnL
 from borb.pdf.canvas.layout.page_layout.page_layout import PageLayout
 from borb.pdf.canvas.layout.table.fixed_column_width_table import FixedColumnWidthTable
 from borb.pdf.canvas.layout.text.paragraph import Paragraph
-from borb.pdf.document import Document
+from borb.pdf.document.document import Document
 from borb.pdf.page.page import Page
 from borb.pdf.pdf import PDF
 
 
 def main():
 
-    # Document
-    d: Document = Document()
+    # create Document
+    doc: Document = Document()
 
-    # Page
-    p: Page = Page()
-    d.append_page(p)
+    # create Page
+    page: Page = Page()
 
-    # PageLayout
-    l: PageLayout = SingleColumnLayout(p)
+    # add Page to Document
+    doc.append_page(page)
 
-    # add fields
-    l.add(
+    # set a PageLayout
+    layout: PageLayout = SingleColumnLayout(page)
+
+    # add FixedColumnWidthTable containing Paragraph and TextField objects
+    layout.add(
         FixedColumnWidthTable(number_of_columns=2, number_of_rows=3)
         .add(Paragraph("Name:"))
         .add(TextField(field_name="name", font_color=HexColor("f1cd2e")))
@@ -3548,23 +4410,167 @@ def main():
 
     # store
     with open("output_form.pdf", "wb") as pdf_file_handle:
-        PDF.dumps(pdf_file_handle, d)
+        PDF.dumps(pdf_file_handle, doc)
 
 
 if __name__ == "__main__":
     main()
-
 ```
 
-#### 2.11.3.6 Adding a `CheckBox` to a PDF
+![enter image description here](chapter_004/img/snippet_005.png)
+
+### 4.3.6 Adding a `CheckBox` to a PDF
 
 :mega: todo :mega:
 
-#### 2.11.3.7 Adding a `RadioButton` to a PDF
+### 4.3.7 Adding a `RadioButton` to a PDF
 
 :mega: todo :mega:
 
-### 2.11.4 Getting the value of a `FormField` in an existing PDF
+### 4.3.8 Adding a `PushButton` to a PDF
+
+You can also add a `PushButton` to a PDF. 
+These buttons can be configured (using their `\Action` dictionary) to interact with the PDF in predefined ways.
+The default action (assuming you do not specify anything) is to reset the form (clearing all the input).
+
+```python
+#!chapter_004/src/snippet_006.py
+from decimal import Decimal
+
+from borb.pdf.canvas.color.color import HexColor
+from borb.pdf.canvas.layout.forms.country_drop_down_list import CountryDropDownList
+from borb.pdf.canvas.layout.forms.text_field import TextField
+from borb.pdf.canvas.layout.page_layout.multi_column_layout import SingleColumnLayout
+from borb.pdf.canvas.layout.page_layout.page_layout import PageLayout
+from borb.pdf.canvas.layout.table.fixed_column_width_table import FixedColumnWidthTable
+from borb.pdf.canvas.layout.text.paragraph import Paragraph
+from borb.pdf.document.document import Document
+from borb.pdf.page.page import Page
+from borb.pdf.pdf import PDF
+from borb.pdf.canvas.layout.forms.push_button import PushButton
+from borb.pdf.canvas.layout.layout_element import Alignment
+
+
+def main():
+
+    # create Document
+    doc: Document = Document()
+
+    # create Page
+    page: Page = Page()
+
+    # add Page to Document
+    doc.append_page(page)
+
+    # set a PageLayout
+    layout: PageLayout = SingleColumnLayout(page)
+
+    # add FixedColumnWidthTable containing Paragraph and TextField objects
+    layout.add(
+        FixedColumnWidthTable(number_of_columns=2, number_of_rows=4)
+        .add(Paragraph("Name:"))
+        .add(TextField(field_name="name", font_color=HexColor("f1cd2e")))
+        .add(Paragraph("Firstname:"))
+        .add(TextField(field_name="firstname", font_color=HexColor("f1cd2e")))
+        .add(Paragraph("Country"))
+        .add(CountryDropDownList(field_name="country"))
+        .add(Paragraph(" "))
+        .add(PushButton("Clear!", horizontal_alignment=Alignment.RIGHT))
+        .set_padding_on_all_cells(Decimal(2), Decimal(2), Decimal(2), Decimal(2))
+        .no_borders()
+    )
+
+    # store
+    with open("output_form.pdf", "wb") as pdf_file_handle:
+        PDF.dumps(pdf_file_handle, doc)
+
+
+if __name__ == "__main__":
+    main()
+```
+
+![enter image description here](chapter_004/img/snippet_006.png)
+
+### 4.3.9 Adding a `JavaScriptPushButton` to a PDF
+
+To have maximum configurability you can add a `JavaScriptPushButton` to a `Document`.
+These buttons can be configured to have any (compliant) `JavaScript` script associated with them.
+In this example you'll create a `Document` that shows an alert box whenever the `PushButton` gets pressed.
+
+```python
+#!chapter_004/src/snippet_007.py
+from decimal import Decimal
+
+from borb.pdf.canvas.color.color import HexColor
+from borb.pdf.canvas.layout.forms.country_drop_down_list import CountryDropDownList
+from borb.pdf.canvas.layout.forms.text_field import TextField
+from borb.pdf.canvas.layout.page_layout.multi_column_layout import SingleColumnLayout
+from borb.pdf.canvas.layout.page_layout.page_layout import PageLayout
+from borb.pdf.canvas.layout.table.fixed_column_width_table import FixedColumnWidthTable
+from borb.pdf.canvas.layout.text.paragraph import Paragraph
+from borb.pdf.document.document import Document
+from borb.pdf.page.page import Page
+from borb.pdf.pdf import PDF
+from borb.pdf.canvas.layout.forms.push_button import JavaScriptPushButton
+from borb.pdf.canvas.layout.layout_element import Alignment
+
+
+def main():
+
+    # create Document
+    doc: Document = Document()
+
+    # create Page
+    page: Page = Page()
+
+    # add Page to Document
+    doc.append_page(page)
+
+    # set a PageLayout
+    layout: PageLayout = SingleColumnLayout(page)
+
+    # add FixedColumnWidthTable containing Paragraph and TextField objects
+    layout.add(
+        FixedColumnWidthTable(number_of_columns=2, number_of_rows=4)
+        .add(Paragraph("Name:"))
+        .add(TextField(field_name="name", font_color=HexColor("f1cd2e")))
+        .add(Paragraph("Firstname:"))
+        .add(TextField(field_name="firstname", font_color=HexColor("f1cd2e")))
+        .add(Paragraph("Country"))
+        .add(CountryDropDownList(field_name="country"))
+        .add(Paragraph(" "))
+        .add(
+            JavaScriptPushButton(
+                text="Popup!",
+                javascript="app.alert('Hello World!', 3)",
+                horizontal_alignment=Alignment.RIGHT,
+            )
+        )
+        .set_padding_on_all_cells(Decimal(2), Decimal(2), Decimal(2), Decimal(2))
+        .no_borders()
+    )
+
+    # store
+    with open("output_form.pdf", "wb") as pdf_file_handle:
+        PDF.dumps(pdf_file_handle, doc)
+
+
+if __name__ == "__main__":
+    main()
+```
+
+![enter image description here](chapter_004/img/snippet_007_001.png)
+
+When clicked, this shows a popup:
+
+![enter image description here](chapter_004/img/snippet_007_002.png)
+
+For more information on how to use `JavaScript` inside a PDF, I recommend the following resources:
+- https://helpx.adobe.com/acrobat/using/applying-actions-scripts-pdfs.html
+- https://acrobatusers.com/tutorials/
+- https://acrobatusers.com/tutorials/popup_windows_part1/
+
+## 4.4 Getting the value of a `FormField` in an existing PDF
 
 In this section you'll learn how to retrieve the values that a user filled in from a PDF AcroForm.
 You'll be using the PDF created earlier. 
@@ -3573,7 +4579,7 @@ Be sure to open it, fill in some values, and save it in order to get everything 
 We'll start by creating a PDF with a form in it:
 
 ```python
-import typing
+#!chapter_004/src/snippet_008.py
 from decimal import Decimal
 
 from borb.pdf.canvas.color.color import HexColor
@@ -3583,25 +4589,27 @@ from borb.pdf.canvas.layout.page_layout.multi_column_layout import SingleColumnL
 from borb.pdf.canvas.layout.page_layout.page_layout import PageLayout
 from borb.pdf.canvas.layout.table.fixed_column_width_table import FixedColumnWidthTable
 from borb.pdf.canvas.layout.text.paragraph import Paragraph
-from borb.pdf.document import Document
+from borb.pdf.document.document import Document
 from borb.pdf.page.page import Page
 from borb.pdf.pdf import PDF
 
 
-def build_pdf():
+def main():
 
-    # Document
-    d: Document = Document()
+    # create Document
+    doc: Document = Document()
 
-    # Page
-    p: Page = Page()
-    d.append_page(p)
+    # create Page
+    page: Page = Page()
 
-    # PageLayout
-    l: PageLayout = SingleColumnLayout(p)
+    # add Page to Document
+    doc.append_page(page)
 
-    # add fields
-    l.add(
+    # set a PageLayout
+    layout: PageLayout = SingleColumnLayout(page)
+
+    # add FixedColumnWidthTable containing Paragraph and TextField objects
+    layout.add(
         FixedColumnWidthTable(number_of_columns=2, number_of_rows=3)
         .add(Paragraph("Name:"))
         .add(TextField(field_name="name", font_color=HexColor("f1cd2e")))
@@ -3615,40 +4623,44 @@ def build_pdf():
 
     # store
     with open("output_form.pdf", "wb") as pdf_file_handle:
-        PDF.dumps(pdf_file_handle, d)
+        PDF.dumps(pdf_file_handle, doc)
 
-def main():
-    build_pdf()
 
 if __name__ == "__main__":
     main()
 ```
 
-Now we can either set the values in the form by opening the PDF and typing something (make sure to save the PDF when Adobe asks you to do so).
-We could also just set the values using `borb` of course.
+![enter image description here](chapter_004/img/snippet_008.png)
 
-Finally, we can get the filled in values in the PDF:
+Now we can either set the values in the form by opening the PDF and typing something (make sure to save the PDF when Adobe asks you to do so).
+We could also just set the values using `borb` of course. You'll learn how to do that shortly.
+
+Finally, with our form filled in (and saved), we can get the filled in values in the PDF:
 
 ```python
-def get_values_from_form():
+#!chapter_004/src/snippet_010.py
+from decimal import Decimal
+
+from borb.pdf.canvas.color.color import HexColor
+from borb.pdf.canvas.layout.page_layout.page_layout import PageLayout
+from borb.pdf.document.document import Document
+from borb.pdf.page.page import Page
+from borb.pdf.pdf import PDF
+
+
+def main():
 
     # open document
     doc: typing.Optional[Document] = None
-    with open("output_form_filled.pdf", "rb") as pdf_file_handle:
+    with open("output_form.pdf", "rb") as pdf_file_handle:
         doc = PDF.loads(pdf_file_handle)
     assert doc is not None
 
-    # print all key/value pairs
-    for k in ["name", "firstname", "country"]:
-        v: str = str(doc.get_page(0).get_form_field_value(k))
-        while len(k) < 16:
-            k += " "
-        print(k + " : " + v)
+    # get
+    print("Name: %s" % doc.get_page(0).get_form_field_value("name"))
+    print("Firstname: %s" % doc.get_page(0).get_form_field_value("firstname"))
+    print("Country: %s" % doc.get_page(0).get_form_field_value("country"))
 
-def main():
-    build_pdf()
-    set_values()
-    get_values_from_form()
 
 if __name__ == "__main__":
     main()
@@ -3658,14 +4670,14 @@ This should print something like:
 
 ```commandline
 /usr/bin/python3.8 /home/joris/Code/borb-examples-dev/example/example_053.py
-name             : Schellekens
-firstname        : Joris
-country          : Belgium
+Name             : Schellekens
+Firstname        : Joris
+Country          : Belgium
 ```
 
 of course, the exact values depend on what you filled in (either manually or programmatically).
 
-### 2.11.5 Changing the value of a `FormField` in an existing PDF
+## 4.5 Changing the value of a `FormField` in an existing PDF
 
 This is another very common usecase.
 You have designed a wonderful PDF, complete with `FormField` objects (perhaps in another PDF software suite),
@@ -3677,8 +4689,20 @@ Or even for a famous circus-act.
 In the next example you'll be using an existing PDF (the one you created earlier), and filling in its fields.
 Later you'll learn how to remove interactivity by flattening the `Document`.
 
+### 4.5.1 Changing the value of a `FormField` in an existing PDF using `borb`
+
 ```python
-def set_values():
+#!chapter_004/src/snippet_009.py
+from decimal import Decimal
+
+from borb.pdf.canvas.color.color import HexColor
+from borb.pdf.canvas.layout.page_layout.page_layout import PageLayout
+from borb.pdf.document.document import Document
+from borb.pdf.page.page import Page
+from borb.pdf.pdf import PDF
+
+
+def main():
 
     # open document
     doc: typing.Optional[Document] = None
@@ -3695,39 +4719,100 @@ def set_values():
     with open("output_form_filled.pdf", "wb") as pdf_file_handle:
         PDF.dumps(pdf_file_handle, doc)
 
-def main():
-    build_pdf()
-    set_values()
 
 if __name__ == "__main__":
     main()
 ```
 
-### 2.11.6 Flattening a `FormField`
+![enter image description here](chapter_004/img/snippet_009.png)
+
+### 4.5.2 Changing the value of a `FormField` in an existing PDF using `JavaScript`
+
+We can also set the values of fields inside the PDF by using `JavaScript`.
+This has the advantage of making the PDF really dynamic. You can have the user fill in their date of birth, and automatically calculate their age (and fill it in on a different `FormField`).
+You could pre-fill address fields with `JavaScript`, for instance filling in somebody's town if you know their zipcode.
+
+In the next example, you'll be creating a PDF with a simple `JavaScriptPushButton` that triggers a piece of `JavaScript` to set a `TextField`.
+
+```python
+#!chapter_004/src/snippet_011.py
+from decimal import Decimal
+
+from borb.pdf.canvas.color.color import HexColor
+from borb.pdf.canvas.layout.forms.country_drop_down_list import CountryDropDownList
+from borb.pdf.canvas.layout.forms.text_field import TextField
+from borb.pdf.canvas.layout.page_layout.multi_column_layout import SingleColumnLayout
+from borb.pdf.canvas.layout.page_layout.page_layout import PageLayout
+from borb.pdf.canvas.layout.table.fixed_column_width_table import FixedColumnWidthTable
+from borb.pdf.canvas.layout.text.paragraph import Paragraph
+from borb.pdf.document.document import Document
+from borb.pdf.page.page import Page
+from borb.pdf.pdf import PDF
+from borb.pdf.canvas.layout.forms.push_button import JavaScriptPushButton
+from borb.pdf.canvas.layout.layout_element import Alignment
+
+
+def main():
+
+    # create Document
+    doc: Document = Document()
+
+    # create Page
+    page: Page = Page()
+
+    # add Page to Document
+    doc.append_page(page)
+
+    # set a PageLayout
+    layout: PageLayout = SingleColumnLayout(page)
+
+    # add FixedColumnWidthTable containing Paragraph and TextField objects
+    layout.add(
+        FixedColumnWidthTable(number_of_columns=2, number_of_rows=4)
+        .add(Paragraph("Name:"))
+        .add(TextField(field_name="name", font_color=HexColor("f1cd2e")))
+        .add(Paragraph("Firstname:"))
+        .add(TextField(field_name="firstname", font_color=HexColor("f1cd2e")))
+        .add(Paragraph("Country"))
+        .add(CountryDropDownList(field_name="country"))
+        .add(Paragraph(" "))
+        .add(
+            JavaScriptPushButton(
+                text="Set",
+                javascript="this.getField('name').value = 'Schellekens';",
+                horizontal_alignment=Alignment.RIGHT,
+            )
+        )
+        .set_padding_on_all_cells(Decimal(2), Decimal(2), Decimal(2), Decimal(2))
+        .no_borders()
+    )
+
+    # store
+    with open("output_form.pdf", "wb") as pdf_file_handle:
+        PDF.dumps(pdf_file_handle, doc)
+
+
+if __name__ == "__main__":
+    main()
+```
+
+## 4.6 Flattening a `FormField`
 
 :mega: todo :mega:
 
-<div style="page-break-before: always;"></div>
+## 4.7 Conclusion
 
-## 2.12 Conclusion
+In this section you've learned how to build interactive, fillable PDF forms.
 
-In this section you've learned the basics of creating a new PDF using `borb`. 
-In this section you've learned how various pieces of content are represented by the different `LayoutElement` implementations in `borb`. 
-You've worked with text, images, barcodes, qr-codes, emoji, and geometric shapes.
+You've seen the various form `LayoutElement` objects `borb` has to offer and you've coded up a sample for each of them.
 
-You've briefly explored classes like; `Paragraph`, `Image`, `Shape`, `Emoji`, `OrderedList`, `UnorderedList`, `FlexibleColumnWidthTable` and `FixedColumnWidthTable`.
+You've set the values of these fields using `Python` or by embedding `JavaScript` in the PDF itself.
 
-You've learned how to set various properties like `font_color`, or `background_color` 
-and even used `horizontal_alignment` , `vertical_alignment` and `text_alignment`.
-
-You've briefly explored `PageLayout`, `BrowserLayout` and even manual layout.
-
-To see how you can use all of those techniques together, 
-check out some of the deep-dives, where I'll show you how to create an invoice from start to finish.
+Finally, you've learned how to extract the filled in values from a form inside a PDF.
 
 <div style="page-break-before: always;"></div>
 
-# 3. Working with existing PDFs
+# 5 Working with existing PDFs
 
 For some use-cases, you won't be creating the PDF's yourself. Imagine setting up a pipeline that automatically processes PDF invoices. Or even processing order forms.
 
@@ -3735,11 +4820,11 @@ Most of these workflows can be boiled down to some simple steps that can be hand
 
 In this section you'll learn the ins and outs of working with existing PDF's.
 
-![enter image description here](img/chapter_illustrations/borb_003.jpg)
+![enter image description here](chapter_005/img/chapter_illustration.jpg)
 
 <div style="page-break-before: always;"></div>
 
-## 3.1 Extracting meta-information
+## 5.1 Extracting meta-information
 
 Suppose you have a PDF document. Did you know it contains meta-information? Try it. Next time you have a PDF open in Adobe, press CTRL+D to open the document properties. You'll find things like:
 
@@ -3752,7 +4837,7 @@ Suppose you have a PDF document. Did you know it contains meta-information? Try 
 
 It can be very useful to be able to extract these. Processing an invoice for instance might be more accurate if we know "supplier A uses software B to create their invoices, and python script C works best for that" versus "supplier X uses software Y, which is best handled by script Z".
 
-### 3.1.1 Extracting the author from a PDF
+### 5.1.1 Extracting the author from a PDF
 
 In the next example you'll start by extracting the author from the PDF. 
 This is of course assuming this property was set by whatever software created the PDF.
@@ -3760,70 +4845,89 @@ This is of course assuming this property was set by whatever software created th
 In order to be able to test these examples and get the same result as the book, I am providing a snippet of code here that will generate a very simple PDF;
 
 ```python
-from borb.io.read.types import Name, String, Dictionary  
-from borb.pdf.canvas.layout.page_layout.multi_column_layout import SingleColumnLayout  
-from borb.pdf.canvas.layout.page_layout.page_layout import PageLayout  
-from borb.pdf.canvas.layout.text.paragraph import Paragraph  
-from borb.pdf.document import Document  
-from borb.pdf.page.page import Page  
-from borb.pdf.pdf import PDF  
-  
-  
-def main():  
-    doc: Document = Document()  
-    page: Page = Page()  
-    doc.append_page(page)  
-  
-    layout: PageLayout = SingleColumnLayout(page)  
-    layout.add(Paragraph("""  
-                        Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.                        Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.   
-                        Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur.   
-                        Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.  
-                        """))  
-  
-    # set the /Info dictionary  
-    doc["XRef"]["Trailer"][Name("Info")] = Dictionary()  
-  
-    # set the /Author  
-    doc["XRef"]["Trailer"]["Info"][Name("Author")] = String("Joris Schellekens")  
-  
-    with open("output.pdf", "wb") as out_file_handle:  
-        PDF.dumps(out_file_handle, doc)  
+#!chapter_005/src/snippet_001.py
+from borb.io.read.types import Name, String, Dictionary
+from borb.pdf.canvas.layout.page_layout.multi_column_layout import SingleColumnLayout
+from borb.pdf.canvas.layout.page_layout.page_layout import PageLayout
+from borb.pdf.canvas.layout.text.paragraph import Paragraph
+from borb.pdf.document.document import Document
+from borb.pdf.page.page import Page
+from borb.pdf.pdf import PDF
 
-  
-if __name__ == "__main__":  
+
+def main():
+    # create Document
+    doc: Document = Document()
+
+    # create Page
+    page: Page = Page()
+
+    # add Page to Document
+    doc.append_page(page)
+
+    # set a PageLayout
+    layout: PageLayout = SingleColumnLayout(page)
+
+    # add a Paragraph
+    layout.add(
+        Paragraph(
+            """
+                        Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. 
+                        Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. 
+                        Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. 
+                        Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
+                         """
+        )
+    )
+
+    # set the /Info dictionary
+    doc["XRef"]["Trailer"][Name("Info")] = Dictionary()
+
+    # set the /Author
+    doc["XRef"]["Trailer"]["Info"][Name("Author")] = String("Joris Schellekens")
+
+    with open("output.pdf", "wb") as out_file_handle:
+        PDF.dumps(out_file_handle, doc)
+
+
+if __name__ == "__main__":
     main()
 ```
 
 The PDF doesn't really look all that special when you open it.
 
-![enter image description here](img/borb_in_action_example_051_001.png)
+![enter image description here](chapter_005/img/snippet_001_001.png)
 
 But, when you open the properties (the exact shortcut differs depending on which PDF viewer you're using of course), you'll see the meta-data:
 
-![enter image description here](img/borb_in_action_example_051_002.png)
+![enter image description here](chapter_005/img/snippet_001_002.png)
 
 Now, let's assume you're getting this PDF (perhaps via email, or some automated process) and you'd like to extract the author from it.
 
 `borb` allows you to do that in just a few lines of code:
 
 ```python
-import typing  
-from borb.pdf.document import Document  
-from borb.pdf.pdf import PDF  
-  
-  
-def main():  
-  
-    doc: typing.Optional[Document] = None  
-    with open("output.pdf", "rb") as in_file_handle:  
-        doc = PDF.loads(in_file_handle)  
-  
-    assert doc is not None  
-    print(doc.get_document_info().get_author())  
-  
+#!chapter_005/src/snippet_002.py
+import typing
+from borb.pdf.document.document import Document
+from borb.pdf.pdf import PDF
 
-if __name__ == "__main__":  
+
+def main():
+
+    # read the Document
+    doc: typing.Optional[Document] = None
+    with open("output.pdf", "rb") as in_file_handle:
+        doc = PDF.loads(in_file_handle)
+
+    # check whether we have read a Document
+    assert doc is not None
+
+    # print the \Author key from the \Info dictionary
+    print("Author: %s" % doc.get_document_info().get_author())
+
+
+if __name__ == "__main__":
     main()
 ```
 
@@ -3833,7 +4937,7 @@ Keep in mind that this property (`/Author`) is not mandatory.
 So the code may simply return (and thus print) `None`. 
 This is not a bug, it simply means the `/Author` property was not explicitly set.
 
-### 3.1.2 Extracting the producer from a PDF
+### 5.1.2 Extracting the producer from a PDF
 
 Similarly, you can extract other properties, like the producer. This is typically the name of the piece of software that created the PDF (or last modified the PDF).
 
@@ -3843,31 +4947,34 @@ Some PDF software might do things a little differently than others, thus causing
 You can easily mitigate this by checking the producer property, and separating the problematic files.
 
 ```python
-import typing  
-from borb.pdf.document import Document  
-from borb.pdf.pdf import PDF  
-from borb.pdf.trailer.document_info import DocumentInfo  
-  
-  
-def main():  
-  
-    doc: typing.Optional[Document] = None  
-    with open("output.pdf", "rb") as in_file_handle:  
-        doc = PDF.loads(in_file_handle)  
-  
-    assert doc is not None  
-    document_info: DocumentInfo = doc.get_document_info()  
-    print("Producer: %s" % document_info.get_producer())  
-  
+#!chapter_005/src/snippet_003.py
+import typing
+from borb.pdf.document.document import Document
+from borb.pdf.pdf import PDF
 
-if __name__ == "__main__":  
+
+def main():
+
+    # read the Document
+    doc: typing.Optional[Document] = None
+    with open("output.pdf", "rb") as in_file_handle:
+        doc = PDF.loads(in_file_handle)
+
+    # check whether we have read a Document
+    assert doc is not None
+
+    # print the \Producer key from the \Info dictionary
+    print("Producer: %s" % doc.get_document_info().get_producer())
+
+
+if __name__ == "__main__":
     main()
 ```
 
 Of course, now that you know how to extract the author and the producer, 
 you can check out the other methods of `DocumentInfo` and find out even more about any PDF that comes your way.
 
-### 3.1.3 using XMP meta information
+### 5.1.3 using XMP meta information
 
 This is from `adobe.com`:
 
@@ -3882,35 +4989,39 @@ Keep in mind that XMP is not a requirement for a PDF `Document` to be valid.
 So you may find these methods return `None` when you test them on a `Document` that does not have embedded XMP data.
 
 ```python
-import typing  
-from borb.pdf.document import Document  
-from borb.pdf.pdf import PDF   
-from borb.pdf.trailer.document_info import XMPDocumentInfo  
+#!chapter_005/src/snippet_004.py
+import typing
+from borb.pdf.document.document import Document
+from borb.pdf.pdf import PDF
 
 
-def main(): 
-    doc: typing.Optional[Document] = None  
-    with open("input.pdf", "rb") as in_file_handle:  
-        doc = PDF.loads(in_file_handle) 
-    
-    assert doc is not None  
-    doc_info: XMPDocumentInfo = doc.get_xmp_document_info()
-    print(doc_info.get_document_id())
+def main():
+
+    # read the Document
+    doc: typing.Optional[Document] = None
+    with open("output.pdf", "rb") as in_file_handle:
+        doc = PDF.loads(in_file_handle)
+
+    # check whether we have read a Document
+    assert doc is not None
+
+    # print the ID using XMP meta info
+    print("ID: %s" % doc.get_xmp_document_info().get_document_id())
 
 
-if __name__ == "__main__":  
+if __name__ == "__main__":
     main()
 ```
 
 For the document I tested, this printed:
 
-```python
+```commandline
 xmp.id:54e5adca-494c-4c10-983a-daa03cdae65a
 ```
 
 <div style="page-break-before: always;"></div>
 
-## 3.2 Extracting text from a PDF
+## 5.2 Extracting text from a PDF
 
 Being able to extract text from a PDF is a fundamental skill. 
 In the deep-dive, you'll learn more about PDF syntax, and why text-extraction is a non-trivial thing.
@@ -3923,24 +5034,29 @@ Hence the name `SimpleTextExtraction`.
 You'll be using the same input PDF as earlier (containing a paragraph of lorem ipsum).
 
 ```python
-import typing  
-from borb.pdf.document import Document  
-from borb.pdf.pdf import PDF  
-from borb.toolkit.text.simple_text_extraction import SimpleTextExtraction  
-  
-  
-def main():  
-  
-    doc: typing.Optional[Document] = None  
-    l: SimpleTextExtraction = SimpleTextExtraction()  
-    with open("output.pdf", "rb") as in_file_handle:  
-        doc = PDF.loads(in_file_handle, [l])  
-  
-    assert doc is not None  
-    print(l.get_text_for_page(0))  
+#!chapter_005/src/snippet_005.py
+import typing
+from borb.pdf.document.document import Document
+from borb.pdf.pdf import PDF
+from borb.toolkit.text.simple_text_extraction import SimpleTextExtraction
 
 
-if __name__ == "__main__":  
+def main():
+
+    # read the Document
+    doc: typing.Optional[Document] = None
+    l: SimpleTextExtraction = SimpleTextExtraction()
+    with open("output.pdf", "rb") as in_file_handle:
+        doc = PDF.loads(in_file_handle, [l])
+
+    # check whether we have read a Document
+    assert doc is not None
+
+    # print the text on the first Page
+    print(l.get_text_for_page(0))
+
+
+if __name__ == "__main__":
     main()
 ```
 
@@ -3971,7 +5087,7 @@ laborum.
 
 <div style="page-break-before: always;"></div>
 
-## 3.3 Extracting text using regular expressions
+## 5.3 Extracting text using regular expressions
 
 This is a much more advanced way to extract text from a PDF. 
 By using regular expressions, you can easily look for things like "total amount due" followed by some numbers. 
@@ -3981,27 +5097,38 @@ In the next example you'll be doing exactly that.
 The code is very similar to what you've done earlier.
 
 ```python
-import typing  
-from borb.pdf.document import Document  
-from borb.pdf.pdf import PDF  
-from borb.toolkit.text.regular_expression_text_extraction import RegularExpressionTextExtraction  
-  
-  
-def main():  
-  
-    doc: typing.Optional[Document] = None  
-    l: RegularExpressionTextExtraction = RegularExpressionTextExtraction("[lL]orem .* [dD]olor")  
-    with open("output.pdf", "rb") as in_file_handle:  
-        doc = PDF.loads(in_file_handle, [l])  
-  
-    assert doc is not None  
-    for i, m in enumerate(l.get_matches_for_page(0)):  
-        print("%d %s" % (i, m.group(0)))  
-        for r in m.get_bounding_boxes():  
-            print("\t%f %f %f %f" % (r.get_x(), r.get_y(), r.get_width(), r.get_height()))
+#!chapter_005/src/snippet_006.py
+import typing
+from borb.pdf.document.document import Document
+from borb.pdf.pdf import PDF
+from borb.toolkit.text.regular_expression_text_extraction import (
+    RegularExpressionTextExtraction,
+)
 
 
-if __name__ == "__main__":  
+def main():
+
+    # read the Document
+    # fmt: off
+    doc: typing.Optional[Document] = None
+    l: RegularExpressionTextExtraction = RegularExpressionTextExtraction("[lL]orem .* [dD]olor")
+    with open("output.pdf", "rb") as in_file_handle:
+        doc = PDF.loads(in_file_handle, [l])
+    # fmt: on
+
+    # check whether we have read a Document
+    assert doc is not None
+
+    # print matching groups
+    for i, m in enumerate(l.get_matches_for_page(0)):
+        print("%d %s" % (i, m.group(0)))
+        for r in m.get_bounding_boxes():
+            print(
+                "\t%f %f %f %f" % (r.get_x(), r.get_y(), r.get_width(), r.get_height())
+            )
+
+
+if __name__ == "__main__":
     main()
 ```
 
@@ -4024,15 +5151,15 @@ In this example however, the output should be:
 
 ```
 0 Lorem ipsum dolor
-	59.500000 731.316000 99.360000 11.100000
+	59.500000 740.916000 99.360000 11.100000
 ```
 
 indicating a single match, with text "lorem ipsum dolor", 
-with bounding box (lower left corner) at `[59.5, 731.316]` and a width of `99.36` and a height of `11.1`.
+with bounding box (lower left corner) at `[59.5, 740.916]` and a width of `99.36` and a height of `11.1`.
 
 <div style="page-break-before: always;"></div>
 
-## 3.4 Extracting text using its bounding box
+## 5.4 Extracting text using its bounding box
 
 Another extraction process relies on the rendering of the PDF itself. 
 Perhaps the PDF's you are processing always have some kind of information at a precise location 
@@ -4043,49 +5170,54 @@ This implementation of `EventListener` allows you to filter events (i.e. renderi
 In the next example you'll be using the coordinates from the previous example, to build a filter for `SimpleTextExtraction`.
 
 ```python
-import typing  
-from decimal import Decimal  
-  
-from borb.pdf.canvas.geometry.rectangle import Rectangle  
-from borb.pdf.document import Document  
-from borb.pdf.pdf import PDF  
-from borb.toolkit.location.location_filter import LocationFilter  
-from borb.toolkit.text.simple_text_extraction import SimpleTextExtraction  
-  
-  
-def main():  
-  
-    doc: typing.Optional[Document] = None  
-    l0: SimpleTextExtraction = SimpleTextExtraction()  
-  
-    r: Rectangle = Rectangle(Decimal(59),  
-                             Decimal(731),  
-                             Decimal(99),  
-                             Decimal(11))  
-  
-    l1: LocationFilter = LocationFilter(r)  
-    l1.add_listener(l0)  
-  
-    with open("output.pdf", "rb") as in_file_handle:  
-        doc = PDF.loads(in_file_handle, [l1])  
-  
-    assert doc is not None  
-    print(l0.get_text_for_page(0))  
+#!chapter_005/src/snippet_007.py
+import typing
+from decimal import Decimal
+
+from borb.pdf.canvas.geometry.rectangle import Rectangle
+from borb.pdf.document.document import Document
+from borb.pdf.pdf import PDF
+from borb.toolkit.location.location_filter import LocationFilter
+from borb.toolkit.text.simple_text_extraction import SimpleTextExtraction
 
 
-if __name__ == "__main__":  
+def main():
+
+    # define the Rectangle of interest
+    r: Rectangle = Rectangle(Decimal(59), Decimal(740), Decimal(99), Decimal(11))
+
+    # define SimpleTextExtraction
+    l0: SimpleTextExtraction = SimpleTextExtraction()
+
+    # apply a LocationFilter on top of SimpleTextExtraction
+    l1: LocationFilter = LocationFilter(r)
+    l1.add_listener(l0)
+
+    # read the Document
+    doc: typing.Optional[Document] = None
+    with open("output.pdf", "rb") as in_file_handle:
+        doc = PDF.loads(in_file_handle, [l1])
+
+    # check whether we have read a Document
+    assert doc is not None
+
+    # print the text inside the Rectangle of interest
+    print(l0.get_text_for_page(0))
+
+
+if __name__ == "__main__":
     main()
 ```
 
-This snippet should print:
+This prints:
 
-```
+```commandline
 Lorem ipsum dolor
 ```
 
 <div style="page-break-before: always;"></div>
 
-## 3.5 Combining regular expressions and bounding boxes
+## 5.5 Combining regular expressions and bounding boxes
 
 Of course, `borb` is designed to be a library, 
 so the idea of being able to strap together your own tools using the toolkit is very important to me.
@@ -4099,56 +5231,61 @@ Then you can extend this box,
 knowing the text you'd really like to extract will be on the right of that piece of text.
 
 ```python
-import typing  
-from decimal import Decimal  
-  
-from borb.pdf.canvas.geometry.rectangle import Rectangle  
-from borb.pdf.document import Document  
-from borb.pdf.pdf import PDF  
-from borb.toolkit.location.location_filter import LocationFilter  
-from borb.toolkit.text.regular_expression_text_extraction import RegularExpressionTextExtraction, PDFMatch
-from borb.toolkit.text.simple_text_extraction import SimpleTextExtraction  
-  
-  
-def main():  
-  
-    # 1. set up RegularExpressionTextExtraction  
-    l0: RegularExpressionTextExtraction = RegularExpressionTextExtraction("[nN]isi .* aliquip")  
-  
-    # 2. process Document  
-    doc: typing.Optional[Document] = None  
-    with open("output.pdf", "rb") as in_file_handle:  
-        doc = PDF.loads(in_file_handle, [l0])  
-    assert doc is not None  
-  
-    # 3. find match  
-    m: typing.Optional[PDFMatch] = next(iter(l0.get_matches_for_page(0)), None)  
-    assert m is not None  
-  
-    # 4. get page width  
-    w: Decimal = doc.get_page(0).get_page_info().get_width()  
-  
-    # 5. change rectangle to get more text  
-    r0: Rectangle = m.get_bounding_boxes()[0]  
-    r1: Rectangle = Rectangle(r0.get_x() + r0.get_width(),  
-                              r0.get_y(),  
-                              w - r0.get_x(),  
-                              r0.get_height())  
-  
-    # 6. process document (again) filtering by rectangle  
-    l1: LocationFilter = LocationFilter(r1)  
-    l2: SimpleTextExtraction = SimpleTextExtraction()  
-    l1.add_listener(l2)  
-    doc: typing.Optional[Document] = None  
-    with open("output.pdf", "rb") as in_file_handle:  
-        doc = PDF.loads(in_file_handle, [l1])  
-    assert doc is not None  
-  
-    # 7. print text  
-    print(l2.get_text_for_page(0))  
+#!chapter_005/src/snippet_008.py
+import typing
+from decimal import Decimal
+
+from borb.pdf.canvas.geometry.rectangle import Rectangle
+from borb.pdf.document.document import Document
+from borb.pdf.pdf import PDF
+from borb.toolkit.location.location_filter import LocationFilter
+from borb.toolkit.text.regular_expression_text_extraction import (
+    RegularExpressionTextExtraction,
+    PDFMatch,
+)
+from borb.toolkit.text.simple_text_extraction import SimpleTextExtraction
 
 
-if __name__ == "__main__":  
+def main():
+
+    # set up RegularExpressionTextExtraction
+    # fmt: off
+    l0: RegularExpressionTextExtraction = RegularExpressionTextExtraction("[nN]isi .* aliquip")
+    # fmt: on
+
+    # process Document
+    doc: typing.Optional[Document] = None
+    with open("output.pdf", "rb") as in_file_handle:
+        doc = PDF.loads(in_file_handle, [l0])
+    assert doc is not None
+
+    # find match
+    m: typing.Optional[PDFMatch] = next(iter(l0.get_matches_for_page(0)), None)
+    assert m is not None
+
+    # get page width
+    w: Decimal = doc.get_page(0).get_page_info().get_width()
+
+    # change rectangle to get more text
+    r0: Rectangle = m.get_bounding_boxes()[0]
+    r1: Rectangle = Rectangle(
+        r0.get_x() + r0.get_width(), r0.get_y(), w - r0.get_x(), r0.get_height()
+    )
+
+    # process document (again) filtering by rectangle
+    l1: LocationFilter = LocationFilter(r1)
+    l2: SimpleTextExtraction = SimpleTextExtraction()
+    l1.add_listener(l2)
+    doc: typing.Optional[Document] = None
+    with open("output.pdf", "rb") as in_file_handle:
+        doc = PDF.loads(in_file_handle, [l1])
+    assert doc is not None
+
+    # get text
+    print(l2.get_text_for_page(0))
+
+
+if __name__ == "__main__":
     main()
 ```
 
@@ -4162,7 +5299,7 @@ With this location it processes the `Document` again, filtering a modified bound
 
 This example prints:
 
-```
+```commandline
 ex ea commodo conse uat. Duis aute irure dolor in
 ```
 
@@ -4174,9 +5311,9 @@ The same strategy can be used to extract addresses from invoices, or anything si
 
 <div style="page-break-before: always;"></div>
 
-## 3.6 Extracting keywords from a PDF
+## 5.6 Extracting keywords from a PDF
 
-### 3.6.1 Extracting keywords from a PDF using TF-IDF
+### 5.6.1 Extracting keywords from a PDF using TF-IDF
 
 From wikipedia:
 
@@ -4185,7 +5322,7 @@ From wikipedia:
 > The tf–idf value increases proportionally to the number of times a word appears in the document and is offset by the number of documents in the corpus that contain the word, which helps to adjust for the fact that some words appear more frequently in general. 
 > tf–idf is one of the most popular term-weighting schemes today.
 
-#### 3.6.1.1 Term Frequency
+#### 5.6.1.1 Term Frequency
 
 From wikipedia:
 
@@ -4194,42 +5331,188 @@ From wikipedia:
 > To further distinguish them, we might count the number of times each term occurs in each document; the number of times a term occurs in a document is called its term frequency. 
 > However, in the case where the length of documents varies greatly, adjustments are often made (see definition below). 
 
-#### 3.6.1.2 Inverse document frequency
+#### 5.6.1.2 Inverse document frequency
 
 From wikipedia:
 
 > Because the term "the" is so common, term frequency will tend to incorrectly emphasize documents which happen to use the word "the" more frequently, without giving enough weight to the more meaningful terms "brown" and "cow". 
 > The term "the" is not a good keyword to distinguish relevant and non-relevant documents and terms, unlike the less-common words "brown" and "cow". Hence, an inverse document frequency factor is incorporated which diminishes the weight of terms that occur very frequently in the document set and increases the weight of terms that occur rarely.
 
-#### 3.6.1.3 Using TF-IDF in `borb`
+#### 5.6.1.3 Using TF-IDF in `borb`
 
 Let's start by creating a `Document` with a few `Paragraph` objects in it.
 Since you'll be eliminating stop words (which are language-dependent), this `Document` needs to contain sensible English text.
 You'll be creating a `Document` containing information about "Lorem Ipsum".
 
 ```python
+#!chapter_005/src/snippet_009.py
+from borb.io.read.types import Name, String, Dictionary
+from borb.pdf.canvas.layout.page_layout.multi_column_layout import SingleColumnLayout
+from borb.pdf.canvas.layout.page_layout.page_layout import PageLayout
+from borb.pdf.canvas.layout.text.paragraph import Paragraph
+from borb.pdf.document.document import Document
+from borb.pdf.page.page import Page
+from borb.pdf.pdf import PDF
 
+
+def main():
+    # create Document
+    doc: Document = Document()
+
+    # create Page
+    page: Page = Page()
+
+    # add Page to Document
+    doc.append_page(page)
+
+    # set a PageLayout
+    layout: PageLayout = SingleColumnLayout(page)
+
+    # add first Paragraph
+    layout.add(Paragraph("What is Lorem Ipsum?", font="Helvetica-bold"))
+    layout.add(
+        Paragraph(
+            """
+    Lorem Ipsum is simply dummy text of the printing and typesetting industry. 
+    Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, 
+    when an unknown printer took a galley of type and scrambled it to make a type specimen book. 
+    It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. 
+    It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, 
+    and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum.
+    """
+        )
+    )
+
+    # add second Paragraph
+    layout.add(Paragraph("Where does it come from?", font="Helvetica-bold"))
+    layout.add(
+        Paragraph(
+            """
+    Contrary to popular belief, Lorem Ipsum is not simply random text. 
+    It has roots in a piece of classical Latin literature from 45 BC, making it over 2000 years old. 
+    Richard McClintock, a Latin professor at Hampden-Sydney College in Virginia, looked up one of the more obscure Latin words, 
+    consectetur, from a Lorem Ipsum passage, and going through the cites of the word in classical literature, 
+    discovered the undoubtable source. Lorem Ipsum comes from sections 1.10.32 and 1.10.33 of "de Finibus Bonorum et Malorum" 
+    (The Extremes of Good and Evil) by Cicero, written in 45 BC. 
+    This book is a treatise on the theory of ethics, very popular during the Renaissance. 
+    The first line of Lorem Ipsum, "Lorem ipsum dolor sit amet..", comes from a line in section 1.10.32.
+    """
+        )
+    )
+
+    # store
+    with open("output.pdf", "wb") as out_file_handle:
+        PDF.dumps(out_file_handle, doc)
+
+
+if __name__ == "__main__":
+    main()
 ```
 
 This should produce a `Document` like this:
 
-Now you can unleash `` on the `Document` you made;
+Now you can unleash `TFIDFKeywordExtraction` on the `Document` you made;
 
 ```python
+#!chapter_005/src/snippet_010.py
+import typing
 
+from borb.io.read.types import Name, String, Dictionary
+from borb.pdf.canvas.layout.page_layout.multi_column_layout import SingleColumnLayout
+from borb.pdf.canvas.layout.page_layout.page_layout import PageLayout
+from borb.pdf.canvas.layout.text.paragraph import Paragraph
+from borb.pdf.document.document import Document
+from borb.pdf.page.page import Page
+from borb.pdf.pdf import PDF
+from borb.toolkit.text.tf_idf_keyword_extraction import TFIDFKeywordExtraction
+from borb.toolkit.text.stop_words import ENGLISH_STOP_WORDS
+
+
+def main():
+
+    l: TFIDFKeywordExtraction = TFIDFKeywordExtraction(stopwords=ENGLISH_STOP_WORDS)
+
+    # load
+    doc: typing.Optional[Document] = None
+    with open("output.pdf", "rb") as in_file_handle:
+        doc = PDF.loads(in_file_handle, [l])
+
+    # check whether we have read a Document
+    assert doc is not None
+
+    print(l.get_keywords_for_page(0))
+
+
+if __name__ == "__main__":
+    main()
 ```
 
 This outputs:
 
+```commandline
+/usr/bin/python3.8 /home/joris/Code/borb-examples-dev/chapter_005/src/snippet_010.py
+[('LOREM', 9.100909090909093e-06), 
+ ('IPSUM', 9.100909090909093e-06), 
+ ('TEXT', 2.737272727272727e-06), 
+ ('LATIN', 2.737272727272727e-06)]
+
+Process finished with exit code 0
 ```
 
+### 5.6.2 Extracting keywords from a PDF using  textrank
+
+TextRank is a graph-based ranking model for text processing which can be used in order to find the most relevant sentences in text and also to find keywords. 
+The algorithm is explained in detail in the paper at https://web.eecs.umich.edu/~mihalcea/papers/mihalcea.emnlp04.pdf
+
+```python
+#!chapter_005/src/snippet_011.py
+import typing
+
+from borb.io.read.types import Name, String, Dictionary
+from borb.pdf.canvas.layout.page_layout.multi_column_layout import SingleColumnLayout
+from borb.pdf.canvas.layout.page_layout.page_layout import PageLayout
+from borb.pdf.canvas.layout.text.paragraph import Paragraph
+from borb.pdf.document.document import Document
+from borb.pdf.page.page import Page
+from borb.pdf.pdf import PDF
+from borb.toolkit.text.text_rank_keyword_extraction import TextRankKeywordExtraction
+from borb.toolkit.text.stop_words import ENGLISH_STOP_WORDS
+
+
+def main():
+
+    l: TextRankKeywordExtraction = TextRankKeywordExtraction()
+
+    # load
+    doc: typing.Optional[Document] = None
+    with open("output.pdf", "rb") as in_file_handle:
+        doc = PDF.loads(in_file_handle, [l])
+
+    # check whether we have read a Document
+    assert doc is not None
+
+    print(l.get_keywords_for_page(0))
+
+
+if __name__ == "__main__":
+    main()
 ```
 
-### 3.6.2 Extracting keywords from a PDF using  textrank
+This outputs:
+
+```commandline
+/usr/bin/python3.8 /home/joris/Code/borb-examples-dev/chapter_005/src/snippet_011.py
+[('LOREM', 9.100909090909093e-06), 
+ ('IPSUM', 9.100909090909093e-06), 
+ ('TEXT', 2.737272727272727e-06), 
+ ('LATIN', 2.737272727272727e-06)]
+
+Process finished with exit code 0
+```
 
 <div style="page-break-before: always;"></div>
 
-## 3.7 Extracting color-information
+## 5.7 Extracting color-information
 
 This is perhaps a bit more of a tangent, but I can imagine it may be useful. 
 In this particular example you'll be extracting color-information from a PDF.
@@ -4245,23 +5528,31 @@ In the deep-dive, you'll learn the ins and outs of implementing your own `EventL
 To start this example, you'll be creating a PDF containing multiple colors. You'll be adding 3 `Paragraph` objects (red, green, blue) and one `Image`.
 
 ```python
-from decimal import Decimal
-
-from borb.pdf.canvas.color.color import HexColor
-from borb.pdf.canvas.layout.image.image import Image
+#!chapter_005/src/snippet_012.py
+from borb.io.read.types import Name, String, Dictionary
 from borb.pdf.canvas.layout.page_layout.multi_column_layout import SingleColumnLayout
 from borb.pdf.canvas.layout.page_layout.page_layout import PageLayout
 from borb.pdf.canvas.layout.text.paragraph import Paragraph
-from borb.pdf.document import Document
+from borb.pdf.document.document import Document
 from borb.pdf.page.page import Page
 from borb.pdf.pdf import PDF
+from borb.pdf.canvas.color.color import HexColor
+from borb.pdf.canvas.layout.image.image import Image
+
+from decimal import Decimal
+
 
 def main():
-
+    # create Document
     doc: Document = Document()
+
+    # create Page
     page: Page = Page()
+
+    # add Page to Document
     doc.append_page(page)
 
+    # set a PageLayout
     layout: PageLayout = SingleColumnLayout(page)
 
     # the following code adds 3 paragraphs, each in a different color
@@ -4270,19 +5561,23 @@ def main():
     layout.add(Paragraph("Hello World!", font_color=HexColor("0000FF")))
 
     # the following code adds 1 image
-    layout.add(Image("https://images.unsplash.com/photo-1589606663923-283bbd309229?ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8",
-                     width=Decimal(256),
-                     height=Decimal(256)))
-
+    layout.add(
+        Image(
+            "https://images.unsplash.com/photo-1589606663923-283bbd309229?ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8",
+            width=Decimal(256),
+            height=Decimal(256),
+        )
+    )
+    # store
     with open("output.pdf", "wb") as out_file_handle:
         PDF.dumps(out_file_handle, doc)
 
+
 if __name__ == "__main__":
     main()
-
 ```
 
-![enter image description here](img/borb_in_action_example_058_001.png)
+![enter image description here](chapter_005/img/snippet_012.png)
 
 This `Document` will serve as the input for the extraction example. 
 
@@ -4291,19 +5586,23 @@ you'll create an output-pdf. I think it's a lot more visual to actually see the 
 rather than having their RGB values printed out on the console.
 
 ```python
+#!chapter_005/src/snippet_013.py
 from decimal import Decimal
 
 import typing
-from borb.pdf.canvas.color.color import RGBColor
+from borb.pdf.canvas.color.color import HexColor, RGBColor
 from borb.pdf.canvas.geometry.rectangle import Rectangle
+from borb.pdf.canvas.layout.image.image import Image
 from borb.pdf.canvas.layout.shape.shape import Shape
 from borb.pdf.canvas.layout.layout_element import Alignment
 from borb.pdf.canvas.layout.page_layout.multi_column_layout import SingleColumnLayout
 from borb.pdf.canvas.layout.page_layout.page_layout import PageLayout
-from borb.pdf.canvas.layout.table.flexible_column_width_table import FlexibleColumnWidthTable
+from borb.pdf.canvas.layout.table.flexible_column_width_table import (
+    FlexibleColumnWidthTable,
+)
 from borb.pdf.canvas.layout.text.paragraph import Paragraph
 from borb.pdf.canvas.line_art.line_art_factory import LineArtFactory
-from borb.pdf.document import Document
+from borb.pdf.document.document import Document
 from borb.pdf.page.page import Page
 from borb.pdf.pdf import PDF
 from borb.toolkit.color.color_spectrum_extraction import ColorSpectrumExtraction
@@ -4317,7 +5616,7 @@ def main():
         doc = PDF.loads(pdf_file_handle, [l])
 
     # extract colors
-    colors: typing.List[typing.Tuple[RGBColor, Decimal]] = l.get_colors_per_page(0)
+    colors: typing.List[typing.Tuple[RGBColor, Decimal]] = l.get_colors_for_page(0)
     colors = colors[0:32]
 
     # create output Document
@@ -4334,34 +5633,36 @@ def main():
     l.add(Paragraph("These are the colors used in the input PDF:"))
 
     # add Table
-    t: FlexibleColumnWidthTable = FlexibleColumnWidthTable(number_of_rows=8,
-                                                           number_of_columns=4,
-                                                           horizontal_alignment=Alignment.CENTERED)
+    t: FlexibleColumnWidthTable = FlexibleColumnWidthTable(
+        number_of_rows=8, number_of_columns=4, horizontal_alignment=Alignment.CENTERED
+    )
     for c in colors:
-        t.add(Shape(LineArtFactory.droplet(Rectangle(Decimal(0),
-                                                     Decimal(0),
-                                                     Decimal(32),
-                                                     Decimal(32))), stroke_color=c[0], fill_color=c[0]))
-    t.set_padding_on_all_cells(Decimal(5),
-                               Decimal(5),
-                               Decimal(5),
-                               Decimal(5))
+        t.add(
+            Shape(
+                LineArtFactory.droplet(
+                    Rectangle(Decimal(0), Decimal(0), Decimal(32), Decimal(32))
+                ),
+                stroke_color=c[0],
+                fill_color=c[0],
+            )
+        )
+    t.set_padding_on_all_cells(Decimal(5), Decimal(5), Decimal(5), Decimal(5))
     l.add(t)
 
-    # write
-    with open("output.pdf","wb") as pdf_file_handle:
+    # store
+    with open("output.pdf", "wb") as pdf_file_handle:
         PDF.dumps(pdf_file_handle, doc_out)
+
 
 if __name__ == "__main__":
     main()
-
 ```
 
-![enter image description here](img/borb_in_action_example_058_002.png)
+![enter image description here](chapter_005/img/snippet_013.png)
 
 <div style="page-break-before: always;"></div>
 
-## 3.8 Extracting font-information
+## 5.8 Extracting font-information
 
 In this example you'll be extracting font-names from an existing PDF.
 This may be useful (in later examples) to handle situations in which you know a certain snippet of information is always written in a particular font.
@@ -4369,159 +5670,171 @@ This may be useful (in later examples) to handle situations in which you know a 
 You'll start by creating a PDF with several fonts;
 
 ```python
-from decimal import Decimal
-
-import typing
-from borb.pdf.canvas.color.color import RGBColor
-from borb.pdf.canvas.geometry.rectangle import Rectangle
-from borb.pdf.canvas.layout.shape.shape import Shape
-from borb.pdf.canvas.layout.layout_element import Alignment
+#!chapter_005/src/snippet_014.py
+from borb.pdf.canvas.layout.list.unordered_list import UnorderedList
 from borb.pdf.canvas.layout.page_layout.multi_column_layout import SingleColumnLayout
 from borb.pdf.canvas.layout.page_layout.page_layout import PageLayout
-from borb.pdf.canvas.layout.table.flexible_column_width_table import FlexibleColumnWidthTable
 from borb.pdf.canvas.layout.text.paragraph import Paragraph
-from borb.pdf.canvas.line_art.line_art_factory import LineArtFactory
-from borb.pdf.document import Document
+from borb.pdf.document.document import Document
 from borb.pdf.page.page import Page
 from borb.pdf.pdf import PDF
-from borb.toolkit.color.color_spectrum_extraction import ColorSpectrumExtraction
-from borb.toolkit.text.font_extraction import FontExtraction
 
 
-def create_document():
-
+def main():
     # create Document
     doc: Document = Document()
 
     # create Page
     page: Page = Page()
+
+    # add Page to Document
     doc.append_page(page)
 
-    # create PageLayout
+    # set a PageLayout
     layout: PageLayout = SingleColumnLayout(page)
 
-    # add Paragraph for each font (name)
+    # add UnorderedList containing a (twice nested) UnorderedList
     for font_name in ["Helvetica", "Helvetica-Bold", "Courier"]:
-        layout.add(Paragraph("Hello World!", font=font_name))
+        layout.add(Paragraph("Hello World from %s!" % font_name, font=font_name))
 
-    # write
-    with open("output.pdf","wb") as pdf_file_handle:
-        PDF.dumps(pdf_file_handle, doc)
+    # store
+    with open("output.pdf", "wb") as out_file_handle:
+        PDF.dumps(out_file_handle, doc)
 
-        
+
 if __name__ == "__main__":
-    create_document()
-
+    main()
 ```
 
-![enter image description here](img/borb_in_action_example_052.png)
+![enter image description here](chapter_005/img/snippet_014.png)
 
 And now you can process that PDF and retrieve the fonts;
 
 ```python
-def extract_fonts():
+#!chapter_005/src/snippet_015.py
+import typing
+from borb.pdf.document.document import Document
+from borb.pdf.pdf import PDF
+from borb.toolkit.text.font_extraction import FontExtraction
 
+
+def main():
+
+    # read the Document
     doc: typing.Optional[Document] = None
     l: FontExtraction = FontExtraction()
-    with open("output.pdf", "rb") as pdf_file_handle:
-        doc = PDF.loads(pdf_file_handle, [l])
+    with open("output.pdf", "rb") as in_file_handle:
+        doc = PDF.loads(in_file_handle, [l])
 
+    # check whether we have read a Document
     assert doc is not None
-    
-    print(l.get_font_names_per_page(0))
+
+    # print the names of the Fonts
+    print(l.get_font_names_for_page(0))
 
 
 if __name__ == "__main__":
-    create_document()
-    extract_fonts()
+    main()
 ```
 
 This prints:
 
-```
+```commandline
 ['Helvetica', 'Helvetica-Bold', 'Courier']
 ```
 
 You can of course go looking at the code for `FontExtraction` (I highly encourage you to do so).
 This should enable you to write your own filter (similar to `LocationFilter`) to filter on fonts.
 
-### 3.8.1 Filtering by `font`
+### 5.8.1 Filtering by `font`
 
 In this example you'll be using `FontNameFilter` to retrieve all text on a `Page` that was written in `Courier`.
 First things first though, let's create an example PDF with text in different fonts;
 
 ```python
-import typing
+#!chapter_005/src/snippet_016.py
+from borb.pdf.canvas.layout.list.unordered_list import UnorderedList
 from borb.pdf.canvas.layout.page_layout.multi_column_layout import SingleColumnLayout
 from borb.pdf.canvas.layout.page_layout.page_layout import PageLayout
 from borb.pdf.canvas.layout.text.paragraph import Paragraph
-from borb.pdf.document import Document
+from borb.pdf.document.document import Document
 from borb.pdf.page.page import Page
 from borb.pdf.pdf import PDF
-from borb.toolkit.text.simple_text_extraction import SimpleTextExtraction
 
 
-def create_document():
-
+def main():
     # create Document
     doc: Document = Document()
 
     # create Page
     page: Page = Page()
+
+    # add Page to Document
     doc.append_page(page)
 
-    # create PageLayout
+    # set a PageLayout
     layout: PageLayout = SingleColumnLayout(page)
 
-    # add Paragraph for each font (name)
+    # add UnorderedList containing a (twice nested) UnorderedList
     for font_name in ["Helvetica", "Helvetica-Bold", "Courier"]:
-        layout.add(Paragraph("Hello World, from %s!" % font_name, font=font_name))
+        layout.add(Paragraph("Hello World from %s!" % font_name, font=font_name))
 
-    # write
-    with open("output.pdf", "wb") as pdf_file_handle:
-        PDF.dumps(pdf_file_handle, doc)
-
-```
-
-This generates the following PDF:
-
-![enter image description here](img/borb_in_action_example_060.png)
-
-Now we can run the code to filter on `font_name`:
-
-```python
-
-def extract_courier_text():
-
-    doc: typing.Optional[Document] = None
-    l0: FontNameFilter = FontNameFilter("Courier")
-    l1: SimpleTextExtraction = SimpleTextExtraction()
-    l0.add_listener(l1)
-    with open("output.pdf", "rb") as pdf_file_handle:
-        doc = PDF.loads(pdf_file_handle, [l0])
-
-    assert doc is not None
-
-    print(l1.get_text_for_page(0))
-
-
-def main():
-    create_document()
-    extract_courier_text()
+    # store
+    with open("output.pdf", "wb") as out_file_handle:
+        PDF.dumps(out_file_handle, doc)
 
 
 if __name__ == "__main__":
     main()
+```
 
+This generates the following PDF:
+
+![enter image description here](chapter_005/img/snippet_016.png)
+
+Now we can run the code to filter on `font_name`:
+
+```python
+#!chapter_005/src/snippet_017.py
+import typing
+from borb.pdf.document.document import Document
+from borb.pdf.pdf import PDF
+from borb.toolkit.text.font_name_filter import FontNameFilter
+from borb.toolkit.text.simple_text_extraction import SimpleTextExtraction
+
+
+def main():
+
+    # create FontNameFilter
+    l0: FontNameFilter = FontNameFilter("Courier")
+
+    # filtered text just gets passed to SimpleTextExtraction
+    l1: SimpleTextExtraction = SimpleTextExtraction()
+    l0.add_listener(l1)
+
+    # read the Document
+    doc: typing.Optional[Document] = None
+    with open("output.pdf", "rb") as in_file_handle:
+        doc = PDF.loads(in_file_handle, [l0])
+
+    # check whether we have read a Document
+    assert doc is not None
+
+    # print the names of the Fonts
+    print(l1.get_text_for_page(0))
+
+
+if __name__ == "__main__":
+    main()
 ```
 
 This should print:
 
-```
+```commandline
 Hello World, from Courier!
 ```
 
-### 3.8.2 Filtering by `font_color`
+### 5.8.2 Filtering by `font_color`
 
 Being able to filter by `font_color` allows you to extract text in a much more fine-grained way.
 You could filter out only the red text from an invoice, 
@@ -4533,69 +5846,87 @@ This implementation of `EventListener` takes 2 arguments at construction:
 - `maximum_normalized_rgb_distance` :   This is the maximum allowable distance between the `Color` in the PDF and the `color` parameter. This allows you to filter on "everything that looks kinda red" rather than "everything that is this exact shade of red".                                  
                                         The distance is defined as ((r0 - r1)² - (g0 - g1)² + (b0 - b1)²) / 3, with r, g, b being the red, green, blue components of the `Color`.
 
-```python
-import typing
-from decimal import Decimal
+We're going to start by creating an input PDF with text in various colors.
 
-from borb.pdf.canvas.color.color import X11Color
-from borb.toolkit.text.font_color_filter import FontColorFilter
+```python
+#!chapter_005/src/snippet_018.py
+from borb.pdf.canvas.layout.list.unordered_list import UnorderedList
 from borb.pdf.canvas.layout.page_layout.multi_column_layout import SingleColumnLayout
 from borb.pdf.canvas.layout.page_layout.page_layout import PageLayout
 from borb.pdf.canvas.layout.text.paragraph import Paragraph
-from borb.pdf.document import Document
+from borb.pdf.document.document import Document
 from borb.pdf.page.page import Page
 from borb.pdf.pdf import PDF
-from borb.toolkit.text.simple_text_extraction import SimpleTextExtraction
+from borb.pdf.canvas.color.color import X11Color
 
 
-def create_document():
-
+def main():
     # create Document
     doc: Document = Document()
 
     # create Page
     page: Page = Page()
+
+    # add Page to Document
     doc.append_page(page)
 
-    # create PageLayout
+    # set a PageLayout
     layout: PageLayout = SingleColumnLayout(page)
 
-    # add Paragraph for each font (name)
-    for font_color in [X11Color("Red"), X11Color("Green"), X11Color("Blue")]:
-        layout.add(Paragraph("Hello World, in %s!" % font_color.get_name(),
-                             font_color=font_color))
+    # add UnorderedList containing a (twice nested) UnorderedList
+    for color_name in ["Red", "Green", "Blue"]:
+        layout.add(
+            Paragraph(
+                "Hello World from %s!" % color_name, font_color=X11Color(color_name)
+            )
+        )
 
-    # write
-    with open("output.pdf", "wb") as pdf_file_handle:
-        PDF.dumps(pdf_file_handle, doc)
+    # store
+    with open("output.pdf", "wb") as out_file_handle:
+        PDF.dumps(out_file_handle, doc)
 
+
+if __name__ == "__main__":
+    main()
 ```
 
 This generates the following PDF:
 
-![enter image description here](img/borb_in_action_example_061.png)
+![enter image description here](chapter_005/img/snippet_018.png)
 
 Now we can filter the text in the PDF by selecting the red letters:
 
 ```python
+#!chapter_005/src/snippet_019.py
+import typing
+from borb.pdf.document.document import Document
+from borb.pdf.pdf import PDF
+from borb.toolkit.text.font_color_filter import FontColorFilter
+from borb.toolkit.text.simple_text_extraction import SimpleTextExtraction
+from borb.pdf.canvas.color.color import X11Color
 
-def extract_red_text():
-
-    doc: typing.Optional[Document] = None
-    l0: FontColorFilter = FontColorFilter(X11Color("Red"), Decimal(0.01))
-    l1: SimpleTextExtraction = SimpleTextExtraction()
-    l0.add_listener(l1)
-    with open("output.pdf", "rb") as pdf_file_handle:
-        doc = PDF.loads(pdf_file_handle, [l0])
-
-    assert doc is not None
-
-    print(l1.get_text_for_page(0))
+from decimal import Decimal
 
 
 def main():
-    create_document()
-    extract_red_text()
+
+    # create FontColorFilter
+    l0: FontColorFilter = FontColorFilter(X11Color("Red"), Decimal(0.01))
+
+    # filtered text just gets passed to SimpleTextExtraction
+    l1: SimpleTextExtraction = SimpleTextExtraction()
+    l0.add_listener(l1)
+
+    # read the Document
+    doc: typing.Optional[Document] = None
+    with open("output.pdf", "rb") as in_file_handle:
+        doc = PDF.loads(in_file_handle, [l0])
+
+    # check whether we have read a Document
+    assert doc is not None
+
+    # print the names of the Fonts
+    print(l1.get_text_for_page(0))
 
 
 if __name__ == "__main__":
@@ -4604,13 +5935,13 @@ if __name__ == "__main__":
 
 This should print:
 
-```
+```commandline
 Hello World, in Red!
 ```
 
 <div style="page-break-before: always;"></div>
 
-## 3.9 Extracting images from a PDF
+## 5.9 Extracting images from a PDF
 
 In this example you'll be extracting images from an existing PDF.
 Keep in mind the images may be subject to copyright, they may not have been intended for you to be able to extract them.
@@ -4618,70 +5949,89 @@ Keep in mind the images may be subject to copyright, they may not have been inte
 To get started, let's briefly re-iterate one of the earlier examples about inserting an `Image` object in a PDF.
 
 ```python
-from decimal import Decimal
-
-import typing
-from borb.pdf.canvas.layout.image.image import Image
+#!chapter_005/src/snippet_020.py
+from borb.io.read.types import Name, String, Dictionary
 from borb.pdf.canvas.layout.page_layout.multi_column_layout import SingleColumnLayout
 from borb.pdf.canvas.layout.page_layout.page_layout import PageLayout
-from borb.pdf.document import Document
+from borb.pdf.canvas.layout.text.paragraph import Paragraph
+from borb.pdf.document.document import Document
 from borb.pdf.page.page import Page
 from borb.pdf.pdf import PDF
+from borb.pdf.canvas.layout.image.image import Image
+
+from decimal import Decimal
+
 
 def main():
-
+    # create Document
     doc: Document = Document()
+
+    # create Page
     page: Page = Page()
+
+    # add Page to Document
     doc.append_page(page)
 
+    # set a PageLayout
     layout: PageLayout = SingleColumnLayout(page)
 
-    image_urls: typing.List[str] = ["https://images.unsplash.com/photo-1589606663923-283bbd309229?ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8",
-                                    "https://images.unsplash.com/photo-1496637721836-f46d116e6d34?ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8",
-                                    "https://images.unsplash.com/photo-1611873101970-dfa544c23494?ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8"
-                                    ]
+    # define 3 Image URLs
+    image_urls: typing.List[str] = [
+        "https://images.unsplash.com/photo-1589606663923-283bbd309229?ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8",
+        "https://images.unsplash.com/photo-1496637721836-f46d116e6d34?ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8",
+        "https://images.unsplash.com/photo-1611873101970-dfa544c23494?ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8",
+    ]
 
-    # the following code adds each image
+    # add an Image for each URL
     for image_url in image_urls:
-        layout.add(Image(image_url,
-                         width=Decimal(128),
-                         height=Decimal(128)))
+        layout.add(Image(image_url, width=Decimal(128), height=Decimal(128)))
 
+    # store
     with open("output.pdf", "wb") as out_file_handle:
         PDF.dumps(out_file_handle, doc)
 
-        
+
 if __name__ == "__main__":
     main()
-
 ```
 
-![enter image description here](img/borb_in_action_example_062.png)
+![enter image description here](chapter_005/img/snippet_020.png)
 
 Now that you have an input `Document`, let's go ahead and extract the `Image` from it.
 
 ```python
+#!chapter_005/src/snippet_021.py
 import typing
-from borb.pdf.document import Document
+
+from borb.io.read.types import Name, String, Dictionary
+from borb.pdf.canvas.layout.page_layout.multi_column_layout import SingleColumnLayout
+from borb.pdf.canvas.layout.page_layout.page_layout import PageLayout
+from borb.pdf.canvas.layout.text.paragraph import Paragraph
+from borb.pdf.document.document import Document
+from borb.pdf.page.page import Page
 from borb.pdf.pdf import PDF
+from borb.toolkit.text.text_rank_keyword_extraction import TextRankKeywordExtraction
+from borb.toolkit.text.stop_words import ENGLISH_STOP_WORDS
 from borb.toolkit.image.simple_image_extraction import SimpleImageExtraction
 
 
 def main():
 
-    doc: typing.Optional[Document] = None
     l: SimpleImageExtraction = SimpleImageExtraction()
-    with open("output.pdf", "rb") as pdf_file_handle:
-        doc = PDF.loads(pdf_file_handle, [l])
 
+    # load
+    doc: typing.Optional[Document] = None
+    with open("output.pdf", "rb") as in_file_handle:
+        doc = PDF.loads(in_file_handle, [l])
+
+    # check whether we have read a Document
     assert doc is not None
-    for img in l.get_images_per_page(0):
-        print(img)
-    
-        
+
+    print(l.get_images_for_page(0))
+
+
 if __name__ == "__main__":
     main()
-
 ```
 
 This should print:
@@ -4706,7 +6056,7 @@ you typically want the image to be as small as possible (while remaining legible
 In one of the upcoming examples you'll see how to subsample an `Image` in a PDF, 
 and you'll see firsthand how this technique can help reduce your document's memory footprint.
 
-### 3.9.1 Modifying images in an existing PDF
+### 5.9.1 Modifying images in an existing PDF
 
 In this example you'll be modifying the images in a PDF.
 You'll be using the PDF you created earlier (with 3 pineapple images) as a starting point.
@@ -4714,25 +6064,35 @@ You'll be using the PDF you created earlier (with 3 pineapple images) as a start
 First you'll be exploring the PDF, using the JSON-like structure `borb` has created.
 
 ```python
+#!chapter_005/src/snippet_022.py
 import typing
-from borb.pdf.document import Document
+
+from borb.io.read.types import Name, String, Dictionary
+from borb.pdf.canvas.layout.page_layout.multi_column_layout import SingleColumnLayout
+from borb.pdf.canvas.layout.page_layout.page_layout import PageLayout
+from borb.pdf.canvas.layout.text.paragraph import Paragraph
+from borb.pdf.document.document import Document
+from borb.pdf.page.page import Page
 from borb.pdf.pdf import PDF
+
 
 def main():
 
+    # load
     doc: typing.Optional[Document] = None
-    with open("output.pdf", "rb") as pdf_file_handle:
-        doc = PDF.loads(pdf_file_handle)
+    with open("output.pdf", "rb") as in_file_handle:
+        doc = PDF.loads(in_file_handle)
 
+    # check whether we have read a Document
     assert doc is not None
 
+    # print debug information for each Image (which PDF calls XObjects)
     for k, v in doc.get_page(0)["Resources"]["XObject"].items():
         print("%s\t%s" % (k, str(v)))
 
-        
+
 if __name__ == "__main__":
     main()
-
 ```
 
 This code prints:
@@ -4751,31 +6111,17 @@ First, you'll write this simple function to convert an `Image` to its sepia coun
 "sepia" is just a fancy way of saying "old timey brown pictures".
 
 ```python
-from PIL import Image as PILImage
-
-def modify_image(image: PILImage.Image):
-    w = image.width
-    h = image.height
-    pixels = image.load()
-    for i in range(0, w):
-        for j in range(0, h):
-            r, g, b = pixels[i, j]
-
-            # convert to sepia
-            new_r = r * 0.393 + g * 0.769 + b * 0.189
-            new_g = r * 0.349 + g * 0.686 + b * 0.168
-            new_b = r * 0.272 + g * 0.534 + b * 0.131
-
-            # set
-            pixels[i, j] = (int(new_r), int(new_g), int(new_b))
-```
-
-With that taken care of, you can now modify the `Image` objects inside the PDF:
-
-```python
+#!chapter_005/src/snippet_023.py
 import typing
-from borb.pdf.document import Document
+
+from borb.io.read.types import Name, String, Dictionary
+from borb.pdf.canvas.layout.page_layout.multi_column_layout import SingleColumnLayout
+from borb.pdf.canvas.layout.page_layout.page_layout import PageLayout
+from borb.pdf.canvas.layout.text.paragraph import Paragraph
+from borb.pdf.document.document import Document
+from borb.pdf.page.page import Page
 from borb.pdf.pdf import PDF
+
 from PIL import Image as PILImage
 
 
@@ -4798,13 +6144,15 @@ def modify_image(image: PILImage.Image):
 
 def main():
 
+    # load
     doc: typing.Optional[Document] = None
-    with open("output.pdf", "rb") as pdf_file_handle:
-        doc = PDF.loads(pdf_file_handle)
+    with open("output.pdf", "rb") as in_file_handle:
+        doc = PDF.loads(in_file_handle)
 
+    # check whether we have read a Document
     assert doc is not None
 
-    # modify each image
+    # modify each Image
     for k, v in doc.get_page(0)["Resources"]["XObject"].items():
         print("%s\t%s" % (k, str(v)))
         modify_image(v)
@@ -4813,17 +6161,16 @@ def main():
     with open("output.pdf", "wb") as out_file_handle:
         PDF.dumps(out_file_handle, doc)
 
-        
+
 if __name__ == "__main__":
     main()
-
 ```
 
 The result should look like this:
 
-![enter image description here](img/borb_in_action_example_064.png)
+![enter image description here](chapter_005/img/snippet_023.png)
 
-### 3.9.2 Subsampling images in an existing PDF
+### 5.9.2 Subsampling images in an existing PDF
 
 As you've found out in a previous example, sometimes the dimensions at which an `Image` is displayed are not the same as the dimensions at which it was stored.
 This can lead to a rather bulky PDF, if each `Image` is substantially larger than its display-dimensions.
@@ -4833,48 +6180,55 @@ Luckily `borb` comes with `ImageFormatOptimization` which does all the heavy lif
 
 As a benchmark, you can first have a look at the file-characteristics of the original input PDF.
 
-![enter image description here](img/borb_in_action_example_065_001.png)
+![enter image description here](chapter_005/img/snippet_024_001.png)
 
 You can see the file is roughly 5Mb large.
 Now you can use the following code to optimize the `Image` dimensions:
 
 ```python
+#!chapter_005/src/snippet_024.py
 import typing
-from borb.pdf.document import Document
+
+from borb.io.read.types import Name, String, Dictionary
+from borb.pdf.canvas.layout.page_layout.multi_column_layout import SingleColumnLayout
+from borb.pdf.canvas.layout.page_layout.page_layout import PageLayout
+from borb.pdf.canvas.layout.text.paragraph import Paragraph
+from borb.pdf.document.document import Document
+from borb.pdf.page.page import Page
 from borb.pdf.pdf import PDF
 from borb.toolkit.image.image_format_optimization import ImageFormatOptimization
 
 
 def main():
 
+    # load
     doc: typing.Optional[Document] = None
-    l: ImageFormatOptimization = ImageFormatOptimization()
-    with open("output.pdf", "rb") as pdf_file_handle:
-        doc = PDF.loads(pdf_file_handle, [l])
+    with open("output.pdf", "rb") as in_file_handle:
+        doc = PDF.loads(in_file_handle, [ImageFormatOptimization()])
 
+    # check whether we have read a Document
     assert doc is not None
 
     # store PDF
     with open("output.pdf", "wb") as out_file_handle:
         PDF.dumps(out_file_handle, doc)
 
-        
+
 if __name__ == "__main__":
     main()
-
 ```
 
 When you check out the file-stats on the output-file, the difference is astonishing:
 
-![enter image description here](img/borb_in_action_example_065_002.png)
+![enter image description here](chapter_005/img/snippet_024_002.png)
 
 You'll see that the output file looks the same, although there may have been some quality loss in the images.
 
-![enter image description here](img/borb_in_action_example_065_003.png)
+![enter image description here](chapter_005/img/snippet_024_003.png)
 
 <div style="page-break-before: always;"></div>
 
-## 3.10 Working with embedded files
+## 5.10 Working with embedded files
 
 PDF is more than just a digital paper-replacement. 
 PDF also has some features that go beyond "imitating paper".
@@ -4886,15 +6240,16 @@ to ensure the document can be processed automatically.
 
 In this section you'll handle both extraction of embedded files, and appending embedded files to a `Document`.
 
-### 3.10.1 Embedding files in a PDF
+### 5.10.1 Embedding files in a PDF
 
 In this example, you'll be creating a `Document` containing one `Paragraph`, and embed a json-file.
 
 ```python
+#!chapter_005/src/snippet_025.py
 from borb.pdf.canvas.layout.page_layout.multi_column_layout import SingleColumnLayout
 from borb.pdf.canvas.layout.page_layout.page_layout import PageLayout
 from borb.pdf.canvas.layout.text.paragraph import Paragraph
-from borb.pdf.document import Document
+from borb.pdf.document.document import Document
 from borb.pdf.page.page import Page
 from borb.pdf.pdf import PDF
 
@@ -4912,12 +6267,16 @@ def main():
     l: PageLayout = SingleColumnLayout(p)
 
     # add Paragraph
-    l.add(Paragraph("""
+    l.add(
+        Paragraph(
+            """
                     Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. 
                     Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. 
                     Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. 
                     Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.    
-                    """))
+                    """
+        )
+    )
 
     # create bytes for embedded file
     file_bytes = b"""
@@ -4927,53 +6286,56 @@ def main():
     }
     """
 
-    # add embedded file
+    # append embedded file
     d.append_embedded_file("lorem_ipsum.json", file_bytes)
 
     # store
     with open("output.pdf", "wb") as pdf_file_handle:
         PDF.dumps(pdf_file_handle, d)
 
-        
+
 if __name__ == "__main__":
     main()
 ```
 
 The PDF should look something like this: 
 
-![enter image description here](img/borb_in_action_example_066_001.png)
+![enter image description here](chapter_005/img/snippet_025_001.png)
 
 Notice the warning you see atop the PDF viewer. 
 This may of course vary depending on the viewer you're using.
 If you open the embedded file pane (again depending on your editor) you may see something similar to this:
 
-![enter image description here](img/borb_in_action_example_066_002.png)
+![enter image description here](chapter_005/img/snippet_025_002.png)
 
-### 3.10.2 Extracting embedded files from a PDF
+### 5.10.2 Extracting embedded files from a PDF
 
 Now that you can embed files in a PDF, let's see how you can retrieve those files again.
 
 ```python
+#!chapter_005/src/snippet_026.py
 import typing
-from borb.pdf.document import Document
+from borb.pdf.document.document import Document
 from borb.pdf.pdf import PDF
 
 
 def main():
 
+    # read the Document
     doc: typing.Optional[Document] = None
     with open("output.pdf", "rb") as pdf_file_handle:
         doc = PDF.loads(pdf_file_handle)
 
+    # check whether we have read a Document
     assert doc is not None
-    
+
     # retrieve all embedded files and their bytes
-    for k,v in doc.get_embedded_files().items():
+    for k, v in doc.get_embedded_files().items():
 
         # display the file name, and the size
         print("%s, %d bytes" % (k, len(v)))
-    
-        
+
+
 if __name__ == "__main__":
     main()
 ```
@@ -4989,7 +6351,578 @@ Or process them directly using the `io` API in Python.
 
 <div style="page-break-before: always;"></div>
 
-## 3.11 Adding annotations to a PDF
+## 5.11 Merging PDF documents
+
+This is one of the most common usecases in working with PDF.
+In the next example you'll be merging multiple existing PDF documents.
+
+You'll start by creating two methods that each create (and write) a PDF document.
+
+```python
+#!chapter_005/src/snippet_027.py
+import typing
+from borb.pdf.document.document import Document
+from borb.pdf.pdf import PDF
+
+import typing
+
+from borb.pdf.canvas.color.color import HexColor
+from borb.pdf.canvas.layout.page_layout.multi_column_layout import SingleColumnLayout
+from borb.pdf.canvas.layout.page_layout.page_layout import PageLayout
+from borb.pdf.canvas.layout.text.paragraph import Paragraph
+from borb.pdf.document.document import Document
+from borb.pdf.page.page import Page
+from borb.pdf.pdf import PDF
+
+
+def main():
+
+    d: Document = Document()
+    p: Page = Page()
+    d.append_page(p)
+
+    l: PageLayout = SingleColumnLayout(p)
+    l.add(
+        Paragraph(
+            """
+                    Lorem Ipsum is simply dummy text of the printing and typesetting industry. 
+                    Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, 
+                    when an unknown printer took a galley of type and scrambled it to make a type specimen book. 
+                    It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. 
+                    It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, 
+                    and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum.
+                    """,
+            font_color=HexColor("de6449"),
+        )
+    )
+
+    with open("output_001.pdf", "wb") as pdf_out_handle:
+        PDF.dumps(pdf_out_handle, d)
+
+
+if __name__ == "__main__":
+    main()
+```
+
+![enter image description here](chapter_005/img/snippet_027.png)
+
+That should take care of the first PDF.
+Now you can write a second (similar) PDF document:
+
+```python
+#!chapter_005/src/snippet_028.py
+import typing
+from borb.pdf.document.document import Document
+from borb.pdf.pdf import PDF
+
+import typing
+
+from borb.pdf.canvas.color.color import HexColor
+from borb.pdf.canvas.layout.page_layout.multi_column_layout import SingleColumnLayout
+from borb.pdf.canvas.layout.page_layout.page_layout import PageLayout
+from borb.pdf.canvas.layout.text.paragraph import Paragraph
+from borb.pdf.document.document import Document
+from borb.pdf.page.page import Page
+from borb.pdf.pdf import PDF
+
+
+def main():
+
+    d: Document = Document()
+    p: Page = Page()
+    d.append_page(p)
+
+    l: PageLayout = SingleColumnLayout(p)
+    l.add(
+        Paragraph(
+            """
+                    Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. 
+                    Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. 
+                    Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. 
+                    Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
+                    """,
+            font_color=HexColor("f1cd2e"),
+        )
+    )
+
+    with open("output_002.pdf", "wb") as pdf_out_handle:
+        PDF.dumps(pdf_out_handle, d)
+
+
+if __name__ == "__main__":
+    main()
+```
+
+![enter image description here](chapter_005/img/snippet_028.png)
+
+Finally, you can write the main method, which will create both documents, read them, and merge them.
+
+```python
+#!chapter_005/src/snippet_029.py
+import typing
+from borb.pdf.document.document import Document
+from borb.pdf.pdf import PDF
+
+import typing
+
+from borb.pdf.canvas.color.color import HexColor
+from borb.pdf.canvas.layout.page_layout.multi_column_layout import SingleColumnLayout
+from borb.pdf.canvas.layout.page_layout.page_layout import PageLayout
+from borb.pdf.canvas.layout.text.paragraph import Paragraph
+from borb.pdf.document.document import Document
+from borb.pdf.page.page import Page
+from borb.pdf.pdf import PDF
+
+
+def main():
+
+    # open doc_001
+    doc_001: typing.Optional[Document] = Document()
+    with open("output_001.pdf", "rb") as pdf_file_handle:
+        doc_001 = PDF.loads(pdf_file_handle)
+
+    # open doc_002
+    doc_002: typing.Optional[Document] = Document()
+    with open("output_002.pdf", "rb") as pdf_file_handle:
+        doc_002 = PDF.loads(pdf_file_handle)
+
+    # merge
+    doc_001.append_document(doc_002)
+
+    # write
+    with open("output_003.pdf", "wb") as pdf_file_handle:
+        PDF.dumps(pdf_file_handle, doc_001)
+
+
+if __name__ == "__main__":
+    main()
+```
+
+![enter image description here](chapter_005/img/snippet_029.png)
+
+You don't have to fully merge both `Document` objects, you can just copy a couple of `Page` objects from one `Document` to another.     
+In the next example you'll be selecting one `Page` from each `Document` and building a new PDF with them.
+
+You'll start by creating a slightly modified version of the first document from the previous example.
+This document has 10 pages.
+
+```python
+#!chapter_005/src/snippet_030.py
+import typing
+from borb.pdf.document.document import Document
+from borb.pdf.pdf import PDF
+
+from decimal import Decimal
+import typing
+
+from borb.pdf.canvas.color.color import HexColor
+from borb.pdf.canvas.layout.page_layout.multi_column_layout import SingleColumnLayout
+from borb.pdf.canvas.layout.page_layout.page_layout import PageLayout
+from borb.pdf.canvas.layout.text.paragraph import Paragraph
+from borb.pdf.document.document import Document
+from borb.pdf.page.page import Page
+from borb.pdf.pdf import PDF
+
+
+def main():
+
+    d: Document = Document()
+
+    N: int = 10
+    for i in range(0, N):
+        p: Page = Page()
+        d.append_page(p)
+        l: PageLayout = SingleColumnLayout(p)
+        l.add(
+            Paragraph(
+                "Page %d of %d" % (i + 1, N),
+                font_color=HexColor("0b3954"),
+                font_size=Decimal(24),
+            )
+        )
+        l.add(
+            Paragraph(
+                """
+                        Lorem Ipsum is simply dummy text of the printing and typesetting industry. 
+                        Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, 
+                        when an unknown printer took a galley of type and scrambled it to make a type specimen book. 
+                        It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. 
+                        It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, 
+                        and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum.
+                        """,
+                font_color=HexColor("de6449"),
+            )
+        )
+
+    with open("output_001.pdf", "wb") as pdf_out_handle:
+        PDF.dumps(pdf_out_handle, d)
+
+
+if __name__ == "__main__":
+    main()
+```
+
+The page number is printed atop each page, to make it easier to identify them later.
+
+![enter image description here](chapter_005/img/snippet_030.png)
+
+The second document will also have 10 pages. The page number will also be displayed atop each page:
+
+```python
+#!chapter_005/src/snippet_031.py
+import typing
+from borb.pdf.document.document import Document
+from borb.pdf.pdf import PDF
+
+import typing
+from decimal import Decimal
+
+from borb.pdf.document.document import Document
+from borb.pdf.page.page import Page
+from borb.pdf.pdf import PDF
+
+
+def main():
+
+    # open doc_001
+    doc_001: typing.Optional[Document] = Document()
+    with open("output_001.pdf", "rb") as pdf_file_handle:
+        doc_001 = PDF.loads(pdf_file_handle)
+
+    # open doc_002
+    doc_002: typing.Optional[Document] = Document()
+    with open("output_002.pdf", "rb") as pdf_file_handle:
+        doc_002 = PDF.loads(pdf_file_handle)
+
+    # create new document
+    d: Document = Document()
+    for i in range(0, 10):
+        p: typing.Optional[Page] = None
+        if i % 2 == 0:
+            p = doc_001.get_page(i)
+        else:
+            p = doc_002.get_page(i)
+        d.append_page(p)
+
+    # write
+    with open("output_003.pdf", "wb") as pdf_file_handle:
+        PDF.dumps(pdf_file_handle, d)
+
+
+if __name__ == "__main__":
+    main()
+```
+
+![enter image description here](chapter_005/img/snippet_031.png)
+
+To build the merged document you'll be selecting a page from each input document in turn, until the merged document has 10 pages.
+
+```python
+#!chapter_005/src/snippet_032.py
+import typing
+from borb.pdf.document.document import Document
+from borb.pdf.pdf import PDF
+
+import typing
+from decimal import Decimal
+
+from borb.pdf.document.document import Document
+from borb.pdf.page.page import Page
+from borb.pdf.pdf import PDF
+
+
+def main():
+
+    # open doc_001
+    doc_001: typing.Optional[Document] = Document()
+    with open("output_001.pdf", "rb") as pdf_file_handle:
+        doc_001 = PDF.loads(pdf_file_handle)
+
+    # open doc_002
+    doc_002: typing.Optional[Document] = Document()
+    with open("output_002.pdf", "rb") as pdf_file_handle:
+        doc_002 = PDF.loads(pdf_file_handle)
+
+    # create new document
+    d: Document = Document()
+    for i in range(0, 10):
+        p: typing.Optional[Page] = None
+        if i % 2 == 0:
+            p = doc_001.get_page(i)
+        else:
+            p = doc_002.get_page(i)
+        d.append_page(p)
+
+    # write
+    with open("output_003.pdf", "wb") as pdf_file_handle:
+        PDF.dumps(pdf_file_handle, d)
+
+
+if __name__ == "__main__":
+    main()
+```
+
+The final document alternates pages between both input documents (which is obvious from the color and page numbers).
+
+![enter image description here](chapter_005/img/snippet_032.png)
+
+<div style="page-break-before: always;"></div>
+
+## 5.12 Removing pages from  PDF documents
+
+Sometimes you may want to remove a `Page` from a PDF.
+e.g. removing a cover-page before text-extraction may speed things up (one less page to process)
+
+In the next example you'll be removing the first `Page` from a `Document`.
+First of course, we need to create a `Document` to start with;
+
+```python
+#!chapter_005/src/snippet_033.py
+import typing
+from borb.pdf.document.document import Document
+from borb.pdf.pdf import PDF
+
+import typing
+from decimal import Decimal
+
+from borb.pdf.document.document import Document
+from borb.pdf.page.page import Page
+from borb.pdf.pdf import PDF
+from borb.pdf.canvas.layout.page_layout.multi_column_layout import MultiColumnLayout
+from borb.pdf.canvas.layout.page_layout.page_layout import PageLayout
+from borb.pdf.canvas.layout.text.paragraph import Paragraph
+from borb.pdf.canvas.color.color import HexColor
+
+
+def main():
+
+    # create new document
+    d: Document = Document()
+
+    # add Page
+    p: Page = Page()
+    d.append_page(p)
+    page_number: int = 1
+
+    # create PageLayout
+    l: PageLayout = MultiColumnLayout(p)
+
+    # adding Pages
+    for _ in range(0, 20):
+        if l.get_page() != p or page_number == 1:
+            l.add(
+                Paragraph(
+                    "Page %d" % page_number,
+                    font_color=HexColor("f1cd2e"),
+                    font_size=Decimal(20),
+                    font="Courier-Bold",
+                )
+            )
+            p = l.get_page()
+            page_number += 1
+
+        l.add(
+            Paragraph(
+                """
+                        Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. 
+                        Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. 
+                        Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. 
+                        Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
+                        """
+            )
+        )
+
+    # write
+    with open("output.pdf", "wb") as pdf_file_handle:
+        PDF.dumps(pdf_file_handle, d)
+
+
+if __name__ == "__main__":
+    main()
+```
+
+![enter image description here](chapter_005/img/snippet_033.png)
+
+Now that we have a substantial `Document`, we can remove a `Page` from it;
+
+```python
+#!chapter_005/src/snippet_034.py
+import typing
+from borb.pdf.document.document import Document
+from borb.pdf.pdf import PDF
+
+import typing
+from decimal import Decimal
+
+from borb.pdf.document.document import Document
+from borb.pdf.page.page import Page
+from borb.pdf.pdf import PDF
+from borb.pdf.canvas.layout.page_layout.multi_column_layout import MultiColumnLayout
+from borb.pdf.canvas.layout.page_layout.page_layout import PageLayout
+from borb.pdf.canvas.layout.text.paragraph import Paragraph
+from borb.pdf.canvas.color.color import HexColor
+
+
+def main():
+
+    doc: typing.Optional[Document] = None
+    with open("output.pdf", "rb") as pdf_file_handle:
+        doc = PDF.loads(pdf_file_handle)
+
+    assert doc is not None
+
+    # remove Page
+    doc.pop_page(1)
+
+    # store Document
+    with open("output.pdf", "wb") as pdf_file_handle:
+        PDF.dumps(pdf_file_handle, doc)
+
+
+if __name__ == "__main__":
+    main()
+```
+
+![enter image description here](chapter_005/img/snippet_034.png)
+
+You can see (in the thumbnail panel on the left side) that the second page was removed.
+
+<div style="page-break-before: always;"></div>
+
+## 5.13 Rotating pages in PDF documents
+
+In this example you'll be rotating a `Page` 90 degrees clockwise. 
+You can rotate a `Page` any multiple of 90 degrees.
+
+```python
+#!chapter_005/src/snippet_035.py
+import typing
+from borb.pdf.document.document import Document
+from borb.pdf.pdf import PDF
+
+import typing
+from decimal import Decimal
+
+from borb.pdf.document.document import Document
+from borb.pdf.page.page import Page
+from borb.pdf.pdf import PDF
+from borb.pdf.canvas.layout.page_layout.multi_column_layout import MultiColumnLayout
+from borb.pdf.canvas.layout.page_layout.page_layout import PageLayout
+from borb.pdf.canvas.layout.text.paragraph import Paragraph
+from borb.pdf.canvas.color.color import HexColor
+
+
+def main():
+
+    # create new document
+    d: Document = Document()
+
+    # add Page
+    p: Page = Page()
+    d.append_page(p)
+    page_number: int = 1
+
+    # create PageLayout
+    l: PageLayout = MultiColumnLayout(p)
+
+    # adding Pages
+    for _ in range(0, 20):
+        if l.get_page() != p or page_number == 1:
+            l.add(
+                Paragraph(
+                    "Page %d" % page_number,
+                    font_color=HexColor("f1cd2e"),
+                    font_size=Decimal(20),
+                    font="Courier-Bold",
+                )
+            )
+            p = l.get_page()
+            page_number += 1
+
+        l.add(
+            Paragraph(
+                """
+                        Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. 
+                        Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. 
+                        Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. 
+                        Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
+                        """
+            )
+        )
+
+    # write
+    with open("output.pdf", "wb") as pdf_file_handle:
+        PDF.dumps(pdf_file_handle, d)
+
+
+if __name__ == "__main__":
+    main()
+```
+
+![enter image description here](chapter_005/img/snippet_035.png)
+
+You already know this PDF, it's the same from the previous examples.
+
+Now let's rotate a `Page`:
+
+```python
+#!chapter_005/src/snippet_036.py
+import typing
+from borb.pdf.document.document import Document
+from borb.pdf.pdf import PDF
+
+import typing
+from decimal import Decimal
+
+from borb.pdf.document.document import Document
+from borb.pdf.page.page import Page
+from borb.pdf.pdf import PDF
+from borb.pdf.canvas.layout.page_layout.multi_column_layout import MultiColumnLayout
+from borb.pdf.canvas.layout.page_layout.page_layout import PageLayout
+from borb.pdf.canvas.layout.text.paragraph import Paragraph
+from borb.pdf.canvas.color.color import HexColor
+
+
+def main():
+
+    doc: typing.Optional[Document] = None
+    with open("output.pdf", "rb") as pdf_file_handle:
+        doc = PDF.loads(pdf_file_handle)
+
+    assert doc is not None
+
+    # rotate Page
+    doc.get_page(0).rotate_right()
+
+    # store Document
+    with open("output.pdf", "wb") as pdf_file_handle:
+        PDF.dumps(pdf_file_handle, doc)
+
+
+if __name__ == "__main__":
+    main()
+```
+
+![enter image description here](chapter_005/img/snippet_036.png)
+
+<div style="page-break-before: always;"></div>
+
+## 5.14 Conclusion
+
+In this section you've learned the basics of working with existing PDF documents. 
+You've seen how to extract text, regular expressions, images, font-information and color-information.
+
+And you've seen the basics of merging PDF's and removing one or more pages from a PDF.
+
+This section, together with the previous wraps up the basics of what you can do with `borb`.
+
+I would encourage you to continue reading, and more importantly to continue exploring `borb`.
+There are many more options and algorithms that you may find useful. 
+As a developer, expanding your toolkit with more knowledge is never a bad thing.
+
+<div style="page-break-before: always;"></div>
+
+## 6 Adding annotations to a PDF
 
 from the PDF-spec:
 
@@ -4997,22 +6930,28 @@ from the PDF-spec:
 > document, or provides a way to interact with the user by means of the mouse and keyboard. PDF includes a
 > wide variety of standard annotation types, described in detail in 12.5.6, “Annotation Types.”
 
-### 3.11.1 Adding geometric shapes
+![enter image description here](chapter_006/img/chapter_illustration.jpg)
+
+<div style="page-break-before: always;"></div>
+
+## 6.1 Adding geometric shapes
 
 For this example, you'll be adding a cartoon-ish diamond shape to a PDF.
 You can do this with a PDF that was just created, or with an existing PDF.
 `borb` comes with a rich `LineArtFactory` enabling you to easily add a shape to your PDF without having to resort to pixel-geometry.
 
 ```python
+#!chapter_006/src/snippet_001.py
 from decimal import Decimal
 
+from borb.pdf.canvas.layout.annotation.polygon_annotion import PolygonAnnotation
 from borb.pdf.canvas.color.color import HexColor
 from borb.pdf.canvas.geometry.rectangle import Rectangle
 from borb.pdf.canvas.layout.page_layout.multi_column_layout import SingleColumnLayout
 from borb.pdf.canvas.layout.page_layout.page_layout import PageLayout
 from borb.pdf.canvas.layout.text.paragraph import Paragraph
 from borb.pdf.canvas.line_art.line_art_factory import LineArtFactory
-from borb.pdf.document import Document
+from borb.pdf.document.document import Document
 from borb.pdf.page.page import Page
 from borb.pdf.page.page_size import PageSize
 from borb.pdf.pdf import PDF
@@ -5025,32 +6964,43 @@ def main():
     doc.append_page(page)
 
     layout: PageLayout = SingleColumnLayout(page)
-
-    layout.add(Paragraph("""
+    layout.add(
+        Paragraph(
+            """
                         Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. 
                         Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. 
                         Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. 
                         Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
-                        """))
+                        """
+        )
+    )
 
     page_width: Decimal = PageSize.A4_PORTRAIT.value[0]
     page_height: Decimal = PageSize.A4_PORTRAIT.value[1]
     s: Decimal = Decimal(100)
-    page.append_polygon_annotation(LineArtFactory.cartoon_diamond(Rectangle(page_width / Decimal(2) - s / Decimal(2),
-                                                                            page_height / Decimal(2) - s / Decimal(2),
-                                                                            s,
-                                                                            s)), stroke_color=HexColor("f1cd2e"))
+    page.append_annotation(
+        PolygonAnnotation(
+            LineArtFactory.cartoon_diamond(
+                Rectangle(
+                    page_width / Decimal(2) - s / Decimal(2),
+                    page_height / Decimal(2) - s / Decimal(2),
+                    s,
+                    s,
+                )
+            ),
+            stroke_color=HexColor("f1cd2e"),
+        )
+    )
 
     with open("output.pdf", "wb") as out_file_handle:
         PDF.dumps(out_file_handle, doc)
 
-        
+
 if __name__ == "__main__":
     main()
-
 ```
 
-![enter image description here](img/borb_in_action_example_068.png)
+![enter image description here](chapter_006/img/snippet_001.png)
 
 You may be wondering why `borb` did not make it easier on you to add the annotation.
 I mean to say, you had to calculate the coordinates yourself, that's unusually unhelpful.
@@ -5059,21 +7009,26 @@ The key thing to take away from this example (and in fact all subsequent example
 
 So `borb` does not offer much convenience methods, because it assumes the precise layout of the `Page` will have already been baked in to the `Document` at which point it is too late to attempt to retrieve it.
 
-### 3.11.2 Adding text annotations
+## 6.2 Adding text annotations
 
 In this example you'll be creating a text-annotation. 
 This is comparable to adding a pop-up Post-it note to a PDF.
 
 ```python
+#!chapter_006/src/snippet_002.py
 from decimal import Decimal
 
+from borb.pdf.canvas.layout.annotation.text_annotation import (
+    TextAnnotation,
+    TextAnnotationIconType,
+)
 from borb.pdf.canvas.color.color import HexColor
 from borb.pdf.canvas.geometry.rectangle import Rectangle
 from borb.pdf.canvas.layout.page_layout.multi_column_layout import SingleColumnLayout
 from borb.pdf.canvas.layout.page_layout.page_layout import PageLayout
 from borb.pdf.canvas.layout.text.paragraph import Paragraph
-from borb.pdf.document import Document
-from borb.pdf.page.page import Page, TextAnnotationIconType
+from borb.pdf.document.document import Document
+from borb.pdf.page.page import Page
 from borb.pdf.page.page_size import PageSize
 from borb.pdf.pdf import PDF
 
@@ -5085,32 +7040,40 @@ def main():
     doc.append_page(page)
 
     layout: PageLayout = SingleColumnLayout(page)
-
-    layout.add(Paragraph("""
+    layout.add(
+        Paragraph(
+            """
                         Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. 
                         Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. 
                         Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. 
                         Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
-                        """))
+                        """
+        )
+    )
 
     page_width: Decimal = PageSize.A4_PORTRAIT.value[0]
     page_height: Decimal = PageSize.A4_PORTRAIT.value[1]
     s: Decimal = Decimal(100)
-    page.append_text_annotation(Rectangle(page_width / Decimal(2) - s / Decimal(2),
-                                          page_height / Decimal(2) - s / Decimal(2),
-                                          s,
-                                          s),
-                                contents="Hello World!",
-                                text_annotation_icon=TextAnnotationIconType.COMMENT,
-                                color=HexColor("f1cd2e"))
+    page.append_annotation(
+        TextAnnotation(
+            Rectangle(
+                page_width / Decimal(2) - s / Decimal(2),
+                page_height / Decimal(2) - s / Decimal(2),
+                s,
+                s,
+            ),
+            contents="Hello World!",
+            text_annotation_icon=TextAnnotationIconType.COMMENT,
+            color=HexColor("f1cd2e"),
+        )
+    )
 
     with open("output.pdf", "wb") as out_file_handle:
         PDF.dumps(out_file_handle, doc)
 
-        
+
 if __name__ == "__main__":
     main()
-
 ```
 
 You can customize quite a few aspects of this particular annotation:
@@ -5122,13 +7085,13 @@ You can customize quite a few aspects of this particular annotation:
 
 The PDF you created should end up looking like this:
 
-![enter image description here](img/borb_in_action_example_069_001.png)
+![enter image description here](chapter_006/img/snippet_002_001.png)
 
 And when you click on the icon in the middle of the page, you get a little pop-up:
 
-![enter image description here](img/borb_in_action_example_069_002.png)
+![enter image description here](chapter_006/img/snippet_002_002.png)
 
-### 3.11.3 Adding link annotations
+## 6.3 Adding link annotations
 
 Link annotations provide your readers with an easy way to navigate the PDF document.
 Clicking a link-annotation can:
@@ -5141,15 +7104,20 @@ In the next example, you'll create a `Document` with several pages,
 and provide each of them with a convenient "back to the beginning" link annotation.
 
 ```python
+#!chapter_006/src/snippet_003.py
 from decimal import Decimal
 
+from borb.pdf.canvas.layout.annotation.link_annotation import (
+    LinkAnnotation,
+    DestinationType,
+)
 from borb.pdf.canvas.color.color import HexColor
 from borb.pdf.canvas.geometry.rectangle import Rectangle
 from borb.pdf.canvas.layout.page_layout.multi_column_layout import SingleColumnLayout
 from borb.pdf.canvas.layout.page_layout.page_layout import PageLayout
 from borb.pdf.canvas.layout.text.paragraph import Paragraph
-from borb.pdf.document import Document
-from borb.pdf.page.page import Page, DestinationType
+from borb.pdf.document.document import Document
+from borb.pdf.page.page import Page
 from borb.pdf.page.page_size import PageSize
 from borb.pdf.pdf import PDF
 
@@ -5166,39 +7134,52 @@ def main():
 
         layout: PageLayout = SingleColumnLayout(page)
 
-        layout.add(Paragraph("page %d of %d" % (i+1, N),
-                             font_color=HexColor("f1cd2e"),
-                             font_size=Decimal(20),
-                             font="Helvetica-Bold"))
+        layout.add(
+            Paragraph(
+                "page %d of %d" % (i + 1, N),
+                font_color=HexColor("f1cd2e"),
+                font_size=Decimal(20),
+                font="Helvetica-Bold",
+            )
+        )
 
-        layout.add(Paragraph("""
+        layout.add(
+            Paragraph(
+                """
                         Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. 
                         Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. 
                         Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. 
                         Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
-                        """))
+                        """
+            )
+        )
 
         page_width: Decimal = PageSize.A4_PORTRAIT.value[0]
         page_height: Decimal = PageSize.A4_PORTRAIT.value[1]
         s: Decimal = Decimal(100)
-        page.append_link_annotation(Rectangle(page_width / Decimal(2) - s / Decimal(2),
-                                          page_height / Decimal(2) - s / Decimal(2),
-                                          s,
-                                          s),
-                                    page=Decimal(0),
-                                    destination_type=DestinationType.FIT)
+        page.append_annotation(
+            LinkAnnotation(
+                Rectangle(
+                    page_width / Decimal(2) - s / Decimal(2),
+                    page_height / Decimal(2) - s / Decimal(2),
+                    s,
+                    s,
+                ),
+                page=Decimal(0),
+                destination_type=DestinationType.FIT,
+            )
+        )
 
     # store
     with open("output.pdf", "wb") as out_file_handle:
         PDF.dumps(out_file_handle, doc)
 
-        
+
 if __name__ == "__main__":
     main()
-
 ```
 
-![enter image description here](img/borb_in_action_example_070.png)
+![enter image description here](chapter_006/img/snippet_003.png)
 
 Try it! Navigate to any `Page` of the `Document` and click the link-annotation. 
 It should send you straight back to the first `Page`.
@@ -5261,7 +7242,75 @@ This example is very minimalistic. You can expand upon it.
 Rather than using a simple square, you can draw an `Image` or `Paragraph` and have the annotation be on top of it.
 I'm just giving you the basic tools you need, what you do with them is limited only by your imagination.
 
-### 3.11.4 Adding rubber stamp annotations
+## 6.4 Adding remote go-to annotations
+
+A remote go-to annotation allows you to make an area of your PDF clickable and functions like a hyperlink when clicked.
+This can be particularly useful if your PDF is part of a document-process where you might want to link this document to its source-system, or other documents.
+
+```python
+#!chapter_006/src/snippet_004.py
+from decimal import Decimal
+
+from borb.pdf.canvas.layout.annotation.remote_go_to_annotation import (
+    RemoteGoToAnnotation,
+)
+from borb.pdf.canvas.color.color import HexColor
+from borb.pdf.canvas.geometry.rectangle import Rectangle
+from borb.pdf.canvas.layout.page_layout.multi_column_layout import SingleColumnLayout
+from borb.pdf.canvas.layout.page_layout.page_layout import PageLayout
+from borb.pdf.canvas.layout.text.paragraph import Paragraph
+from borb.pdf.document.document import Document
+from borb.pdf.page.page import Page
+from borb.pdf.page.page_size import PageSize
+from borb.pdf.pdf import PDF
+
+
+def main():
+
+    doc: Document = Document()
+
+    page: Page = Page()
+    doc.append_page(page)
+
+    layout: PageLayout = SingleColumnLayout(page)
+    layout.add(
+        Paragraph(
+            """
+                        Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. 
+                        Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. 
+                        Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. 
+                        Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
+                        """
+        )
+    )
+
+    page_width: Decimal = PageSize.A4_PORTRAIT.value[0]
+    page_height: Decimal = PageSize.A4_PORTRAIT.value[1]
+    s: Decimal = Decimal(100)
+    page.append_annotation(
+        RemoteGoToAnnotation(
+            Rectangle(
+                page_width / Decimal(2) - s / Decimal(2),
+                page_height / Decimal(2) - s / Decimal(2),
+                s,
+                s,
+            ),
+            uri="https://www.google.com",
+        ),
+    )
+
+    # store
+    with open("output.pdf", "wb") as out_file_handle:
+        PDF.dumps(out_file_handle, doc)
+
+
+if __name__ == "__main__":
+    main()
+```
+
+![enter image description here](chapter_006/img/snippet_004.png)
+
+## 6.5 Adding rubber stamp annotations
 
 Rubber stamp annotations bring a bit of that classic paper feeling to digital documents.
 A giant "Confidential" on a page just screams "classy".
@@ -5269,16 +7318,22 @@ A giant "Confidential" on a page just screams "classy".
 In the next example, you'll be adding a rubber stamp annotation to a simple "lorem ipsum" document.
 
 ```python
+#!chapter_006/src/snippet_005.py
 from decimal import Decimal
 
+from borb.pdf.canvas.layout.annotation.rubber_stamp_annotation import (
+    RubberStampAnnotation,
+    RubberStampAnnotationIconType,
+)
 from borb.pdf.canvas.geometry.rectangle import Rectangle
 from borb.pdf.canvas.layout.page_layout.multi_column_layout import SingleColumnLayout
 from borb.pdf.canvas.layout.page_layout.page_layout import PageLayout
 from borb.pdf.canvas.layout.text.paragraph import Paragraph
-from borb.pdf.document import Document
-from borb.pdf.page.page import Page, RubberStampAnnotationIconType
+from borb.pdf.document.document import Document
+from borb.pdf.page.page import Page
 from borb.pdf.page.page_size import PageSize
 from borb.pdf.pdf import PDF
+
 
 def main():
 
@@ -5289,34 +7344,42 @@ def main():
 
     layout: PageLayout = SingleColumnLayout(page)
 
-    layout.add(Paragraph("""
+    layout.add(
+        Paragraph(
+            """
                         Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. 
                         Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. 
                         Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. 
                         Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
-                        """))
+                        """
+        )
+    )
 
     page_width: Decimal = PageSize.A4_PORTRAIT.value[0]
     page_height: Decimal = PageSize.A4_PORTRAIT.value[1]
     s: Decimal = Decimal(100)
-    page.append_stamp_annotation(Rectangle(page_width / Decimal(2) - s / Decimal(2),
-                                          page_height / Decimal(2) - s / Decimal(2),
-                                          s,
-                                          s),
-                                 name=RubberStampAnnotationIconType.CONFIDENTIAL
-                                 )
+    page.append_stamp_annotation(
+        RubberStampAnnotation(
+            Rectangle(
+                page_width / Decimal(2) - s / Decimal(2),
+                page_height / Decimal(2) - s / Decimal(2),
+                s,
+                s,
+            ),
+            name=RubberStampAnnotationIconType.CONFIDENTIAL,
+        )
+    )
 
     # store
     with open("output.pdf", "wb") as out_file_handle:
         PDF.dumps(out_file_handle, doc)
 
-        
+
 if __name__ == "__main__":
     main()
-
 ```
 
-![enter image description here](img/borb_in_action_example_071.png)
+![enter image description here](chapter_006/img/snippet_005.png)
 
 The different types of rubber stamps are limited (the PDF spec only defines a handful of them);
 
@@ -5339,7 +7402,7 @@ So this example may look entirely different on your device.
 
 <div style="page-break-before: always;"></div>
 
-## 3.12 Adding redaction (annotations)
+## 6.6 Adding redaction (annotations)
 
 from the PDF spec:
 > A redaction annotation (PDF 1.7) identifies content that is intended to be removed from the document. The
@@ -5361,19 +7424,21 @@ from the PDF spec:
 > process (content removal). This phase is application-specific and requires the conforming reader to remove all
 > content identified by the redaction annotation, as well as the annotation itself.
 
-### 3.12.1 Adding redaction annotations
+### 6.6.1 Adding redaction annotations
 
 In the next example, you'll be adding a redaction annotation. In a subsequent example you'll be using `borb` to apply all redaction annotations (thus removing the content).
 Redaction annotations are simply another kind of annotation, so all the methods and tools you've seen so far can of course be used again.
 
 ```python
+#!chapter_006/src/snippet_006.py
 from decimal import Decimal
 
+from borb.pdf.canvas.layout.annotation.redact_annotation import RedactAnnotation
 from borb.pdf.canvas.geometry.rectangle import Rectangle
 from borb.pdf.canvas.layout.page_layout.multi_column_layout import SingleColumnLayout
 from borb.pdf.canvas.layout.page_layout.page_layout import PageLayout
 from borb.pdf.canvas.layout.text.paragraph import Paragraph
-from borb.pdf.document import Document
+from borb.pdf.document.document import Document
 from borb.pdf.page.page import Page
 from borb.pdf.pdf import PDF
 
@@ -5387,29 +7452,35 @@ def main():
 
     layout: PageLayout = SingleColumnLayout(page)
 
-    layout.add(Paragraph("""
+    layout.add(
+        Paragraph(
+            """
                         Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. 
                         Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. 
                         Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. 
                         Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
-                        """))
+                        """
+        )
+    )
 
-    page.append_redact_annotation(Rectangle(Decimal(405),
-                                            Decimal(721),
-                                            Decimal(40),
-                                            Decimal(8)).grow(Decimal(2)))
+    page.append_annotation(
+        RedactAnnotation(
+            Rectangle(Decimal(405), Decimal(721), Decimal(40), Decimal(8)).grow(
+                Decimal(2)
+            )
+        )
+    )
 
     # store
     with open("output.pdf", "wb") as out_file_handle:
         PDF.dumps(out_file_handle, doc)
 
-        
+
 if __name__ == "__main__":
     main()
-
 ```
 
-![enter image description here](img/borb_in_action_example_072.png)
+![enter image description here](chapter_006/img/snippet_006.png)
 
 Of course, rather than passing a `Rectangle`, you can also use some of the logic you've applied in previous examples. 
 For instance, you can use `RegularExpressionTextExtraction` to look for a regular expression and then redact it.
@@ -5446,13 +7517,14 @@ The document you produced should still have the "marked for redaction" - content
 You could (at this point) ask a PDF reader (e.g. "Adobe") to apply the redaction annotations.
 Although this feature may not be supported.
 
-### 3.12.2 Applying redaction annotations
+### 6.6.2 Applying redaction annotations
 
 In this example you'll be applying the redaction annotations you added to the `Document` earlier.
 
 ```python
+#!chapter_006/src/snippet_007.py
 import typing
-from borb.pdf.document import Document
+from borb.pdf.document.document import Document
 from borb.pdf.pdf import PDF
 
 
@@ -5469,445 +7541,154 @@ def main():
     with open("output.pdf", "wb") as out_file_handle:
         PDF.dumps(out_file_handle, doc)
 
-        
+
 if __name__ == "__main__":
     main()
-
 ```
 
-![enter image description here](img/borb_in_action_example_073.png)
+![enter image description here](chapter_006/img/snippet_007.png)
 
 If you now try to select the content in the `Document`, you'll see the text is gone.
 
 <div style="page-break-before: always;"></div>
 
-## 3.13 Merging PDF documents
+## 6.7 Adding invisible `JavaScript` buttons
 
-This is one of the most common usecases in working with PDF.
-In the next example you'll be merging multiple existing PDF documents.
-
-You'll start by creating two methods that each create (and write) a PDF document.
+This annotation requires some trickiness. You're going to add a regular `RemoteGoToAnnotation` and modify its `Action` dictionary to have the `Annotation` perform like a click-button.
+You're going to add some `JavaScript` to the button's onclick.
 
 ```python
+#!chapter_006/src/snippet_008.py
 import typing
-
-from borb.pdf.canvas.color.color import HexColor
+from borb.pdf.document.document import Document
+from borb.pdf.pdf import PDF
+from borb.pdf.canvas.geometry.rectangle import Rectangle
 from borb.pdf.canvas.layout.page_layout.multi_column_layout import SingleColumnLayout
 from borb.pdf.canvas.layout.page_layout.page_layout import PageLayout
-from borb.pdf.canvas.layout.text.paragraph import Paragraph
-from borb.pdf.document import Document
 from borb.pdf.page.page import Page
-from borb.pdf.pdf import PDF
+from borb.pdf.canvas.layout.image.image import Image
+from decimal import Decimal
+from borb.pdf.canvas.layout.annotation.remote_go_to_annotation import (
+    RemoteGoToAnnotation,
+)
 
-
-def create_document_001():
-
-    d: Document = Document()
-    p: Page = Page()
-    d.append_page(p)
-
-    l: PageLayout = SingleColumnLayout(p)
-    l.add(Paragraph("""
-                    Lorem Ipsum is simply dummy text of the printing and typesetting industry. 
-                    Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, 
-                    when an unknown printer took a galley of type and scrambled it to make a type specimen book. 
-                    It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. 
-                    It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, 
-                    and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum.
-                    """,
-                    font_color=HexColor("de6449")))
-
-    with open("output_001.pdf", "wb") as pdf_out_handle:
-        PDF.dumps(pdf_out_handle, d)
-
-```
-
-![enter image description here](img/borb_in_action_example_074_001.png)
-
-That should take care of the first PDF.
-Now you can write a second (similar) PDF document:
-
-```python
-
-def create_document_002():
-
-    d: Document = Document()
-    p: Page = Page()
-    d.append_page(p)
-
-    l: PageLayout = SingleColumnLayout(p)
-    l.add(Paragraph("""
-                    Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. 
-                    Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. 
-                    Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. 
-                    Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
-                    """,
-                    font_color=HexColor("f1cd2e")))
-
-    with open("output_002.pdf", "wb") as pdf_out_handle:
-        PDF.dumps(pdf_out_handle, d)
-
-```
-
-![enter image description here](img/borb_in_action_example_074_002.png)
-
-Finally, you can write the main method, which will create both documents, read them, and merge them.
-
-```python
 
 def main():
 
-    # create both documents
-    create_document_001()
-    create_document_002()
+    # create document
+    pdf = Document()
 
-    # open doc_001
-    doc_001: typing.Optional[Document] = Document()
-    with open("output_001.pdf", "rb") as pdf_file_handle:
-        doc_001 = PDF.loads(pdf_file_handle)
+    # add page
+    page = Page()
+    pdf.append_page(page)
 
-    # open doc_002
-    doc_002: typing.Optional[Document] = Document()
-    with open("output_002.pdf", "rb") as pdf_file_handle:
-        doc_002 = PDF.loads(pdf_file_handle)
+    # add test information
+    layout = SingleColumnLayout(page)
 
-    # merge
-    doc_001.append_document(doc_002)
+    # add image
+    img: Image = Image(
+        "https://images.unsplash.com/photo-1614963366795-973eb8748ebb",
+        width=Decimal(128),
+        height=Decimal(128),
+    )
+    layout.add(img)
 
-    # write
-    with open("output_003.pdf", "wb") as pdf_file_handle:
-        PDF.dumps(pdf_file_handle, doc_001)
+    # create RemoteGoToAnnotation
+    annot: RemoteGoToAnnotation = RemoteGoToAnnotation(
+        img.get_bounding_box(), uri="https://www.google.com"
+    )
 
-        
+    # modify annotation
+    annot[Name("A")][Name("S")] = Name("JavaScript")
+    annot[Name("A")][Name("JS")] = String("app.alert('Hello World!', 3)")
+    page.append_annotation(annot)
+
+    # attempt to store PDF
+    with open(self.output_dir / "output.pdf", "wb") as out_file_handle:
+        PDF.dumps(out_file_handle, pdf)
+
+
 if __name__ == "__main__":
     main()
-
 ```
 
-![enter image description here](img/borb_in_action_example_074_003.png)
+![enter image description here](chapter_006/img/snippet_008.png)
 
-You don't have to fully merge both `Document` objects, you can just copy a couple of `Page` objects from one `Document` to another.     
-In the next example you'll be selecting one `Page` from each `Document` and building a new PDF with them.
+## 6.8 Adding sound annotations
 
-You'll start by creating a slightly modified version of the first document from the previous example.
-This document has 10 pages.
+Did you know you can add sound to a PDF?
+This opens all kinds of options; you could add a text-to-speech rendering of your PDF to the document itself.
+Talk about making your PDF accessible!
+
+In this example we're going to add a `SoundAnnotation` to a PDF, which plays some classical music.
 
 ```python
+#!chapter_006/src/snippet_009.py
 import typing
-from decimal import Decimal
-
-from borb.pdf.canvas.color.color import HexColor
+from borb.pdf.document.document import Document
+from borb.pdf.pdf import PDF
+from borb.pdf.canvas.geometry.rectangle import Rectangle
 from borb.pdf.canvas.layout.page_layout.multi_column_layout import SingleColumnLayout
 from borb.pdf.canvas.layout.page_layout.page_layout import PageLayout
-from borb.pdf.canvas.layout.text.paragraph import Paragraph
-from borb.pdf.document import Document
 from borb.pdf.page.page import Page
-from borb.pdf.pdf import PDF
-
-
-def create_document_001():
-
-    d: Document = Document()
-
-    N: int = 10
-    for i in range(0, N):
-        p: Page = Page()
-        d.append_page(p)
-        l: PageLayout = SingleColumnLayout(p)
-        l.add(Paragraph("Page %d of %d" % (i+1, N),
-                        font_color=HexColor("0b3954"),
-                        font_size=Decimal(24)))
-        l.add(Paragraph("""
-                        Lorem Ipsum is simply dummy text of the printing and typesetting industry. 
-                        Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, 
-                        when an unknown printer took a galley of type and scrambled it to make a type specimen book. 
-                        It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. 
-                        It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, 
-                        and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum.
-                        """,
-                        font_color=HexColor("de6449")))
-
-    with open("output_001.pdf", "wb") as pdf_out_handle:
-        PDF.dumps(pdf_out_handle, d)
-
-```
-
-The page number is printed atop each page, to make it easier to identify them later.
-
-![enter image description here](img/borb_in_action_example_075_001.png)
-
-The second document will also have 10 pages. The page number will also be displayed atop each page:
-
-```python
-
-def create_document_002():
-
-    d: Document = Document()
-
-    N: int = 10
-    for i in range(0, N):
-        p: Page = Page()
-        d.append_page(p)
-        l: PageLayout = SingleColumnLayout(p)
-        l.add(Paragraph("Page %d of %d" % (i+1, N),
-                        font_color=HexColor("56cbf9"),
-                        font_size=Decimal(24)))
-        l.add(Paragraph("""
-                        Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. 
-                        Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. 
-                        Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. 
-                        Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
-                        """,
-                        font_color=HexColor("f1cd2e")))
-
-    with open("output_002.pdf", "wb") as pdf_out_handle:
-        PDF.dumps(pdf_out_handle, d)
-
-```
-
-![enter image description here](img/borb_in_action_example_075_002.png)
-
-To build the merged document you'll be selecting a page from each input document in turn, until the merged document has 10 pages.
-
-```python
-def main():
-
-    # create both documents
-    create_document_001()
-    create_document_002()
-
-    # open doc_001
-    doc_001: typing.Optional[Document] = Document()
-    with open("output_001.pdf", "rb") as pdf_file_handle:
-        doc_001 = PDF.loads(pdf_file_handle)
-
-    # open doc_002
-    doc_002: typing.Optional[Document] = Document()
-    with open("output_002.pdf", "rb") as pdf_file_handle:
-        doc_002 = PDF.loads(pdf_file_handle)
-
-    # create new document
-    d: Document = Document()
-    for i in range(0, 10):
-        p: typing.Optional[Page] = None
-        if i % 2 == 0:
-            p = doc_001.get_page(i)
-        else:
-            p = doc_002.get_page(i)
-        d.append_page(p)
-
-    # write
-    with open("output_003.pdf", "wb") as pdf_file_handle:
-        PDF.dumps(pdf_file_handle, d)
-
-        
-if __name__ == "__main__":
-    main()
-
-```
-
-The final document alternates pages between both input documents (which is obvious from the color and page numbers).
-
-![enter image description here](img/borb_in_action_example_075_003.png)
-
-<div style="page-break-before: always;"></div>
-
-## 3.14 Removing pages from  PDF documents
-
-Sometimes you may want to remove a `Page` from a PDF.
-e.g. removing a cover-page before text-extraction may speed things up (one less page to process)
-
-In the next example you'll be removing the first `Page` from a `Document`.
-First of course, we need to create a `Document` to start with;
-
-```python
+from borb.pdf.canvas.layout.image.image import Image
+from borb.pdf.canvas.layout.annotation.sound_annotation import SoundAnnotation
 from decimal import Decimal
 
-import typing
-from borb.pdf.canvas.color.color import HexColor
-from borb.pdf.canvas.layout.page_layout.multi_column_layout import MultiColumnLayout
-from borb.pdf.canvas.layout.page_layout.page_layout import PageLayout
-from borb.pdf.canvas.layout.text.paragraph import Paragraph
-from borb.pdf.document import Document
-from borb.pdf.page.page import Page
-from borb.pdf.pdf import PDF
-
-
-def create_document():
-
-    # create empty Document
-    d: Document = Document()
-
-    # add Page
-    p: Page = Page()
-    d.append_page(p)
-    page_number: int = 1
-
-    # create PageLayout
-    l: PageLayout = MultiColumnLayout(p)
-
-    for _ in range(0, 20):
-        if l.get_page() != p or page_number == 1:
-            l.add(Paragraph("Page %d" % page_number, font_color=HexColor("f1cd2e"), font_size=Decimal(20), font="Courier-Bold"))
-            p = l.get_page()
-            page_number += 1
-
-        l.add(Paragraph("""
-                        Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. 
-                        Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. 
-                        Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. 
-                        Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
-                        """))
-
-    # store
-    with open("output.pdf", "wb") as pdf_file_handle:
-        PDF.dumps(pdf_file_handle, d)
-
-```
-
-![enter image description here](img/borb_in_action_example_076_001.png)
-
-Now that we have a substantial `Document`, we can remove a `Page` from it;
-
-```python
-
-def remove_page_from_document():
-
-    doc: typing.Optional[Document] = None
-    with open("output.pdf", "rb") as pdf_file_handle:
-        doc = PDF.loads(pdf_file_handle)
-
-    assert doc is not None
-
-    # remove Page
-    doc.pop_page(1)
-
-    # store Document
-    with open("output.pdf", "wb") as pdf_file_handle:
-        PDF.dumps(pdf_file_handle, doc)
-
 
 def main():
-    create_document()
-    remove_page_from_document()
+
+    # create document
+    pdf = Document()
+
+    # add page
+    page = Page()
+    pdf.append_page(page)
+
+    # add test information
+    layout = SingleColumnLayout(page)
+
+    # add image
+    img: Image = Image(
+        "https://images.unsplash.com/photo-1513883049090-d0b7439799bf",
+        width=Decimal(128),
+        height=Decimal(128),
+    )
+    layout.add(img)
+
+    # add sound annotation
+    page.append_annotation(
+        SoundAnnotation(img.get_bounding_box(), "/home/joris/Downloads/audioclip.mp3")
+    )
+
+    # attempt to store PDF
+    with open(self.output_dir / "output.pdf", "wb") as out_file_handle:
+        PDF.dumps(out_file_handle, pdf)
 
 
 if __name__ == "__main__":
     main()
 ```
 
-![enter image description here](img/borb_in_action_example_076_002.png)
+![enter image description here](chapter_006/img/snippet_009.png)
 
-You can see (in the thumbnail panel on the left side) that the second page was removed.
+## 6.9 Adding movie annotations
 
-<div style="page-break-before: always;"></div>
-
-## 3.15 Rotating pages in PDF documents
-
-In this example you'll be rotating a `Page` 90 degrees clockwise. 
-You can rotate a `Page` any multiple of 90 degrees.
 
 ```python
-
-import typing
-from decimal import Decimal
-
-from borb.pdf.canvas.color.color import HexColor
-from borb.pdf.canvas.layout.page_layout.multi_column_layout import MultiColumnLayout
-from borb.pdf.canvas.layout.page_layout.page_layout import PageLayout
-from borb.pdf.canvas.layout.text.paragraph import Paragraph
-from borb.pdf.document import Document
-from borb.pdf.page.page import Page
-from borb.pdf.pdf import PDF
-
-
-def create_document():
-
-    # create empty Document
-    d: Document = Document()
-
-    # add Page
-    p: Page = Page()
-    d.append_page(p)
-    page_number: int = 1
-
-    # create PageLayout
-    l: PageLayout = MultiColumnLayout(p)
-
-    for _ in range(0, 20):
-        if l.get_page() != p or page_number == 1:
-            l.add(Paragraph("Page %d" % page_number, font_color=HexColor("f1cd2e"), font_size=Decimal(20), font="Courier-Bold"))
-            p = l.get_page()
-            page_number += 1
-
-        l.add(Paragraph("""
-                        Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. 
-                        Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. 
-                        Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. 
-                        Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
-                        """))
-
-    # store
-    with open("output.pdf", "wb") as pdf_file_handle:
-        PDF.dumps(pdf_file_handle, d)
-
+#!chapter_006/src/snippet_010.py
 ```
 
-![enter image description here](img/borb_in_action_example_077_001.png)
+![enter image description here](chapter_006/img/snippet_010.png)
 
-You already know this PDF, it's the same from the previous examples.
+## 6.10 Conclusion
 
-Now let's rotate a `Page`:
-
-```python
-
-def rotate_page_in_document():
-
-    doc: typing.Optional[Document] = None
-    with open("output.pdf", "rb") as pdf_file_handle:
-        doc = PDF.loads(pdf_file_handle)
-
-    assert doc is not None
-
-    # rotate Page
-    doc.get_page(0).rotate_right()
-
-    # store Document
-    with open("output.pdf", "wb") as pdf_file_handle:
-        PDF.dumps(pdf_file_handle, doc)
-
-
-def main():
-    create_document()
-    rotate_page_in_document()
-
-
-if __name__ == "__main__":
-    main()
-
-```
-
-![enter image description here](img/borb_in_action_example_077_002.png)
+In this section you've learned how to work with `Annotation` objects.
+These objects allow you to add content to existing PDF documents.
 
 <div style="page-break-before: always;"></div>
 
-## 3.16 Conclusion
-
-In this section you've learned the basics of working with existing PDF documents. 
-You've seen how to extract text, regular expressions, images, font-information and color-information.
-
-You've played around with annotations, and redaction. 
-And you've seen the basics of merging PDF's and removing one or more pages from a PDF.
-
-This section, together with the previous wraps up the basics of what you can do with `borb`.
-
-I would encourage you to continue reading, and more importantly to continue exploring `borb`.
-There are many more options and algorithms that you may find useful. 
-As a developer, expanding your toolkit with more knowledge is never a bad thing.
-
-<div style="page-break-before: always;"></div>
-
-# 4. Heuristics for PDF documents
+# 7 Heuristics for PDF documents
 
 Most of what you've done so far is exact.
 There is an exact algorithm for retrieving the bytes of an embedded file.
@@ -5924,11 +7705,11 @@ In this section you'll learn how to:
 - Export a PDF to various image formats
 - Export certain formats (HTML, Markdown) to PDF
 
-![enter image description here](img/chapter_illustrations/borb_005.jpg)
+![enter image description here](chapter_007/img/chapter_illustration.jpg)
 
 <div style="page-break-before: always;"></div>
 
-## 4.1 Extracting tables from a PDF
+## 7.1 Extracting tables from a PDF
 
 For the next example you'll first need to create a `Document` with a `Table`.
 In order to provide `borb` with a challenge, let's create a `Table` with:
@@ -5939,6 +7720,7 @@ In order to provide `borb` with a challenge, let's create a `Table` with:
 - `text_alignment`
 
 ```python
+#!chapter_007/src/snippet_001.py
 from decimal import Decimal
 
 import typing
@@ -5947,16 +7729,17 @@ from borb.pdf.canvas.layout.layout_element import Alignment
 from borb.pdf.canvas.layout.page_layout.multi_column_layout import SingleColumnLayout
 from borb.pdf.canvas.layout.page_layout.page_layout import PageLayout
 from borb.pdf.canvas.layout.table.table import TableCell
-from borb.pdf.canvas.layout.table.flexible_column_width_table import FlexibleColumnWidthTable
+from borb.pdf.canvas.layout.table.flexible_column_width_table import (
+    FlexibleColumnWidthTable,
+)
 from borb.pdf.canvas.layout.table.table import Table
 from borb.pdf.canvas.layout.text.paragraph import Paragraph
-from borb.pdf.document import Document
+from borb.pdf.document.document import Document
 from borb.pdf.page.page import Page
 from borb.pdf.pdf import PDF
-from borb.toolkit.table.table_detection_by_lines import TableDetectionByLines
 
 
-def create_document():
+def main():
 
     # create empty Document
     d: Document = Document()
@@ -5969,27 +7752,49 @@ def create_document():
     l: PageLayout = SingleColumnLayout(p)
 
     # create Table
-    l.add(FlexibleColumnWidthTable(number_of_rows=3, number_of_columns=3)
-          .add(TableCell(Paragraph("1", font_color=HexColor("f1cd2e"), horizontal_alignment=Alignment.RIGHT),
-                         row_span=3,
-                         preferred_width=Decimal(64)))
-          .add(TableCell(Paragraph("2")))
-          .add(TableCell(Paragraph("3")))
-          .add(TableCell(Paragraph("4", font_color=HexColor("56cbf9"), horizontal_alignment=Alignment.LEFT),
-                         row_span=2,
-                         preferred_width=Decimal(32)))
-          .add(TableCell(Paragraph("5")))
-          .add(TableCell(Paragraph("6", font_color=HexColor("de6449"))))
-          .set_padding_on_all_cells(Decimal(5), Decimal(5), Decimal(5), Decimal(5))
-          )
+    l.add(
+        FlexibleColumnWidthTable(number_of_rows=3, number_of_columns=3)
+        .add(
+            TableCell(
+                Paragraph(
+                    "1",
+                    font_color=HexColor("f1cd2e"),
+                    horizontal_alignment=Alignment.RIGHT,
+                ),
+                row_span=3,
+                preferred_width=Decimal(64),
+            )
+        )
+        .add(TableCell(Paragraph("2")))
+        .add(TableCell(Paragraph("3")))
+        .add(
+            TableCell(
+                Paragraph(
+                    "4",
+                    font_color=HexColor("56cbf9"),
+                    horizontal_alignment=Alignment.LEFT,
+                ),
+                row_span=2,
+                preferred_width=Decimal(32),
+            )
+        )
+        .add(TableCell(Paragraph("5")))
+        .add(TableCell(Paragraph("6", font_color=HexColor("de6449"))))
+        .set_padding_on_all_cells(Decimal(5), Decimal(5), Decimal(5), Decimal(5))
+    )
 
     # store
     with open("output.pdf", "wb") as pdf_file_handle:
         PDF.dumps(pdf_file_handle, d)
 
+
+if __name__ == "__main__":
+    main()
 ```
 
-![enter image description here](img/borb_in_action_example_078_001.png)
+This creates a PDF that looks like this:
+
+![enter image description here](chapter_007/img/snippet_001.png)
 
 Now you can use the `TableDetectionByLines` implementation of `EventListener` to get the job done.
 
@@ -5997,8 +7802,28 @@ In this example, you'll be adding rectangular annotations to display the detecte
 This is something I do a lot, adding annotations is a quick and easy way to debug a PDF workflow.
 
 ```python
+#!chapter_007/src/snippet_002.py
+from decimal import Decimal
 
-def recognize_table():
+import typing
+from borb.pdf.canvas.color.color import HexColor, X11Color
+from borb.pdf.canvas.layout.layout_element import Alignment
+from borb.pdf.canvas.layout.page_layout.multi_column_layout import SingleColumnLayout
+from borb.pdf.canvas.layout.page_layout.page_layout import PageLayout
+from borb.pdf.canvas.layout.table.table import TableCell
+from borb.pdf.canvas.layout.table.flexible_column_width_table import (
+    FlexibleColumnWidthTable,
+)
+from borb.pdf.canvas.layout.table.table import Table
+from borb.pdf.canvas.layout.text.paragraph import Paragraph
+from borb.pdf.document.document import Document
+from borb.pdf.page.page import Page
+from borb.pdf.pdf import PDF
+from borb.toolkit.table.table_detection_by_lines import TableDetectionByLines
+from borb.pdf.canvas.layout.annotation.square_annotation import SquareAnnotation
+
+
+def main():
 
     doc: typing.Optional[Document] = None
     l: TableDetectionByLines = TableDetectionByLines()
@@ -6016,8 +7841,7 @@ def recognize_table():
 
     for r in l.get_table_bounding_boxes_for_page(0):
         r = r.grow(Decimal(5))
-        p.append_square_annotation(r,
-                                   stroke_color=X11Color("Green"))
+        p.append_annotation(SquareAnnotation(r, stroke_color=X11Color("Green")))
 
     for t in tables:
 
@@ -6025,31 +7849,25 @@ def recognize_table():
         for c in t._content:
             r = c.get_bounding_box()
             r = r.shrink(Decimal(5))
-            p.append_square_annotation(r, stroke_color=X11Color("Red"))
+            p.append_annotation(SquareAnnotation(r, stroke_color=X11Color("Red")))
 
     # write
     with open("output.pdf", "wb") as pdf_file_handle:
         PDF.dumps(pdf_file_handle, doc)
 
 
-def main():
-    create_document()
-    recognize_table()
-
-    
 if __name__ == "__main__":
     main()
-
 ```
 
-![enter image description here](img/borb_in_action_example_078_002.png)
+![enter image description here](chapter_007/img/snippet_002.png)
 
 As you can see, `borb` was able to find the `Table` and retrieve its `TableCell` objects.
 Now that you have their coordinates, you can easily use some of the earlier examples (filtering text by location for instance) to retrieve the contents of each cell.
 
 <div style="page-break-before: always;"></div>
 
-## 4.2 Performing OCR on a PDF
+## 7.2 Performing OCR on a PDF
 
 This is by far one of the most classic questions on any programming-forum, or helpdesk: "My document does not seem to have text in it. Help?" or "Your text-extraction code sample does not work for my document. How come?"
 
@@ -6075,20 +7893,13 @@ You'll start by creating a method that builds a PIL `Image` with some text in it
 This `Image` will then be inserted in a PDF.
 
 ```python
+#!chapter_007/src/snippet_003.py
 import typing
 from pathlib import Path
 
-from borb.pdf.canvas.layout.image.image import Image
-from borb.pdf.canvas.layout.page_layout.multi_column_layout import SingleColumnLayout
-from borb.pdf.canvas.layout.page_layout.page_layout import PageLayout
-from borb.pdf.canvas.layout.text.paragraph import Paragraph
-from borb.pdf.document import Document
-from borb.pdf.page.page import Page
 from borb.pdf.pdf import PDF
 from PIL import Image as PILImage  # type: ignore [import]
 from PIL import ImageDraw, ImageFont
-from borb.toolkit.ocr.ocr_as_optional_content_group import OCRAsOptionalContentGroup
-from borb.toolkit.text.simple_text_extraction import SimpleTextExtraction
 
 
 def create_image() -> PILImage:
@@ -6102,20 +7913,48 @@ def create_image() -> PILImage:
 
     # draw text
     draw = ImageDraw.Draw(img)
-    draw.text((10, 10),
-              "Hello World!",
-              fill=(0, 0, 0),
-              font=font)
+    draw.text((10, 10), "Hello World!", fill=(0, 0, 0), font=font)
 
     # return
     return img
-
 ```
 
 Now you can build a `Document` with this `Image`
 
 ```python
-def create_document():
+#!chapter_007/src/snippet_004.py
+import typing
+from pathlib import Path
+
+from borb.pdf.canvas.layout.image.image import Image
+from borb.pdf.canvas.layout.page_layout.multi_column_layout import SingleColumnLayout
+from borb.pdf.canvas.layout.page_layout.page_layout import PageLayout
+from borb.pdf.canvas.layout.text.paragraph import Paragraph
+from borb.pdf.document.document import Document
+from borb.pdf.page.page import Page
+from borb.pdf.pdf import PDF
+from PIL import Image as PILImage  # type: ignore [import]
+from PIL import ImageDraw, ImageFont
+
+
+def create_image() -> PILImage:
+
+    # create new Image
+    img = PILImage.new("RGB", (256, 256), color=(255, 255, 255))
+
+    # create ImageFont
+    # CAUTION: you may need to adjust the path to your particular font directory
+    font = ImageFont.truetype("/usr/share/fonts/truetype/ubuntu/UbuntuMono-B.ttf", 24)
+
+    # draw text
+    draw = ImageDraw.Draw(img)
+    draw.text((10, 10), "Hello World!", fill=(0, 0, 0), font=font)
+
+    # return
+    return img
+
+
+def main():
 
     # create Document
     d: Document = Document()
@@ -6136,21 +7975,26 @@ def create_document():
     # write
     with open("output_001.pdf", "wb") as pdf_file_handle:
         PDF.dumps(pdf_file_handle, d)
+
+
+if __name__ == "__main__":
+    main()
 ```
 
 The document should look something like this:
 
-![enter image description here](img/borb_in_action_example_079_001.png)
+![enter image description here](chapter_007/img/snippet_004_001.png)
 
 When you select the text in this document, you'll see immediately that only the top line is actually text.
 The rest is an `Image` with text (the `Image` you created).
 
-![enter image description here](img/borb_in_action_example_079_002.png)
+![enter image description here](chapter_007/img/snippet_004_002.png)
 
 Now you can apply OCR to this `Document`:
 
 ```python
-def apply_ocr_to_document():
+#!chapter_007/src/snippet_005.py
+def main():
 
     # set up everything for OCR
     tesseract_data_dir: Path = Path("/home/joris/Downloads/tessdata-master/")
@@ -6167,29 +8011,33 @@ def apply_ocr_to_document():
     # store Document
     with open("output_002.pdf", "wb") as pdf_file_handle:
         PDF.dumps(pdf_file_handle, doc)
+
+
+if __name__ == "__main__":
+    main()
 ```
 
-![enter image description here](img/borb_in_action_example_079_003.png)
+![enter image description here](chapter_007/img/snippet_005_001.png)
 
 You can see this created an extra layer in the PDF.
 This layer is named "OCR by borb", and contains the rendering instructions `borb` re-inserted in the `Document`.
 
 You can toggle the visibility of this layer (this can be handy when debugging).
 
-![enter image description here](img/borb_in_action_example_079_004.png)
+![enter image description here](chapter_007/img/snippet_005_002.png)
 
 You can see `borb` re-inserted the postscript rendering command to ensure "Hello World!" is in the `Document.
 Let's hide this layer again.
 
 Now (even with the layer hidden), you can select the text:
 
-![enter image description here](img/borb_in_action_example_079_005.png)
+![enter image description here](chapter_007/img/snippet_005_003.png)
 
 And if you apply `SimpleTextExtraction` now, you should be able to retrieve all the text in the `Document`.
 
 ```python
-
-def read_modified_document():
+#!chapter_007/src/snippet_006.py
+def main():
 
     doc: typing.Optional[Document] = None
     l: SimpleTextExtraction = SimpleTextExtraction()
@@ -6199,12 +8047,6 @@ def read_modified_document():
     print(l.get_text_for_page(0))
 
 
-def main():
-    create_document()
-    apply_ocr_to_document()
-    read_modified_document()
-
-    
 if __name__ == "__main__":
     main()
 ```
@@ -6218,19 +8060,121 @@ Hello World!
 
 <div style="page-break-before: always;"></div>
 
-## 4.3 Exporting PDF as a (PIL) image
+## 7.3 Exporting PDF as a (PIL) image
 
-:mega: todo :mega:
+Let's start by creating a PDF we can later export.
+In the next example you'll be creating a PDF with different fonts, font-sizes and an image.
+
+```python
+#!chapter_007/src/snippet_007.py
+from borb.pdf.document.document import Document
+from borb.pdf.page.page import Page
+from borb.pdf.canvas.layout.page_layout.multi_column_layout import SingleColumnLayout
+from borb.pdf.canvas.layout.page_layout.page_layout import PageLayout
+from borb.pdf.canvas.layout.text.paragraph import Paragraph
+from borb.pdf.canvas.layout.image.image import Image
+from borb.pdf.pdf import PDF
+
+from decimal import Decimal
+
+
+def main():
+    # create Document
+    doc: Document = Document()
+
+    # create Page
+    page: Page = Page()
+
+    # add Page to Document
+    doc.append_page(page)
+
+    # set a PageLayout
+    layout: PageLayout = SingleColumnLayout(page)
+
+    # add an Image
+    layout.add(
+        Image(
+            "https://www.gutenberg.org/cache/epub/58866/pg58866.cover.medium.jpg",
+            width=Decimal(200),
+            height=Decimal(300),
+        )
+    )
+
+    # add a Paragraph
+    layout.add(
+        Paragraph("1. A Fellow Traveller", font="Helvetica-bold", font_size=Decimal(20))
+    )
+    layout.add(
+        Paragraph(
+            """
+    I believe that a well-known anecdote exists to the effect that a young
+    writer, determined to make the commencement of his story forcible and
+    original enough to catch and rivet the attention of the most blasé of
+    editors, penned the following sentence:
+    """
+        )
+    )
+
+    # store
+    with open("output.pdf", "wb") as pdf_file_handle:
+        PDF.dumps(pdf_file_handle, doc)
+
+
+if __name__ == "__main__":
+    main()
+```
+
+![enter image description here](chapter_007/img/snippet_007.png)
+
+Now let's export this as an Image.
+
+```python
+#!chapter_007/src/snippet_008.py
+from borb.pdf.pdf import PDF
+from borb.toolkit.export.pdf_to_jpg import PDFToJPG
+
+from pathlib import Path
+
+
+def main():
+    input_file: Path = Path(__file__).parent / "output.pdf"
+    PDFToJPG.convert_pdf_to_jpg(input_file, 0).save("output_page_00.jpg")
+
+
+if __name__ == "__main__":
+    main()
+```
+
+![enter image description here](chapter_007/img/snippet_008.jpg)
+
 
 <div style="page-break-before: always;"></div>
 
-## 4.4 Exporting PDF as an SVG image
+## 7.4 Exporting PDF as an SVG image
 
-:mega: todo :mega:
+```python
+#!chapter_007/src/snippet_009.py
+from borb.pdf.pdf import PDF
+from borb.toolkit.export.pdf_to_svg import PDFToSVG
+
+from pathlib import Path
+
+
+def main():
+    input_file: Path = Path(__file__).parent / "output.pdf"
+    PDFToSVG.convert_pdf_to_jpg(input_file, 0).save("output_page_00.svg")
+
+
+if __name__ == "__main__":
+    main()
+```
+
+![enter image description here](chapter_007/img/snippet_009.jpg)
+
 
 <div style="page-break-before: always;"></div>
 
-## 4.5 Exporting Markdown as PDF
+## 7.5 Exporting Markdown as PDF
 
 Markdown is a very convenient format (for developers and non-technical people) to provide a quick and legible lightweight formatted document.
 
@@ -6263,38 +8207,18 @@ You'll be using the following input markdown:
 Using `borb`, you can transform Markdown to PDF;
 
 ```python
-from borb.pdf.document import Document
+#!chapter_007/src/snippet_010.py
+from borb.pdf.document.document import Document
 from borb.pdf.pdf import PDF
 from borb.toolkit.export.markdown_to_pdf.markdown_to_pdf import MarkdownToPDF
 
 
 def main():
 
-    markdown_str: str = """
-# Headings
-To create a heading, add number signs (#) in front of a word or phrase. The number of number signs you use should correspond to the heading level. For example, to create a heading level three (\<h3\>), use three number signs (e.g., ### My Header).
-
-# Heading level 1
-## Heading level 2
-### Heading level 3
-#### Heading level 4
-##### Heading level 5
-###### Heading level 6
-
-## Alternate Syntax
-Alternatively, on the line below the text, add any number of == characters for heading level 1 or -- characters for heading level 2.
-
-Heading level 1
-===============
-
-Heading level 2
----------------
-
-## Heading Best Practices
-Markdown applications don’t agree on how to handle a missing space between the number signs (#) and the heading name. For compatibility, always put a space between the number signs and the heading name.
-
-You should also put blank lines before and after a heading for compatibility.
-    """
+    # read entire markdown file
+    markdown_str: str = ""
+    with open("snippet_010.md", "r") as md_file_handle:
+        markdown_str = md_file_handle.read()
 
     # convert
     doc: Document = MarkdownToPDF.convert_markdown_to_pdf(markdown_str)
@@ -6306,16 +8230,19 @@ You should also put blank lines before and after a heading for compatibility.
 
 
 if __name__ == "__main__":
-    main()    
+    main()
+
+if __name__ == "__main__":
+    main()
 ```
 
 This produces the following PDF;
 
-![enter image description here](img/borb_in_action_example_081.png)
+![enter image description here](chapter_007/img/snippet_010.png)
 
 <div style="page-break-before: always;"></div>
 
-## 4.6 Exporting HTML as PDF
+## 7.6 Exporting HTML as PDF
 
 Another wonderful format for content is HTML. 
 `borb` supports basic HTML to PDF conversion. 
@@ -6333,23 +8260,18 @@ For this example, you'll be using the following HTML snippet:
 >    \</html>
 
 ```python
-from borb.pdf.document import Document
+#!chapter_007/src/snippet_011.py
+from borb.pdf.document.document import Document
 from borb.pdf.pdf import PDF
 from borb.toolkit.export.html_to_pdf.html_to_pdf import HTMLToPDF
 
 
 def main():
 
-    html_str: str = """
-    <html>
-        <head>
-            <title>Lorem Ipsum</title>
-        </head>
-        <p>
-            Hello World!
-        </p>
-    </html>
-    """
+    # read entire markdown file
+    html_str: str = ""
+    with open("snippet_011.html", "r") as md_file_handle:
+        html_str = md_file_handle.read()
 
     # convert
     doc: Document = HTMLToPDF.convert_html_to_pdf(html_str)
@@ -6362,11 +8284,14 @@ def main():
 
 if __name__ == "__main__":
     main()
+
+if __name__ == "__main__":
+    main()
 ```
 
 Which ends up producing the following PDF:
 
-![enter image description here](img/borb_in_action_example_082.png)
+![enter image description here](chapter_007/img/snippet_011.png)
 
 You'll also notice (if you open this PDF in your preferred viewer) that the title of the `Document` was set to `"lorem ipsum"`.
 So `borb` also processed the meta-information.
@@ -6375,13 +8300,17 @@ Check out the examples in the GitHub repository and the tests to find out more s
 
 <div style="page-break-before: always;"></div>
 
-# 5. Deep Dive
-
-![enter image description here](img/chapter_illustrations/borb_006.jpg)
+## 7.7 Conclusion
 
 <div style="page-break-before: always;"></div>
 
-## 5.1 About PDF
+# 8 Deep Dive into `borb`
+
+![enter image description here](chapter_008/img/chapter_illustration.jpg)
+
+<div style="page-break-before: always;"></div>
+
+## 8.1 About PDF
 
 If we consider PDF as a programming language, then these would be its primitive data-types:
 
@@ -6422,7 +8351,7 @@ Objects such as `1 0 R` are references. They need to be resolved by the XREF (mo
 
 is an array containing two hexadecimal string objects.
 
-## 5.2 The XREF table
+## 8.2 The XREF table
 
 The cross-reference table in a PDF is one of many tricks designed to speed up a reader. A cross-reference table (further abbreviated as XREF) contains a mapping of all PDF objects and their byte offset.
 
@@ -6511,7 +8440,7 @@ endobj
 
 `/Contents` points to the `Page` content stream. This is a string of postfix instructions (usually compressed using `deflate`).
 
-## 5.3 Page content streams
+## 8.3 Page content streams
 
 In the previous section you explored the top-level objects of a PDF.
 You got all the way down to the `Page` object.
@@ -6549,7 +8478,7 @@ Operators are prefix operators, meaning the arguments come before the operator.
 
 <div style="page-break-before: always;"></div>
 
-## 5.4 Postscript syntax
+## 8.4 Postscript syntax
 
 This section provides you with a quick overview of the most common PDF operators.
 This is meant to enable you to debug PDF documents.
@@ -6638,7 +8567,7 @@ A free copy of which can be found:
 
 <div style="page-break-before: always;"></div>
 
-## 5.5 Creating a `Document` using low-level syntax
+## 8.5 Creating a `Document` using low-level syntax
 
 In this subsection I'll take you through all of the relevant pieces of `borb` when rendering a small piece of text to a PDF.
 This is a bit like having someone sit next to you, explaining the code while you're stepping through it with a debugger.
@@ -6658,21 +8587,21 @@ In this example, you'll be creating a PDF from scratch, containing "Hello World!
 
 <div style="page-break-before: always;"></div>
 
-## 5.6 Fonts in PDF
+## 8.6 Fonts in PDF
 
 :mega: todo :mega:
 
-### 5.6.1 Simple fonts
+### 8.6.1 Simple fonts
 
 :mega: todo :mega:
 
-### 5.6.2 Composite fonts
+### 8.6.2 Composite fonts
 
 :mega: todo :mega:
 
 <div style="page-break-before: always;"></div>
 
-## 5.7 About structured vs. unstructured document formats
+## 8.7 About structured vs. unstructured document formats
 
 Typically, at one point or another when you're working with PDF, someone will come along that would like to convert the PDF to some other format.
 Most libraries or software-tools offer all kinds of wacky conversions. Some more successful than others.
@@ -6696,7 +8625,7 @@ So, when extracting text from a PDF `borb` is faced with several issues:
 
 In order to be able to extract text, `borb` has to do a lot of work. Let's have a look behind the scenes to see what goes on.
 
-### 5.7.1 Text extraction: using heuristics to bridge the gap
+### 8.7.1 Text extraction: using heuristics to bridge the gap
 
 In `borb`, the easiest way of accessing the text on a page is by using `SimpleTextExtraction`.
 Let's have a look at how it works.
@@ -6843,13 +8772,13 @@ finally, `SimpleTextExtraction` stores the reconstituted text (to ensure fast lo
         self._text_per_page[self._current_page] = text
 ```
 
-### 5.7.2 Paragraph extraction and disjoint set
+### 8.7.2 Paragraph extraction and disjoint set
 
 :mega: todo :mega:
 
 <div style="page-break-before: always;"></div>
 
-## 5.8 Hyphenation
+## 8.8 Hyphenation
 
 from wikipedia.org
 > Syllabification (/sɪˌlæbɪfɪˈkeɪʃən/) or syllabication (/sɪˌlæbɪˈkeɪʃən/), also known as hyphenation, is the separation of a word into syllables, whether spoken, written or signed.
@@ -6869,7 +8798,7 @@ from wikipedia.org
 
 And that's not even mentioning hyphenation in other languages.
 
-### 5.8.2 A fast and scalable hyphenation algorithm
+### 8.8.2 A fast and scalable hyphenation algorithm
 
 `borb` hyphenates text (on a `Paragraph`) if you pass it a `Hyphenation` object.
 This object represents an instantiation of the aforementioned hyphenation algorithm.
@@ -6931,7 +8860,7 @@ Whenever the `Paragraph` is performing layout, it will do the following:
 
 This ensures hyphenation is only called when needed (rather than on every word in the sentence).
 
-### 5.8.3 Using hyphenation in `borb`
+### 8.8.3 Using hyphenation in `borb`
 
 In the next example you'll be creating a `Document` with two `Paragraph` instances.
 One `Paragraph` will have hyphenation enabled, the other will not.
@@ -6943,7 +8872,7 @@ from borb.pdf.canvas.layout.hyphenation.hyphenation import Hyphenation
 from borb.pdf.canvas.layout.page_layout.multi_column_layout import SingleColumnLayout
 from borb.pdf.canvas.layout.page_layout.page_layout import PageLayout
 from borb.pdf.canvas.layout.text.paragraph import Paragraph
-from borb.pdf.document import Document
+from borb.pdf.document.document import Document
 from borb.pdf.page.page import Page
 from borb.pdf.pdf import PDF
 
@@ -6994,98 +8923,499 @@ if __name__ == "__main__":
 
 In the final PDF you can see the word "survived" was hyphenated as well as the word "essentially".
 
-![enter image description here](img/borb_in_action_example_083.png)
+![enter image description here](chapter_008/img/borb_in_action_example_083.png)
 
 <div style="page-break-before: always;"></div>
 
 
-# 6. Showcases
+# 9 Showcases
 
-![enter image description here](img/chapter_illustrations/borb_007.jpg)
+In this chapter we'll build some practical PDF documents that are ready-to-use.
+This chapter assumes you have a good working knowledge of all the basic `LayoutElement`  concepts.
+
+![enter image description here](chapter_009/img/chapter_illustration.jpg)
 
 <div style="page-break-before: always;"></div>
 
-## 6.1 Showcase: creating an invoice
+## 9.1 Building a sudoku puzzle
 
-In this example you'll learn how to build a (realistic) invoice using `borb`.
-This is a great little project to review all the `LayoutElement` objects you've seen in previous sections.
-And a chance to experiment with colors and style, to make sure this invoice really matches your company style.
-
-Let's create a Document() and Page() as a blank canvas that we can add the invoice to:
+First let's define the representation of the sudoku.
+This code does not need to be very high-performant, or solve a sudoku.
+So for this example, representing a sudoku as a `str` will do fine.
 
 ```python
-from borb.pdf.document import Document
+#!chapter_009/src/snippet_001.py
+# represent the sudoku as a plaintext str
+# every . represents an empty cell in the puzzle
+# this is easier to debug/change
+sudoku_str: str = """
+ .  6  . | 8  .  3 | .  7  . 
+ .  .  1 | .  .  . | .  6  9 
+ 7  .  . | .  .  . | .  .  5 
+---------+---------+--------
+ .  .  . | 9  .  . | .  1  . 
+ .  .  . | .  .  . | .  .  4 
+ .  .  5 | .  1  . | .  .  . 
+---------+---------+--------
+ 5  4  . | .  8  . | .  .  7 
+ .  .  . | 5  7  . | .  .  8 
+ .  9  7 | 3  .  . | .  .  . 
+"""
+
+# process sudoku_str to remove everything that is not a number or dot
+for c in "\t\n|+- ":
+    sudoku_str = sudoku_str.replace(c, "")
+```
+
+Next we're going to build a `Document` containing the basic information.
+
+```python
+#!chapter_009/src/snippet_002.py
+from borb.pdf.document.document import Document
+from borb.pdf.page.page import Page
+from borb.pdf.pdf import PDF
+from borb.pdf.canvas.layout.page_layout.multi_column_layout import SingleColumnLayout
+from borb.pdf.canvas.layout.page_layout.page_layout import PageLayout
+from borb.pdf.canvas.layout.text.paragraph import Paragraph
+from borb.pdf.canvas.color.color import HexColor
+
+from decimal import Decimal
+
+# represent the sudoku as a plaintext str
+# every . represents an empty cell in the puzzle
+# this is easier to debug/change
+sudoku_str: str = """
+ .  6  . | 8  .  3 | .  7  . 
+ .  .  1 | .  .  . | .  6  9 
+ 7  .  . | .  .  . | .  .  5 
+---------+---------+--------
+ .  .  . | 9  .  . | .  1  . 
+ .  .  . | .  .  . | .  .  4 
+ .  .  5 | .  1  . | .  .  . 
+---------+---------+--------
+ 5  4  . | .  8  . | .  .  7 
+ .  .  . | 5  7  . | .  .  8 
+ .  9  7 | 3  .  . | .  .  . 
+"""
+
+# process sudoku_str to remove everything that is not a number or dot
+for c in "\t\n|+- ":
+    sudoku_str = sudoku_str.replace(c, "")
+
+
+def main():
+
+    # define theme color
+    theme_color: Color = HexColor("f1cd2e")
+
+    # create new Document
+    doc: Document = Document()
+
+    # create new Page
+    page: Page = Page()
+    doc.append_page(page)
+
+    # set PageLayout
+    layout: PageLayout = SingleColumnLayout(page)
+
+    # add title to the Document
+    layout.add(
+        Paragraph("Sudoku Puzzle", font_color=theme_color, font_size=Decimal(20))
+    )
+
+    # add the explanation of how to solve a sudoku
+    layout.add(
+        Paragraph(
+            """
+                    Sudoku is a logic-based, combinatorial number-placement puzzle. 
+                    In classic sudoku, the objective is to fill a 9×9 grid with digits so that each column, each row, 
+                    and each of the nine 3×3 subgrids that compose the grid contains all of the digits from 1 to 9. 
+                    The puzzle setter provides a partially completed grid, which for a well-posed puzzle has a single solution.
+                    """,
+            font="Helvetica-Oblique",
+        )
+    )
+
+
+if __name__ == "__main__":
+    main()
+```
+
+We can render the sudoku in a `Document` by using a `FlexibleColumnWidthTable`
+
+```python
+#!chapter_009/src/snippet_003.py
+from borb.pdf.document.document import Document
+from borb.pdf.page.page import Page
+from borb.pdf.pdf import PDF
+from borb.pdf.canvas.layout.page_layout.multi_column_layout import SingleColumnLayout
+from borb.pdf.canvas.layout.page_layout.page_layout import PageLayout
+from borb.pdf.canvas.layout.text.paragraph import Paragraph
+from borb.pdf.canvas.color.color import HexColor
+from borb.pdf.canvas.layout.table.flexible_column_width_table import (
+    FlexibleColumnWidthTable,
+)
+from borb.pdf.canvas.layout.table.table import Table, TableCell
+from borb.pdf.canvas.layout.layout_element import Alignment
+
+from decimal import Decimal
+
+# represent the sudoku as a plaintext str
+# every . represents an empty cell in the puzzle
+# this is easier to debug/change
+sudoku_str: str = """
+ .  6  . | 8  .  3 | .  7  . 
+ .  .  1 | .  .  . | .  6  9 
+ 7  .  . | .  .  . | .  .  5 
+---------+---------+--------
+ .  .  . | 9  .  . | .  1  . 
+ .  .  . | .  .  . | .  .  4 
+ .  .  5 | .  1  . | .  .  . 
+---------+---------+--------
+ 5  4  . | .  8  . | .  .  7 
+ .  .  . | 5  7  . | .  .  8 
+ .  9  7 | 3  .  . | .  .  . 
+"""
+
+# process sudoku_str to remove everything that is not a number or dot
+for c in "\t\n|+- ":
+    sudoku_str = sudoku_str.replace(c, "")
+
+
+def main():
+
+    # define theme color
+    theme_color: Color = HexColor("f1cd2e")
+
+    # create new Document
+    doc: Document = Document()
+
+    # create new Page
+    page: Page = Page()
+    doc.append_page(page)
+
+    # set PageLayout
+    layout: PageLayout = SingleColumnLayout(page)
+
+    # add title to the Document
+    layout.add(
+        Paragraph("Sudoku Puzzle", font_color=theme_color, font_size=Decimal(20))
+    )
+
+    # add the explanation of how to solve a sudoku
+    layout.add(
+        Paragraph(
+            """
+                    Sudoku is a logic-based, combinatorial number-placement puzzle. 
+                    In classic sudoku, the objective is to fill a 9×9 grid with digits so that each column, each row, 
+                    and each of the nine 3×3 subgrids that compose the grid contains all of the digits from 1 to 9. 
+                    The puzzle setter provides a partially completed grid, which for a well-posed puzzle has a single solution.
+                    """,
+            font="Helvetica-Oblique",
+        )
+    )
+
+    # represent the sudoku as a table
+    s: Decimal = Decimal(20)
+    t: Table = FlexibleColumnWidthTable(
+        number_of_rows=9, number_of_columns=9, horizontal_alignment=Alignment.CENTERED
+    )
+    for i in range(0, 81):
+        r: int = int(i / 9)
+        c: int = i % 9
+        background_color: Color = HexColor("ffffff")
+        if r in [0, 1, 2, 6, 7, 8] and c in [0, 1, 2, 6, 7, 8]:
+            background_color = theme_color
+        if r in [3, 4, 5] and c in [3, 4, 5]:
+            background_color = theme_color
+        if sudoku_str[i] == ".":
+            t.add(
+                TableCell(
+                    Paragraph(" "),
+                    preferred_width=s,
+                    preferred_height=s,
+                    background_color=background_color,
+                )
+            )
+        else:
+            t.add(
+                TableCell(
+                    Paragraph(sudoku_str[i], text_alignment=Alignment.CENTERED),
+                    preferred_width=s,
+                    preferred_height=s,
+                    background_color=background_color,
+                )
+            )
+    t.set_padding_on_all_cells(Decimal(5), Decimal(5), Decimal(5), Decimal(5))
+    layout.add(t)
+
+
+if __name__ == "__main__":
+    main()
+```
+
+Finally, we can store the `Document`
+
+```python
+#!chapter_009/src/snippet_004.py
+from borb.pdf.document.document import Document
+from borb.pdf.page.page import Page
+from borb.pdf.pdf import PDF
+from borb.pdf.canvas.layout.page_layout.multi_column_layout import SingleColumnLayout
+from borb.pdf.canvas.layout.page_layout.page_layout import PageLayout
+from borb.pdf.canvas.layout.text.paragraph import Paragraph
+from borb.pdf.canvas.color.color import HexColor
+from borb.pdf.canvas.layout.table.flexible_column_width_table import (
+    FlexibleColumnWidthTable,
+)
+from borb.pdf.canvas.layout.table.table import Table, TableCell
+from borb.pdf.canvas.layout.layout_element import Alignment
+
+from decimal import Decimal
+
+# represent the sudoku as a plaintext str
+# every . represents an empty cell in the puzzle
+# this is easier to debug/change
+sudoku_str: str = """
+ .  6  . | 8  .  3 | .  7  . 
+ .  .  1 | .  .  . | .  6  9 
+ 7  .  . | .  .  . | .  .  5 
+---------+---------+--------
+ .  .  . | 9  .  . | .  1  . 
+ .  .  . | .  .  . | .  .  4 
+ .  .  5 | .  1  . | .  .  . 
+---------+---------+--------
+ 5  4  . | .  8  . | .  .  7 
+ .  .  . | 5  7  . | .  .  8 
+ .  9  7 | 3  .  . | .  .  . 
+"""
+
+# process sudoku_str to remove everything that is not a number or dot
+for c in "\t\n|+- ":
+    sudoku_str = sudoku_str.replace(c, "")
+
+
+def main():
+
+    # define theme color
+    theme_color: Color = HexColor("f1cd2e")
+
+    # create new Document
+    doc: Document = Document()
+
+    # create new Page
+    page: Page = Page()
+    doc.append_page(page)
+
+    # set PageLayout
+    layout: PageLayout = SingleColumnLayout(page)
+
+    # add title to the Document
+    layout.add(
+        Paragraph("Sudoku Puzzle", font_color=theme_color, font_size=Decimal(20))
+    )
+
+    # add the explanation of how to solve a sudoku
+    layout.add(
+        Paragraph(
+            """
+                    Sudoku is a logic-based, combinatorial number-placement puzzle. 
+                    In classic sudoku, the objective is to fill a 9×9 grid with digits so that each column, each row, 
+                    and each of the nine 3×3 subgrids that compose the grid contains all of the digits from 1 to 9. 
+                    The puzzle setter provides a partially completed grid, which for a well-posed puzzle has a single solution.
+                    """,
+            font="Helvetica-Oblique",
+        )
+    )
+
+    # represent the sudoku as a table
+    s: Decimal = Decimal(20)
+    t: Table = FlexibleColumnWidthTable(
+        number_of_rows=9, number_of_columns=9, horizontal_alignment=Alignment.CENTERED
+    )
+    for i in range(0, 81):
+        r: int = int(i / 9)
+        c: int = i % 9
+        background_color: Color = HexColor("ffffff")
+        if r in [0, 1, 2, 6, 7, 8] and c in [0, 1, 2, 6, 7, 8]:
+            background_color = theme_color
+        if r in [3, 4, 5] and c in [3, 4, 5]:
+            background_color = theme_color
+        if sudoku_str[i] == ".":
+            t.add(
+                TableCell(
+                    Paragraph(" "),
+                    preferred_width=s,
+                    preferred_height=s,
+                    background_color=background_color,
+                )
+            )
+        else:
+            t.add(
+                TableCell(
+                    Paragraph(sudoku_str[i], text_alignment=Alignment.CENTERED),
+                    preferred_width=s,
+                    preferred_height=s,
+                    background_color=background_color,
+                )
+            )
+    t.set_padding_on_all_cells(Decimal(5), Decimal(5), Decimal(5), Decimal(5))
+    layout.add(t)
+
+    # output
+    with open("output.pdf", "wb") as pdf_file_handle:
+        PDF.dumps(pdf_file_handle, doc)
+
+
+if __name__ == "__main__":
+    main()
+```
+
+That should yield a wonderful little puzzle in a PDF, like so:
+
+![enter image description here](chapter_009/img/snippet_004.png)
+
+## 9.2 Building a realistic invoice
+
+```python
+#!chapter_009/src/snippet_005.py
+from borb.pdf.document.document import Document
 from borb.pdf.page.page import Page
 
-# Create document
-pdf = Document()
 
-# Add page
-page = Page()
-pdf.append_page(page)
+def main():
+
+    # Create document
+    pdf = Document()
+
+    # Add page
+    page = Page()
+    pdf.append_page(page)
+
+
+if __name__ == "__main__":
+    main()
 ```
 
 Since we don't want to deal with calculating coordinates - we can delegate this to a `PageLayout` which manages all of the content and its positions:
 
 ```python
+#!chapter_009/src/snippet_006.py
+from borb.pdf.document.document import Document
+from borb.pdf.page.page import Page
+
 # New imports
 from borb.pdf.canvas.layout.page_layout.multi_column_layout import SingleColumnLayout
+from borb.pdf.canvas.layout.page_layout.page_layout import PageLayout
 from decimal import Decimal
 
-page_layout = SingleColumnLayout(page)
-page_layout.vertical_margin = page.get_page_info().get_height() * Decimal(0.02)
+
+def main():
+
+    # Create document
+    pdf = Document()
+
+    # Add page
+    page = Page()
+    pdf.append_page(page)
+
+    # create PageLayout
+    page_layout: PageLayout = SingleColumnLayout(page)
+    page_layout.vertical_margin = page.get_page_info().get_height() * Decimal(0.02)
+
+
+if __name__ == "__main__":
+    main()
 ```
 
 Here, we're using a `SingleColumnLayout` since all of the content should be in a single column - we won't have a left and right side of the invoice. 
-We're also making the vertical margin smaller here. The default value is to trim the top 10% of the page height as the margin, 
-and we're reducing it down to 2%, since we'll want to use this space for the company logo/name.
+We're also making the vertical margin smaller here. The default value is to trim the top 10% of the page height as the margin, and we're reducing it down to 2%, since we'll want to use this space for the company logo/name.
 
 Speaking of which, let's add the company logo to the layout:
 
 ```python
-# New import
+#!chapter_009/src/snippet_007.py
+from borb.pdf.document.document import Document
+from borb.pdf.page.page import Page
+from borb.pdf.canvas.layout.page_layout.multi_column_layout import SingleColumnLayout
+from borb.pdf.canvas.layout.page_layout.page_layout import PageLayout
+from decimal import Decimal
+
+# New imports
 from borb.pdf.canvas.layout.image.image import Image
 
-page_layout.add(    
-        Image(        
-        "https://github.com/jorisschellekens/borb/blob/master/readme_img/logo/borb_64.png?raw=true",        
-        width=Decimal(128),        
-        height=Decimal(128),    
-        ))
+
+def main():
+
+    # Create document
+    pdf = Document()
+
+    # Add page
+    page = Page()
+    pdf.append_page(page)
+
+    # create PageLayout
+    page_layout: PageLayout = SingleColumnLayout(page)
+    page_layout.vertical_margin = page.get_page_info().get_height() * Decimal(0.02)
+
+    page_layout.add(
+        Image(
+            "https://s3.stackabuse.com/media/articles/creating-an-invoice-in-python-with-ptext-1.png",
+            width=Decimal(128),
+            height=Decimal(128),
+        )
+    )
+
+
+if __name__ == "__main__":
+    main()
 ```
 
-Here, we're adding an element to the layout - an `Image`. 
-Through its constructor, we're adding a URL pointing to the image resource and setting its `width` and `height`.
+Here, we're adding an element to the layout - an `Image`. Through its constructor, we're adding a URL pointing to the image resource and setting its `width` and `height`.
 
-Beneath the image, we'll want to add our imaginary company info (name, address, website, phone) as well as the invoice information (invoice number, date, due date). 
-A common format for brevity (which incidentally also makes the code cleaner) is to use a table to store invoice data. 
-Let's create a separate helper method to build the invoice information in a table, which we can then use to simply add a table to the invoice in our main method:
+Beneath the image, we'll want to add our imaginary company info (name, address, website, phone) as well as the invoice information (invoice number, date, due date).
+
+A common format for brevity (which incidentally also makes the code cleaner) is to use a table to store invoice data. Let's create a separate helper method to build the invoice information in a table, which we can then use to simply add a table to the invoice in our main method:
 
 ```python
+#!chapter_009/src/snippet_008.py
 # New imports
-from borb.pdf.canvas.layout.table.fixed_column_width_table import FixedColumnWidthTable
+from borb.pdf.canvas.layout.table.fixed_column_width_table import (
+    FixedColumnWidthTable as Table,
+)
 from borb.pdf.canvas.layout.text.paragraph import Paragraph
 from borb.pdf.canvas.layout.layout_element import Alignment
 from datetime import datetime
 import random
 
-def _build_invoice_information():    
-    table_001 = FixedColumnWidthTable(number_of_rows=5, number_of_columns=3)
-	
-    table_001.add(Paragraph("[Street Address]"))    
-    table_001.add(Paragraph("Date", font="Helvetica-Bold", horizontal_alignment=Alignment.RIGHT))    
-    now = datetime.now()    
+
+def _build_invoice_information():
+    table_001 = Table(number_of_rows=5, number_of_columns=3)
+
+    table_001.add(Paragraph("[Street Address]"))
+    table_001.add(
+        Paragraph("Date", font="Helvetica-Bold", horizontal_alignment=Alignment.RIGHT)
+    )
+    now = datetime.now()
     table_001.add(Paragraph("%d/%d/%d" % (now.day, now.month, now.year)))
-	
-    table_001.add(Paragraph("[City, State, ZIP Code]"))    
-    table_001.add(Paragraph("Invoice #", font="Helvetica-Bold", horizontal_alignment=Alignment.RIGHT))
-    table_001.add(Paragraph("%d" % random.randint(1000, 10000)))   
-	
-    table_001.add(Paragraph("[Phone]"))    
-    table_001.add(Paragraph("Due Date", font="Helvetica-Bold", horizontal_alignment=Alignment.RIGHT))
-    table_001.add(Paragraph("%d/%d/%d" % (now.day, now.month, now.year))) 
-	
-    table_001.add(Paragraph("[Email Address]"))    
+
+    table_001.add(Paragraph("[City, State, ZIP Code]"))
+    table_001.add(
+        Paragraph(
+            "Invoice #", font="Helvetica-Bold", horizontal_alignment=Alignment.RIGHT
+        )
+    )
+    table_001.add(Paragraph("%d" % random.randint(1000, 10000)))
+
+    table_001.add(Paragraph("[Phone]"))
+    table_001.add(
+        Paragraph(
+            "Due Date", font="Helvetica-Bold", horizontal_alignment=Alignment.RIGHT
+        )
+    )
+    table_001.add(Paragraph("%d/%d/%d" % (now.day, now.month, now.year)))
+
+    table_001.add(Paragraph("[Email Address]"))
     table_001.add(Paragraph(" "))
     table_001.add(Paragraph(" "))
 
@@ -7093,226 +9423,58 @@ def _build_invoice_information():
     table_001.add(Paragraph(" "))
     table_001.add(Paragraph(" "))
 
-    table_001.set_padding_on_all_cells(Decimal(2), Decimal(2), Decimal(2), Decimal(2))    		
+    table_001.set_padding_on_all_cells(Decimal(2), Decimal(2), Decimal(2), Decimal(2))
     table_001.no_borders()
     return table_001
 ```
 
-Here, we're making a simple `Table` with 5 rows and 3 columns.
-The rows correspond to the street address, city/state, phone, email address and company website. 
-Each row will have `0..3` values (columns). Each text element is added as a `Paragraph`, which we've aligned to the right via `Alignment.RIGHT`, and accept styling arguments such as `font`.
+Here, we're making a simple `Table` with 5 rows and 3 columns. The rows correspond to the street address, city/state, phone, email address and company website. Each row will have `0..3` values (columns). Each text element is added as a `Paragraph`, which we've aligned to the right via `Alignment.RIGHT`, and accept styling arguments such as font.
 
 Finally, we've added padding to all the cells to make sure we don't place the text awkwardly near the confounds of the cells.
 
 Now, back in our main method, we can call `_build_invoice_information()` to populate a table and add it to our layout:
 
 ```python
-page_layout = SingleColumnLayout(page)
-page_layout.vertical_margin = page.get_page_info().get_height() * Decimal(0.02)
-page_layout.add(    
-    Image(        
-        "https://github.com/jorisschellekens/borb/blob/master/readme_img/logo/borb_64.png?raw=true",          
-        width=Decimal(128),        
-        height=Decimal(128),    
-        ))
-
-# Invoice information table  
-page_layout.add(_build_invoice_information())  
-  
-# Empty paragraph for spacing  
-page_layout.add(Paragraph(" "))
-```
-
-Now, let's build this PDF document real quick to see what it looks like. For this, we'll use the `PDF` module:
-
-![enter image description here](img/borb_in_action_example_084_001.png)
-
-```python
-# New import
-from borb.pdf.pdf import PDF
-
-with open("showcase_001.pdf", "wb") as pdf_file_handle:
-    PDF.dumps(pdf_file_handle, pdf)
-```
-
-Great! Now we'll want to add the billing and shipping information as well. 
-It'll conveniently be placed in a table, just like the company information. 
-For brevity's sake, we'll also opt to make a separate helper function to build this info, 
-and then we can simply add it in our main method:
-
-```python
-# New imports
-from borb.pdf.canvas.color.color import HexColor, X11Color
-
-def _build_billing_and_shipping_information():  
-    table_001 = Table(number_of_rows=6, number_of_columns=2)  
-    table_001.add(  
-        Paragraph(  
-            "BILL TO",  
-            background_color=HexColor("263238"),  
-            font_color=X11Color("White"),  
-        )  
-    )  
-    table_001.add(  
-        Paragraph(  
-            "SHIP TO",  
-            background_color=HexColor("263238"),  
-            font_color=X11Color("White"),  
-        )  
-    )  
-    table_001.add(Paragraph("[Recipient Name]"))        # BILLING  
-    table_001.add(Paragraph("[Recipient Name]"))        # SHIPPING  
-    table_001.add(Paragraph("[Company Name]"))          # BILLING  
-    table_001.add(Paragraph("[Company Name]"))          # SHIPPING  
-    table_001.add(Paragraph("[Street Address]"))        # BILLING  
-    table_001.add(Paragraph("[Street Address]"))        # SHIPPING  
-    table_001.add(Paragraph("[City, State, ZIP Code]")) # BILLING  
-    table_001.add(Paragraph("[City, State, ZIP Code]")) # SHIPPING  
-    table_001.add(Paragraph("[Phone]"))                 # BILLING  
-    table_001.add(Paragraph("[Phone]"))                 # SHIPPING  
-    table_001.set_padding_on_all_cells(Decimal(2), Decimal(2), Decimal(2), Decimal(2))  
-    table_001.no_borders()  
-    return table_001
-```
-
-We've set the `background_color` of the initial paragraphs to `#263238` (grey-blue) to match the color of the logo, and the `font_color` to `White`.
-
-Let's call this in the main method as well:
-
-```python
-# Invoice information table
-page_layout.add(_build_invoice_information())
-
-# Empty paragraph for spacing
-page_layout.add(Paragraph(" "))
-
-# Billing and shipping information table
-page_layout.add(_build_billing_and_shipping_information())
-```
-
-Once we run the script again, this results in a new PDF file that contains more information:
-
-![enter image description here](img/borb_in_action_example_084_002.png)
-
-With our basic information sorted out (company info and billing/shipping info) - 
-we'll want to add an itemized description. These will be the goods/services that our supposed company offered to someone and are also typically done in a table-like fashion beneath the information we've already added.
-
-Again, let's create a helper function that generates a table and populates it with data, which we can simply add to our layout later on:
-
-We'll start by defining a `Product` class to represent a sold product.
-In practice, you'd substitute the hard-coded strings related to the subtotal, 
-taxes and total prices with calculations of the actual prices - though, 
-this heavily depends on the underlying implementation of your Product models, 
-so we've added a stand-in for abstraction.
-
-```python
-class Product:
-    """
-    This class represents a purchased product
-    """
-    def __init__(self, name: str, quantity: int, price_per_sku: float):
-        self.name: str = name
-        assert quantity >= 0
-        self.quantity: int = quantity
-        assert price_per_sku >= 0
-        self.price_per_sku: float = price_per_sku
-```
-
-Now we can build a method `_build_itemized_description_table` that will render these products and their prices to the PDF:
-
-```python
-def _build_itemized_description_table(products: typing.List[Product] = []):
-    """
-    This function builds a Table containing itemized billing information
-    :param:     products
-    :return:    a Table containing itemized billing information
-    """
-    table_001 = FixedColumnWidthTable(number_of_rows=15, number_of_columns=4)
-    for h in ["DESCRIPTION", "QTY", "UNIT PRICE", "AMOUNT"]:
-        table_001.add(
-            TableCell(
-                Paragraph(h, font_color=X11Color("White")),
-                background_color=HexColor("0b3954"),
-            )
-        )
-
-    odd_color = HexColor("BBBBBB")
-    even_color = HexColor("FFFFFF")
-    for row_number, item in enumerate(products):
-        c = even_color if row_number % 2 == 0 else odd_color
-        table_001.add(TableCell(Paragraph(item.name), background_color=c))
-        table_001.add(TableCell(Paragraph(str(item.quantity)), background_color=c))
-        table_001.add(TableCell(Paragraph("$ " + str(item.price_per_sku)), background_color=c))
-        table_001.add(TableCell(Paragraph("$ " + str(item.quantity * item.price_per_sku)), background_color=c))
-
-    # Optionally add some empty rows to have a fixed number of rows for styling purposes
-    for row_number in range(len(products), 10):
-        c = even_color if row_number % 2 == 0 else odd_color
-        for _ in range(0, 4):
-            table_001.add(TableCell(Paragraph(" "), background_color=c))
-
-    # subtotal
-    subtotal: float = sum([x.price_per_sku * x.quantity for x in products])
-    table_001.add(TableCell(Paragraph("Subtotal", font="Helvetica-Bold", horizontal_alignment=Alignment.RIGHT, ), col_span=3, ))
-    table_001.add(TableCell(Paragraph("$ 1,180.00", horizontal_alignment=Alignment.RIGHT)))
-
-    # discounts
-    table_001.add(TableCell(Paragraph("Discounts", font="Helvetica-Bold", horizontal_alignment=Alignment.RIGHT, ), col_span=3, ))
-    table_001.add(TableCell(Paragraph("$ 0.00", horizontal_alignment=Alignment.RIGHT)))
-
-    # taxes
-    taxes: float = subtotal * 0.06
-    table_001.add(TableCell(Paragraph("Taxes", font="Helvetica-Bold", horizontal_alignment=Alignment.RIGHT), col_span=3, ))
-    table_001.add(TableCell(Paragraph("$ " + str(taxes), horizontal_alignment=Alignment.RIGHT)))
-
-    # total
-    total: float = subtotal + taxes
-    table_001.add(TableCell(Paragraph("Total", font="Helvetica-Bold", horizontal_alignment=Alignment.RIGHT), col_span=3, ))
-    table_001.add(TableCell(Paragraph("$ " + str(total), horizontal_alignment=Alignment.RIGHT)))
-    table_001.set_padding_on_all_cells(Decimal(2), Decimal(2), Decimal(2), Decimal(2))
-    table_001.no_borders()
-    return table_001
-```
-
-This is the final code for this example:
-
-```python
-import datetime
-import random
-from decimal import Decimal
-
-import typing
-from borb.pdf.canvas.color.color import HexColor, X11Color
-from borb.pdf.canvas.layout.image.image import Image
-from borb.pdf.canvas.layout.layout_element import Alignment
+#!chapter_009/src/snippet_009.py
+from borb.pdf.document.document import Document
+from borb.pdf.page.page import Page
 from borb.pdf.canvas.layout.page_layout.multi_column_layout import SingleColumnLayout
 from borb.pdf.canvas.layout.page_layout.page_layout import PageLayout
-from borb.pdf.canvas.layout.table.fixed_column_width_table import FixedColumnWidthTable
-from borb.pdf.canvas.layout.table.table import Table, TableCell
+from decimal import Decimal
+from borb.pdf.canvas.layout.image.image import Image
+from borb.pdf.canvas.layout.table.fixed_column_width_table import (
+    FixedColumnWidthTable as Table,
+)
 from borb.pdf.canvas.layout.text.paragraph import Paragraph
-from borb.pdf.document import Document
-from borb.pdf.page.page import Page
-from borb.pdf.pdf import PDF
+from borb.pdf.canvas.layout.layout_element import Alignment
+from datetime import datetime
+import random
 
 
-def _build_invoice_information() -> Table:
-    """
-    This function builds a Table containing invoice information
-    :return:    a Table containing invoice information
-    """
-    table_001 = FixedColumnWidthTable(number_of_rows=5, number_of_columns=3)
+def _build_invoice_information():
+    table_001 = Table(number_of_rows=5, number_of_columns=3)
 
     table_001.add(Paragraph("[Street Address]"))
-    table_001.add(Paragraph("Date", font="Helvetica-Bold", horizontal_alignment=Alignment.RIGHT))
-    now = datetime.datetime.now()
+    table_001.add(
+        Paragraph("Date", font="Helvetica-Bold", horizontal_alignment=Alignment.RIGHT)
+    )
+    now = datetime.now()
     table_001.add(Paragraph("%d/%d/%d" % (now.day, now.month, now.year)))
 
     table_001.add(Paragraph("[City, State, ZIP Code]"))
-    table_001.add(Paragraph("Invoice #", font="Helvetica-Bold", horizontal_alignment=Alignment.RIGHT))
+    table_001.add(
+        Paragraph(
+            "Invoice #", font="Helvetica-Bold", horizontal_alignment=Alignment.RIGHT
+        )
+    )
     table_001.add(Paragraph("%d" % random.randint(1000, 10000)))
 
     table_001.add(Paragraph("[Phone]"))
-    table_001.add(Paragraph("Due Date", font="Helvetica-Bold", horizontal_alignment=Alignment.RIGHT))
+    table_001.add(
+        Paragraph(
+            "Due Date", font="Helvetica-Bold", horizontal_alignment=Alignment.RIGHT
+        )
+    )
     table_001.add(Paragraph("%d/%d/%d" % (now.day, now.month, now.year)))
 
     table_001.add(Paragraph("[Email Address]"))
@@ -7328,12 +9490,47 @@ def _build_invoice_information() -> Table:
     return table_001
 
 
-def _build_billing_and_shipping_information() -> Table:
-    """
-    This function builds a Table containing billing and shipping information
-    :return:    a Table containing shipping and billing information
-    """
-    table_001 = FixedColumnWidthTable(number_of_rows=6, number_of_columns=2)
+def main():
+    # Create document
+    pdf = Document()
+
+    # Add page
+    page = Page()
+    pdf.append_page(page)
+
+    # create PageLayout
+    page_layout: PageLayout = SingleColumnLayout(page)
+    page_layout.vertical_margin = page.get_page_info().get_height() * Decimal(0.02)
+
+    page_layout.add(
+        Image(
+            "https://s3.stackabuse.com/media/articles/creating-an-invoice-in-python-with-ptext-1.png",
+            width=Decimal(64),
+            height=Decimal(64),
+        )
+    )
+
+    # Invoice information table
+    page_layout.add(_build_invoice_information())
+
+    # Empty paragraph for spacing
+    page_layout.add(Paragraph(" "))
+
+
+if __name__ == "__main__":
+    main()
+```
+
+Great! Now we'll want to add the billing and shipping information as well. It'll conveniently be placed in a table, just like the company information. For brevity's sake, we'll also opt to make a separate helper function to build this info, and then we can simply add it in our main method:
+
+```python
+#!chapter_009/src/snippet_010.py
+# New imports
+from borb.pdf.canvas.color.color import HexColor, X11Color
+
+
+def _build_billing_and_shipping_information():
+    table_001 = Table(number_of_rows=6, number_of_columns=2)
     table_001.add(
         Paragraph(
             "BILL TO",
@@ -7348,31 +9545,173 @@ def _build_billing_and_shipping_information() -> Table:
             font_color=X11Color("White"),
         )
     )
-    table_001.add(Paragraph("[Recipient Name]"))        # BILLING
-    table_001.add(Paragraph("[Recipient Name]"))        # SHIPPING
-    table_001.add(Paragraph("[Company Name]"))          # BILLING
-    table_001.add(Paragraph("[Company Name]"))          # SHIPPING
-    table_001.add(Paragraph("[Street Address]"))        # BILLING
-    table_001.add(Paragraph("[Street Address]"))        # SHIPPING
-    table_001.add(Paragraph("[City, State, ZIP Code]")) # BILLING
-    table_001.add(Paragraph("[City, State, ZIP Code]")) # SHIPPING
-    table_001.add(Paragraph("[Phone]"))                 # BILLING
-    table_001.add(Paragraph("[Phone]"))                 # SHIPPING
+    table_001.add(Paragraph("[Recipient Name]"))  # BILLING
+    table_001.add(Paragraph("[Recipient Name]"))  # SHIPPING
+    table_001.add(Paragraph("[Company Name]"))  # BILLING
+    table_001.add(Paragraph("[Company Name]"))  # SHIPPING
+    table_001.add(Paragraph("[Street Address]"))  # BILLING
+    table_001.add(Paragraph("[Street Address]"))  # SHIPPING
+    table_001.add(Paragraph("[City, State, ZIP Code]"))  # BILLING
+    table_001.add(Paragraph("[City, State, ZIP Code]"))  # SHIPPING
+    table_001.add(Paragraph("[Phone]"))  # BILLING
+    table_001.add(Paragraph("[Phone]"))  # SHIPPING
+    table_001.set_padding_on_all_cells(Decimal(2), Decimal(2), Decimal(2), Decimal(2))
+    table_001.no_borders()
+    return table_001
+```
+
+Let's call this in the main method as well:
+
+```python
+#!chapter_009/src/snippet_011.py
+from borb.pdf.document.document import Document
+from borb.pdf.page.page import Page
+from borb.pdf.canvas.layout.page_layout.multi_column_layout import SingleColumnLayout
+from borb.pdf.canvas.layout.page_layout.page_layout import PageLayout
+from decimal import Decimal
+from borb.pdf.canvas.layout.image.image import Image
+from borb.pdf.canvas.layout.table.fixed_column_width_table import (
+    FixedColumnWidthTable as Table,
+)
+from borb.pdf.canvas.layout.text.paragraph import Paragraph
+from borb.pdf.canvas.layout.layout_element import Alignment
+from borb.pdf.canvas.color.color import HexColor, X11Color
+from datetime import datetime
+import random
+
+
+def _build_invoice_information():
+    table_001 = Table(number_of_rows=5, number_of_columns=3)
+
+    table_001.add(Paragraph("[Street Address]"))
+    table_001.add(
+        Paragraph("Date", font="Helvetica-Bold", horizontal_alignment=Alignment.RIGHT)
+    )
+    now = datetime.now()
+    table_001.add(Paragraph("%d/%d/%d" % (now.day, now.month, now.year)))
+
+    table_001.add(Paragraph("[City, State, ZIP Code]"))
+    table_001.add(
+        Paragraph(
+            "Invoice #", font="Helvetica-Bold", horizontal_alignment=Alignment.RIGHT
+        )
+    )
+    table_001.add(Paragraph("%d" % random.randint(1000, 10000)))
+
+    table_001.add(Paragraph("[Phone]"))
+    table_001.add(
+        Paragraph(
+            "Due Date", font="Helvetica-Bold", horizontal_alignment=Alignment.RIGHT
+        )
+    )
+    table_001.add(Paragraph("%d/%d/%d" % (now.day, now.month, now.year)))
+
+    table_001.add(Paragraph("[Email Address]"))
+    table_001.add(Paragraph(" "))
+    table_001.add(Paragraph(" "))
+
+    table_001.add(Paragraph("[Company Website]"))
+    table_001.add(Paragraph(" "))
+    table_001.add(Paragraph(" "))
+
     table_001.set_padding_on_all_cells(Decimal(2), Decimal(2), Decimal(2), Decimal(2))
     table_001.no_borders()
     return table_001
 
 
+def _build_billing_and_shipping_information():
+    table_001 = Table(number_of_rows=6, number_of_columns=2)
+    table_001.add(
+        Paragraph(
+            "BILL TO",
+            background_color=HexColor("263238"),
+            font_color=X11Color("White"),
+        )
+    )
+    table_001.add(
+        Paragraph(
+            "SHIP TO",
+            background_color=HexColor("263238"),
+            font_color=X11Color("White"),
+        )
+    )
+    table_001.add(Paragraph("[Recipient Name]"))  # BILLING
+    table_001.add(Paragraph("[Recipient Name]"))  # SHIPPING
+    table_001.add(Paragraph("[Company Name]"))  # BILLING
+    table_001.add(Paragraph("[Company Name]"))  # SHIPPING
+    table_001.add(Paragraph("[Street Address]"))  # BILLING
+    table_001.add(Paragraph("[Street Address]"))  # SHIPPING
+    table_001.add(Paragraph("[City, State, ZIP Code]"))  # BILLING
+    table_001.add(Paragraph("[City, State, ZIP Code]"))  # SHIPPING
+    table_001.add(Paragraph("[Phone]"))  # BILLING
+    table_001.add(Paragraph("[Phone]"))  # SHIPPING
+    table_001.set_padding_on_all_cells(Decimal(2), Decimal(2), Decimal(2), Decimal(2))
+    table_001.no_borders()
+    return table_001
+
+
+def main():
+    # Create document
+    pdf = Document()
+
+    # Add page
+    page = Page()
+    pdf.append_page(page)
+
+    # create PageLayout
+    page_layout: PageLayout = SingleColumnLayout(page)
+    page_layout.vertical_margin = page.get_page_info().get_height() * Decimal(0.02)
+
+    page_layout.add(
+        Image(
+            "https://s3.stackabuse.com/media/articles/creating-an-invoice-in-python-with-ptext-1.png",
+            width=Decimal(64),
+            height=Decimal(64),
+        )
+    )
+
+    # Invoice information table
+    page_layout.add(_build_invoice_information())
+
+    # Empty paragraph for spacing
+    page_layout.add(Paragraph(" "))
+
+    # Billing and shipping information table
+    page_layout.add(_build_billing_and_shipping_information())
+
+
+if __name__ == "__main__":
+    main()
+```
+
+With our basic information sorted out (company info and billing/shipping info) - we'll want to add an itemized description. These will be the goods/services that our supposed company offered to someone and are also typically done in a table-like fashion beneath the information we've already added.
+
+Again, let's create a helper function that generates a table and populates it with data, which we can simply add to our layout later on.
+
+We'll start by defining a Product class to represent a sold product. In practice, you'd substitute the hard-coded strings related to the subtotal, taxes and total prices with calculations of the actual prices - though, this heavily depends on the underlying implementation of your Product models, so we've added a stand-in for abstraction.
+
+```python
+#!chapter_009/src/snippet_012.py
 class Product:
     """
     This class represents a purchased product
     """
+
     def __init__(self, name: str, quantity: int, price_per_sku: float):
         self.name: str = name
         assert quantity >= 0
         self.quantity: int = quantity
         assert price_per_sku >= 0
         self.price_per_sku: float = price_per_sku
+```
+
+Now we can build a method `_build_itemized_description_table` that will render these products and their prices to the PDF:
+
+```python
+#!chapter_009/src/snippet_013.py
+# New Imports
+from borb.pdf.canvas.layout.table.table import TableCell
+import typing
 
 
 def _build_itemized_description_table(products: typing.List[Product] = []):
@@ -7381,7 +9720,7 @@ def _build_itemized_description_table(products: typing.List[Product] = []):
     :param:     products
     :return:    a Table containing itemized billing information
     """
-    table_001 = FixedColumnWidthTable(number_of_rows=15, number_of_columns=4)
+    table_001 = Table(number_of_rows=15, number_of_columns=4)
     for h in ["DESCRIPTION", "QTY", "UNIT PRICE", "AMOUNT"]:
         table_001.add(
             TableCell(
@@ -7396,8 +9735,15 @@ def _build_itemized_description_table(products: typing.List[Product] = []):
         c = even_color if row_number % 2 == 0 else odd_color
         table_001.add(TableCell(Paragraph(item.name), background_color=c))
         table_001.add(TableCell(Paragraph(str(item.quantity)), background_color=c))
-        table_001.add(TableCell(Paragraph("$ " + str(item.price_per_sku)), background_color=c))
-        table_001.add(TableCell(Paragraph("$ " + str(item.quantity * item.price_per_sku)), background_color=c))
+        table_001.add(
+            TableCell(Paragraph("$ " + str(item.price_per_sku)), background_color=c)
+        )
+        table_001.add(
+            TableCell(
+                Paragraph("$ " + str(item.quantity * item.price_per_sku)),
+                background_color=c,
+            )
+        )
 
     # Optionally add some empty rows to have a fixed number of rows for styling purposes
     for row_number in range(len(products), 10):
@@ -7407,47 +9753,287 @@ def _build_itemized_description_table(products: typing.List[Product] = []):
 
     # subtotal
     subtotal: float = sum([x.price_per_sku * x.quantity for x in products])
-    table_001.add(TableCell(Paragraph("Subtotal", font="Helvetica-Bold", horizontal_alignment=Alignment.RIGHT, ), col_span=3, ))
-    table_001.add(TableCell(Paragraph("$ 1,180.00", horizontal_alignment=Alignment.RIGHT)))
+    table_001.add(
+        TableCell(
+            Paragraph(
+                "Subtotal",
+                font="Helvetica-Bold",
+                horizontal_alignment=Alignment.RIGHT,
+            ),
+            col_span=3,
+        )
+    )
+    table_001.add(
+        TableCell(Paragraph("$ 1,180.00", horizontal_alignment=Alignment.RIGHT))
+    )
 
     # discounts
-    table_001.add(TableCell(Paragraph("Discounts", font="Helvetica-Bold", horizontal_alignment=Alignment.RIGHT, ), col_span=3, ))
+    table_001.add(
+        TableCell(
+            Paragraph(
+                "Discounts",
+                font="Helvetica-Bold",
+                horizontal_alignment=Alignment.RIGHT,
+            ),
+            col_span=3,
+        )
+    )
     table_001.add(TableCell(Paragraph("$ 0.00", horizontal_alignment=Alignment.RIGHT)))
 
     # taxes
     taxes: float = subtotal * 0.06
-    table_001.add(TableCell(Paragraph("Taxes", font="Helvetica-Bold", horizontal_alignment=Alignment.RIGHT), col_span=3, ))
-    table_001.add(TableCell(Paragraph("$ " + str(taxes), horizontal_alignment=Alignment.RIGHT)))
+    table_001.add(
+        TableCell(
+            Paragraph(
+                "Taxes", font="Helvetica-Bold", horizontal_alignment=Alignment.RIGHT
+            ),
+            col_span=3,
+        )
+    )
+    table_001.add(
+        TableCell(Paragraph("$ " + str(taxes), horizontal_alignment=Alignment.RIGHT))
+    )
 
     # total
     total: float = subtotal + taxes
-    table_001.add(TableCell(Paragraph("Total", font="Helvetica-Bold", horizontal_alignment=Alignment.RIGHT), col_span=3, ))
-    table_001.add(TableCell(Paragraph("$ " + str(total), horizontal_alignment=Alignment.RIGHT)))
+    table_001.add(
+        TableCell(
+            Paragraph(
+                "Total", font="Helvetica-Bold", horizontal_alignment=Alignment.RIGHT
+            ),
+            col_span=3,
+        )
+    )
+    table_001.add(
+        TableCell(Paragraph("$ " + str(total), horizontal_alignment=Alignment.RIGHT))
+    )
+    table_001.set_padding_on_all_cells(Decimal(2), Decimal(2), Decimal(2), Decimal(2))
+    table_001.no_borders()
+    return table_001
+```
+
+Let's call this method with some dummy `Product` items:
+
+```python
+#!chapter_009/src/snippet_014.py
+from borb.pdf.document.document import Document
+from borb.pdf.page.page import Page
+from borb.pdf.canvas.layout.page_layout.multi_column_layout import SingleColumnLayout
+from borb.pdf.canvas.layout.page_layout.page_layout import PageLayout
+from decimal import Decimal
+from borb.pdf.canvas.layout.image.image import Image
+from borb.pdf.canvas.layout.table.fixed_column_width_table import (
+    FixedColumnWidthTable as Table,
+)
+from borb.pdf.canvas.layout.text.paragraph import Paragraph
+from borb.pdf.canvas.layout.layout_element import Alignment
+from borb.pdf.canvas.color.color import HexColor, X11Color
+from borb.pdf.canvas.layout.table.table import TableCell
+from datetime import datetime
+import random
+import typing
+
+
+class Product:
+    """
+    This class represents a purchased product
+    """
+
+    def __init__(self, name: str, quantity: int, price_per_sku: float):
+        self.name: str = name
+        assert quantity >= 0
+        self.quantity: int = quantity
+        assert price_per_sku >= 0
+        self.price_per_sku: float = price_per_sku
+
+
+def _build_invoice_information():
+    table_001 = Table(number_of_rows=5, number_of_columns=3)
+
+    table_001.add(Paragraph("[Street Address]"))
+    table_001.add(
+        Paragraph("Date", font="Helvetica-Bold", horizontal_alignment=Alignment.RIGHT)
+    )
+    now = datetime.now()
+    table_001.add(Paragraph("%d/%d/%d" % (now.day, now.month, now.year)))
+
+    table_001.add(Paragraph("[City, State, ZIP Code]"))
+    table_001.add(
+        Paragraph(
+            "Invoice #", font="Helvetica-Bold", horizontal_alignment=Alignment.RIGHT
+        )
+    )
+    table_001.add(Paragraph("%d" % random.randint(1000, 10000)))
+
+    table_001.add(Paragraph("[Phone]"))
+    table_001.add(
+        Paragraph(
+            "Due Date", font="Helvetica-Bold", horizontal_alignment=Alignment.RIGHT
+        )
+    )
+    table_001.add(Paragraph("%d/%d/%d" % (now.day, now.month, now.year)))
+
+    table_001.add(Paragraph("[Email Address]"))
+    table_001.add(Paragraph(" "))
+    table_001.add(Paragraph(" "))
+
+    table_001.add(Paragraph("[Company Website]"))
+    table_001.add(Paragraph(" "))
+    table_001.add(Paragraph(" "))
+
+    table_001.set_padding_on_all_cells(Decimal(2), Decimal(2), Decimal(2), Decimal(2))
+    table_001.no_borders()
+    return table_001
+
+
+def _build_billing_and_shipping_information():
+    table_001 = Table(number_of_rows=6, number_of_columns=2)
+    table_001.add(
+        Paragraph(
+            "BILL TO",
+            background_color=HexColor("263238"),
+            font_color=X11Color("White"),
+        )
+    )
+    table_001.add(
+        Paragraph(
+            "SHIP TO",
+            background_color=HexColor("263238"),
+            font_color=X11Color("White"),
+        )
+    )
+    table_001.add(Paragraph("[Recipient Name]"))  # BILLING
+    table_001.add(Paragraph("[Recipient Name]"))  # SHIPPING
+    table_001.add(Paragraph("[Company Name]"))  # BILLING
+    table_001.add(Paragraph("[Company Name]"))  # SHIPPING
+    table_001.add(Paragraph("[Street Address]"))  # BILLING
+    table_001.add(Paragraph("[Street Address]"))  # SHIPPING
+    table_001.add(Paragraph("[City, State, ZIP Code]"))  # BILLING
+    table_001.add(Paragraph("[City, State, ZIP Code]"))  # SHIPPING
+    table_001.add(Paragraph("[Phone]"))  # BILLING
+    table_001.add(Paragraph("[Phone]"))  # SHIPPING
+    table_001.set_padding_on_all_cells(Decimal(2), Decimal(2), Decimal(2), Decimal(2))
+    table_001.no_borders()
+    return table_001
+
+
+def _build_itemized_description_table(products: typing.List[Product] = []):
+    """
+    This function builds a Table containing itemized billing information
+    :param:     products
+    :return:    a Table containing itemized billing information
+    """
+    table_001 = Table(number_of_rows=15, number_of_columns=4)
+    for h in ["DESCRIPTION", "QTY", "UNIT PRICE", "AMOUNT"]:
+        table_001.add(
+            TableCell(
+                Paragraph(h, font_color=X11Color("White")),
+                background_color=HexColor("0b3954"),
+            )
+        )
+
+    odd_color = HexColor("BBBBBB")
+    even_color = HexColor("FFFFFF")
+    for row_number, item in enumerate(products):
+        c = even_color if row_number % 2 == 0 else odd_color
+        table_001.add(TableCell(Paragraph(item.name), background_color=c))
+        table_001.add(TableCell(Paragraph(str(item.quantity)), background_color=c))
+        table_001.add(
+            TableCell(Paragraph("$ " + str(item.price_per_sku)), background_color=c)
+        )
+        table_001.add(
+            TableCell(
+                Paragraph("$ " + str(item.quantity * item.price_per_sku)),
+                background_color=c,
+            )
+        )
+
+    # Optionally add some empty rows to have a fixed number of rows for styling purposes
+    for row_number in range(len(products), 10):
+        c = even_color if row_number % 2 == 0 else odd_color
+        for _ in range(0, 4):
+            table_001.add(TableCell(Paragraph(" "), background_color=c))
+
+    # subtotal
+    subtotal: float = sum([x.price_per_sku * x.quantity for x in products])
+    table_001.add(
+        TableCell(
+            Paragraph(
+                "Subtotal",
+                font="Helvetica-Bold",
+                horizontal_alignment=Alignment.RIGHT,
+            ),
+            col_span=3,
+        )
+    )
+    table_001.add(
+        TableCell(Paragraph("$ 1,180.00", horizontal_alignment=Alignment.RIGHT))
+    )
+
+    # discounts
+    table_001.add(
+        TableCell(
+            Paragraph(
+                "Discounts",
+                font="Helvetica-Bold",
+                horizontal_alignment=Alignment.RIGHT,
+            ),
+            col_span=3,
+        )
+    )
+    table_001.add(TableCell(Paragraph("$ 0.00", horizontal_alignment=Alignment.RIGHT)))
+
+    # taxes
+    taxes: float = subtotal * 0.06
+    table_001.add(
+        TableCell(
+            Paragraph(
+                "Taxes", font="Helvetica-Bold", horizontal_alignment=Alignment.RIGHT
+            ),
+            col_span=3,
+        )
+    )
+    table_001.add(
+        TableCell(Paragraph("$ " + str(taxes), horizontal_alignment=Alignment.RIGHT))
+    )
+
+    # total
+    total: float = subtotal + taxes
+    table_001.add(
+        TableCell(
+            Paragraph(
+                "Total", font="Helvetica-Bold", horizontal_alignment=Alignment.RIGHT
+            ),
+            col_span=3,
+        )
+    )
+    table_001.add(
+        TableCell(Paragraph("$ " + str(total), horizontal_alignment=Alignment.RIGHT))
+    )
     table_001.set_padding_on_all_cells(Decimal(2), Decimal(2), Decimal(2), Decimal(2))
     table_001.no_borders()
     return table_001
 
 
 def main():
+    # Create document
+    pdf = Document()
 
-    # create Document
-    pdf: Document = Document()
-
-    # add Page
-    page: Page = Page()
+    # Add page
+    page = Page()
     pdf.append_page(page)
 
-    # set PageLayout
-    page_layout: PageLayout = SingleColumnLayout(page,
-                                                 vertical_margin=page.get_page_info().get_height() * Decimal(0.02))
+    # create PageLayout
+    page_layout: PageLayout = SingleColumnLayout(page)
+    page_layout.vertical_margin = page.get_page_info().get_height() * Decimal(0.02)
 
-    # add corporate logo
     page_layout.add(
         Image(
-            "https://github.com/jorisschellekens/borb/blob/master/readme_img/logo/borb_64.png?raw=true",
+            "https://s3.stackabuse.com/media/articles/creating-an-invoice-in-python-with-ptext-1.png",
             width=Decimal(64),
             height=Decimal(64),
-        ))
+        )
+    )
 
     # Invoice information table
     page_layout.add(_build_invoice_information())
@@ -7462,668 +10048,1324 @@ def main():
     page_layout.add(Paragraph(" "))
 
     # Itemized description
-    page_layout.add(_build_itemized_description_table([
-        Product("Product 1", 2, 50),
-        Product("Product 2", 4, 60),
-        Product("Labor", 14, 60)
-    ]))
+    page_layout.add(
+        _build_itemized_description_table(
+            [
+                Product("Product 1", 2, 50),
+                Product("Product 2", 4, 60),
+                Product("Labor", 14, 60),
+            ]
+        )
+    )
 
-    # store
-    with open("showcase_001.pdf", "wb") as out_file_handle:
-        PDF.dumps(out_file_handle, pdf)
 
-        
 if __name__ == "__main__":
     main()
 ```
 
-Which outputs this PDF:
-
-![enter image description here](img/borb_in_action_example_084_003.png)
-
-<div style="page-break-before: always;"></div>
-
-## 6.2 Showcase: creating a sudoku puzzle
-
-This example originated from my love of Sudoku puzzles, and a desire to showcase the `FlexibleColumnWidthTable` I'd been working on.
-`FlexibleColumnWidthTable` allows you to specify `preferred_width` and `preferred_height`, enabling you to create square `TableCell` objects.
-
-In the next example you'll be creating a Sudoku, with background colors for each 3x3 block.
+Finally, you can store the PDF to disk
 
 ```python
-from decimal import Decimal
-from pathlib import Path
-
-from borb.pdf.canvas.color.color import Color, HexColor
-from borb.pdf.canvas.font.font import Font
-from borb.pdf.canvas.font.simple_font.true_type_font import TrueTypeFont
-from borb.pdf.canvas.layout.layout_element import Alignment
+#!chapter_009/src/snippet_015.py
+from borb.pdf.document.document import Document
+from borb.pdf.page.page import Page
 from borb.pdf.canvas.layout.page_layout.multi_column_layout import SingleColumnLayout
 from borb.pdf.canvas.layout.page_layout.page_layout import PageLayout
-from borb.pdf.canvas.layout.table.flexible_column_width_table import FlexibleColumnWidthTable
-from borb.pdf.canvas.layout.table.table import Table, TableCell
+from decimal import Decimal
+from borb.pdf.canvas.layout.image.image import Image
+from borb.pdf.canvas.layout.table.fixed_column_width_table import (
+    FixedColumnWidthTable as Table,
+)
 from borb.pdf.canvas.layout.text.paragraph import Paragraph
-from borb.pdf.document import Document
-from borb.pdf.page.page import Page
-from borb.pdf.pdf import PDF
-
-
-def main():
-
-    # represent the sudoku as a plaintext str
-    # this is easier to debug/change
-    sudoku_str: str = """
-    3.9...4..
-    2..7.9...
-    .87......
-    75..6.23.
-    6..9.4..8
-    .28.5..41
-    ......59.
-    ...1.6..7
-    ..6...1.4
-    """
-    sudoku_str = sudoku_str \
-        .replace("\t","")   \
-        .replace(" ","")    \
-        .replace("\n","")
-
-    # create empty Document
-    doc: Document = Document()
-
-    # create empty Page
-    p: Page = Page()
-    doc.append_page(p)
-
-    # create PageLayout
-    l: PageLayout = SingleColumnLayout(p)
-
-    # add Title
-    pacifico: Font = TrueTypeFont.true_type_font_from_file(Path(__file__).parent / "Pacifico-Regular.ttf")
-    l.add(Paragraph("Sudoku", font_size=Decimal(24), font_color=HexColor("0b3954"), font=pacifico))
-
-    # add explanation
-    l.add(Paragraph("""
-                    Sudoku is a logic-based, combinatorial number-placement puzzle. 
-                    In classic sudoku, the objective is to fill a 9×9 grid with digits so that each column, each row, 
-                    and each of the nine 3×3 subgrids that compose the grid contains all of the digits from 1 to 9. 
-                    The puzzle setter provides a partially completed grid, which for a well-posed puzzle has a single solution.
-                    """, font="Helvetica-Oblique"))
-
-    # add Table
-    s: Decimal = Decimal(20)
-    t: Table = FlexibleColumnWidthTable(number_of_rows=9, number_of_columns=9)
-    for i in range(0, 81):
-        r: int = int(i / 9)
-        c: int = i % 9
-        background_color: Color = HexColor("ffffff")
-        if r in [0,1,2,6,7,8] and c in [0,1,2,6,7,8]:
-            background_color = HexColor("f1cd2e")
-        if r in [3,4,5] and c in [3,4,5]:
-            background_color = HexColor("f1cd2e")
-        if sudoku_str[i] == ".":
-            t.add(TableCell(Paragraph(" "), preferred_width=s, preferred_height=s, background_color=background_color))
-        else:
-            t.add(TableCell(Paragraph(sudoku_str[i], text_alignment=Alignment.CENTERED), preferred_width=s, preferred_height=s, background_color=background_color))
-    t.set_padding_on_all_cells(Decimal(5), Decimal(5), Decimal(5), Decimal(5))
-    l.add(t)
-
-    # store
-    with open("showcase_001.pdf", "wb") as out_file_handle:
-        PDF.dumps(out_file_handle, doc)
-
-        
-if __name__ == "__main__":
-    main()
-```
-
-![enter image description here](img/borb_in_action_example_085.png)
-
-<div style="page-break-before: always;"></div>
-
-## 6.3 Showcase: creating a nonogram puzzle
-
-This is another example of creating a `Table` and setting custom properties:
-
-- `border_top`, `border_right`, `border_bottom`, `border_left`
-- `preferred_width`
-- `preferred_height`
-
-Doing these examples allows you to build a sort of muscle-memory for using `Table` objects in `borb`.
-They also create fun little PDF's that you can share with colleagues during the coffee breaks.
-
-```python
-from pathlib import Path
-
-import typing
-from borb.io.read.types import Decimal
-from borb.pdf.canvas.color.color import HexColor
-from borb.pdf.canvas.font.font import Font
-from borb.pdf.canvas.font.simple_font.true_type_font import TrueTypeFont
 from borb.pdf.canvas.layout.layout_element import Alignment
-from borb.pdf.canvas.layout.page_layout.multi_column_layout import SingleColumnLayout
+from borb.pdf.canvas.color.color import HexColor, X11Color
 from borb.pdf.canvas.layout.table.table import TableCell
-from borb.pdf.canvas.layout.table.flexible_column_width_table import FlexibleColumnWidthTable
-from borb.pdf.canvas.layout.text.paragraph import Paragraph
-from borb.pdf.document import Document
-from borb.pdf.page.page import Page
-from borb.pdf.page.page_size import PageSize
 from borb.pdf.pdf import PDF
 
-
-def main():
-
-    # create document
-    pdf = Document()
-
-    # add page
-    page = Page(PageSize.A4_LANDSCAPE.value[0], PageSize.A4_LANDSCAPE.value[1])
-    pdf.append_page(page)
-
-    layout = SingleColumnLayout(page)
-
-    # write puzzle title
-    font: Font = TrueTypeFont.true_type_font_from_file(
-        Path(__file__).parent / "Pacifico-Regular.ttf"
-    )
-    layout.add(
-        Paragraph(
-            "Nonogram",
-            font_color=HexColor("#f1cd2e"),
-            font=font,
-            font_size=Decimal(23),
-        )
-    )
-
-    # write puzzle information
-    layout.add(
-        Paragraph(
-            """
-            Nonograms, also known as Paint by Numbers, Picross, Griddlers, Pic-a-Pix, and various other names, 
-            are picture logic puzzles in which cells in a grid must be colored or left blank according to numbers at the side of the grid to reveal a hidden picture. 
-            In this puzzle type, the numbers are a form of discrete tomography that measures how many unbroken lines of filled-in squares there are in any given row or column. 
-            For example, a clue of "4 8 3" would mean there are sets of four, eight, and three filled squares, in that order, 
-            with at least one blank square between successive sets.
-            """
-        )
-    )
-
-    # write grid
-    w = Decimal(20)
-    grid = FlexibleColumnWidthTable(
-        number_of_rows=9,
-        number_of_columns=25,
-        margin_top=Decimal(12),
-        horizontal_alignment=Alignment.CENTERED,
-    )
-
-    def insert_clues(cs: typing.List[int]):
-        """
-        This function inserts an array of clues into the table representing the nonogram.
-        A clue of "0" renders an empty cell
-        :param cs:  the clues to be inserted
-        :return:    None
-        """
-        for c in cs:
-            if c == 0:
-                grid.add(
-                    TableCell(
-                        Paragraph(" "),
-                        preferred_width=w,
-                        preferred_height=w,
-                        border_top=False,
-                        border_right=False,
-                        border_bottom=False,
-                        border_left=False,
-                    )
-                )
-            else:
-                grid.add(
-                    TableCell(
-                        Paragraph(str(c), text_alignment=Alignment.CENTERED),
-                        preferred_width=w,
-                        preferred_height=w,
-                        border_top=False,
-                        border_right=False,
-                        border_bottom=False,
-                        border_left=False,
-                    )
-                )
-
-    def insert_blanks(n: int):
-        for _ in range(0, n):
-            grid.add(TableCell(Paragraph(" "), preferred_width=w, preferred_height=w))
-
-    insert_clues([0, 0, 0, 0, 0, 0, 0, 0, 1, 1, 0, 0, 0, 1, 1, 0, 0, 0, 0, 0, 0, 0, 1, 1, 0])
-    insert_clues([0, 0, 0, 0, 0, 0, 0, 7, 1, 1, 2, 0, 2, 1, 1, 2, 0, 3, 1, 1, 0, 7, 1, 1, 2])
-    insert_clues([0, 0, 0, 0, 0, 1, 1])
-    insert_blanks(18)
-    insert_clues([0, 0, 0, 0, 0, 1, 1])
-    insert_blanks(18)
-    insert_clues([0, 0, 0, 0, 0, 1, 1])
-    insert_blanks(18)
-    insert_clues([0, 0, 0, 3, 2, 2, 3])
-    insert_blanks(18)
-    insert_clues([1, 1, 1, 1, 1, 1, 1])
-    insert_blanks(18)
-    insert_clues([1, 1, 1, 1, 1, 1, 1])
-    insert_blanks(18)
-    insert_clues([0, 0, 0, 3, 2, 1, 3])
-    insert_blanks(18)
-
-    grid.set_padding_on_all_cells(Decimal(3), Decimal(3), Decimal(3), Decimal(3))
-    layout.add(grid)
-
-    # attempt to store PDF
-    with open("output.pdf", "wb") as in_file_handle:
-        PDF.dumps(in_file_handle, pdf)
-
-
-if __name__ == "__main__":
-    main()
-
-```
-
-This code creates the following PDF:
-
-![enter image description here](img/borb_in_action_example_086.png)
-
-<div style="page-break-before: always;"></div>
-
-## 6.4 Showcase: creating a tents-and-trees puzzle
-
-Since I started writing this library, I've been on the lookout for fun ways to display new features.
-When I added support for Emoji, I was at a loss to find an interesting and engaging way to show them.
-
-And then I came across tents-and-trees puzzles. And it immediately provided me with a way to showcase both:
-
-- `FlexibleColumnWidthTable`
-- `Emoji`
-- `TrueTypeFont`
-
-In this example you'll be creating a one-page puzzle:
-
-```python
+from datetime import datetime
 import random
-from pathlib import Path
+import typing
 
-from borb.io.read.types import Decimal
-from borb.pdf.canvas.color.color import HexColor
-from borb.pdf.canvas.font.font import Font
-from borb.pdf.canvas.font.simple_font.true_type_font import TrueTypeFont
-from borb.pdf.canvas.layout.emoji.emoji import Emojis
-from borb.pdf.canvas.layout.layout_element import Alignment
-from borb.pdf.canvas.layout.list.unordered_list import UnorderedList
-from borb.pdf.canvas.layout.page_layout.multi_column_layout import SingleColumnLayout
-from borb.pdf.canvas.layout.table.table import TableCell
-from borb.pdf.canvas.layout.table.flexible_column_width_table import FlexibleColumnWidthTable
-from borb.pdf.canvas.layout.text.paragraph import Paragraph
-from borb.pdf.document import Document
-from borb.pdf.page.page import Page
-from borb.pdf.pdf import PDF
 
-def main():
-
-    # create document
-    pdf = Document()
-
-    # add page
-    page = Page()
-    pdf.append_page(page)
-
-    layout = SingleColumnLayout(page)
-
-    # write puzzle title
-    font: Font = TrueTypeFont.true_type_font_from_file(
-        Path(__file__).parent / "Pacifico-Regular.ttf"
-    )
-    layout.add(
-        Paragraph(
-            "Tents and Trees",
-            font_color=HexColor("#f1cd2e"),
-            font=font,
-            font_size=Decimal(23),
-        )
-    )
-
-    # write puzzle information
-    layout.add(
-        Paragraph(
-            """
-            You get a grid that represents a campsite. 
-            There are a number of trees on the campsite. 
-            You as a campsite manager must find a spot for the tent of each visitor that meets the following requirements:
-            """
-        )
-    )
-    layout.add(
-        UnorderedList()
-            .add(Paragraph("A tree must be immediately next to each tent (diagonal is not allowed)."))
-            .add(Paragraph("In total there are as many tents as trees. So every tent has its own tree."))
-            .add(Paragraph("The numbers outside the grid indicate how many tents there are in the relevant row or column."))
-            .add(Paragraph("Tents never touch each other: neither horizontally nor vertically nor diagonally."))
-            .add(Paragraph("A tent can make contact with multiple trees, but is only connected to one."))
-    )
-
-    # write grid
-    w = Decimal(20)
-    grid = FlexibleColumnWidthTable(
-        number_of_rows=11,
-        number_of_columns=11,
-        margin_top=Decimal(5),
-        horizontal_alignment=Alignment.CENTERED,
-    )
-    h_clues = [3, 2, 2, 1, 2, 2, 1, 2, 2, 3]
-    v_clues = [3, 1, 1, 3, 1, 3, 2, 2, 0, 4]
-    tree_layout = """
-    __________
-    x_____x__x
-    ____x_____
-    _x____x___
-    ____x____x
-    xx___x__x_
-    ___x___x__
-    _x_______x
-    __x_____x_
-    _x____x___
+class Product:
     """
-    tree_layout = tree_layout.replace("\n", "").replace(" ", "")
-    grid.add(TableCell(Paragraph(" "), preferred_height=w, preferred_width=w, border_top=False, border_left=False))
-    for i in h_clues:
-        grid.add(
-            TableCell(Paragraph(str(i)), preferred_height=w, preferred_width=w)
+    This class represents a purchased product
+    """
+
+    def __init__(self, name: str, quantity: int, price_per_sku: float):
+        self.name: str = name
+        assert quantity >= 0
+        self.quantity: int = quantity
+        assert price_per_sku >= 0
+        self.price_per_sku: float = price_per_sku
+
+
+def _build_invoice_information():
+    table_001 = Table(number_of_rows=5, number_of_columns=3)
+
+    table_001.add(Paragraph("[Street Address]"))
+    table_001.add(
+        Paragraph("Date", font="Helvetica-Bold", horizontal_alignment=Alignment.RIGHT)
+    )
+    now = datetime.now()
+    table_001.add(Paragraph("%d/%d/%d" % (now.day, now.month, now.year)))
+
+    table_001.add(Paragraph("[City, State, ZIP Code]"))
+    table_001.add(
+        Paragraph(
+            "Invoice #", font="Helvetica-Bold", horizontal_alignment=Alignment.RIGHT
         )
-    for i in range(0, 10):
-        grid.add(
+    )
+    table_001.add(Paragraph("%d" % random.randint(1000, 10000)))
+
+    table_001.add(Paragraph("[Phone]"))
+    table_001.add(
+        Paragraph(
+            "Due Date", font="Helvetica-Bold", horizontal_alignment=Alignment.RIGHT
+        )
+    )
+    table_001.add(Paragraph("%d/%d/%d" % (now.day, now.month, now.year)))
+
+    table_001.add(Paragraph("[Email Address]"))
+    table_001.add(Paragraph(" "))
+    table_001.add(Paragraph(" "))
+
+    table_001.add(Paragraph("[Company Website]"))
+    table_001.add(Paragraph(" "))
+    table_001.add(Paragraph(" "))
+
+    table_001.set_padding_on_all_cells(Decimal(2), Decimal(2), Decimal(2), Decimal(2))
+    table_001.no_borders()
+    return table_001
+
+
+def _build_billing_and_shipping_information():
+    table_001 = Table(number_of_rows=6, number_of_columns=2)
+    table_001.add(
+        Paragraph(
+            "BILL TO",
+            background_color=HexColor("263238"),
+            font_color=X11Color("White"),
+        )
+    )
+    table_001.add(
+        Paragraph(
+            "SHIP TO",
+            background_color=HexColor("263238"),
+            font_color=X11Color("White"),
+        )
+    )
+    table_001.add(Paragraph("[Recipient Name]"))  # BILLING
+    table_001.add(Paragraph("[Recipient Name]"))  # SHIPPING
+    table_001.add(Paragraph("[Company Name]"))  # BILLING
+    table_001.add(Paragraph("[Company Name]"))  # SHIPPING
+    table_001.add(Paragraph("[Street Address]"))  # BILLING
+    table_001.add(Paragraph("[Street Address]"))  # SHIPPING
+    table_001.add(Paragraph("[City, State, ZIP Code]"))  # BILLING
+    table_001.add(Paragraph("[City, State, ZIP Code]"))  # SHIPPING
+    table_001.add(Paragraph("[Phone]"))  # BILLING
+    table_001.add(Paragraph("[Phone]"))  # SHIPPING
+    table_001.set_padding_on_all_cells(Decimal(2), Decimal(2), Decimal(2), Decimal(2))
+    table_001.no_borders()
+    return table_001
+
+
+def _build_itemized_description_table(products: typing.List[Product] = []):
+    """
+    This function builds a Table containing itemized billing information
+    :param:     products
+    :return:    a Table containing itemized billing information
+    """
+    table_001 = Table(number_of_rows=15, number_of_columns=4)
+    for h in ["DESCRIPTION", "QTY", "UNIT PRICE", "AMOUNT"]:
+        table_001.add(
             TableCell(
-                Paragraph(str(v_clues[i])), preferred_height=w, preferred_width=w
+                Paragraph(h, font_color=X11Color("White")),
+                background_color=HexColor("0b3954"),
             )
         )
-        for j in range(0, 10):
-            if tree_layout[i * 10 + j] == "_":
-                grid.add(
-                    TableCell(Paragraph(" "), preferred_height=w, preferred_width=w)
-                )
-            else:
-                grid.add(
-                    TableCell(
-                        random.choice(
-                            [
-                                Emojis.DECIDUOUS_TREE.value,
-                                Emojis.EVERGREEN_TREE.value,
-                            ]
-                        ),
-                        preferred_height=w,
-                        preferred_width=w,
-                    )
-                )
 
-    grid.set_padding_on_all_cells(Decimal(3), Decimal(3), Decimal(3), Decimal(3))
-    layout.add(grid)
+    odd_color = HexColor("BBBBBB")
+    even_color = HexColor("FFFFFF")
+    for row_number, item in enumerate(products):
+        c = even_color if row_number % 2 == 0 else odd_color
+        table_001.add(TableCell(Paragraph(item.name), background_color=c))
+        table_001.add(TableCell(Paragraph(str(item.quantity)), background_color=c))
+        table_001.add(
+            TableCell(Paragraph("$ " + str(item.price_per_sku)), background_color=c)
+        )
+        table_001.add(
+            TableCell(
+                Paragraph("$ " + str(item.quantity * item.price_per_sku)),
+                background_color=c,
+            )
+        )
 
-    # attempt to store PDF
-    with open("showcase_002.pdf", "wb") as in_file_handle:
-        PDF.dumps(in_file_handle, pdf)
+    # Optionally add some empty rows to have a fixed number of rows for styling purposes
+    for row_number in range(len(products), 10):
+        c = even_color if row_number % 2 == 0 else odd_color
+        for _ in range(0, 4):
+            table_001.add(TableCell(Paragraph(" "), background_color=c))
 
-if __name__ == '__main__':
-    main()
-```
+    # subtotal
+    subtotal: float = sum([x.price_per_sku * x.quantity for x in products])
+    table_001.add(
+        TableCell(
+            Paragraph(
+                "Subtotal",
+                font="Helvetica-Bold",
+                horizontal_alignment=Alignment.RIGHT,
+            ),
+            col_span=3,
+        )
+    )
+    table_001.add(
+        TableCell(Paragraph("$ 1,180.00", horizontal_alignment=Alignment.RIGHT))
+    )
 
-The output PDF should look like this (except for the tree-emoji, which are random):
+    # discounts
+    table_001.add(
+        TableCell(
+            Paragraph(
+                "Discounts",
+                font="Helvetica-Bold",
+                horizontal_alignment=Alignment.RIGHT,
+            ),
+            col_span=3,
+        )
+    )
+    table_001.add(TableCell(Paragraph("$ 0.00", horizontal_alignment=Alignment.RIGHT)))
 
-![enter image description here](img/borb_in_action_example_087.png)
+    # taxes
+    taxes: float = subtotal * 0.06
+    table_001.add(
+        TableCell(
+            Paragraph(
+                "Taxes", font="Helvetica-Bold", horizontal_alignment=Alignment.RIGHT
+            ),
+            col_span=3,
+        )
+    )
+    table_001.add(
+        TableCell(Paragraph("$ " + str(taxes), horizontal_alignment=Alignment.RIGHT))
+    )
 
-<div style="page-break-before: always;"></div>
-
-## 6.5 Showcase: Using multiple `PageLayout` instances on the same `Page`
-
-In previous examples you've always used one `PageLayout` instance per `Page`.
-And although this is the most common scenario, you can easily use multiple `PageLayout` instances.
-This has the advantage of offering you even greater flexibility.
-
-In this example you'll be adding some content to a `Page` using `SingleColumnLayout`, and then switch to `MultiColumnLayout` to finish the `Page`.
-You'll be recreating a classic newspaper look-and-feel.
-
-```python
-from borb.io.read.types import Decimal
-from borb.pdf.canvas.layout.horizontal_rule import HorizontalRule
-from borb.pdf.canvas.layout.layout_element import Alignment
-from borb.pdf.canvas.layout.page_layout.multi_column_layout import SingleColumnLayout, MultiColumnLayout
-from borb.pdf.canvas.layout.page_layout.page_layout import PageLayout
-from borb.pdf.canvas.layout.table.fixed_column_width_table import FixedColumnWidthTable
-from borb.pdf.canvas.layout.text.paragraph import Paragraph
-from borb.pdf.document import Document
-from borb.pdf.page.page import Page
-from borb.pdf.page.page_size import PageSize
-from borb.pdf.pdf import PDF
+    # total
+    total: float = subtotal + taxes
+    table_001.add(
+        TableCell(
+            Paragraph(
+                "Total", font="Helvetica-Bold", horizontal_alignment=Alignment.RIGHT
+            ),
+            col_span=3,
+        )
+    )
+    table_001.add(
+        TableCell(Paragraph("$ " + str(total), horizontal_alignment=Alignment.RIGHT))
+    )
+    table_001.set_padding_on_all_cells(Decimal(2), Decimal(2), Decimal(2), Decimal(2))
+    table_001.no_borders()
+    return table_001
 
 
 def main():
-
-    # create document
+    # Create document
     pdf = Document()
 
-    # add page
+    # Add page
     page = Page()
     pdf.append_page(page)
 
-    # write title
-    layout_001 = SingleColumnLayout(page)
-    title_table: FixedColumnWidthTable = FixedColumnWidthTable(number_of_rows=1, number_of_columns=3, column_widths=[Decimal(1), Decimal(4), Decimal(1)])
-    title_table.add(Paragraph("\"All the News That's Fit to Print.\""))
-    title_table.add(Paragraph("The New York Times", font="Helvetica-Bold", font_size=Decimal(30), text_alignment=Alignment.CENTERED))
-    title_table.add(Paragraph("""
-                                Today, morning clouds give way to sunshine by the afternoon high 65.
-                                Tonight, cloudy low 54. 
-                                Tomorrow clouds giving way to sunshine, high 70.
-                                """, font_size=Decimal(8)))
-    title_table.no_borders()
-    layout_001.add(title_table)
+    # create PageLayout
+    page_layout: PageLayout = SingleColumnLayout(page)
+    page_layout.vertical_margin = page.get_page_info().get_height() * Decimal(0.02)
 
-    layout_001.add(HorizontalRule())
-    layout_001.add(Paragraph("VOL. CLXIX", text_alignment=Alignment.CENTERED))
-    layout_001.add(HorizontalRule())
+    page_layout.add(
+        Image(
+            "https://s3.stackabuse.com/media/articles/creating-an-invoice-in-python-with-ptext-1.png",
+            width=Decimal(64),
+            height=Decimal(64),
+        )
+    )
 
-    # switch to MultiColumnLayout
-    layout_002: PageLayout = MultiColumnLayout(page, 4)
+    # Invoice information table
+    page_layout.add(_build_invoice_information())
 
-```
+    # Empty paragraph for spacing
+    page_layout.add(Paragraph(" "))
 
-The next part is a bit tricky. We need to convince `MultiColumnLayout` to not render content at the top of the `Page`.
-In order to do that, we're going to do 2 things:
-                                               
-- After `MultiColumnLayout` has been constructed, we're going to change its `page_height` parameter. By doing so we're telling the layout mechanism that it needs to render content (and jump to the next column) in the limited remaining `Rectangle`.
-  Because PDF has its origin in the lower-left corner of the `page`, setting the `page_height` parameter will also limit the maximum y-coordinate at which `LayoutElement` objects are allowed to render.
-- We are also going to change the `_previous_element_y` variable. This variable keeps track of where the previous `LayoutElement` was rendered, and is default initialized to the `page_height` minus the `vertical_margin`.
-  By tweaking this variable we ensure the next (that is to say first) `LayoutElement` to be added in `MultiColumnLayout` will be placed at the right y-coordinate.
+    # Billing and shipping information table
+    page_layout.add(_build_billing_and_shipping_information())
 
-```python
+    # Empty paragraph for spacing
+    page_layout.add(Paragraph(" "))
 
-    # mark the top section as off limits
-    max_y: Decimal = Decimal(PageSize.A4_PORTRAIT.value[1] - 120)
-    layout_002._page_height = max_y
-    layout_002._previous_element_y = max_y - layout_002._vertical_margin
+    # Itemized description
+    page_layout.add(
+        _build_itemized_description_table(
+            [
+                Product("Product 1", 2, 50),
+                Product("Product 2", 4, 60),
+                Product("Labor", 14, 60),
+            ]
+        )
+    )
 
-```
-
-With that taken care of, we can now add content to the `PageLayout` manager as we would normally do.
-
-```python
-
-    # add content
-    for _ in range(0, 10):
-        layout_002.add(Paragraph("""
-                                Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. 
-                                Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. 
-                                Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. 
-                                Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
-                                """, font_size=Decimal(10)))
-
-    # attempt to store PDF
-    with open("output.pdf", "wb") as in_file_handle:
-        PDF.dumps(in_file_handle, pdf)
+    # store
+    with open("output.pdf", "wb") as out_file_handle:
+        PDF.dumps(out_file_handle, pdf)
 
 
 if __name__ == "__main__":
     main()
-
 ```
 
-![enter image description here](img/borb_in_action_example_088.png)
+The final PDF should look somewhat like this:
 
-<div style="page-break-before: always;"></div>
+![enter image description here](chapter_009/img/snippet_015.png)
 
-## 6.6 Showcase: creating a poem with custom `PageLayout`
+## 9.3 Creating a stunning flyer
 
-In this example you'll see how to write your own `PageLayout`.
-We'll be making a `PageLayout` implementation that attempts to write text in a circular shape.
-This will give you more insight into how `PageLayout` (and in fact the whole layout-mechanism) works in `borb`.
+These are the steps to creating a PDF document using borb:
 
-```python
-
-```
-
-<div style="page-break-before: always;"></div>
-
-## 6.7 Showcase: automatically processing an invoice
-
-For this example, you'll be working with the invoice you created earlier.
-In this example you'll learn how to process its content automatically.
-You'll also learn how to debug such a workflow.
-
-![enter image description here](img/borb_in_action_example_084_003.png)
-
-To start, let's just read the PDF into a `Document` object:
+- Create an empty `Document`
+- Create an empty `Page`
+- Append the `Page` to the `Document`
+- Set a `PageLayout` to handle the flow of content (we're using a `SingleColumnLayout` here)
+- Add content (not shown here)
+- Write the PDF to disk (not shown here)
 
 ```python
-import typing
-from borb.pdf.document import Document
+#!chapter_009/src/snippet_016.py
+from borb.pdf.document.document import Document
+from borb.pdf.page.page import Page
 from borb.pdf.pdf import PDF
+from borb.pdf.canvas.layout.page_layout.multi_column_layout import SingleColumnLayout
+from borb.pdf.canvas.layout.page_layout.page_layout import PageLayout
 
 
 def main():
+    # create empty Document
+    pdf = Document()
 
-    d: typing.Optional[Document] = None
-    with open("output.pdf", "rb") as pdf_in_handle:
-        d = PDF.loads(pdf_in_handle)
+    # create empty Page
+    page = Page()
 
-    assert d is not None
+    # add Page to Document
+    pdf.append_page(page)
+
+    # create PageLayout
+    layout: PageLayout = SingleColumnLayout(page)
 
 
 if __name__ == "__main__":
     main()
 ```
 
-Now we can extract the shipping information by specifying a rectangular area.
-Since I don't know the exact coordinates, I'm going to be starting out at a pretty random location, and drawing a square (annotation) on the page.
-That way I can get an idea of where the information is that I'd like to extract.
+We'd like to add some geometric artwork to our flyer in the upper right corner. We're going to write a separate method to do that. Then we can later re-use this method (for instance on every `Page` in the `Document`).
 
 ```python
-import typing
+#!chapter_009/src/snippet_017.py
+# new imports
+from borb.pdf.canvas.layout.shape.shape import Shape
 from decimal import Decimal
-
-from borb.pdf.canvas.color.color import X11Color
+from borb.pdf.canvas.color.color import HexColor, X11Color
 from borb.pdf.canvas.geometry.rectangle import Rectangle
-from borb.pdf.document import Document
-from borb.pdf.pdf import PDF
-
-
-def main():
-
-    d: typing.Optional[Document] = None
-    with open("output.pdf", "rb") as pdf_file_handle:
-        d = PDF.loads(pdf_file_handle)
-
-    assert d is not None
-
-    # add annotation
-    d.get_page(0).append_square_annotation(Rectangle(Decimal(300), Decimal(600), Decimal(100), Decimal(100)),
-                                           stroke_color=X11Color("Red"))
-
-    # Write
-    with open("output_001.pdf", "wb") as pdf_file_handle:
-        PDF.dumps(pdf_file_handle, d)
-
-if __name__ == "__main__":
-    main()
-
-```
-
-![enter image description here](img/borb_in_action_example_090_001.png)
-
-After some fiddling around, I found these coordinates to work best:
-
-```python
-    # add annotation
-    d.get_page(0).append_square_annotation(Rectangle(Decimal(280), Decimal(510), Decimal(200), Decimal(130)),
-                                           stroke_color=X11Color("Red"))
-```
-
-![enter image description here](img/borb_in_action_example_090_002.png)
-
-Now you can extract the text-content in the invoice, by using a `LocationFilter` and `SimpleTextExtraction`.
-
-```python
+from borb.pdf.page.page_size import PageSize
 import typing
-from decimal import Decimal
+import random
 
-from borb.pdf.canvas.geometry.rectangle import Rectangle
-from borb.pdf.document import Document
+
+def add_gray_artwork_to_upper_right_corner(page: Page) -> None:
+    """
+    This method will add a gray artwork of squares and triangles in the upper right corner
+    of the given Page
+    """
+
+    # define a list of gray colors
+    grays: typing.List[HexColor] = [
+        HexColor("A9A9A9"),
+        HexColor("D3D3D3"),
+        HexColor("DCDCDC"),
+        HexColor("E0E0E0"),
+        HexColor("E8E8E8"),
+        HexColor("F0F0F0"),
+    ]
+
+    # we're going to use the size of the page later on,
+    # so perhaps it's a good idea to retrieve it now
+    ps: typing.Tuple[Decimal, Decimal] = PageSize.A4_PORTRAIT.value
+
+    # now we'll write N triangles in the upper right corner
+    # we'll later fill the remaining space with squares
+    N: int = 4
+    M: Decimal = Decimal(32)
+    for i in range(0, N):
+        x: Decimal = ps[0] - N * M + i * M
+        y: Decimal = ps[1] - (i + 1) * M
+        rg: HexColor = random.choice(grays)
+        Shape(
+            points=[(x + M, y), (x + M, y + M), (x, y + M)],
+            stroke_color=rg,
+            fill_color=rg,
+        ).layout(page, Rectangle(x, y, M, M))
+
+    # now we can fill up the remaining space with squares
+    for i in range(0, N - 1):
+        for j in range(0, N - 1):
+            if j > i:
+                continue
+            x: Decimal = ps[0] - (N - 1) * M + i * M
+            y: Decimal = ps[1] - (j + 1) * M
+            rg: HexColor = random.choice(grays)
+            Shape(
+                points=[(x, y), (x + M, y), (x + M, y + M), (x, y + M)],
+                stroke_color=rg,
+                fill_color=rg,
+            ).layout(page, Rectangle(x, y, M, M))
+```
+
+Now that we've defined this method, we can call it in the main body of our script to add the artwork to the PDF.
+
+```python
+#!chapter_009/src/snippet_018.py
+from borb.pdf.document.document import Document
+from borb.pdf.page.page import Page
 from borb.pdf.pdf import PDF
-from borb.toolkit.location.location_filter import LocationFilter
-from borb.toolkit.text.simple_text_extraction import SimpleTextExtraction
+from borb.pdf.canvas.layout.page_layout.multi_column_layout import SingleColumnLayout
+from borb.pdf.canvas.layout.page_layout.page_layout import PageLayout
+from borb.pdf.canvas.layout.shape.shape import Shape
+from decimal import Decimal
+from borb.pdf.canvas.color.color import HexColor, X11Color
+from borb.pdf.canvas.geometry.rectangle import Rectangle
+from borb.pdf.page.page_size import PageSize
+import typing
+import random
+
+
+def add_gray_artwork_to_upper_right_corner(page: Page) -> None:
+    """
+    This method will add a gray artwork of squares and triangles in the upper right corner
+    of the given Page
+    """
+
+    # define a list of gray colors
+    grays: typing.List[HexColor] = [
+        HexColor("A9A9A9"),
+        HexColor("D3D3D3"),
+        HexColor("DCDCDC"),
+        HexColor("E0E0E0"),
+        HexColor("E8E8E8"),
+        HexColor("F0F0F0"),
+    ]
+
+    # we're going to use the size of the page later on,
+    # so perhaps it's a good idea to retrieve it now
+    ps: typing.Tuple[Decimal, Decimal] = PageSize.A4_PORTRAIT.value
+
+    # now we'll write N triangles in the upper right corner
+    # we'll later fill the remaining space with squares
+    N: int = 4
+    M: Decimal = Decimal(32)
+    for i in range(0, N):
+        x: Decimal = ps[0] - N * M + i * M
+        y: Decimal = ps[1] - (i + 1) * M
+        rg: HexColor = random.choice(grays)
+        Shape(
+            points=[(x + M, y), (x + M, y + M), (x, y + M)],
+            stroke_color=rg,
+            fill_color=rg,
+        ).layout(page, Rectangle(x, y, M, M))
+
+    # now we can fill up the remaining space with squares
+    for i in range(0, N - 1):
+        for j in range(0, N - 1):
+            if j > i:
+                continue
+            x: Decimal = ps[0] - (N - 1) * M + i * M
+            y: Decimal = ps[1] - (j + 1) * M
+            rg: HexColor = random.choice(grays)
+            Shape(
+                points=[(x, y), (x + M, y), (x + M, y + M), (x, y + M)],
+                stroke_color=rg,
+                fill_color=rg,
+            ).layout(page, Rectangle(x, y, M, M))
 
 
 def main():
+    # create empty Document
+    pdf = Document()
 
-    r: Rectangle = Rectangle(Decimal(280), Decimal(510), Decimal(200), Decimal(130))
-    l0: LocationFilter = LocationFilter(r)
-    l1: SimpleTextExtraction = SimpleTextExtraction()
-    l0.add_listener(l1)
+    # create empty Page
+    page = Page()
 
-    d: typing.Optional[Document] = None
-    with open("output.pdf", "rb") as pdf_file_handle:
-        d = PDF.loads(pdf_file_handle, [l0])
+    # add Page to Document
+    pdf.append_page(page)
 
-    assert d is not None
+    # create PageLayout
+    layout: PageLayout = SingleColumnLayout(page)
 
-    print(l1.get_text_for_page(0))
+    # now we can call this method in the main method
+    add_gray_artwork_to_upper_right_corner(page)
 
 
 if __name__ == "__main__":
     main()
 ```
 
-This prints:
-
-```
-SHIP TO
-[Recipient Name]
-[Company Name]
-[Street Address]
-[City, State, ZIP Code]
-[Phone]
-```
-
-Of course, this process can be rather error-prone. Ideally, you'd like to specify something like "find the address underneath the words SHIP TO".
-Let's make that happen;
+Next we're going to add our company contact details, so people know where to reach us:
 
 ```python
+#!chapter_009/src/snippet_019.py
+from borb.pdf.document.document import Document
+from borb.pdf.page.page import Page
+from borb.pdf.pdf import PDF
+from borb.pdf.canvas.layout.page_layout.multi_column_layout import SingleColumnLayout
+from borb.pdf.canvas.layout.page_layout.page_layout import PageLayout
+from borb.pdf.canvas.layout.shape.shape import Shape
+from decimal import Decimal
+from borb.pdf.canvas.color.color import HexColor, X11Color
+from borb.pdf.canvas.geometry.rectangle import Rectangle
+from borb.pdf.page.page_size import PageSize
+from borb.pdf.canvas.layout.text.paragraph import Paragraph
+from borb.pdf.canvas.layout.image.barcode import Barcode, BarcodeType
+from borb.pdf.canvas.layout.layout_element import LayoutElement
+from borb.pdf.canvas.layout.table.flexible_column_width_table import (
+    FlexibleColumnWidthTable,
+)
+from borb.pdf.canvas.layout.annotation.remote_go_to_annotation import (
+    RemoteGoToAnnotation,
+)
 
+import typing
+import random
+
+
+def add_gray_artwork_to_upper_right_corner(page: Page) -> None:
+    """
+    This method will add a gray artwork of squares and triangles in the upper right corner
+    of the given Page
+    """
+
+    # define a list of gray colors
+    grays: typing.List[HexColor] = [
+        HexColor("A9A9A9"),
+        HexColor("D3D3D3"),
+        HexColor("DCDCDC"),
+        HexColor("E0E0E0"),
+        HexColor("E8E8E8"),
+        HexColor("F0F0F0"),
+    ]
+
+    # we're going to use the size of the page later on,
+    # so perhaps it's a good idea to retrieve it now
+    ps: typing.Tuple[Decimal, Decimal] = PageSize.A4_PORTRAIT.value
+
+    # now we'll write N triangles in the upper right corner
+    # we'll later fill the remaining space with squares
+    N: int = 4
+    M: Decimal = Decimal(32)
+    for i in range(0, N):
+        x: Decimal = ps[0] - N * M + i * M
+        y: Decimal = ps[1] - (i + 1) * M
+        rg: HexColor = random.choice(grays)
+        Shape(
+            points=[(x + M, y), (x + M, y + M), (x, y + M)],
+            stroke_color=rg,
+            fill_color=rg,
+        ).layout(page, Rectangle(x, y, M, M))
+
+    # now we can fill up the remaining space with squares
+    for i in range(0, N - 1):
+        for j in range(0, N - 1):
+            if j > i:
+                continue
+            x: Decimal = ps[0] - (N - 1) * M + i * M
+            y: Decimal = ps[1] - (j + 1) * M
+            rg: HexColor = random.choice(grays)
+            Shape(
+                points=[(x, y), (x + M, y), (x + M, y + M), (x, y + M)],
+                stroke_color=rg,
+                fill_color=rg,
+            ).layout(page, Rectangle(x, y, M, M))
+
+
+def main():
+    # create empty Document
+    pdf = Document()
+
+    # create empty Page
+    page = Page()
+
+    # add Page to Document
+    pdf.append_page(page)
+
+    # create PageLayout
+    layout: PageLayout = SingleColumnLayout(page)
+
+    # now we can call this method in the main method
+    add_gray_artwork_to_upper_right_corner(page)
+
+    # contact information
+    layout.add(
+        Paragraph("Your Company", font_color=HexColor("#6d64e8"), font_size=Decimal(20))
+    )
+
+    # We're going to add a qr code that links to our website.
+    # Later, we're going to add a remote go-to annotation
+    # (that's just PDF talk for "if you click the qr code, it will take you to our website")
+    # in order to be able to do that, we need its coordinates.
+    qr_code: LayoutElement = Barcode(
+        data="https://www.borbpdf.com",
+        width=Decimal(64),
+        height=Decimal(64),
+        type=BarcodeType.QR,
+    )
+
+    # now we can add this content to the table
+    layout.add(
+        FlexibleColumnWidthTable(number_of_columns=2, number_of_rows=1)
+        .add(qr_code)
+        .add(
+            Paragraph(
+                """
+            500 South Buena Vista Street
+            Burbank CA
+            91521-0991 USA
+            """,
+                padding_top=Decimal(12),
+                respect_newlines_in_text=True,
+                font_color=HexColor("#666666"),
+                font_size=Decimal(10),
+            )
+        )
+        .no_borders()
+    )
+
+    # let's add the remote go-to annotation
+    page.append_annotation(
+        RemoteGoToAnnotation(qr_code.get_bounding_box(), uri="https://www.borbpdf.com")
+    )
+
+
+if __name__ == "__main__":
+    main()
 ```
 
-To round up this exercise, let's find the subtotal/total/discount/price information.
-Again, we'll be making use of `RegularExpressionTextExtraction`;
+Now we can add a few titles and subtitles and some promotional blurb;
 
 ```python
+#!chapter_009/src/snippet_020.py
+from borb.pdf.document.document import Document
+from borb.pdf.page.page import Page
+from borb.pdf.pdf import PDF
+from borb.pdf.canvas.layout.page_layout.multi_column_layout import SingleColumnLayout
+from borb.pdf.canvas.layout.page_layout.page_layout import PageLayout
+from borb.pdf.canvas.layout.shape.shape import Shape
+from decimal import Decimal
+from borb.pdf.canvas.color.color import HexColor, X11Color
+from borb.pdf.canvas.geometry.rectangle import Rectangle
+from borb.pdf.page.page_size import PageSize
+from borb.pdf.canvas.layout.text.paragraph import Paragraph
+from borb.pdf.canvas.layout.image.barcode import Barcode, BarcodeType
+from borb.pdf.canvas.layout.layout_element import LayoutElement
+from borb.pdf.canvas.layout.table.flexible_column_width_table import (
+    FlexibleColumnWidthTable,
+)
+from borb.pdf.canvas.layout.annotation.remote_go_to_annotation import (
+    RemoteGoToAnnotation,
+)
 
+import typing
+import random
+
+
+def add_gray_artwork_to_upper_right_corner(page: Page) -> None:
+    """
+    This method will add a gray artwork of squares and triangles in the upper right corner
+    of the given Page
+    """
+
+    # define a list of gray colors
+    grays: typing.List[HexColor] = [
+        HexColor("A9A9A9"),
+        HexColor("D3D3D3"),
+        HexColor("DCDCDC"),
+        HexColor("E0E0E0"),
+        HexColor("E8E8E8"),
+        HexColor("F0F0F0"),
+    ]
+
+    # we're going to use the size of the page later on,
+    # so perhaps it's a good idea to retrieve it now
+    ps: typing.Tuple[Decimal, Decimal] = PageSize.A4_PORTRAIT.value
+
+    # now we'll write N triangles in the upper right corner
+    # we'll later fill the remaining space with squares
+    N: int = 4
+    M: Decimal = Decimal(32)
+    for i in range(0, N):
+        x: Decimal = ps[0] - N * M + i * M
+        y: Decimal = ps[1] - (i + 1) * M
+        rg: HexColor = random.choice(grays)
+        Shape(
+            points=[(x + M, y), (x + M, y + M), (x, y + M)],
+            stroke_color=rg,
+            fill_color=rg,
+        ).layout(page, Rectangle(x, y, M, M))
+
+    # now we can fill up the remaining space with squares
+    for i in range(0, N - 1):
+        for j in range(0, N - 1):
+            if j > i:
+                continue
+            x: Decimal = ps[0] - (N - 1) * M + i * M
+            y: Decimal = ps[1] - (j + 1) * M
+            rg: HexColor = random.choice(grays)
+            Shape(
+                points=[(x, y), (x + M, y), (x + M, y + M), (x, y + M)],
+                stroke_color=rg,
+                fill_color=rg,
+            ).layout(page, Rectangle(x, y, M, M))
+
+
+def main():
+    # create empty Document
+    pdf = Document()
+
+    # create empty Page
+    page = Page()
+
+    # add Page to Document
+    pdf.append_page(page)
+
+    # create PageLayout
+    layout: PageLayout = SingleColumnLayout(page)
+
+    # now we can call this method in the main method
+    add_gray_artwork_to_upper_right_corner(page)
+
+    # contact information
+    layout.add(
+        Paragraph("Your Company", font_color=HexColor("#6d64e8"), font_size=Decimal(20))
+    )
+
+    # We're going to add a qr code that links to our website.
+    # Later, we're going to add a remote go-to annotation
+    # (that's just PDF talk for "if you click the qr code, it will take you to our website")
+    # in order to be able to do that, we need its coordinates.
+    qr_code: LayoutElement = Barcode(
+        data="https://www.borbpdf.com",
+        width=Decimal(64),
+        height=Decimal(64),
+        type=BarcodeType.QR,
+    )
+
+    # now we can add this content to the table
+    layout.add(
+        FlexibleColumnWidthTable(number_of_columns=2, number_of_rows=1)
+        .add(qr_code)
+        .add(
+            Paragraph(
+                """
+            500 South Buena Vista Street
+            Burbank CA
+            91521-0991 USA
+            """,
+                padding_top=Decimal(12),
+                respect_newlines_in_text=True,
+                font_color=HexColor("#666666"),
+                font_size=Decimal(10),
+            )
+        )
+        .no_borders()
+    )
+
+    # let's add the remote go-to annotation
+    page.append_annotation(
+        RemoteGoToAnnotation(qr_code.get_bounding_box(), uri="https://www.borbpdf.com")
+    )
+
+    # title
+    layout.add(
+        Paragraph(
+            "Productbrochure", font_color=HexColor("#283592"), font_size=Decimal(34)
+        )
+    )
+
+    # subtitle
+    layout.add(
+        Paragraph(
+            "September 4th, 2021", font_color=HexColor("#e01b84"), font_size=Decimal(11)
+        )
+    )
+
+    layout.add(
+        Paragraph(
+            "Product Overview", font_color=HexColor("000000"), font_size=Decimal(21)
+        )
+    )
+
+    layout.add(
+        Paragraph(
+            """
+                        Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. 
+                        Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. 
+                        Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. 
+                        Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
+                        """
+        )
+    )
+
+
+if __name__ == "__main__":
+    main()
 ```
 
-<div style="page-break-before: always;"></div>
+Images make things more visually interesting. Let's add an `Image` with some core product features next to it;
 
-## 6.8 Conclusion
+```python
+#!chapter_009/src/snippet_021.py
+from borb.pdf.document.document import Document
+from borb.pdf.page.page import Page
+from borb.pdf.pdf import PDF
+from borb.pdf.canvas.layout.page_layout.multi_column_layout import SingleColumnLayout
+from borb.pdf.canvas.layout.page_layout.page_layout import PageLayout
+from borb.pdf.canvas.layout.shape.shape import Shape
+from decimal import Decimal
+from borb.pdf.canvas.color.color import HexColor, X11Color
+from borb.pdf.canvas.geometry.rectangle import Rectangle
+from borb.pdf.page.page_size import PageSize
+from borb.pdf.canvas.layout.text.paragraph import Paragraph
+from borb.pdf.canvas.layout.image.barcode import Barcode, BarcodeType
+from borb.pdf.canvas.layout.layout_element import LayoutElement
+from borb.pdf.canvas.layout.table.flexible_column_width_table import (
+    FlexibleColumnWidthTable,
+)
+from borb.pdf.canvas.layout.annotation.remote_go_to_annotation import (
+    RemoteGoToAnnotation,
+)
+from borb.pdf.canvas.layout.table.fixed_column_width_table import FixedColumnWidthTable
+from borb.pdf.canvas.layout.table.table import TableCell
+from borb.pdf.canvas.layout.image.image import Image
+from borb.pdf.canvas.layout.list.unordered_list import UnorderedList
 
-In this section you've coded up some challenging PDF documents.
-You've worked with `Table` and `PageLayout` (even making your own) and you've learned how to create and process an invoice.
-You should be ready to take on the world with your new PDF-processing skills.
+import typing
+import random
 
+
+def add_gray_artwork_to_upper_right_corner(page: Page) -> None:
+    """
+    This method will add a gray artwork of squares and triangles in the upper right corner
+    of the given Page
+    """
+
+    # define a list of gray colors
+    grays: typing.List[HexColor] = [
+        HexColor("A9A9A9"),
+        HexColor("D3D3D3"),
+        HexColor("DCDCDC"),
+        HexColor("E0E0E0"),
+        HexColor("E8E8E8"),
+        HexColor("F0F0F0"),
+    ]
+
+    # we're going to use the size of the page later on,
+    # so perhaps it's a good idea to retrieve it now
+    ps: typing.Tuple[Decimal, Decimal] = PageSize.A4_PORTRAIT.value
+
+    # now we'll write N triangles in the upper right corner
+    # we'll later fill the remaining space with squares
+    N: int = 4
+    M: Decimal = Decimal(32)
+    for i in range(0, N):
+        x: Decimal = ps[0] - N * M + i * M
+        y: Decimal = ps[1] - (i + 1) * M
+        rg: HexColor = random.choice(grays)
+        Shape(
+            points=[(x + M, y), (x + M, y + M), (x, y + M)],
+            stroke_color=rg,
+            fill_color=rg,
+        ).layout(page, Rectangle(x, y, M, M))
+
+    # now we can fill up the remaining space with squares
+    for i in range(0, N - 1):
+        for j in range(0, N - 1):
+            if j > i:
+                continue
+            x: Decimal = ps[0] - (N - 1) * M + i * M
+            y: Decimal = ps[1] - (j + 1) * M
+            rg: HexColor = random.choice(grays)
+            Shape(
+                points=[(x, y), (x + M, y), (x + M, y + M), (x, y + M)],
+                stroke_color=rg,
+                fill_color=rg,
+            ).layout(page, Rectangle(x, y, M, M))
+
+
+def main():
+    # create empty Document
+    pdf = Document()
+
+    # create empty Page
+    page = Page()
+
+    # add Page to Document
+    pdf.append_page(page)
+
+    # create PageLayout
+    layout: PageLayout = SingleColumnLayout(page)
+
+    # now we can call this method in the main method
+    add_gray_artwork_to_upper_right_corner(page)
+
+    # contact information
+    layout.add(
+        Paragraph("Your Company", font_color=HexColor("#6d64e8"), font_size=Decimal(20))
+    )
+
+    # We're going to add a qr code that links to our website.
+    # Later, we're going to add a remote go-to annotation
+    # (that's just PDF talk for "if you click the qr code, it will take you to our website")
+    # in order to be able to do that, we need its coordinates.
+    qr_code: LayoutElement = Barcode(
+        data="https://www.borbpdf.com",
+        width=Decimal(64),
+        height=Decimal(64),
+        type=BarcodeType.QR,
+    )
+
+    # now we can add this content to the table
+    layout.add(
+        FlexibleColumnWidthTable(number_of_columns=2, number_of_rows=1)
+        .add(qr_code)
+        .add(
+            Paragraph(
+                """
+            500 South Buena Vista Street
+            Burbank CA
+            91521-0991 USA
+            """,
+                padding_top=Decimal(12),
+                respect_newlines_in_text=True,
+                font_color=HexColor("#666666"),
+                font_size=Decimal(10),
+            )
+        )
+        .no_borders()
+    )
+
+    # let's add the remote go-to annotation
+    page.append_annotation(
+        RemoteGoToAnnotation(qr_code.get_bounding_box(), uri="https://www.borbpdf.com")
+    )
+
+    # title
+    layout.add(
+        Paragraph(
+            "Productbrochure", font_color=HexColor("#283592"), font_size=Decimal(34)
+        )
+    )
+
+    # subtitle
+    layout.add(
+        Paragraph(
+            "September 4th, 2021", font_color=HexColor("#e01b84"), font_size=Decimal(11)
+        )
+    )
+
+    layout.add(
+        Paragraph(
+            "Product Overview", font_color=HexColor("000000"), font_size=Decimal(21)
+        )
+    )
+
+    layout.add(
+        Paragraph(
+            """
+                        Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. 
+                        Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. 
+                        Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. 
+                        Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
+                        """
+        )
+    )
+
+    # table with image and key features
+    layout.add(
+        FixedColumnWidthTable(
+            number_of_rows=2,
+            number_of_columns=2,
+            column_widths=[Decimal(0.3), Decimal(0.7)],
+        )
+        .add(
+            TableCell(
+                Image(
+                    "https://www.att.com/catalog/en/skus/images/apple-iphone%2012-purple-450x350.png",
+                    width=Decimal(128),
+                    height=Decimal(128),
+                ),
+                row_span=2,
+            )
+        )
+        .add(
+            Paragraph(
+                "Key Features",
+                font_color=HexColor("e01b84"),
+                font="Helvetica-Bold",
+                padding_bottom=Decimal(10),
+            )
+        )
+        .add(
+            UnorderedList()
+            .add(
+                Paragraph(
+                    "Nam aliquet ex eget felis lobortis aliquet sit amet ut risus."
+                )
+            )
+            .add(
+                Paragraph(
+                    "Maecenas sit amet odio ut erat tincidunt consectetur accumsan ut nunc."
+                )
+            )
+            .add(Paragraph("Phasellus eget magna et justo malesuada fringilla."))
+            .add(
+                Paragraph(
+                    "Maecenas vitae dui ac nisi aliquam malesuada in consequat sapien."
+                )
+            )
+        )
+        .no_borders()
+    )
+
+
+if __name__ == "__main__":
+    main()
+```
+
+Let's add a footer to the bottom of the page. We're going to put this in a separate method (so that we could call it later on, if we ever need to apply it to other pages in the PDF).
+
+```python
+#!chapter_009/src/snippet_022.py
+# new imports
+from borb.pdf.canvas.line_art.line_art_factory import LineArtFactory
+
+
+def add_colored_artwork_to_bottom_right_corner(page: Page) -> None:
+    """
+    This method will add a blue/purple artwork of lines and squares to the bottom right corner
+    of the given Page
+    """
+    ps: typing.Tuple[Decimal, Decimal] = PageSize.A4_PORTRAIT.value
+
+    # square
+    Shape(
+        points=[(ps[0] - 32, 40), (ps[0], 40), (ps[0], 40 + 32), (ps[0] - 32, 40 + 32)],
+        stroke_color=HexColor("d53067"),
+        fill_color=HexColor("d53067"),
+    ).layout(page, Rectangle(ps[0] - 32, 40, 32, 32))
+
+    # square
+    Shape(
+        points=[
+            (ps[0] - 64, 40),
+            (ps[0] - 32, 40),
+            (ps[0] - 32, 40 + 32),
+            (ps[0] - 64, 40 + 32),
+        ],
+        stroke_color=HexColor("eb3f79"),
+        fill_color=HexColor("eb3f79"),
+    ).layout(page, Rectangle(ps[0] - 64, 40, 32, 32))
+
+    # triangle
+    Shape(
+        points=[(ps[0] - 96, 40), (ps[0] - 64, 40), (ps[0] - 64, 40 + 32)],
+        stroke_color=HexColor("e01b84"),
+        fill_color=HexColor("e01b84"),
+    ).layout(page, Rectangle(ps[0] - 96, 40, 32, 32))
+
+    # line
+    r: Rectangle = Rectangle(Decimal(0), Decimal(32), ps[0], Decimal(8))
+    Shape(
+        points=LineArtFactory.rectangle(r),
+        stroke_color=HexColor("283592"),
+        fill_color=HexColor("283592"),
+    ).layout(page, r)
+```
+
+Now we can call this method in the main body;
+
+```python
+#!chapter_009/src/snippet_023.py
+from borb.pdf.document.document import Document
+from borb.pdf.page.page import Page
+from borb.pdf.pdf import PDF
+from borb.pdf.canvas.layout.page_layout.multi_column_layout import SingleColumnLayout
+from borb.pdf.canvas.layout.page_layout.page_layout import PageLayout
+from borb.pdf.canvas.layout.shape.shape import Shape
+from decimal import Decimal
+from borb.pdf.canvas.color.color import HexColor, X11Color
+from borb.pdf.canvas.geometry.rectangle import Rectangle
+from borb.pdf.page.page_size import PageSize
+from borb.pdf.canvas.layout.text.paragraph import Paragraph
+from borb.pdf.canvas.layout.image.barcode import Barcode, BarcodeType
+from borb.pdf.canvas.layout.layout_element import LayoutElement
+from borb.pdf.canvas.layout.table.flexible_column_width_table import (
+    FlexibleColumnWidthTable,
+)
+from borb.pdf.canvas.layout.annotation.remote_go_to_annotation import (
+    RemoteGoToAnnotation,
+)
+from borb.pdf.canvas.layout.table.fixed_column_width_table import FixedColumnWidthTable
+from borb.pdf.canvas.layout.table.table import TableCell
+from borb.pdf.canvas.layout.image.image import Image
+from borb.pdf.canvas.layout.list.unordered_list import UnorderedList
+from borb.pdf.canvas.line_art.line_art_factory import LineArtFactory
+
+import typing
+import random
+
+
+def add_gray_artwork_to_upper_right_corner(page: Page) -> None:
+    """
+    This method will add a gray artwork of squares and triangles in the upper right corner
+    of the given Page
+    """
+
+    # define a list of gray colors
+    grays: typing.List[HexColor] = [
+        HexColor("A9A9A9"),
+        HexColor("D3D3D3"),
+        HexColor("DCDCDC"),
+        HexColor("E0E0E0"),
+        HexColor("E8E8E8"),
+        HexColor("F0F0F0"),
+    ]
+
+    # we're going to use the size of the page later on,
+    # so perhaps it's a good idea to retrieve it now
+    ps: typing.Tuple[Decimal, Decimal] = PageSize.A4_PORTRAIT.value
+
+    # now we'll write N triangles in the upper right corner
+    # we'll later fill the remaining space with squares
+    N: int = 4
+    M: Decimal = Decimal(32)
+    for i in range(0, N):
+        x: Decimal = ps[0] - N * M + i * M
+        y: Decimal = ps[1] - (i + 1) * M
+        rg: HexColor = random.choice(grays)
+        Shape(
+            points=[(x + M, y), (x + M, y + M), (x, y + M)],
+            stroke_color=rg,
+            fill_color=rg,
+        ).layout(page, Rectangle(x, y, M, M))
+
+    # now we can fill up the remaining space with squares
+    for i in range(0, N - 1):
+        for j in range(0, N - 1):
+            if j > i:
+                continue
+            x: Decimal = ps[0] - (N - 1) * M + i * M
+            y: Decimal = ps[1] - (j + 1) * M
+            rg: HexColor = random.choice(grays)
+            Shape(
+                points=[(x, y), (x + M, y), (x + M, y + M), (x, y + M)],
+                stroke_color=rg,
+                fill_color=rg,
+            ).layout(page, Rectangle(x, y, M, M))
+
+
+def add_colored_artwork_to_bottom_right_corner(page: Page) -> None:
+    """
+    This method will add a blue/purple artwork of lines and squares to the bottom right corner
+    of the given Page
+    """
+    ps: typing.Tuple[Decimal, Decimal] = PageSize.A4_PORTRAIT.value
+
+    # square
+    Shape(
+        points=[(ps[0] - 32, 40), (ps[0], 40), (ps[0], 40 + 32), (ps[0] - 32, 40 + 32)],
+        stroke_color=HexColor("d53067"),
+        fill_color=HexColor("d53067"),
+    ).layout(page, Rectangle(ps[0] - 32, 40, 32, 32))
+
+    # square
+    Shape(
+        points=[
+            (ps[0] - 64, 40),
+            (ps[0] - 32, 40),
+            (ps[0] - 32, 40 + 32),
+            (ps[0] - 64, 40 + 32),
+        ],
+        stroke_color=HexColor("eb3f79"),
+        fill_color=HexColor("eb3f79"),
+    ).layout(page, Rectangle(ps[0] - 64, 40, 32, 32))
+
+    # triangle
+    Shape(
+        points=[(ps[0] - 96, 40), (ps[0] - 64, 40), (ps[0] - 64, 40 + 32)],
+        stroke_color=HexColor("e01b84"),
+        fill_color=HexColor("e01b84"),
+    ).layout(page, Rectangle(ps[0] - 96, 40, 32, 32))
+
+    # line
+    r: Rectangle = Rectangle(Decimal(0), Decimal(32), ps[0], Decimal(8))
+    Shape(
+        points=LineArtFactory.rectangle(r),
+        stroke_color=HexColor("283592"),
+        fill_color=HexColor("283592"),
+    ).layout(page, r)
+
+
+def main():
+    # create empty Document
+    pdf = Document()
+
+    # create empty Page
+    page = Page()
+
+    # add Page to Document
+    pdf.append_page(page)
+
+    # create PageLayout
+    layout: PageLayout = SingleColumnLayout(page)
+
+    # now we can call this method in the main method
+    add_gray_artwork_to_upper_right_corner(page)
+
+    # contact information
+    layout.add(
+        Paragraph("Your Company", font_color=HexColor("#6d64e8"), font_size=Decimal(20))
+    )
+
+    # We're going to add a qr code that links to our website.
+    # Later, we're going to add a remote go-to annotation
+    # (that's just PDF talk for "if you click the qr code, it will take you to our website")
+    # in order to be able to do that, we need its coordinates.
+    qr_code: LayoutElement = Barcode(
+        data="https://www.borbpdf.com",
+        width=Decimal(64),
+        height=Decimal(64),
+        type=BarcodeType.QR,
+    )
+
+    # now we can add this content to the table
+    layout.add(
+        FlexibleColumnWidthTable(number_of_columns=2, number_of_rows=1)
+        .add(qr_code)
+        .add(
+            Paragraph(
+                """
+            500 South Buena Vista Street
+            Burbank CA
+            91521-0991 USA
+            """,
+                padding_top=Decimal(12),
+                respect_newlines_in_text=True,
+                font_color=HexColor("#666666"),
+                font_size=Decimal(10),
+            )
+        )
+        .no_borders()
+    )
+
+    # let's add the remote go-to annotation
+    page.append_annotation(
+        RemoteGoToAnnotation(qr_code.get_bounding_box(), uri="https://www.borbpdf.com")
+    )
+
+    # title
+    layout.add(
+        Paragraph(
+            "Productbrochure", font_color=HexColor("#283592"), font_size=Decimal(34)
+        )
+    )
+
+    # subtitle
+    layout.add(
+        Paragraph(
+            "September 4th, 2021", font_color=HexColor("#e01b84"), font_size=Decimal(11)
+        )
+    )
+
+    layout.add(
+        Paragraph(
+            "Product Overview", font_color=HexColor("000000"), font_size=Decimal(21)
+        )
+    )
+
+    layout.add(
+        Paragraph(
+            """
+                        Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. 
+                        Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. 
+                        Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. 
+                        Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
+                        """
+        )
+    )
+
+    # table with image and key features
+    layout.add(
+        FixedColumnWidthTable(
+            number_of_rows=2,
+            number_of_columns=2,
+            column_widths=[Decimal(0.3), Decimal(0.7)],
+        )
+        .add(
+            TableCell(
+                Image(
+                    "https://www.att.com/catalog/en/skus/images/apple-iphone%2012-purple-450x350.png",
+                    width=Decimal(128),
+                    height=Decimal(128),
+                ),
+                row_span=2,
+            )
+        )
+        .add(
+            Paragraph(
+                "Key Features",
+                font_color=HexColor("e01b84"),
+                font="Helvetica-Bold",
+                padding_bottom=Decimal(10),
+            )
+        )
+        .add(
+            UnorderedList()
+            .add(
+                Paragraph(
+                    "Nam aliquet ex eget felis lobortis aliquet sit amet ut risus."
+                )
+            )
+            .add(
+                Paragraph(
+                    "Maecenas sit amet odio ut erat tincidunt consectetur accumsan ut nunc."
+                )
+            )
+            .add(Paragraph("Phasellus eget magna et justo malesuada fringilla."))
+            .add(
+                Paragraph(
+                    "Maecenas vitae dui ac nisi aliquam malesuada in consequat sapien."
+                )
+            )
+        )
+        .no_borders()
+    )
+
+    # add footer
+    add_colored_artwork_to_bottom_right_corner(page)
+
+
+if __name__ == "__main__":
+    main()
+```
+
+The final PDF should look somewhat like this:
+
+![enter image description here](chapter_009/img/snippet_024.png)
+
+
+## 9.4 Conclusion
+
+This section was all about wrapping up your knowledge with some practical examples.
+I hope you enjoyed working through the examples.
