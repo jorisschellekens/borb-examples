@@ -185,8 +185,115 @@ The final PDF should look somewhat like this:
 
 ![enter image description here](img/snippet_024.png)
 
+## 9.4 Creating a nonogram puzzle
 
-## 9.4 Conclusion
+Nonograms, also known as Hanjie, Paint by Numbers, Picross, Griddlers, and Pic-a-Pix, and by various other names, are picture logic puzzles in which cells in a grid must be colored or left blank according to numbers at the side of the grid to reveal a hidden picture. In this puzzle type, the numbers are a form of discrete tomography that measures how many unbroken lines of filled-in squares there are in any given row or column. For example, a clue of "4 8 3" would mean there are sets of four, eight, and three filled squares, in that order, with at least one blank square between successive sets.
+
+We're going to define the final nonogram as a piece of ASCII art:
+
+```python
+#!src/snippet_025.py
+```
+
+Now we need to turn this into a set of horizontal and vertical clues. 
+The following code does just that!
+
+```python
+#!src/snippet_026.py
+```
+
+For this PDF we're going to use a custom `Font`. Let's first download the `ttf`
+
+```python
+#!src/snippet_027.py
+```
+
+Now we can create a skeleton document containing our title and explanation blurb:
+
+```python
+#!src/snippet_028.py
+```
+
+We're going to represent the nonogram as a `Table`.
+The following code builds a `FixedColumnWidthTable` from the clues we defined earlier.
+
+We're going to start by defining a helper-method to build an empty `TableCell` object.
+
+```python
+#!src/snippet_029.py
+```
+
+And now we can get on with building the `Table`:
+
+```python
+#!src/snippet_030.py
+```
+
+Finally, we can store the `PDF`:
+
+```python
+#!src/snippet_031.py
+```
+
+That should look somewhat like this:
+
+![enter image description here](img/snippet_031.png)
+
+## 9.5 Building a working calculator inside a PDF
+
+We are going to create a method to add some geometric artwork to the upper right corner of a `Page`. This code is not really doing difficult things, it just deals with coordinates and math a bit. 
+
+```python
+#!src/snippet_032.py
+```
+
+Similarly, I want to add some geometric artwork to the bottom of the page to balance things out a bit. I'm going to write another separate method for that.
+
+```python
+#!src/snippet_033.py
+```
+
+Now we're going to create a method that adds the image of a calculator to our `Page`. Here we are using absolute layout, since we want to make absolutely sure that our `Image` is located at the same coordinates every time (even if we were to change the text around it).
+
+```python
+#!src/snippet_034.py
+```
+
+Next up we will be adding a lot of "buttons" (they are actually annotations with associated javascript actions). To make it a bit easier on ourselves we'll separate this logic into its own method.
+
+```python
+#!src/snippet_035.py
+```
+
+Now we are ready to add all the buttons, and have them call our main Javascript (which will be inserted later on).
+
+```python
+#!src/snippet_036.py
+```
+
+This part is easy, we add document level Javascript to our PDF. This script has everything in it to make our calculator actually work.
+
+```python
+#!src/snippet_037.py
+```
+
+In order to display the result of the calculations, we need to add a `TextField` that the JavaScript can modify.
+
+```python
+#!src/snippet_038.py
+```
+
+Now we can build our `Document`
+
+```python
+#!src/snippet_039.py
+```
+
+Look at the stunning PDF you made:
+
+![enter image description here](img/snippet_039.png)
+
+## 9.6 Conclusion
 
 This section was all about wrapping up your knowledge with some practical examples.
 I hope you enjoyed working through the examples.

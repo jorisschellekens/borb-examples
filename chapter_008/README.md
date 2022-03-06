@@ -183,15 +183,15 @@ A free copy of which can be found:
 - In the `borb` GitHub repository
 - On the Adobe website
 
-| Operator | Number of arguments | Type of arguments | Description |
-|----------|---------------------|-------------------|-------------|
-| b |
-| B |
-| b* |
-| B* |
-| BDC |
-| BI |
-| BMC |
+| Operator | Number of arguments | Type of arguments | Description                                                                                                                                                                                                                                                                                                                                                                                                   |
+|----------|---------------------|-------------------|---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
+| b | 0                   |                   | Close, fill, and stroke path using nonzero winding number rule                                                                                                                                                                                                                                                                                                                                                |
+| B | 0                   |                   | Fill and then stroke the path, using the nonzero winding number rule to determine the region to fill.                                                                                                                                                                                                                                                                                                         |
+| b* | 0                   |                   | Close, fill, and then stroke the path, using the even-odd rule to determine the region to fill.                                                                                                                                                                                                                                                                                                               |
+| B* | 0                   |                   | Fill and then stroke the path, using the even-odd rule to determine the region to fill.                                                                                                                                                                                                                                                                                                                       |
+| BDC | 2                   |                   | Begin a marked-content sequence with an associated property list, terminated by a balancing EMC operator. tag shall be a name object indicating the role or significance of the sequence. properties shall be either an inline dictionary containing the property list or a name object associated with it in the Properties subdictionary of the current resource dictionary (see 14.6.2, “Property Lists”). |
+| BI | 0                   |                   | Begin an inline image object.                                                                                                                                                                                                                                                                                                                                                                                 |
+| BMC | 1                   |                   | Begin a marked-content sequence terminated by a balancing **EMC** operator. tag shall be a name object indicating the role or significance of the sequence.                                                                                                                                                                                                                                                   |
 | BT |
 | BX |
 | c |
@@ -202,37 +202,37 @@ A free copy of which can be found:
 | d0 |
 | d1 |
 | Do |
-| DP |
-| EI |
-| EMC |
+| DP | 2                   |                   | Designate a marked-content point with an associated property list. tag shall be a name object indicating the role or significance of the point. properties shall be either an inline dictionary containing the property list or a name object associated with it in the Properties subdictionary of the current resource dictionary (see 14.6.2, “Property Lists”).                                           |
+| EI | 0                   |                   | End an inline image object.                                                                                                                                                                                                                                                                                                                                                                                   |
+| EMC | 0                   |                   | End a marked-content sequence begun by a **BMC** or **BDC** operator.                                                                                                                                                                                                                                                                                                                                         |
 | ET |
 | EX |
-| f |
-| F |
-| f* |
+| f | 0                   |                   | Fill the path, using the nonzero winding number rule to determine the region to fill (see 8.5.3.3.2, "Nonzero Winding Number Rule"). Any subpaths that are open shall be implicitly closed before being filled.                                                                                                                                                                                               |
+| F | 0                   |                   | Equivalent to **f**; included only for compatibility. Although PDF reader applications shall be able to accept this operator, PDF writer applications should use **f** instead.                                                                                                                                                                                                                               |
+| f* | 0                   |                   | Fill the path, using the even-odd rule to determine the region to fill (see 8.5.3.3.3, "Even-Odd Rule").                                                                                                                                                                                                                                                                                                      |
 | G |
 | g |
 | gs |
 | h |
 | i |
-| ID |
+| ID | 0                   |                   | Begin the image data for an inline image object.                                                                                                                                                                                                                                                                                                                                                              |
 | j |
 | J |
 | K |
 | k |
-| l |
-| m |
+| l | 2                   |                   | Append a straight line segment from the current point to the point (x, y). The new current point shall be (x, y).                                                                                                                                                                                                                                                                                             |
+| m | 2                   |                   | Begin a new subpath by moving the current point to coordinates (x, y), omitting any connecting line segment. If the previous path construction operator in the current path was also m, the new m overrides it; no vestige of the previous m operation remains in the path.                                                                                                                                   |
 | M |
-| MP |
-| n |
+| MP | 1                   |                   | Designate a marked-content point. tag shall be a name object indicating the role or significance of the point.                                                                                                                                                                                                                                                                                                |
+| n | 0                   |                   | End the path object without filling or stroking it. This operator shall be a path-painting no-op, used primarily for the side effect of changing the current clipping path (see 8.5.4, "Clipping Path Operators").                                                                                                                                                                                            |
 | q |
 | Q |
 | re |
 | RG |
 | rg |
 | ri |
-| s |
-| S |
+| s | 0                   |                   | Close and stroke the path.                                                                                                                                                                                                                                                                                                                                                                                    |
+| S | 0                   |                   | Stroke the path.                                                                                                                                                                                                                                                                                                                                                                                              |
 | SC |
 | sc |
 | SCN |
@@ -283,15 +283,43 @@ In this example, you'll be creating a PDF from scratch, containing "Hello World!
 
 ## 8.6 Fonts in PDF
 
-:mega: todo :mega:
+A font shall be represented in PDF as a dictionary specifying the type of font, its PostScript name, its encoding,
+and information that can be used to provide a substitute when the font program is not available. Optionally, the
+font program may be embedded as a stream object in the PDF file.
 
 ### 8.6.1 Simple fonts
 
-:mega: todo :mega:
+There are several types of simple fonts, all of which have these properties:
+- Glyphs in the font shall be selected by single-byte character codes obtained from a string that is shown by
+the text-showing operators. Logically, these codes index into a table of 256 glyphs; the mapping from
+codes to glyphs is called the font’s encoding. Under some circumstances, the encoding may be altered by
+means described in 9.6.6, "Character Encoding".
+- Each glyph shall have a single set of metrics, including a horizontal displacement or width, as described in
+9.2.4, "Glyph Positioning and Metrics"; that is, simple fonts support only horizontal writing mode.
+- Except for Type 0 fonts, Type 3 fonts in non-Tagged PDF documents, and certain standard Type 1 fonts,
+every font dictionary shall contain a subsidiary dictionary, the font descriptor, containing font-wide metrics
+and other attributes of the font; see 9.8, "Font Descriptors". Among those attributes is an optional font file
+stream containing the font program.
 
 ### 8.6.2 Composite fonts
 
-:mega: todo :mega:
+A composite font, also called a Type 0 font, is one whose glyphs are obtained from a fontlike object called a
+CIDFont. A composite font shall be represented by a font dictionary whose Subtype value is Type0. The Type
+0 font is known as the root font, and its associated CIDFont is called its descendant.
+
+**NOTE 1:**
+Composite fonts in PDF are analogous to composite fonts in PostScript but with some limitations. In particular,
+PDF requires that the character encoding be defined by a CMap, which is only one of several encoding
+methods available in PostScript. Also, PostScript allows a Type 0 font to have multiple descendants, which
+might also be Type 0 fonts. PDF supports only a single descendant, which shall be a CIDFont.
+
+When the current font is composite, the text-showing operators shall behave differently than with simple fonts.
+For simple fonts, each byte of a string to be shown selects one glyph, whereas for composite fonts, a sequence
+of one or more bytes are decoded to select a glyph from the descendant CIDFont.
+
+**NOTE 2:**
+This facility supports the use of very large character sets, such as those for the Chinese, Japanese, and
+Korean languages. It also simplifies the organization of fonts that have complex encoding requirements.
 
 <div style="page-break-before: always;"></div>
 

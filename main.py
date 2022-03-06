@@ -2,6 +2,9 @@ import typing
 import re
 from pathlib import Path
 
+#
+# IMAGES
+#
 
 def _is_image_decl(s: str) -> bool:
     return re.compile("!\[.*\]\(.*\)").match(s) is not None
@@ -34,6 +37,9 @@ def _update_image_decl(root:Path, ls: typing.List[str]) -> typing.List[str]:
             ls_out.append(l)
     return ls_out
 
+#
+# PYTHON CODE SNIPPETS
+#
 
 def _update_python_insert_decls(root: Path, ls: typing.List[str]) -> typing.List[str]:
     ls_out: typing.List[str] = []
@@ -75,6 +81,9 @@ def _update_python_insert_decls(root: Path, ls: typing.List[str]) -> typing.List
     # return
     return ls_out
 
+#
+# TABLE OF CONTENTS
+#
 
 def _build_table_of_contents(ls: typing.List[str]) -> typing.List[str]:
 
@@ -111,6 +120,10 @@ def _build_table_of_contents(ls: typing.List[str]) -> typing.List[str]:
 
     # return
     return toc_lines
+
+#
+# MAIN
+#
 
 def concat_all_readmes():
     separate_readmes: typing.List[str] = ["chapter_001/README.md",

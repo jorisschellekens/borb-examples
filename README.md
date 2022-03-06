@@ -158,7 +158,9 @@
   9.1 [Building a sudoku puzzle](#91-building-a-sudoku-puzzle)  
   9.2 [Building a realistic invoice](#92-building-a-realistic-invoice)  
   9.3 [Creating a stunning flyer](#93-creating-a-stunning-flyer)  
-  9.4 [Conclusion](#94-conclusion)  
+  9.4 [Creating a nonogram puzzle](#94-creating-a-nonogram-puzzle)  
+  9.5 [Building a working calculator inside a PDF](#95-building-a-working-calculator-inside-a-pdf)  
+  9.6 [Conclusion](#96-conclusion)  
 
 <div style="page-break-before: always;"></div>
 
@@ -8489,15 +8491,15 @@ A free copy of which can be found:
 - In the `borb` GitHub repository
 - On the Adobe website
 
-| Operator | Number of arguments | Type of arguments | Description |
-|----------|---------------------|-------------------|-------------|
-| b |
-| B |
-| b* |
-| B* |
-| BDC |
-| BI |
-| BMC |
+| Operator | Number of arguments | Type of arguments | Description                                                                                                                                                                                                                                                                                                                                                                                                   |
+|----------|---------------------|-------------------|---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
+| b | 0                   |                   | Close, fill, and stroke path using nonzero winding number rule                                                                                                                                                                                                                                                                                                                                                |
+| B | 0                   |                   | Fill and then stroke the path, using the nonzero winding number rule to determine the region to fill.                                                                                                                                                                                                                                                                                                         |
+| b* | 0                   |                   | Close, fill, and then stroke the path, using the even-odd rule to determine the region to fill.                                                                                                                                                                                                                                                                                                               |
+| B* | 0                   |                   | Fill and then stroke the path, using the even-odd rule to determine the region to fill.                                                                                                                                                                                                                                                                                                                       |
+| BDC | 2                   |                   | Begin a marked-content sequence with an associated property list, terminated by a balancing EMC operator. tag shall be a name object indicating the role or significance of the sequence. properties shall be either an inline dictionary containing the property list or a name object associated with it in the Properties subdictionary of the current resource dictionary (see 14.6.2, “Property Lists”). |
+| BI | 0                   |                   | Begin an inline image object.                                                                                                                                                                                                                                                                                                                                                                                 |
+| BMC | 1                   |                   | Begin a marked-content sequence terminated by a balancing **EMC** operator. tag shall be a name object indicating the role or significance of the sequence.                                                                                                                                                                                                                                                   |
 | BT |
 | BX |
 | c |
@@ -8508,37 +8510,37 @@ A free copy of which can be found:
 | d0 |
 | d1 |
 | Do |
-| DP |
-| EI |
-| EMC |
+| DP | 2                   |                   | Designate a marked-content point with an associated property list. tag shall be a name object indicating the role or significance of the point. properties shall be either an inline dictionary containing the property list or a name object associated with it in the Properties subdictionary of the current resource dictionary (see 14.6.2, “Property Lists”).                                           |
+| EI | 0                   |                   | End an inline image object.                                                                                                                                                                                                                                                                                                                                                                                   |
+| EMC | 0                   |                   | End a marked-content sequence begun by a **BMC** or **BDC** operator.                                                                                                                                                                                                                                                                                                                                         |
 | ET |
 | EX |
-| f |
-| F |
-| f* |
+| f | 0                   |                   | Fill the path, using the nonzero winding number rule to determine the region to fill (see 8.5.3.3.2, "Nonzero Winding Number Rule"). Any subpaths that are open shall be implicitly closed before being filled.                                                                                                                                                                                               |
+| F | 0                   |                   | Equivalent to **f**; included only for compatibility. Although PDF reader applications shall be able to accept this operator, PDF writer applications should use **f** instead.                                                                                                                                                                                                                               |
+| f* | 0                   |                   | Fill the path, using the even-odd rule to determine the region to fill (see 8.5.3.3.3, "Even-Odd Rule").                                                                                                                                                                                                                                                                                                      |
 | G |
 | g |
 | gs |
 | h |
 | i |
-| ID |
+| ID | 0                   |                   | Begin the image data for an inline image object.                                                                                                                                                                                                                                                                                                                                                              |
 | j |
 | J |
 | K |
 | k |
-| l |
-| m |
+| l | 2                   |                   | Append a straight line segment from the current point to the point (x, y). The new current point shall be (x, y).                                                                                                                                                                                                                                                                                             |
+| m | 2                   |                   | Begin a new subpath by moving the current point to coordinates (x, y), omitting any connecting line segment. If the previous path construction operator in the current path was also m, the new m overrides it; no vestige of the previous m operation remains in the path.                                                                                                                                   |
 | M |
-| MP |
-| n |
+| MP | 1                   |                   | Designate a marked-content point. tag shall be a name object indicating the role or significance of the point.                                                                                                                                                                                                                                                                                                |
+| n | 0                   |                   | End the path object without filling or stroking it. This operator shall be a path-painting no-op, used primarily for the side effect of changing the current clipping path (see 8.5.4, "Clipping Path Operators").                                                                                                                                                                                            |
 | q |
 | Q |
 | re |
 | RG |
 | rg |
 | ri |
-| s |
-| S |
+| s | 0                   |                   | Close and stroke the path.                                                                                                                                                                                                                                                                                                                                                                                    |
+| S | 0                   |                   | Stroke the path.                                                                                                                                                                                                                                                                                                                                                                                              |
 | SC |
 | sc |
 | SCN |
@@ -8589,15 +8591,43 @@ In this example, you'll be creating a PDF from scratch, containing "Hello World!
 
 ## 8.6 Fonts in PDF
 
-:mega: todo :mega:
+A font shall be represented in PDF as a dictionary specifying the type of font, its PostScript name, its encoding,
+and information that can be used to provide a substitute when the font program is not available. Optionally, the
+font program may be embedded as a stream object in the PDF file.
 
 ### 8.6.1 Simple fonts
 
-:mega: todo :mega:
+There are several types of simple fonts, all of which have these properties:
+- Glyphs in the font shall be selected by single-byte character codes obtained from a string that is shown by
+the text-showing operators. Logically, these codes index into a table of 256 glyphs; the mapping from
+codes to glyphs is called the font’s encoding. Under some circumstances, the encoding may be altered by
+means described in 9.6.6, "Character Encoding".
+- Each glyph shall have a single set of metrics, including a horizontal displacement or width, as described in
+9.2.4, "Glyph Positioning and Metrics"; that is, simple fonts support only horizontal writing mode.
+- Except for Type 0 fonts, Type 3 fonts in non-Tagged PDF documents, and certain standard Type 1 fonts,
+every font dictionary shall contain a subsidiary dictionary, the font descriptor, containing font-wide metrics
+and other attributes of the font; see 9.8, "Font Descriptors". Among those attributes is an optional font file
+stream containing the font program.
 
 ### 8.6.2 Composite fonts
 
-:mega: todo :mega:
+A composite font, also called a Type 0 font, is one whose glyphs are obtained from a fontlike object called a
+CIDFont. A composite font shall be represented by a font dictionary whose Subtype value is Type0. The Type
+0 font is known as the root font, and its associated CIDFont is called its descendant.
+
+**NOTE 1:**
+Composite fonts in PDF are analogous to composite fonts in PostScript but with some limitations. In particular,
+PDF requires that the character encoding be defined by a CMap, which is only one of several encoding
+methods available in PostScript. Also, PostScript allows a Type 0 font to have multiple descendants, which
+might also be Type 0 fonts. PDF supports only a single descendant, which shall be a CIDFont.
+
+When the current font is composite, the text-showing operators shall behave differently than with simple fonts.
+For simple fonts, each byte of a string to be shown selects one glyph, whereas for composite fonts, a sequence
+of one or more bytes are decoded to select a glyph from the descendant CIDFont.
+
+**NOTE 2:**
+This facility supports the use of very large character sets, such as those for the Chinese, Japanese, and
+Korean languages. It also simplifies the organization of fonts that have complex encoding requirements.
 
 <div style="page-break-before: always;"></div>
 
@@ -11364,8 +11394,1402 @@ The final PDF should look somewhat like this:
 
 ![enter image description here](chapter_009/img/snippet_024.png)
 
+## 9.4 Creating a nonogram puzzle
 
-## 9.4 Conclusion
+Nonograms, also known as Hanjie, Paint by Numbers, Picross, Griddlers, and Pic-a-Pix, and by various other names, are picture logic puzzles in which cells in a grid must be colored or left blank according to numbers at the side of the grid to reveal a hidden picture. In this puzzle type, the numbers are a form of discrete tomography that measures how many unbroken lines of filled-in squares there are in any given row or column. For example, a clue of "4 8 3" would mean there are sets of four, eight, and three filled squares, in that order, with at least one blank square between successive sets.
+
+We're going to define the final nonogram as a piece of ASCII art:
+
+```python
+#!chapter_009/src/snippet_025.py
+ascii_art: str = """
+■...........■..
+■...........■..
+■■■.■■■.■■■.■■■
+■.■.■.■.■...■.■
+■■■.■■■.■...■■■
+"""
+
+
+def main():
+    pass
+
+
+if __name__ == "__main__":
+    main()
+```
+
+Now we need to turn this into a set of horizontal and vertical clues. 
+The following code does just that!
+
+```python
+#!chapter_009/src/snippet_026.py
+# new imports
+import typing
+
+ascii_art: str = """
+■...........■..
+■...........■..
+■■■.■■■.■■■.■■■
+■.■.■.■.■...■.■
+■■■.■■■.■...■■■
+"""
+
+
+def calculate_horizontal_and_vertical_clues():
+
+    # trim
+    while ascii_art[0] == "\n":
+        ascii_art = ascii_art[1:]
+    while ascii_art[-1] == "\n":
+        ascii_art = ascii_art[:-1]
+
+    # horizontal clues
+    horizontal_clues: typing.List[typing.List[int]] = []
+    for row in ascii_art.split("\n"):
+        prev_char: str = ""
+        prev_count: int = 0
+        row_clues: typing.List[int] = []
+        for c in row:
+            if c == prev_char:
+                prev_count += 1
+            else:
+                if prev_char == "■":
+                    row_clues.append(prev_count)
+                prev_char = c
+                prev_count = 1
+        if prev_char == "■":
+            row_clues.append(prev_count)
+        horizontal_clues.append(row_clues)
+    number_of_rows: int = len(horizontal_clues)
+
+    # vertical clues
+    number_of_cols: int = int(len(ascii_art) / number_of_rows)
+    vertical_clues: typing.List[typing.List[int]] = []
+    for col_index in range(0, number_of_cols):
+        col = [ascii_art.split("\n")[i][col_index] for i in range(0, number_of_rows)]
+        prev_char: str = ""
+        prev_count: int = 0
+        col_clues: typing.List[int] = []
+        for c in col:
+            if c == prev_char:
+                prev_count += 1
+            else:
+                if prev_char == "■":
+                    col_clues.append(prev_count)
+                prev_char = c
+                prev_count = 1
+        if prev_char == "■":
+            col_clues.append(prev_count)
+        vertical_clues.append(col_clues)
+
+    # padding for horizontal_clues
+    max_number_of_horizontal_clues: int = max([len(x) for x in horizontal_clues])
+    for row in horizontal_clues:
+        while len(row) < max_number_of_horizontal_clues:
+            row.insert(0, None)
+
+    # padding for vertical_clues
+    max_number_of_vertical_clues: int = max([len(x) for x in vertical_clues])
+    for col in vertical_clues:
+        while len(col) < max_number_of_vertical_clues:
+            col.insert(0, None)
+
+    # return
+    return horizontal_clues, vertical_clues
+
+
+def main():
+    pass
+
+
+if __name__ == "__main__":
+    main()
+```
+
+For this PDF we're going to use a custom `Font`. Let's first download the `ttf`
+
+```python
+#!chapter_009/src/snippet_027.py
+from borb.pdf.canvas.font.simple_font.true_type_font import TrueTypeFont
+from borb.pdf.canvas.font.font import Font
+
+# Download Font
+import requests
+
+with open("IndieFlower-Regular.ttf", "wb") as ffh:
+    ffh.write(
+        requests.get(
+            "https://github.com/google/fonts/blob/main/ofl/indieflower/IndieFlower-Regular.ttf?raw=true",
+            allow_redirects=True,
+        ).content
+    )
+```
+
+Now we can create a skeleton document containing our title and explanation blurb:
+
+```python
+#!chapter_009/src/snippet_028.py
+import typing
+import requests
+from borb.pdf.canvas.font.simple_font.true_type_font import TrueTypeFont
+from borb.pdf.canvas.font.font import Font
+
+# new imports
+from borb.pdf.document.document import Document
+from borb.pdf.page.page import Page
+from borb.pdf.pdf import PDF
+from borb.pdf.canvas.layout.page_layout.multi_column_layout import SingleColumnLayout
+from borb.pdf.canvas.layout.page_layout.page_layout import PageLayout
+from borb.pdf.canvas.layout.text.paragraph import Paragraph
+from borb.pdf.canvas.color.color import HexColor
+
+from pathlib import Path
+from decimal import Decimal
+
+ascii_art: str = """
+■...........■..
+■...........■..
+■■■.■■■.■■■.■■■
+■.■.■.■.■...■.■
+■■■.■■■.■...■■■
+"""
+
+
+def calculate_horizontal_and_vertical_clues():
+
+    # trim
+    while ascii_art[0] == "\n":
+        ascii_art = ascii_art[1:]
+    while ascii_art[-1] == "\n":
+        ascii_art = ascii_art[:-1]
+
+    # horizontal clues
+    horizontal_clues: typing.List[typing.List[int]] = []
+    for row in ascii_art.split("\n"):
+        prev_char: str = ""
+        prev_count: int = 0
+        row_clues: typing.List[int] = []
+        for c in row:
+            if c == prev_char:
+                prev_count += 1
+            else:
+                if prev_char == "■":
+                    row_clues.append(prev_count)
+                prev_char = c
+                prev_count = 1
+        if prev_char == "■":
+            row_clues.append(prev_count)
+        horizontal_clues.append(row_clues)
+    number_of_rows: int = len(horizontal_clues)
+
+    # vertical clues
+    number_of_cols: int = int(len(ascii_art) / number_of_rows)
+    vertical_clues: typing.List[typing.List[int]] = []
+    for col_index in range(0, number_of_cols):
+        col = [ascii_art.split("\n")[i][col_index] for i in range(0, number_of_rows)]
+        prev_char: str = ""
+        prev_count: int = 0
+        col_clues: typing.List[int] = []
+        for c in col:
+            if c == prev_char:
+                prev_count += 1
+            else:
+                if prev_char == "■":
+                    col_clues.append(prev_count)
+                prev_char = c
+                prev_count = 1
+        if prev_char == "■":
+            col_clues.append(prev_count)
+        vertical_clues.append(col_clues)
+
+    # padding for horizontal_clues
+    max_number_of_horizontal_clues: int = max([len(x) for x in horizontal_clues])
+    for row in horizontal_clues:
+        while len(row) < max_number_of_horizontal_clues:
+            row.insert(0, None)
+
+    # padding for vertical_clues
+    max_number_of_vertical_clues: int = max([len(x) for x in vertical_clues])
+    for col in vertical_clues:
+        while len(col) < max_number_of_vertical_clues:
+            col.insert(0, None)
+
+    # return
+    return horizontal_clues, vertical_clues
+
+
+def download_custom_font():
+    with open("IndieFlower-Regular.ttf", "wb") as ffh:
+        ffh.write(
+            requests.get(
+                "https://github.com/google/fonts/blob/main/ofl/indieflower/IndieFlower-Regular.ttf?raw=true",
+                allow_redirects=True,
+            ).content
+        )
+
+
+def main():
+    calculate_horizontal_and_vertical_clues()
+    download_custom_font()
+
+    # create empty Document
+    pdf = Document()
+
+    # create empty Page
+    page = Page()
+
+    # add Page to Document
+    pdf.append_page(page)
+
+    # create PageLayout
+    layout: PageLayout = SingleColumnLayout(page)
+
+    # add title
+    layout.add(
+        Paragraph(
+            "Nonogram",
+            font_color=HexColor("#19647E"),
+            font=TrueTypeFont.true_type_font_from_file(Path("IndieFlower-Regular.ttf")),
+            font_size=Decimal(20),
+        )
+    )
+
+    # add explanation
+    layout.add(
+        Paragraph(
+            """
+    Nonograms, also known as Hanjie, Paint by Numbers, Picross, Griddlers, and Pic-a-Pix, and by various other names, 
+    are picture logic puzzles in which cells in a grid must be colored or left blank according to numbers at the side of the grid to reveal a hidden picture. 
+    In this puzzle type, the numbers are a form of discrete tomography that measures how many unbroken lines of filled-in squares there are in any given row or column. 
+    For example, a clue of "4 8 3" would mean there are sets of four, eight, and three filled squares, in that order, with at least one blank square between successive sets.
+                        """,
+            font_color=HexColor("#28AFB0"),
+        )
+    )
+
+
+if __name__ == "__main__":
+    main()
+```
+
+We're going to represent the nonogram as a `Table`.
+The following code builds a `FixedColumnWidthTable` from the clues we defined earlier.
+
+We're going to start by defining a helper-method to build an empty `TableCell` object.
+
+```python
+#!chapter_009/src/snippet_029.py
+# new imports
+from borb.pdf.canvas.layout.table.table import TableCell
+
+
+def empty_cell_without_borders():
+    return TableCell(
+        Paragraph(" "),
+        border_top=False,
+        border_right=False,
+        border_bottom=False,
+        border_left=False,
+    )
+```
+
+And now we can get on with building the `Table`:
+
+```python
+#!chapter_009/src/snippet_030.py
+import typing
+import requests
+from borb.pdf.canvas.font.simple_font.true_type_font import TrueTypeFont
+from borb.pdf.canvas.font.font import Font
+from borb.pdf.document.document import Document
+from borb.pdf.page.page import Page
+from borb.pdf.pdf import PDF
+from borb.pdf.canvas.layout.page_layout.multi_column_layout import SingleColumnLayout
+from borb.pdf.canvas.layout.page_layout.page_layout import PageLayout
+from borb.pdf.canvas.layout.text.paragraph import Paragraph
+from borb.pdf.canvas.color.color import HexColor
+from borb.pdf.canvas.layout.table.table import TableCell
+
+# new imports
+from borb.pdf.canvas.layout.table.fixed_column_width_table import FixedColumnWidthTable
+from borb.pdf.canvas.layout.layout_element import Alignment
+
+from pathlib import Path
+from decimal import Decimal
+
+ascii_art: str = """
+■...........■..
+■...........■..
+■■■.■■■.■■■.■■■
+■.■.■.■.■...■.■
+■■■.■■■.■...■■■
+"""
+
+
+def calculate_horizontal_and_vertical_clues():
+
+    # trim
+    global ascii_art
+    while ascii_art[0] == "\n":
+        ascii_art = ascii_art[1:]
+    while ascii_art[-1] == "\n":
+        ascii_art = ascii_art[:-1]
+
+    # horizontal clues
+    horizontal_clues: typing.List[typing.List[int]] = []
+    for row in ascii_art.split("\n"):
+        prev_char: str = ""
+        prev_count: int = 0
+        row_clues: typing.List[int] = []
+        for c in row:
+            if c == prev_char:
+                prev_count += 1
+            else:
+                if prev_char == "■":
+                    row_clues.append(prev_count)
+                prev_char = c
+                prev_count = 1
+        if prev_char == "■":
+            row_clues.append(prev_count)
+        horizontal_clues.append(row_clues)
+    number_of_rows: int = len(horizontal_clues)
+
+    # vertical clues
+    number_of_cols: int = int(len(ascii_art) / number_of_rows)
+    vertical_clues: typing.List[typing.List[int]] = []
+    for col_index in range(0, number_of_cols):
+        col = [ascii_art.split("\n")[i][col_index] for i in range(0, number_of_rows)]
+        prev_char: str = ""
+        prev_count: int = 0
+        col_clues: typing.List[int] = []
+        for c in col:
+            if c == prev_char:
+                prev_count += 1
+            else:
+                if prev_char == "■":
+                    col_clues.append(prev_count)
+                prev_char = c
+                prev_count = 1
+        if prev_char == "■":
+            col_clues.append(prev_count)
+        vertical_clues.append(col_clues)
+
+    # padding for horizontal_clues
+    max_number_of_horizontal_clues: int = max([len(x) for x in horizontal_clues])
+    for row in horizontal_clues:
+        while len(row) < max_number_of_horizontal_clues:
+            row.insert(0, None)
+
+    # padding for vertical_clues
+    max_number_of_vertical_clues: int = max([len(x) for x in vertical_clues])
+    for col in vertical_clues:
+        while len(col) < max_number_of_vertical_clues:
+            col.insert(0, None)
+
+    # return
+    return (
+        horizontal_clues,
+        max_number_of_horizontal_clues,
+        vertical_clues,
+        max_number_of_vertical_clues,
+    )
+
+
+def download_custom_font():
+    with open("IndieFlower-Regular.ttf", "wb") as ffh:
+        ffh.write(
+            requests.get(
+                "https://github.com/google/fonts/blob/main/ofl/indieflower/IndieFlower-Regular.ttf?raw=true",
+                allow_redirects=True,
+            ).content
+        )
+
+
+def empty_cell_without_borders():
+    return TableCell(
+        Paragraph(" "),
+        border_top=False,
+        border_right=False,
+        border_bottom=False,
+        border_left=False,
+    )
+
+
+def main():
+    (
+        horizontal_clues,
+        max_number_of_horizontal_clues,
+        vertical_clues,
+        max_number_of_vertical_clues,
+    ) = calculate_horizontal_and_vertical_clues()
+
+    # number_of_rows, number_of_cols
+    number_of_rows: int = len(horizontal_clues)
+    number_of_cols: int = int(len(ascii_art) / number_of_rows)
+
+    download_custom_font()
+
+    # create empty Document
+    pdf = Document()
+
+    # create empty Page
+    page = Page()
+
+    # add Page to Document
+    pdf.append_page(page)
+
+    # create PageLayout
+    layout: PageLayout = SingleColumnLayout(page)
+
+    # add title
+    layout.add(
+        Paragraph(
+            "Nonogram",
+            font_color=HexColor("#19647E"),
+            font=TrueTypeFont.true_type_font_from_file(Path("IndieFlower-Regular.ttf")),
+            font_size=Decimal(20),
+        )
+    )
+
+    # add explanation
+    layout.add(
+        Paragraph(
+            """
+    Nonograms, also known as Hanjie, Paint by Numbers, Picross, Griddlers, and Pic-a-Pix, and by various other names, 
+    are picture logic puzzles in which cells in a grid must be colored or left blank according to numbers at the side of the grid to reveal a hidden picture. 
+    In this puzzle type, the numbers are a form of discrete tomography that measures how many unbroken lines of filled-in squares there are in any given row or column. 
+    For example, a clue of "4 8 3" would mean there are sets of four, eight, and three filled squares, in that order, with at least one blank square between successive sets.
+                        """,
+            font_color=HexColor("#28AFB0"),
+        )
+    )
+
+    # build table to represent nonogram
+    table: FixedColumnWidthTable = FixedColumnWidthTable(
+        number_of_rows=max_number_of_vertical_clues + number_of_rows,
+        number_of_columns=max_number_of_horizontal_clues + number_of_cols,
+    )
+
+    for i in range(0, max_number_of_vertical_clues):
+        for _ in range(0, max_number_of_horizontal_clues):
+            table.add(empty_cell_without_borders())
+        for j in range(0, len(vertical_clues)):
+            if vertical_clues[j][i] is None:
+                table.add(empty_cell_without_borders())
+            else:
+                table.add(
+                    TableCell(
+                        Paragraph(
+                            str(vertical_clues[j][i]),
+                            horizontal_alignment=Alignment.CENTERED,
+                        ),
+                        border_top=False,
+                        border_right=False,
+                        border_bottom=False,
+                        border_left=False,
+                    )
+                )
+
+    for i in range(0, len(horizontal_clues)):
+        for j in horizontal_clues[i]:
+            if j is None:
+                table.add(empty_cell_without_borders())
+            else:
+                table.add(
+                    TableCell(
+                        Paragraph(str(j), horizontal_alignment=Alignment.CENTERED),
+                        border_top=False,
+                        border_right=False,
+                        border_bottom=False,
+                        border_left=False,
+                    )
+                )
+        for _ in range(0, number_of_cols):
+            table.add(Paragraph(" "))
+
+    table.set_padding_on_all_cells(Decimal(2), Decimal(2), Decimal(2), Decimal(2))
+
+    # add Table
+    layout.add(table)
+
+
+if __name__ == "__main__":
+    main()
+```
+
+Finally, we can store the `PDF`:
+
+```python
+#!chapter_009/src/snippet_031.py
+import typing
+import requests
+from borb.pdf.canvas.font.simple_font.true_type_font import TrueTypeFont
+from borb.pdf.canvas.font.font import Font
+from borb.pdf.document.document import Document
+from borb.pdf.page.page import Page
+from borb.pdf.pdf import PDF
+from borb.pdf.canvas.layout.page_layout.multi_column_layout import SingleColumnLayout
+from borb.pdf.canvas.layout.page_layout.page_layout import PageLayout
+from borb.pdf.canvas.layout.text.paragraph import Paragraph
+from borb.pdf.canvas.color.color import HexColor
+from borb.pdf.canvas.layout.table.table import TableCell
+
+# new imports
+from borb.pdf.canvas.layout.table.fixed_column_width_table import FixedColumnWidthTable
+from borb.pdf.canvas.layout.layout_element import Alignment
+
+from pathlib import Path
+from decimal import Decimal
+
+ascii_art: str = """
+■...........■..
+■...........■..
+■■■.■■■.■■■.■■■
+■.■.■.■.■...■.■
+■■■.■■■.■...■■■
+"""
+
+
+def calculate_horizontal_and_vertical_clues():
+
+    # trim
+    global ascii_art
+    while ascii_art[0] == "\n":
+        ascii_art = ascii_art[1:]
+    while ascii_art[-1] == "\n":
+        ascii_art = ascii_art[:-1]
+
+    # horizontal clues
+    horizontal_clues: typing.List[typing.List[int]] = []
+    for row in ascii_art.split("\n"):
+        prev_char: str = ""
+        prev_count: int = 0
+        row_clues: typing.List[int] = []
+        for c in row:
+            if c == prev_char:
+                prev_count += 1
+            else:
+                if prev_char == "■":
+                    row_clues.append(prev_count)
+                prev_char = c
+                prev_count = 1
+        if prev_char == "■":
+            row_clues.append(prev_count)
+        horizontal_clues.append(row_clues)
+    number_of_rows: int = len(horizontal_clues)
+
+    # vertical clues
+    number_of_cols: int = int(len(ascii_art) / number_of_rows)
+    vertical_clues: typing.List[typing.List[int]] = []
+    for col_index in range(0, number_of_cols):
+        col = [ascii_art.split("\n")[i][col_index] for i in range(0, number_of_rows)]
+        prev_char: str = ""
+        prev_count: int = 0
+        col_clues: typing.List[int] = []
+        for c in col:
+            if c == prev_char:
+                prev_count += 1
+            else:
+                if prev_char == "■":
+                    col_clues.append(prev_count)
+                prev_char = c
+                prev_count = 1
+        if prev_char == "■":
+            col_clues.append(prev_count)
+        vertical_clues.append(col_clues)
+
+    # padding for horizontal_clues
+    max_number_of_horizontal_clues: int = max([len(x) for x in horizontal_clues])
+    for row in horizontal_clues:
+        while len(row) < max_number_of_horizontal_clues:
+            row.insert(0, None)
+
+    # padding for vertical_clues
+    max_number_of_vertical_clues: int = max([len(x) for x in vertical_clues])
+    for col in vertical_clues:
+        while len(col) < max_number_of_vertical_clues:
+            col.insert(0, None)
+
+    # return
+    return (
+        horizontal_clues,
+        max_number_of_horizontal_clues,
+        vertical_clues,
+        max_number_of_vertical_clues,
+    )
+
+
+def download_custom_font():
+    with open("IndieFlower-Regular.ttf", "wb") as ffh:
+        ffh.write(
+            requests.get(
+                "https://github.com/google/fonts/blob/main/ofl/indieflower/IndieFlower-Regular.ttf?raw=true",
+                allow_redirects=True,
+            ).content
+        )
+
+
+def empty_cell_without_borders():
+    return TableCell(
+        Paragraph(" "),
+        border_top=False,
+        border_right=False,
+        border_bottom=False,
+        border_left=False,
+    )
+
+
+def main():
+    (
+        horizontal_clues,
+        max_number_of_horizontal_clues,
+        vertical_clues,
+        max_number_of_vertical_clues,
+    ) = calculate_horizontal_and_vertical_clues()
+
+    # number_of_rows, number_of_cols
+    number_of_rows: int = len(horizontal_clues)
+    number_of_cols: int = int(len(ascii_art) / number_of_rows)
+
+    download_custom_font()
+
+    # create empty Document
+    pdf = Document()
+
+    # create empty Page
+    page = Page()
+
+    # add Page to Document
+    pdf.append_page(page)
+
+    # create PageLayout
+    layout: PageLayout = SingleColumnLayout(page)
+
+    # add title
+    layout.add(
+        Paragraph(
+            "Nonogram",
+            font_color=HexColor("#19647E"),
+            font=TrueTypeFont.true_type_font_from_file(Path("IndieFlower-Regular.ttf")),
+            font_size=Decimal(20),
+        )
+    )
+
+    # add explanation
+    layout.add(
+        Paragraph(
+            """
+    Nonograms, also known as Hanjie, Paint by Numbers, Picross, Griddlers, and Pic-a-Pix, and by various other names, 
+    are picture logic puzzles in which cells in a grid must be colored or left blank according to numbers at the side of the grid to reveal a hidden picture. 
+    In this puzzle type, the numbers are a form of discrete tomography that measures how many unbroken lines of filled-in squares there are in any given row or column. 
+    For example, a clue of "4 8 3" would mean there are sets of four, eight, and three filled squares, in that order, with at least one blank square between successive sets.
+                        """,
+            font_color=HexColor("#28AFB0"),
+        )
+    )
+
+    # build table to represent nonogram
+    table: FixedColumnWidthTable = FixedColumnWidthTable(
+        number_of_rows=max_number_of_vertical_clues + number_of_rows,
+        number_of_columns=max_number_of_horizontal_clues + number_of_cols,
+    )
+
+    for i in range(0, max_number_of_vertical_clues):
+        for _ in range(0, max_number_of_horizontal_clues):
+            table.add(empty_cell_without_borders())
+        for j in range(0, len(vertical_clues)):
+            if vertical_clues[j][i] is None:
+                table.add(empty_cell_without_borders())
+            else:
+                table.add(
+                    TableCell(
+                        Paragraph(
+                            str(vertical_clues[j][i]),
+                            horizontal_alignment=Alignment.CENTERED,
+                        ),
+                        border_top=False,
+                        border_right=False,
+                        border_bottom=False,
+                        border_left=False,
+                    )
+                )
+
+    for i in range(0, len(horizontal_clues)):
+        for j in horizontal_clues[i]:
+            if j is None:
+                table.add(empty_cell_without_borders())
+            else:
+                table.add(
+                    TableCell(
+                        Paragraph(str(j), horizontal_alignment=Alignment.CENTERED),
+                        border_top=False,
+                        border_right=False,
+                        border_bottom=False,
+                        border_left=False,
+                    )
+                )
+        for _ in range(0, number_of_cols):
+            table.add(Paragraph(" "))
+
+    table.set_padding_on_all_cells(Decimal(2), Decimal(2), Decimal(2), Decimal(2))
+
+    # add Table
+    layout.add(table)
+
+    # write Document
+    with open("output.pdf", "wb") as pdf_file_handle:
+        PDF.dumps(pdf_file_handle, pdf)
+
+
+if __name__ == "__main__":
+    main()
+```
+
+That should look somewhat like this:
+
+![enter image description here](chapter_009/img/snippet_031.png)
+
+## 9.5 Building a working calculator inside a PDF
+
+We are going to create a method to add some geometric artwork to the upper right corner of a `Page`. This code is not really doing difficult things, it just deals with coordinates and math a bit. 
+
+```python
+#!chapter_009/src/snippet_032.py
+# new imports
+from borb.pdf.canvas.layout.shape.shape import Shape
+from decimal import Decimal
+from borb.pdf.canvas.color.color import HexColor, X11Color
+from borb.pdf.canvas.geometry.rectangle import Rectangle
+from borb.pdf.page.page_size import PageSize
+from borb.pdf.page.page import Page
+import typing
+import random
+
+
+def add_gray_artwork_to_upper_right_corner(page: Page) -> None:
+    """
+    This method will add a gray artwork of squares and triangles in the upper right corner
+    of the given Page
+    """
+
+    # define a list of gray colors
+    grays: typing.List[HexColor] = [
+        HexColor("A9A9A9"),
+        HexColor("D3D3D3"),
+        HexColor("DCDCDC"),
+        HexColor("E0E0E0"),
+        HexColor("E8E8E8"),
+        HexColor("F0F0F0"),
+    ]
+
+    # we're going to use the size of the page later on,
+    # so perhaps it's a good idea to retrieve it now
+    ps: typing.Tuple[Decimal, Decimal] = PageSize.A4_PORTRAIT.value
+
+    # now we'll write N triangles in the upper right corner
+    # we'll later fill the remaining space with squares
+    N: int = 4
+    M: Decimal = Decimal(32)
+    for i in range(0, N):
+        x: Decimal = ps[0] - N * M + i * M
+        y: Decimal = ps[1] - (i + 1) * M
+        rg: HexColor = random.choice(grays)
+        Shape(
+            points=[(x + M, y), (x + M, y + M), (x, y + M)],
+            stroke_color=rg,
+            fill_color=rg,
+        ).layout(page, Rectangle(x, y, M, M))
+
+    # now we can fill up the remaining space with squares
+    for i in range(0, N - 1):
+        for j in range(0, N - 1):
+            if j > i:
+                continue
+            x: Decimal = ps[0] - (N - 1) * M + i * M
+            y: Decimal = ps[1] - (j + 1) * M
+            rg: HexColor = random.choice(grays)
+            Shape(
+                points=[(x, y), (x + M, y), (x + M, y + M), (x, y + M)],
+                stroke_color=rg,
+                fill_color=rg,
+            ).layout(page, Rectangle(x, y, M, M))
+```
+
+Similarly, I want to add some geometric artwork to the bottom of the page to balance things out a bit. I'm going to write another separate method for that.
+
+```python
+#!chapter_009/src/snippet_033.py
+# new imports
+from borb.pdf.canvas.line_art.line_art_factory import LineArtFactory
+
+
+def add_colored_artwork_to_bottom_right_corner(page: Page) -> None:
+    """
+    This method will add a blue/purple artwork of lines and squares to the bottom right corner
+    of the given Page
+    """
+    ps: typing.Tuple[Decimal, Decimal] = PageSize.A4_PORTRAIT.value
+
+    # square
+    Shape(
+        points=[(ps[0] - 32, 40), (ps[0], 40), (ps[0], 40 + 32), (ps[0] - 32, 40 + 32)],
+        stroke_color=HexColor("f1cd2e"),
+        fill_color=HexColor("f1cd2e"),
+    ).layout(page, Rectangle(ps[0] - 32, 40, 32, 32))
+
+    # square
+    Shape(
+        points=[
+            (ps[0] - 64, 40),
+            (ps[0] - 32, 40),
+            (ps[0] - 32, 40 + 32),
+            (ps[0] - 64, 40 + 32),
+        ],
+        stroke_color=HexColor("0b3954"),
+        fill_color=HexColor("0b3954"),
+    ).layout(page, Rectangle(ps[0] - 64, 40, 32, 32))
+
+    # triangle
+    Shape(
+        points=[(ps[0] - 96, 40), (ps[0] - 64, 40), (ps[0] - 64, 40 + 32)],
+        stroke_color=HexColor("a5ffd6"),
+        fill_color=HexColor("a5ffd6"),
+    ).layout(page, Rectangle(ps[0] - 96, 40, 32, 32))
+
+    # line
+    r: Rectangle = Rectangle(Decimal(0), Decimal(32), ps[0], Decimal(8))
+    Shape(
+        points=LineArtFactory.rectangle(r),
+        stroke_color=HexColor("56cbf9"),
+        fill_color=HexColor("56cbf9"),
+    ).layout(page, r)
+```
+
+Now we're going to create a method that adds the image of a calculator to our `Page`. Here we are using absolute layout, since we want to make absolutely sure that our `Image` is located at the same coordinates every time (even if we were to change the text around it).
+
+```python
+#!chapter_009/src/snippet_034.py
+from borb.pdf.canvas.layout.image.image import Image
+from decimal import Decimal
+
+
+def add_calculator_image(page: Page):
+    calculator_img = Image(
+        "https://www.shopcore.nl/pub/media/catalog/product/cache/49cebce0f131f74df9ad2e5adc64fe79/t/i/ti-1726-1.jpg",
+        width=Decimal(128),
+        height=Decimal(128),
+    )
+    calculator_img.layout(
+        page,
+        Rectangle(
+            Decimal(595 / 2 - 128 / 2),
+            Decimal(842 / 2 + 128 / 2),
+            Decimal(600),
+            Decimal(128),
+        ),
+    )
+```
+
+Next up we will be adding a lot of "buttons" (they are actually annotations with associated javascript actions). To make it a bit easier on ourselves we'll separate this logic into its own method.
+
+```python
+#!chapter_009/src/snippet_035.py
+from borb.io.read.types import Name
+from borb.io.read.types import String
+from borb.pdf.canvas.layout.annotation.remote_go_to_annotation import (
+    RemoteGoToAnnotation,
+)
+
+
+def add_invisible_button(r: Rectangle, javascript: str):
+    # the next line (commented out) adds a rectangular annotation with red border
+    # this makes it a lot easier to debug the calculator
+    # page.append_annotation(SquareAnnotation(r, stroke_color=HexColor("ff0000"), fill_color=None))
+    page.append_annotation(RemoteGoToAnnotation(r, "https://www.borbpdf.com"))
+    page[Name("Annots")][-1][Name("A")][Name("S")] = Name("JavaScript")
+    page[Name("Annots")][-1][Name("A")][Name("JS")] = String(javascript)
+```
+
+Now we are ready to add all the buttons, and have them call our main Javascript (which will be inserted later on).
+
+```python
+#!chapter_009/src/snippet_036.py
+def add_action_annotations(page: Page):
+    add_invisible_button(
+        Rectangle(Decimal(275), Decimal(492), Decimal(13), Decimal(13)),
+        "process_token('0')",
+    )
+    add_invisible_button(
+        Rectangle(Decimal(291), Decimal(492), Decimal(13), Decimal(13)),
+        "process_token('.')",
+    )
+    add_invisible_button(
+        Rectangle(Decimal(307), Decimal(492), Decimal(13), Decimal(13)),
+        "process_token('=')",
+    )
+
+    add_invisible_button(
+        Rectangle(Decimal(275), Decimal(507), Decimal(13), Decimal(13)),
+        "process_token('1')",
+    )
+    add_invisible_button(
+        Rectangle(Decimal(291), Decimal(507), Decimal(13), Decimal(13)),
+        "process_token('2')",
+    )
+    add_invisible_button(
+        Rectangle(Decimal(307), Decimal(507), Decimal(13), Decimal(13)),
+        "process_token('3')",
+    )
+
+    add_invisible_button(
+        Rectangle(Decimal(275), Decimal(522), Decimal(13), Decimal(13)),
+        "process_token('4')",
+    )
+    add_invisible_button(
+        Rectangle(Decimal(291), Decimal(522), Decimal(13), Decimal(13)),
+        "process_token('5')",
+    )
+    add_invisible_button(
+        Rectangle(Decimal(307), Decimal(522), Decimal(13), Decimal(13)),
+        "process_token('6')",
+    )
+
+    add_invisible_button(
+        Rectangle(Decimal(275), Decimal(538), Decimal(13), Decimal(13)),
+        "process_token('7')",
+    )
+    add_invisible_button(
+        Rectangle(Decimal(291), Decimal(538), Decimal(13), Decimal(13)),
+        "process_token('8')",
+    )
+    add_invisible_button(
+        Rectangle(Decimal(307), Decimal(538), Decimal(13), Decimal(13)),
+        "process_token('9')",
+    )
+
+    add_invisible_button(
+        Rectangle(Decimal(324), Decimal(551), Decimal(13), Decimal(12)),
+        "process_token('/')",
+    )
+    add_invisible_button(
+        Rectangle(Decimal(324), Decimal(536), Decimal(13), Decimal(13)),
+        "process_token('x')",
+    )
+    add_invisible_button(
+        Rectangle(Decimal(324), Decimal(520), Decimal(13), Decimal(13)),
+        "process_token('-')",
+    )
+    add_invisible_button(
+        Rectangle(Decimal(324), Decimal(497), Decimal(13), Decimal(21)),
+        "process_token('+')",
+    )
+
+    add_invisible_button(
+        Rectangle(Decimal(257), Decimal(541), Decimal(13), Decimal(21)),
+        "process_token('AC')",
+    )
+```
+
+This part is easy, we add document level Javascript to our PDF. This script has everything in it to make our calculator actually work.
+
+```python
+#!chapter_009/src/snippet_037.py
+from borb.io.read.types import Decimal as bDecimal
+from borb.io.read.types import String
+from borb.io.read.types import Stream
+from borb.io.read.types import Dictionary
+from borb.io.read.types import List
+from borb.pdf.document.document import Document
+
+
+def add_document_level_javascript(doc: Document):
+    # build global_js_stream
+    global_js_stream = Stream()
+    global_js_stream[Name("Type")] = Name("JavaScript")
+    global_js_stream[
+        Name("DecodedBytes")
+    ] = b"""
+var state = 'START';
+var arg1 = 0;
+var arg2 = 0;
+var disp = '';
+var oper = '';
+
+function to_string(f){
+	if(f > 99999999){ return '99999999'; }
+	if(f < -99999999){ return '-99999999'; }
+	x = f.toString();
+  if(x.length > 8){ x = x.substring(0, 8);}
+	return x;	
+}
+
+function is_number(token){
+	return token == '0' || token == '1' || token == '2' || token == '3' || token == '4' || token == '5' || token == '6' || token == '7'  || token == '8' || token == '9';
+}
+
+function is_binary_operator(token){
+	return token == '+' || token == '-' || token == 'x' || token == '/';
+}
+
+function apply_operator(a1, a2, o){
+	if(o == '+'){ return a1 + a2; }
+	if(o == '-'){ return a1 - a2; }
+	if(o == 'x'){ return a1 * a2; }
+	if(o == '/'){ 
+		if(a2 == 0){
+			return 0;
+		}
+		return a1 / a2; 
+	}
+}
+
+function process_token(token){
+	if(token == 'AC'){
+		state = 'START';
+		arg1 = 0;
+		arg2 = 0;
+		disp = '';
+		oper = '';
+    this.getField("field-000").value = disp;
+		return;
+	}
+	if(state == 'START'){
+		if(token == '.'){
+			disp = '0.';
+      this.getField("field-000").value = disp;
+			state = 'ARG1_FLOAT';
+			return;
+		}
+		if(is_number(token)){
+			disp = token;
+      this.getField("field-000").value = disp;
+			state = 'ARG1'
+			return;
+		}
+	}
+	/* 
+	 * ARG1
+	 * arg1 is being built
+	 */
+	if(state == 'ARG1'){
+		if(token == '.'){
+			disp += '.';
+      this.getField("field-000").value = disp;
+			state = 'ARG1_FLOAT';
+			return;
+		}
+		if(is_number(token)){
+			disp += token;
+      this.getField("field-000").value = disp;
+			return;
+		}
+		if(is_binary_operator(token)){
+			arg1 = parseFloat(disp);
+			disp = '';
+      this.getField("field-000").value = disp;
+			oper = token;
+			state = 'OPERATOR'
+			return;
+		}
+	}
+	/* 
+	 * ARG1_FLOAT
+	 * arg1 is being built, and a decimal point has been entered
+	 */
+	if(state == 'ARG1_FLOAT'){
+		if(is_number(token)){
+			disp += token;
+      this.getField("field-000").value = disp;
+			return;
+		}
+		if(is_binary_operator(token)){
+			arg1 = parseFloat(disp);
+			disp = '';
+      this.getField("field-000").value = disp;
+			oper = token;
+			state = 'OPERATOR'
+			return;
+		}
+	}
+	/* 
+	 * BINARY_OPERATOR
+	 * a binary operator was entered
+	 */
+	if(state == 'OPERATOR'){
+		if(token == '.'){
+			disp = '0.';
+      this.getField("field-000").value = disp;
+			state = 'ARG2_FLOAT';
+			return;
+		}
+		if(is_number(token)){
+			disp = token;
+      this.getField("field-000").value = disp;
+			state = 'ARG2'
+			return;
+		}
+	}
+	/* 
+	 * ARG2
+	 * arg2 is being built
+	 */
+	if(state == 'ARG2'){
+		if(token == '.'){
+			disp += '.';
+      this.getField("field-000").value = disp;
+			state = 'ARG2_FLOAT';
+			return;
+		}
+		if(is_number(token)){
+			disp += token;
+      this.getField("field-000").value = disp;
+			return;
+		}
+		if(is_binary_operator(token)){
+			arg1 = apply_operator(arg1, parseFloat(disp), oper);
+			disp = to_string(arg1);
+      this.getField("field-000").value = disp;
+			oper = token;
+			state = 'OPERATOR'
+			return;
+		}
+		if(token == '='){
+			arg2 = parseFloat(disp);
+			disp = to_string(apply_operator(arg1, arg2, oper));
+      this.getField("field-000").value = disp;
+			state = 'EQUALS';
+			return;
+		}
+	}
+	if(state == 'ARG2_FLOAT'){
+		if(is_number(token)){
+			disp += token;
+      this.getField("field-000").value = disp;
+			return;
+		}
+		if(is_binary_operator(token)){
+			arg1 = apply_operator(arg1, parseFloat(disp), oper);
+			disp = to_string(arg1);
+      this.getField("field-000").value = disp;
+			oper = token;
+			state = 'OPERATOR'
+			return;
+		}
+		if(token == '='){
+			arg2 = parseFloat(disp);
+			disp = to_string(apply_operator(arg1, arg2, oper));
+      this.getField("field-000").value = disp;
+			state = 'EQUALS';
+			return;
+		}
+	}	
+	if(state == 'EQUALS'){
+		if(token == '='){
+			disp = to_string(apply_operator(parseFloat(disp), arg2, oper));
+      this.getField("field-000").value = disp;
+			return;
+		}
+		if(token == '.'){
+			disp = '0.';
+      this.getField("field-000").value = disp;
+			state = 'ARG1_FLOAT';
+			return;
+		}
+		if(is_number(token)){
+			disp = token;
+      this.getField("field-000").value = disp;
+			state = 'ARG1';
+			return;
+		}
+		if(is_binary_operator(token)){
+			arg1 = parseFloat(disp);
+			oper = token;
+			state = 'OPERATOR';
+			return;
+		}
+	}
+}
+this.getField("field-000").fillColor = color.transparent;
+this.getField("field-000").textFont = "Courier";
+app.runtimeHighlightColor = ["RGB", 47/255, 53/255, 51/255];
+"""
+
+    global_js_stream[Name("Filter")] = Name("FlateDecode")
+
+    # build global js dictionary
+    global_js_dictionary = Dictionary()
+    global_js_dictionary[Name("S")] = Name("JavaScript")
+    global_js_dictionary[Name("JS")] = global_js_stream
+
+    # build name tree
+    root = doc["XRef"]["Trailer"]["Root"]
+    root[Name("Names")] = Dictionary()
+    names = root["Names"]
+    names[Name("JavaScript")] = Dictionary()
+    names["JavaScript"][Name("Kids")] = List()
+
+    # build leaf
+    kids_01 = Dictionary()
+    kids_01[Name("Limits")] = List()
+    kids_01["Limits"].append(String("js-000"))
+    kids_01["Limits"].append(String("js-000"))
+    kids_01[Name("Names")] = List()
+    kids_01["Names"].append(String("js-000"))
+    kids_01["Names"].append(global_js_dictionary)
+
+    names["JavaScript"]["Kids"].append(kids_01)
+```
+
+In order to display the result of the calculations, we need to add a `TextField` that the JavaScript can modify.
+
+```python
+#!chapter_009/src/snippet_038.py
+from borb.pdf.canvas.layout.forms.text_field import TextField
+
+
+def add_display(page: Page):
+    r0 = Rectangle(Decimal(264), Decimal(587), Decimal(65), Decimal(15))
+    Shape(
+        LineArtFactory.rectangle(r0),
+        stroke_color=HexColor("7e838e"),
+        fill_color=HexColor("7e838e"),
+    ).layout(page, r0)
+
+    r1 = Rectangle(Decimal(264), Decimal(587), Decimal(65), Decimal(15))
+    display_field = TextField(value="", font_size=Decimal(13))
+    display_field.layout(page, r1)
+```
+
+Now we can build our `Document`
+
+```python
+#!chapter_009/src/snippet_039.py
+from borb.pdf.document.document import Document
+from borb.pdf.page.page import Page
+from borb.pdf.pdf import PDF
+from borb.pdf.canvas.geometry.rectangle import Rectangle
+from borb.pdf.canvas.layout.page_layout.multi_column_layout import MultiColumnLayout
+from borb.pdf.canvas.layout.page_layout.page_layout import PageLayout
+from borb.pdf.canvas.layout.text.paragraph import Paragraph
+from borb.pdf.canvas.color.color import HexColor
+from borb.pdf.canvas.layout.image.barcode import Barcode, BarcodeType
+
+from decimal import Decimal
+from pathlib import Path
+
+
+def main():
+
+    # create Document
+    doc: Document = Document()
+
+    # create Page
+    page: Page = Page()
+    doc.append_page(page)
+
+    # add javascript
+    add_document_level_javascript(doc)
+
+    # add artwork
+    add_gray_artwork_to_upper_right_corner(page)
+    add_colored_artwork_to_bottom_right_corner(page)
+
+    # add Image
+    add_calculator_image(page)
+    add_action_annotations(page)
+
+    # add TextField
+    add_display(page)
+
+    # create layout
+    layout: PageLayout = MultiColumnLayout(page, 2)
+
+    # add first Paragraph
+    layout.add(
+        Paragraph(
+            "Javascript in PDF",
+            font="Helvetica-Bold",
+            font_size=Decimal(20),
+            font_color=HexColor("56cbf9"),
+        )
+    )
+
+    # add second paragraph
+    layout.add(
+        Paragraph(
+            """
+    You can cause an action to occur when a bookmark or link is clicked, or when a page is viewed. 
+    For example, you can use links and bookmarks to jump to different locations in a document, 
+    execute commands from a menu, and perform other actions. """
+        )
+    )
+
+    # add third Paragraph
+    # we are explictly adding the newlines ourselves to ensure the text
+    # breaks nicely around the outline of the calculator
+    layout.add(
+        Paragraph(
+            """To enhance the interactive qual-
+    ity of a document, you can spec-
+    ify actions, such as changing the 
+    zoom value, to occur when a page 
+    is opened or closed.""",
+            respect_newlines_in_text=True,
+        )
+    )
+
+    # add fourth Paragraph
+    layout.add(Paragraph("Trigger Types", font="Helvetica-Bold", font_size=Decimal(14)))
+
+    # add fifth Paragraph
+    layout.add(
+        Paragraph(
+            "Triggers determine how actions are activated in media clips, pages, and form fields. For example, you can specify a movie or sound clip to play when a page is opened or closed. The available options depend on the specified page element."
+        )
+    )
+
+    # add sixth Paragraph
+    layout.add(Paragraph("Javascript", font="Helvetica-Bold", font_size=Decimal(14)))
+
+    # add seventh Paragraph
+    layout.add(
+        Paragraph(
+            """
+    The JavaScript language was developed by Netscape Communications as a means to create interactive web pages more easily. Adobe has enhanced JavaScript so that you can easily integrate this level of interactivity into your PDF documents.
+    You can invoke JavaScript code using actions associated with bookmarks, links, and pages. You can set Document Actions which lets you create document-level JavaScript actions that apply to the entire document."""
+        )
+    )
+
+    # add final Paragraph
+    Paragraph(
+        "With enough buttons and Javascript, you could even make a functional calculator inside a PDF!",
+        font="Courier",
+        font_size=Decimal(8),
+        padding_left=Decimal(5),
+        border_left=True,
+    ).layout(page, Rectangle(Decimal(350), Decimal(450), Decimal(200), Decimal(100)))
+
+    # add QR code
+    Barcode(
+        "https://www.borb-pdf.com",
+        type=BarcodeType.QR,
+        width=Decimal(64),
+        height=Decimal(64),
+    ).layout(
+        page, Rectangle(Decimal(595 - 64 - 15), Decimal(84), Decimal(64), Decimal(64))
+    )
+
+    # store PDF
+    with open(Path("output.pdf"), "wb") as pdf_file_handle:
+        PDF.dumps(pdf_file_handle, doc)
+```
+
+Look at the stunning PDF you made:
+
+![enter image description here](chapter_009/img/snippet_039.png)
+
+## 9.6 Conclusion
 
 This section was all about wrapping up your knowledge with some practical examples.
 I hope you enjoyed working through the examples.
