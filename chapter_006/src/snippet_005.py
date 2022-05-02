@@ -37,7 +37,7 @@ def main():
     page_width: Decimal = PageSize.A4_PORTRAIT.value[0]
     page_height: Decimal = PageSize.A4_PORTRAIT.value[1]
     s: Decimal = Decimal(100)
-    page.append_stamp_annotation(
+    page.append_annotation(
         RubberStampAnnotation(
             Rectangle(
                 page_width / Decimal(2) - s / Decimal(2),
