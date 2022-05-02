@@ -24,7 +24,7 @@ def main():
     # add an Image
     layout.add(
         Image(
-            Path("photo-1517260911058-0fcfd733702f.jpeg"),
+            "https://images.unsplash.com/photo-1517260911058-0fcfd733702f",
             width=Decimal(128),
             height=Decimal(128),
         )
