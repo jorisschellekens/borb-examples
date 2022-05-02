@@ -1,4 +1,7 @@
 
+# Ignore the output.pdf created by the example snippets
+output.pdf
+
 # Created by https://www.toptal.com/developers/gitignore/api/python,pycharm
 # Edit at https://www.toptal.com/developers/gitignore?templates=python,pycharm
 
