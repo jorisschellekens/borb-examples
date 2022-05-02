@@ -1,166 +1,166 @@
 # Table of Contents
 
-1 [`borb` in action](#1-borb-in-action)  
-  1.1 [About this book](#11-about-this-book)  
-  1.2 [About the author](#12-about-the-author)  
-  1.3 [Who should read this book?](#13-who-should-read-this-book)  
-  1.4 [How to use this book](#14-how-to-use-this-book)  
-  1.5 [What you'll be able to do after reading this book](#15-what-youll-be-able-to-do-after-reading-this-book)  
-    1.5.1 [Creating PDF documents](#151-creating-pdf-documents)  
-    1.5.2 [Manipulate existing PDF documents](#152-manipulate-existing-pdf-documents)  
-    1.5.3 [Heuristics for PDF documents](#153-heuristics-for-pdf-documents)  
-    1.5.4 [Deep-dive](#154-deep-dive)  
-    1.5.5 [Showcases](#155-showcases)  
-  1.6 [The goal of this book](#16-the-goal-of-this-book)  
-  1.7 [Software requirements and downloads](#17-software-requirements-and-downloads)  
-    1.7.1 [Installation using `pip`](#171-installation-using-pip)  
-  1.8 [Acknowledgements](#18-acknowledgements)  
-2 [Creating PDF documents from scratch](#2-creating-pdf-documents-from-scratch)  
-  2.1 [Introducing `borb` and PDF](#21-introducing-borb-and-pdf)  
-  2.2 [Steps to creating a PDF using `borb`](#22-steps-to-creating-a-pdf-using-borb)  
-    2.2.1 [Creating an empty `Document` instance](#221-creating-an-empty-document-instance)  
-    2.2.2 [Creating and adding a `Page`](#222-creating-and-adding-a-page)  
-    2.2.3 [Setting a `PageLayout`](#223-setting-a-pagelayout)  
-    2.2.4 [Adding a `Paragraph` to the `Page` using `PageLayout`](#224-adding-a-paragraph-to-the-page-using-pagelayout)  
-      2.2.5 [Writing the `Document` to disk](#225-writing-the-document-to-disk)  
-  2.3 [Using `LayoutElement` sub-classes to represent various types of content](#23-using-layoutelement-sub-classes-to-represent-various-types-of-content)  
-  2.4 [Adding text to a PDF](#24-adding-text-to-a-pdf)  
-    2.4.1 [Setting the `Font` of a `Paragraph`](#241-setting-the-font-of-a-paragraph)  
-    2.4.2 [Setting the `font_color` of a `Paragraph`](#242-setting-the-font_color-of-a-paragraph)  
-      2.4.2.1 [Using `HSVColor` to create a rainbow of text](#2421-using-hsvcolor-to-create-a-rainbow-of-text)  
-      2.4.2.2 [Using `X11Color` to specify color in a more human-legible way](#2422-using-xcolor-to-specify-color-in-a-more-human-legible-way)  
-      2.4.2.3 [Using `Pantone` to specify color in a more human-legible way](#2423-using-pantone-to-specify-color-in-a-more-human-legible-way)  
-      2.4.2.4 [Making the most of the `Color` classes](#2424-making-the-most-of-the-color-classes)  
-        2.4.2.4.1 [Generating a triad `Color` scheme](#24241-generating-a-triad-color-scheme)  
-        2.4.2.4.2 [Generating a split complementary `Color` scheme](#24242-generating-a-split-complementary-color-scheme)  
-        2.4.2.4.3 [Generating an analogous `Color` scheme](#24243-generating-an-analogous-color-scheme)  
-        2.4.2.4.4 [Generating a tetradic square `Color` scheme](#24244-generating-a-tetradic-square-color-scheme)  
-        2.4.2.4.5 [Generating a tetradic rectangular `Color` scheme](#24245-generating-a-tetradic-rectangular-color-scheme)  
-      2.4.2.5 [Implementation details](#2425-implementation-details)  
-    2.4.3 [Using `Alignment` on `Paragraph` objects](#243-using-alignment-on-paragraph-objects)  
-      2.4.3.1 [horizontal alignment](#2431-horizontal-alignment)  
-      2.4.3.2 [vertical alignment](#2432-vertical-alignment)  
-      2.4.3.3 [text alignment](#2433-text-alignment)  
-    2.4.4 [Using borders on `Paragraph` objects](#244-using-borders-on-paragraph-objects)  
-    2.4.5 [Using margin and padding on `Paragraph` objects](#245-using-margin-and-padding-on-paragraph-objects)  
-  2.5 [Adding `Image` objects to a PDF](#25-adding-image-objects-to-a-pdf)  
-  2.6 [Adding line-art to a PDF using `Shape` objects](#26-adding-line-art-to-a-pdf-using-shape-objects)  
-  2.7 [Adding barcodes and QR-codes to a PDF](#27-adding-barcodes-and-qr-codes-to-a-pdf)  
-    2.7.1 [Adding a `Barcode` to a `Page`](#271-adding-a-barcode-to-a-page)  
-      2.7.1.1 [Setting the `stroke_color` and `fill_color` of a `Barcode`](#2711-setting-the-stroke_color-and-fill_color-of-a-barcode)  
-    2.7.2 [Adding a QR-code to the `Page`](#272-adding-a-qr-code-to-the-page)  
-    2.7.3 [Other supported barcodes](#273-other-supported-barcodes)  
-  2.8 [Adding `Chart` objects to a PDF](#28-adding-chart-objects-to-a-pdf)  
-  2.9 [Adding emoji to a PDF](#29-adding-emoji-to-a-pdf)  
-  2.10 [Conclusion](#210-conclusion)  
-3 [Container `LayoutElement` objects](#3-container-layoutelement-objects)  
-  3.1 [Lists](#31-lists)  
-    3.1.1 [Working with `OrderedList`](#311-working-with-orderedlist)  
-    3.1.2 [Working with `RomanNumeralOrderedList`](#312-working-with-romannumeralorderedlist)  
-    3.1.3 [Working with `UnorderedList`](#313-working-with-unorderedlist)  
-    3.1.4 [Nesting `List` objects](#314-nesting-list-objects)  
-  3.2 [Tables](#32-tables)  
-    3.2.1 [FixedColumnWidthTable](#321-fixedcolumnwidthtable)  
-    3.2.2 [FlexibleColumnWidthTable](#322-flexiblecolumnwidthtable)  
-    3.2.3 [Setting layout properties on individual cells of a `Table`](#323-setting-layout-properties-on-individual-cells-of-a-table)  
-    3.2.4 [Incomplete `Table`](#324-incomplete-table)  
-    3.2.5 [Setting `col_span` and `row_span`](#325-setting-col_span-and-row_span)  
-  3.3 [Nesting `Table` in `List` and vice-versa](#33-nesting-table-in-list-and-vice-versa)  
-    3.3.1 [Nesting a `Table` in a `List`](#331-nesting-a-table-in-a-list)  
-    3.3.2 [Nesting a `List` in a `Table`](#332-nesting-a-list-in-a-table)  
-  3.4 [Conclusion](#34-conclusion)  
-4 [Forms](#4-forms)  
-  4.1 [Acroforms vs XFA](#41-acroforms-vs-xfa)  
-  4.2 [The `FormField` object](#42-the-formfield-object)  
-  4.3 [Adding `FormField` objects to a PDF](#43-adding-formfield-objects-to-a-pdf)  
-    4.3.1 [Adding a `TextField` to a PDF](#431-adding-a-textfield-to-a-pdf)  
-    4.3.2 [Customizing a `TextField` object](#432-customizing-a-textfield-object)  
-    4.3.3 [Pre-filling a `TextField` object](#433-pre-filling-a-textfield-object)  
-    4.3.4 [Adding a `DropDownList` to a PDF](#434-adding-a-dropdownlist-to-a-pdf)  
-    4.3.5 [Adding a `CountryDropDownList` to a PDF](#435-adding-a-countrydropdownlist-to-a-pdf)  
-    4.3.6 [Adding a `CheckBox` to a PDF](#436-adding-a-checkbox-to-a-pdf)  
-    4.3.7 [Adding a `RadioButton` to a PDF](#437-adding-a-radiobutton-to-a-pdf)  
-    4.3.8 [Adding a `PushButton` to a PDF](#438-adding-a-pushbutton-to-a-pdf)  
-    4.3.9 [Adding a `JavaScriptPushButton` to a PDF](#439-adding-a-javascriptpushbutton-to-a-pdf)  
-  4.4 [Getting the value of a `FormField` in an existing PDF](#44-getting-the-value-of-a-formfield-in-an-existing-pdf)  
-  4.5 [Changing the value of a `FormField` in an existing PDF](#45-changing-the-value-of-a-formfield-in-an-existing-pdf)  
-    4.5.1 [Changing the value of a `FormField` in an existing PDF using `borb`](#451-changing-the-value-of-a-formfield-in-an-existing-pdf-using-borb)  
-    4.5.2 [Changing the value of a `FormField` in an existing PDF using `JavaScript`](#452-changing-the-value-of-a-formfield-in-an-existing-pdf-using-javascript)  
-  4.6 [Flattening a `FormField`](#46-flattening-a-formfield)  
-  4.7 [Conclusion](#47-conclusion)  
-5 [Working with existing PDFs](#5-working-with-existing-pdfs)  
-  5.1 [Extracting meta-information](#51-extracting-meta-information)  
-    5.1.1 [Extracting the author from a PDF](#511-extracting-the-author-from-a-pdf)  
-    5.1.2 [Extracting the producer from a PDF](#512-extracting-the-producer-from-a-pdf)  
-    5.1.3 [using XMP meta information](#513-using-xmp-meta-information)  
-  5.2 [Extracting text from a PDF](#52-extracting-text-from-a-pdf)  
-  5.3 [Extracting text using regular expressions](#53-extracting-text-using-regular-expressions)  
-  5.4 [Extracting text using its bounding box](#54-extracting-text-using-its-bounding-box)  
-  5.5 [Combining regular expressions and bounding boxes](#55-combining-regular-expressions-and-bounding-boxes)  
-  5.6 [Extracting keywords from a PDF](#56-extracting-keywords-from-a-pdf)  
-    5.6.1 [Extracting keywords from a PDF using TF-IDF](#561-extracting-keywords-from-a-pdf-using-tf-idf)  
-      5.6.1.1 [Term Frequency](#5611-term-frequency)  
-      5.6.1.2 [Inverse document frequency](#5612-inverse-document-frequency)  
-      5.6.1.3 [Using TF-IDF in `borb`](#5613-using-tf-idf-in-borb)  
-    5.6.2 [Extracting keywords from a PDF using  textrank](#562-extracting-keywords-from-a-pdf-using--textrank)  
-  5.7 [Extracting color-information](#57-extracting-color-information)  
-  5.8 [Extracting font-information](#58-extracting-font-information)  
-    5.8.1 [Filtering by `font`](#581-filtering-by-font)  
-    5.8.2 [Filtering by `font_color`](#582-filtering-by-font_color)  
-  5.9 [Extracting images from a PDF](#59-extracting-images-from-a-pdf)  
-    5.9.1 [Modifying images in an existing PDF](#591-modifying-images-in-an-existing-pdf)  
-    5.9.2 [Subsampling images in an existing PDF](#592-subsampling-images-in-an-existing-pdf)  
-  5.10 [Working with embedded files](#510-working-with-embedded-files)  
-    5.10.1 [Embedding files in a PDF](#5101-embedding-files-in-a-pdf)  
-    5.10.2 [Extracting embedded files from a PDF](#5102-extracting-embedded-files-from-a-pdf)  
-  5.11 [Merging PDF documents](#511-merging-pdf-documents)  
-  5.12 [Removing pages from  PDF documents](#512-removing-pages-from--pdf-documents)  
-  5.13 [Rotating pages in PDF documents](#513-rotating-pages-in-pdf-documents)  
-  5.14 [Conclusion](#514-conclusion)  
-  6 [Adding annotations to a PDF](#6-adding-annotations-to-a-pdf)  
-  6.1 [Adding geometric shapes](#61-adding-geometric-shapes)  
-  6.2 [Adding text annotations](#62-adding-text-annotations)  
-  6.3 [Adding link annotations](#63-adding-link-annotations)  
-  6.4 [Adding remote go-to annotations](#64-adding-remote-go-to-annotations)  
-  6.5 [Adding rubber stamp annotations](#65-adding-rubber-stamp-annotations)  
-  6.6 [Adding redaction (annotations)](#66-adding-redaction-annotations)  
-    6.6.1 [Adding redaction annotations](#661-adding-redaction-annotations)  
-    6.6.2 [Applying redaction annotations](#662-applying-redaction-annotations)  
-  6.7 [Adding invisible `JavaScript` buttons](#67-adding-invisible-javascript-buttons)  
-  6.8 [Adding sound annotations](#68-adding-sound-annotations)  
-  6.9 [Adding movie annotations](#69-adding-movie-annotations)  
-  6.10 [Conclusion](#610-conclusion)  
-7 [Heuristics for PDF documents](#7-heuristics-for-pdf-documents)  
-  7.1 [Extracting tables from a PDF](#71-extracting-tables-from-a-pdf)  
-  7.2 [Performing OCR on a PDF](#72-performing-ocr-on-a-pdf)  
-  7.3 [Exporting PDF as a (PIL) image](#73-exporting-pdf-as-a-pil-image)  
-  7.4 [Exporting PDF as an SVG image](#74-exporting-pdf-as-an-svg-image)  
-  7.5 [Exporting Markdown as PDF](#75-exporting-markdown-as-pdf)  
-  7.6 [Exporting HTML as PDF](#76-exporting-html-as-pdf)  
-  7.7 [Conclusion](#77-conclusion)  
-8 [Deep Dive into `borb`](#8-deep-dive-into-borb)  
-  8.1 [About PDF](#81-about-pdf)  
-  8.2 [The XREF table](#82-the-xref-table)  
-  8.3 [Page content streams](#83-page-content-streams)  
-  8.4 [Postscript syntax](#84-postscript-syntax)  
-  8.5 [Creating a `Document` using low-level syntax](#85-creating-a-document-using-low-level-syntax)  
-  8.6 [Fonts in PDF](#86-fonts-in-pdf)  
-    8.6.1 [Simple fonts](#861-simple-fonts)  
-    8.6.2 [Composite fonts](#862-composite-fonts)  
-  8.7 [About structured vs. unstructured document formats](#87-about-structured-vs-unstructured-document-formats)  
-    8.7.1 [Text extraction: using heuristics to bridge the gap](#871-text-extraction-using-heuristics-to-bridge-the-gap)  
-    8.7.2 [Paragraph extraction and disjoint set](#872-paragraph-extraction-and-disjoint-set)  
-  8.8 [Hyphenation](#88-hyphenation)  
-    5.8.1 [The hyphenation problem](#581-the-hyphenation-problem)  
-    8.8.2 [A fast and scalable hyphenation algorithm](#882-a-fast-and-scalable-hyphenation-algorithm)  
-    8.8.3 [Using hyphenation in `borb`](#883-using-hyphenation-in-borb)  
-9 [Showcases](#9-showcases)  
-  9.1 [Building a sudoku puzzle](#91-building-a-sudoku-puzzle)  
-  9.2 [Building a realistic invoice](#92-building-a-realistic-invoice)  
-  9.3 [Creating a stunning flyer](#93-creating-a-stunning-flyer)  
-  9.4 [Creating a nonogram puzzle](#94-creating-a-nonogram-puzzle)  
-  9.5 [Building a working calculator inside a PDF](#95-building-a-working-calculator-inside-a-pdf)  
-  9.6 [Conclusion](#96-conclusion)  
+1 [`borb` in action](#1-borb-in-action)
+  1.1 [About this book](#11-about-this-book)
+  1.2 [About the author](#12-about-the-author)
+  1.3 [Who should read this book?](#13-who-should-read-this-book)
+  1.4 [How to use this book](#14-how-to-use-this-book)
+  1.5 [What you'll be able to do after reading this book](#15-what-youll-be-able-to-do-after-reading-this-book)
+    1.5.1 [Creating PDF documents](#151-creating-pdf-documents)
+    1.5.2 [Manipulate existing PDF documents](#152-manipulate-existing-pdf-documents)
+    1.5.3 [Heuristics for PDF documents](#153-heuristics-for-pdf-documents)
+    1.5.4 [Deep-dive](#154-deep-dive)
+    1.5.5 [Showcases](#155-showcases)
+  1.6 [The goal of this book](#16-the-goal-of-this-book)
+  1.7 [Software requirements and downloads](#17-software-requirements-and-downloads)
+    1.7.1 [Installation using `pip`](#171-installation-using-pip)
+  1.8 [Acknowledgements](#18-acknowledgements)
+2 [Creating PDF documents from scratch](#2-creating-pdf-documents-from-scratch)
+  2.1 [Introducing `borb` and PDF](#21-introducing-borb-and-pdf)
+  2.2 [Steps to creating a PDF using `borb`](#22-steps-to-creating-a-pdf-using-borb)
+    2.2.1 [Creating an empty `Document` instance](#221-creating-an-empty-document-instance)
+    2.2.2 [Creating and adding a `Page`](#222-creating-and-adding-a-page)
+    2.2.3 [Setting a `PageLayout`](#223-setting-a-pagelayout)
+    2.2.4 [Adding a `Paragraph` to the `Page` using `PageLayout`](#224-adding-a-paragraph-to-the-page-using-pagelayout)
+      2.2.5 [Writing the `Document` to disk](#225-writing-the-document-to-disk)
+  2.3 [Using `LayoutElement` sub-classes to represent various types of content](#23-using-layoutelement-sub-classes-to-represent-various-types-of-content)
+  2.4 [Adding text to a PDF](#24-adding-text-to-a-pdf)
+    2.4.1 [Setting the `Font` of a `Paragraph`](#241-setting-the-font-of-a-paragraph)
+    2.4.2 [Setting the `font_color` of a `Paragraph`](#242-setting-the-font_color-of-a-paragraph)
+      2.4.2.1 [Using `HSVColor` to create a rainbow of text](#2421-using-hsvcolor-to-create-a-rainbow-of-text)
+      2.4.2.2 [Using `X11Color` to specify color in a more human-legible way](#2422-using-xcolor-to-specify-color-in-a-more-human-legible-way)
+      2.4.2.3 [Using `Pantone` to specify color in a more human-legible way](#2423-using-pantone-to-specify-color-in-a-more-human-legible-way)
+      2.4.2.4 [Making the most of the `Color` classes](#2424-making-the-most-of-the-color-classes)
+        2.4.2.4.1 [Generating a triad `Color` scheme](#24241-generating-a-triad-color-scheme)
+        2.4.2.4.2 [Generating a split complementary `Color` scheme](#24242-generating-a-split-complementary-color-scheme)
+        2.4.2.4.3 [Generating an analogous `Color` scheme](#24243-generating-an-analogous-color-scheme)
+        2.4.2.4.4 [Generating a tetradic square `Color` scheme](#24244-generating-a-tetradic-square-color-scheme)
+        2.4.2.4.5 [Generating a tetradic rectangular `Color` scheme](#24245-generating-a-tetradic-rectangular-color-scheme)
+      2.4.2.5 [Implementation details](#2425-implementation-details)
+    2.4.3 [Using `Alignment` on `Paragraph` objects](#243-using-alignment-on-paragraph-objects)
+      2.4.3.1 [horizontal alignment](#2431-horizontal-alignment)
+      2.4.3.2 [vertical alignment](#2432-vertical-alignment)
+      2.4.3.3 [text alignment](#2433-text-alignment)
+    2.4.4 [Using borders on `Paragraph` objects](#244-using-borders-on-paragraph-objects)
+    2.4.5 [Using margin and padding on `Paragraph` objects](#245-using-margin-and-padding-on-paragraph-objects)
+  2.5 [Adding `Image` objects to a PDF](#25-adding-image-objects-to-a-pdf)
+  2.6 [Adding line-art to a PDF using `Shape` objects](#26-adding-line-art-to-a-pdf-using-shape-objects)
+  2.7 [Adding barcodes and QR-codes to a PDF](#27-adding-barcodes-and-qr-codes-to-a-pdf)
+    2.7.1 [Adding a `Barcode` to a `Page`](#271-adding-a-barcode-to-a-page)
+      2.7.1.1 [Setting the `stroke_color` and `fill_color` of a `Barcode`](#2711-setting-the-stroke_color-and-fill_color-of-a-barcode)
+    2.7.2 [Adding a QR-code to the `Page`](#272-adding-a-qr-code-to-the-page)
+    2.7.3 [Other supported barcodes](#273-other-supported-barcodes)
+  2.8 [Adding `Chart` objects to a PDF](#28-adding-chart-objects-to-a-pdf)
+  2.9 [Adding emoji to a PDF](#29-adding-emoji-to-a-pdf)
+  2.10 [Conclusion](#210-conclusion)
+3 [Container `LayoutElement` objects](#3-container-layoutelement-objects)
+  3.1 [Lists](#31-lists)
+    3.1.1 [Working with `OrderedList`](#311-working-with-orderedlist)
+    3.1.2 [Working with `RomanNumeralOrderedList`](#312-working-with-romannumeralorderedlist)
+    3.1.3 [Working with `UnorderedList`](#313-working-with-unorderedlist)
+    3.1.4 [Nesting `List` objects](#314-nesting-list-objects)
+  3.2 [Tables](#32-tables)
+    3.2.1 [FixedColumnWidthTable](#321-fixedcolumnwidthtable)
+    3.2.2 [FlexibleColumnWidthTable](#322-flexiblecolumnwidthtable)
+    3.2.3 [Setting layout properties on individual cells of a `Table`](#323-setting-layout-properties-on-individual-cells-of-a-table)
+    3.2.4 [Incomplete `Table`](#324-incomplete-table)
+    3.2.5 [Setting `col_span` and `row_span`](#325-setting-col_span-and-row_span)
+  3.3 [Nesting `Table` in `List` and vice-versa](#33-nesting-table-in-list-and-vice-versa)
+    3.3.1 [Nesting a `Table` in a `List`](#331-nesting-a-table-in-a-list)
+    3.3.2 [Nesting a `List` in a `Table`](#332-nesting-a-list-in-a-table)
+  3.4 [Conclusion](#34-conclusion)
+4 [Forms](#4-forms)
+  4.1 [Acroforms vs XFA](#41-acroforms-vs-xfa)
+  4.2 [The `FormField` object](#42-the-formfield-object)
+  4.3 [Adding `FormField` objects to a PDF](#43-adding-formfield-objects-to-a-pdf)
+    4.3.1 [Adding a `TextField` to a PDF](#431-adding-a-textfield-to-a-pdf)
+    4.3.2 [Customizing a `TextField` object](#432-customizing-a-textfield-object)
+    4.3.3 [Pre-filling a `TextField` object](#433-pre-filling-a-textfield-object)
+    4.3.4 [Adding a `DropDownList` to a PDF](#434-adding-a-dropdownlist-to-a-pdf)
+    4.3.5 [Adding a `CountryDropDownList` to a PDF](#435-adding-a-countrydropdownlist-to-a-pdf)
+    4.3.6 [Adding a `CheckBox` to a PDF](#436-adding-a-checkbox-to-a-pdf)
+    4.3.7 [Adding a `RadioButton` to a PDF](#437-adding-a-radiobutton-to-a-pdf)
+    4.3.8 [Adding a `PushButton` to a PDF](#438-adding-a-pushbutton-to-a-pdf)
+    4.3.9 [Adding a `JavaScriptPushButton` to a PDF](#439-adding-a-javascriptpushbutton-to-a-pdf)
+  4.4 [Getting the value of a `FormField` in an existing PDF](#44-getting-the-value-of-a-formfield-in-an-existing-pdf)
+  4.5 [Changing the value of a `FormField` in an existing PDF](#45-changing-the-value-of-a-formfield-in-an-existing-pdf)
+    4.5.1 [Changing the value of a `FormField` in an existing PDF using `borb`](#451-changing-the-value-of-a-formfield-in-an-existing-pdf-using-borb)
+    4.5.2 [Changing the value of a `FormField` in an existing PDF using `JavaScript`](#452-changing-the-value-of-a-formfield-in-an-existing-pdf-using-javascript)
+  4.6 [Flattening a `FormField`](#46-flattening-a-formfield)
+  4.7 [Conclusion](#47-conclusion)
+5 [Working with existing PDFs](#5-working-with-existing-pdfs)
+  5.1 [Extracting meta-information](#51-extracting-meta-information)
+    5.1.1 [Extracting the author from a PDF](#511-extracting-the-author-from-a-pdf)
+    5.1.2 [Extracting the producer from a PDF](#512-extracting-the-producer-from-a-pdf)
+    5.1.3 [using XMP meta information](#513-using-xmp-meta-information)
+  5.2 [Extracting text from a PDF](#52-extracting-text-from-a-pdf)
+  5.3 [Extracting text using regular expressions](#53-extracting-text-using-regular-expressions)
+  5.4 [Extracting text using its bounding box](#54-extracting-text-using-its-bounding-box)
+  5.5 [Combining regular expressions and bounding boxes](#55-combining-regular-expressions-and-bounding-boxes)
+  5.6 [Extracting keywords from a PDF](#56-extracting-keywords-from-a-pdf)
+    5.6.1 [Extracting keywords from a PDF using TF-IDF](#561-extracting-keywords-from-a-pdf-using-tf-idf)
+      5.6.1.1 [Term Frequency](#5611-term-frequency)
+      5.6.1.2 [Inverse document frequency](#5612-inverse-document-frequency)
+      5.6.1.3 [Using TF-IDF in `borb`](#5613-using-tf-idf-in-borb)
+    5.6.2 [Extracting keywords from a PDF using  textrank](#562-extracting-keywords-from-a-pdf-using--textrank)
+  5.7 [Extracting color-information](#57-extracting-color-information)
+  5.8 [Extracting font-information](#58-extracting-font-information)
+    5.8.1 [Filtering by `font`](#581-filtering-by-font)
+    5.8.2 [Filtering by `font_color`](#582-filtering-by-font_color)
+  5.9 [Extracting images from a PDF](#59-extracting-images-from-a-pdf)
+    5.9.1 [Modifying images in an existing PDF](#591-modifying-images-in-an-existing-pdf)
+    5.9.2 [Subsampling images in an existing PDF](#592-subsampling-images-in-an-existing-pdf)
+  5.10 [Working with embedded files](#510-working-with-embedded-files)
+    5.10.1 [Embedding files in a PDF](#5101-embedding-files-in-a-pdf)
+    5.10.2 [Extracting embedded files from a PDF](#5102-extracting-embedded-files-from-a-pdf)
+  5.11 [Merging PDF documents](#511-merging-pdf-documents)
+  5.12 [Removing pages from  PDF documents](#512-removing-pages-from--pdf-documents)
+  5.13 [Rotating pages in PDF documents](#513-rotating-pages-in-pdf-documents)
+  5.14 [Conclusion](#514-conclusion)
+  6 [Adding annotations to a PDF](#6-adding-annotations-to-a-pdf)
+  6.1 [Adding geometric shapes](#61-adding-geometric-shapes)
+  6.2 [Adding text annotations](#62-adding-text-annotations)
+  6.3 [Adding link annotations](#63-adding-link-annotations)
+  6.4 [Adding remote go-to annotations](#64-adding-remote-go-to-annotations)
+  6.5 [Adding rubber stamp annotations](#65-adding-rubber-stamp-annotations)
+  6.6 [Adding redaction (annotations)](#66-adding-redaction-annotations)
+    6.6.1 [Adding redaction annotations](#661-adding-redaction-annotations)
+    6.6.2 [Applying redaction annotations](#662-applying-redaction-annotations)
+  6.7 [Adding invisible `JavaScript` buttons](#67-adding-invisible-javascript-buttons)
+  6.8 [Adding sound annotations](#68-adding-sound-annotations)
+  6.9 [Adding movie annotations](#69-adding-movie-annotations)
+  6.10 [Conclusion](#610-conclusion)
+7 [Heuristics for PDF documents](#7-heuristics-for-pdf-documents)
+  7.1 [Extracting tables from a PDF](#71-extracting-tables-from-a-pdf)
+  7.2 [Performing OCR on a PDF](#72-performing-ocr-on-a-pdf)
+  7.3 [Exporting PDF as a (PIL) image](#73-exporting-pdf-as-a-pil-image)
+  7.4 [Exporting PDF as an SVG image](#74-exporting-pdf-as-an-svg-image)
+  7.5 [Exporting Markdown as PDF](#75-exporting-markdown-as-pdf)
+  7.6 [Exporting HTML as PDF](#76-exporting-html-as-pdf)
+  7.7 [Conclusion](#77-conclusion)
+8 [Deep Dive into `borb`](#8-deep-dive-into-borb)
+  8.1 [About PDF](#81-about-pdf)
+  8.2 [The XREF table](#82-the-xref-table)
+  8.3 [Page content streams](#83-page-content-streams)
+  8.4 [Postscript syntax](#84-postscript-syntax)
+  8.5 [Creating a `Document` using low-level syntax](#85-creating-a-document-using-low-level-syntax)
+  8.6 [Fonts in PDF](#86-fonts-in-pdf)
+    8.6.1 [Simple fonts](#861-simple-fonts)
+    8.6.2 [Composite fonts](#862-composite-fonts)
+  8.7 [About structured vs. unstructured document formats](#87-about-structured-vs-unstructured-document-formats)
+    8.7.1 [Text extraction: using heuristics to bridge the gap](#871-text-extraction-using-heuristics-to-bridge-the-gap)
+    8.7.2 [Paragraph extraction and disjoint set](#872-paragraph-extraction-and-disjoint-set)
+  8.8 [Hyphenation](#88-hyphenation)
+    5.8.1 [The hyphenation problem](#581-the-hyphenation-problem)
+    8.8.2 [A fast and scalable hyphenation algorithm](#882-a-fast-and-scalable-hyphenation-algorithm)
+    8.8.3 [Using hyphenation in `borb`](#883-using-hyphenation-in-borb)
+9 [Showcases](#9-showcases)
+  9.1 [Building a sudoku puzzle](#91-building-a-sudoku-puzzle)
+  9.2 [Building a realistic invoice](#92-building-a-realistic-invoice)
+  9.3 [Creating a stunning flyer](#93-creating-a-stunning-flyer)
+  9.4 [Creating a nonogram puzzle](#94-creating-a-nonogram-puzzle)
+  9.5 [Building a working calculator inside a PDF](#95-building-a-working-calculator-inside-a-pdf)
+  9.6 [Conclusion](#96-conclusion)
 
 <div style="page-break-before: always;"></div>
 
@@ -188,7 +188,7 @@ I love mathematical optimization, and graph-theory. I never thought I'd be the a
 
 ## 1.3 Who should read this book?
 
-This book is intended for python developers who'd like to create, or work with (existing) PDF documents. This can be anything from generating reports, invoices, to itemized inventory overviews. This book assumes you have some background in Python programming. 
+This book is intended for python developers who'd like to create, or work with (existing) PDF documents. This can be anything from generating reports, invoices, to itemized inventory overviews. This book assumes you have some background in Python programming.
 
 This book includes a lot of small code-snippets that handle a particular facet or problem in a PDF-workflow:
 
@@ -213,7 +213,7 @@ I would recommend the PDF-spec (ISO-32000) to anyone craving a particular brand 
 
 The large sections of this book are meant to stand alone. It is perfectly conceivable that you only wish to create PDF documents, and not work with existing ones, or vice-versa. You can read the book thematically, only touching chapters that are tangent to your requirements.
 
-Of course, in order to gain a deeper understanding of the `borb` library, and PDF, 
+Of course, in order to gain a deeper understanding of the `borb` library, and PDF,
 I would recommend you read this book in its entirety, even if you only give certain sections a cursory glance.
 There is so much information in this book, not just about `borb` but PDF in general. I have no doubt you'll learn something new in each section.
 
@@ -227,12 +227,12 @@ This book consists of 5 major parts:
   - basic `LayoutElement` objects
   - container `LayoutElement` objects
   - Forms
-  
+
 - Manipulating existing PDF documents
   - Getting information out of a PDF
   - Adding annotations to a PDF
   - splitting, merging, rotating
-  
+
 - Heuristics for PDF documents
 - Deep dive(s)
 - Showcase(s)
@@ -251,13 +251,13 @@ After having read this section you should be able to code up a small proof of co
 
 ### 1.5.2 Manipulate existing PDF documents
 
-In this section you'll explore the things you can do with an existing PDF document. 
+In this section you'll explore the things you can do with an existing PDF document.
 
 You'll start with the basics; merging existing documents, extracting and removing pages, making copies. These basics are a great way to learn more about `borb` and the underlying PDF syntax.
 
 Having mastered these common use-cases, you'll move on to annotations. These provide a way to add content to existing documents. It can be as easy as stamping a page with "APPROVED", to adding a pop-up text note with remarks explaining an invoice-line.
 
-PDF is sometimes said to be "where data goes to die". This is because data extraction from PDF can be a tricky job. In this section you'll learn several ways in which you can (attempt to) do this. Everything from extracting the entire textual content, to matching regular expressions, extracting text at specific locations, or combinations thereof. You'll also see how to extract images, color, and font-information, as well as how to embed files, or retrieve embedded files from a PDF. 
+PDF is sometimes said to be "where data goes to die". This is because data extraction from PDF can be a tricky job. In this section you'll learn several ways in which you can (attempt to) do this. Everything from extracting the entire textual content, to matching regular expressions, extracting text at specific locations, or combinations thereof. You'll also see how to extract images, color, and font-information, as well as how to embed files, or retrieve embedded files from a PDF.
 
 You'll explore redaction (the automated removal of content), which (in relation to GDPR) has known a resurgence. Automated redaction makes it easier for you to ensure people's privacy is upheld.
 
@@ -307,7 +307,7 @@ You'll see:
 
 ## 1.6 The goal of this book
 
-My goal for this book is for it to become a companion along your way in PDF-land. 
+My goal for this book is for it to become a companion along your way in PDF-land.
 With this book, you'll have the answers to the most common questions, and an experienced field-guide to help you find the right tools in the `borb` library.
 
 <div style="page-break-before: always;"></div>
@@ -331,13 +331,13 @@ Getting started with `borb` is easy.
 2. Activate your virtual environment
 
     `source venv/bin/activate`
-     
+
 3. Install `borb` using pip
 
     `pip install borb`
 
-4. Done :tada: You are all ready to go. 
- 
+4. Done :tada: You are all ready to go.
+
 Try out some of the examples to get to know `borb`.
 
 **Note**: if you have used `borb` in the past, it's best to ensure that pip is not serving
@@ -385,7 +385,7 @@ I wanted a library that was:
 - Capable of reading, writing, editing PDF documents
 - Puts the user first. No need to know the PDF specification, the library will handle all the heavy lifting for you.
 
-Although `borb` is still a work in progress, and still growing and improving, I think it is clear from the existing code base that the course of the library has been set. 
+Although `borb` is still a work in progress, and still growing and improving, I think it is clear from the existing code base that the course of the library has been set.
 
 <div style="page-break-before: always;"></div>
 
@@ -420,22 +420,22 @@ if __name__ == "__main__":
 
 If you were to look at the class definition of `Document` you'd see:
 
-```python  
-class Document(Dictionary):  
+```python
+class Document(Dictionary):
     """
-    This class represents a PDF document 
+    This class represents a PDF document
     """
-    
+
     ... etc ...
  ```
 
 `Dictionary` is defined in `types.py` as:
 
 ```python
-class Dictionary(dict):  
+class Dictionary(dict):
     """
-    A dictionary object is an associative table containing pairs of objects, known as the dictionary’s entries. The first element of each entry is the key and the second element is the value. The key shall be a name (unlike dictionary keys in PostScript, which may be objects of any type). The value may be any kind of object, including another dictionary. A dictionary entry whose value is null (see 7.3.9, "Null Object") shall be treated the same as if the entry does not exist. (This differs from PostScript, where null behaves like any other object as the value of a dictionary entry.) The number of entries in a dictionary shall be subject to an implementation limit; see Annex C. A dictionary may have zero entries.  
-    The entries in a dictionary represent an associative table and as such shall be unordered even though an arbitrary order may be imposed upon them when written in a file. That ordering shall be ignored. 
+    A dictionary object is an associative table containing pairs of objects, known as the dictionary’s entries. The first element of each entry is the key and the second element is the value. The key shall be a name (unlike dictionary keys in PostScript, which may be objects of any type). The value may be any kind of object, including another dictionary. A dictionary entry whose value is null (see 7.3.9, "Null Object") shall be treated the same as if the entry does not exist. (This differs from PostScript, where null behaves like any other object as the value of a dictionary entry.) The number of entries in a dictionary shall be subject to an implementation limit; see Annex C. A dictionary may have zero entries.
+    The entries in a dictionary represent an associative table and as such shall be unordered even though an arbitrary order may be imposed upon them when written in a file. That ordering shall be ignored.
     """
 
     ... etc ...
@@ -476,20 +476,20 @@ This can easily be customized by passing a `width` and `height` parameter. These
 
 PDF user space units map to roughly 1/72th of an inch.
 
-In order to make life easier, `borb` offers a convenient `enum` that holds the most common paper sizes, in landscape and portrait mode. 
+In order to make life easier, `borb` offers a convenient `enum` that holds the most common paper sizes, in landscape and portrait mode.
 
 ```python
-class PageSize(enum.Enum):  
-    """  
-    This Enum provides a convenient way of getting all common paper page sizes 
-    """  
-    A0_PORTRAIT = (Decimal(2384), Decimal(3370))  
-    A0_LANDSCAPE = (Decimal(3370), Decimal(2384))  
-  
-    A1_PORTRAIT = (Decimal(1684), Decimal(2384))  
-    A1_LANDSCAPE = (Decimal(2384), Decimal(1684))  
-  
-    A2_PORTRAIT = (Decimal(1190), Decimal(1684))  
+class PageSize(enum.Enum):
+    """
+    This Enum provides a convenient way of getting all common paper page sizes
+    """
+    A0_PORTRAIT = (Decimal(2384), Decimal(3370))
+    A0_LANDSCAPE = (Decimal(3370), Decimal(2384))
+
+    A1_PORTRAIT = (Decimal(1684), Decimal(2384))
+    A1_LANDSCAPE = (Decimal(2384), Decimal(1684))
+
+    A2_PORTRAIT = (Decimal(1190), Decimal(1684))
     A2_LANDSCAPE = (Decimal(1684), Decimal(1190))
 
     ... etc ...
@@ -576,7 +576,7 @@ For now, suffice to say the default parameters are:
 - `font_color` : `HexColor("000000")`
 - `text_alignment`: `Alignment.LEFT`
 - `border_top`, `border_right`, `border_bottom`, `border_left` : all set to `False`
-- `padding_top`, `padding_right`, `padding_bottom`, `padding_left` : all set to `Decimal(0)` 
+- `padding_top`, `padding_right`, `padding_bottom`, `padding_left` : all set to `Decimal(0)`
 - `hyphenation` : `None`
 
 #### 2.2.5 Writing the `Document` to disk
@@ -631,9 +631,9 @@ This figure shows the `LayoutElement` hierarchy. The abstract base class `Layout
 - Elements that display text (marked in red)
 - Elements that display images (marked in blue)
 - Elements that act as a container, grouping other `LayoutElement` implementations (marked in green)
-- Elements that enable interactivity, so called `FormField` objects (marked in yellow) 
+- Elements that enable interactivity, so called `FormField` objects (marked in yellow)
 
-You'll explore most of these `LayoutElement` implementations in the coming examples. 
+You'll explore most of these `LayoutElement` implementations in the coming examples.
 The deep-dive will take you on a journey through the entire process from `str` to `PDF`.
 
 <div style="page-break-before: always;"></div>
@@ -816,7 +816,7 @@ if __name__ == "__main__":
 Now that you can set the `font` of a `Paragraph`, you can turn your attention to the second most obvious feature with regards to personalization and branding; color.
 
 `borb` offers a myriad of various color models. The easiest of which are:
-- `RGBColor` : An RGB color space is any additive color space based on the RGB color model.   A particular color space that employs RGB primaries for part of its specification is defined by the three chromaticities of the red, green, and blue additive primaries,  
+- `RGBColor` : An RGB color space is any additive color space based on the RGB color model.   A particular color space that employs RGB primaries for part of its specification is defined by the three chromaticities of the red, green, and blue additive primaries,
 and can produce any chromaticity that is the 2D triangle defined by those primary colors (ie. excluding transfer function, white point, etc.). The primary colors are specified in terms of their CIE 1931 color space chromaticity coordinates (x,y), linking them to human-visible color. RGB is an abbreviation for red–green–blue.
 
 - `HexColor` : A hex triplet is a six-digit, three-byte hexadecimal number used in HTML, CSS, SVG, and other computing applications to represent colors. The bytes represent the red, green, and blue components of the color. One byte represents a number in the range 00 to FF (in hexadecimal notation), or 0 to 255 in decimal notation. This represents the least (0) to the most (255) intensity of each of the color components.
@@ -825,20 +825,20 @@ and can produce any chromaticity that is the 2D triangle defined by those primar
 
 - `X11Color` : In computing, on the X Window System, X11 color names are represented in a simple text file,  which maps certain strings to RGB color values. It was traditionally shipped with every X11 installation, hence the name. The web colors list is descended from it but differs for certain color names.
 
-- `CMYKColor` : The CMYK color model (also known as process color, or four color) is a subtractive color model, based on the CMY color model,  
-used in color printing, and is also used to describe the printing process itself.  
-CMYK refers to the four ink plates used in some color printing: cyan, magenta, yellow, and key (black).  
-  
-    The CMYK model works by partially or entirely masking colors on a lighter, usually white, background. The ink reduces the light that would otherwise be reflected.  
+- `CMYKColor` : The CMYK color model (also known as process color, or four color) is a subtractive color model, based on the CMY color model,
+used in color printing, and is also used to describe the printing process itself.
+CMYK refers to the four ink plates used in some color printing: cyan, magenta, yellow, and key (black).
+
+    The CMYK model works by partially or entirely masking colors on a lighter, usually white, background. The ink reduces the light that would otherwise be reflected.
 Such a model is called subtractive because inks "subtract" the colors red, green and blue from white light. White light minus red leaves cyan, white light minus green leaves magenta, and white light minus blue leaves yellow.
 
 - `GrayColor` : In digital photography, computer-generated imagery, and colorimetry, a grayscale or image is one in which the value of each pixel is a single sample representing only an amount of light;
     that is, it carries only intensity information. Grayscale images, a kind of black-and-white or gray monochrome, are composed exclusively of shades of gray.
     The contrast ranges from black at the weakest intensity to white at the strongest.
 
-- `HSVColor` : HSL (hue, saturation, lightness) and HSV (hue, saturation, value, also known as HSB or hue, saturation, brightness) are alternative representations of the RGB color model, designed in the 1970s by computer graphics researchers to more closely align with the way human vision perceives color-making attributes.  
+- `HSVColor` : HSL (hue, saturation, lightness) and HSV (hue, saturation, value, also known as HSB or hue, saturation, brightness) are alternative representations of the RGB color model, designed in the 1970s by computer graphics researchers to more closely align with the way human vision perceives color-making attributes.
 
-    In these models, colors of each hue are arranged in a radial slice,  
+    In these models, colors of each hue are arranged in a radial slice,
 around a central axis of neutral colors which ranges from black at the bottom to white at the top.
 
 But, enough theory, let's put this into practice.
@@ -885,7 +885,7 @@ if __name__ == "__main__":
 
 #### 2.4.2.1 Using `HSVColor` to create a rainbow of text
 
-The HSV color model arranges colors on a wheel (rather a cone if you take into account saturation and value). That means you can easily generate a set of colors that divide the color spectrum evenly. 
+The HSV color model arranges colors on a wheel (rather a cone if you take into account saturation and value). That means you can easily generate a set of colors that divide the color spectrum evenly.
 
 In the next example, you'll start from the boilerplate Hello World example, and tweak it to generate a `Document` with a rainbow of text.
 
@@ -948,16 +948,16 @@ The list first shipped with X10 release 3 (X10R3) on 7 June 1986, having been ch
 
 In `borb` the class `X11Color` represents all possible X11 colors.
 
-```python   
-COLOR_DEFINITION = {  
-    "AliceBlue": "#FFF0F8FF",  
-    "AntiqueWhite": "#FFFAEBD7",  
-    "Aqua": "#FF00FFFF",  
-    "Aquamarine": "#FF7FFFD4",  
-    "Azure": "#FFF0FFFF",  
-    "Beige": "#FFF5F5DC",  
-    "Bisque": "#FFFFE4C4",  
-    "Black": "#FF000000",  
+```python
+COLOR_DEFINITION = {
+    "AliceBlue": "#FFF0F8FF",
+    "AntiqueWhite": "#FFFAEBD7",
+    "Aqua": "#FF00FFFF",
+    "Aquamarine": "#FF7FFFD4",
+    "Azure": "#FFF0FFFF",
+    "Beige": "#FFF5F5DC",
+    "Bisque": "#FFFFE4C4",
+    "Black": "#FF000000",
     "BlanchedAlmond": "#FFFFEBCD",
     ... etc ...
 ```
@@ -1503,14 +1503,14 @@ All `Color` classes (with the exception of `HexColor`, `Pantone` and `X11Color`)
 This is consistent with the PDF specification, but may be unexpected for those that are used to working with other image-processing software.
 e.g. To represent pure red using `RGBColor`, you would write `RGBColor(Decimal(1), Decimal(0), Decimal(0))`.
 
-Failing to remember this little convention will often result in some `LayoutElement` objects being entirely black or white, 
-although the constructors of the aforementioned `Color` classes do have asserts to check whether the arguments that are passed do fall in the `0..1` range.  
+Failing to remember this little convention will often result in some `LayoutElement` objects being entirely black or white,
+although the constructors of the aforementioned `Color` classes do have asserts to check whether the arguments that are passed do fall in the `0..1` range.
 
 <div style="page-break-before: always;"></div>
 
 ### 2.4.3 Using `Alignment` on `Paragraph` objects
 
-Alignment is the process of determining where (in the available space) a `LayoutElement` should be positioned. 
+Alignment is the process of determining where (in the available space) a `LayoutElement` should be positioned.
 For any `LayoutElement`, there are at least 2 kinds of alignment:
 
 - `horizontal_alignment`: determines whether the `LayoutElement` should be positioned `LEFT`, `CENTERED` or `RIGHT` in the available space
@@ -1743,10 +1743,10 @@ You'll also try setting the horizontal_alignment to an invalid value, just to se
 
 #### 2.4.3.2 vertical alignment
 
-Now you can try the same for vertical_alignment. 
+Now you can try the same for vertical_alignment.
 In the next example you'll start by setting the vertical_alignment to `Alignment.TOP`.
 
-To ensure you can see the difference the various alignment settings make, you'll be adding a red rectangle to the page. 
+To ensure you can see the difference the various alignment settings make, you'll be adding a red rectangle to the page.
 This should make it clear where and how the paragraph is being laid out.
 
 ```python
@@ -1933,7 +1933,7 @@ For text_alignment, you can set the same values as horizontal_alignment, with on
 10.    divide the remaining space by the amount of space characters, call this delta
 11.    for each chunk of text (not space) in line_of_text:
 12.       lay out the chunk, keeping track of the x-position
-13.       if you encounter a space, update the x-position by adding delta 
+13.       if you encounter a space, update the x-position by adding delta
 ```
 The last line of the `Paragraph` is treated as if it was laid out with text_alignment set to `Alignment.LEFT`.
 
@@ -1985,9 +1985,9 @@ def main():
     # add the paragraph to the page
     Paragraph(
         """
-        Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. 
-        Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. 
-        Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. 
+        Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.
+        Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.
+        Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur.
         Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
         """,
         text_alignment=Alignment.JUSTIFIED,
@@ -2152,7 +2152,7 @@ if __name__ == "__main__":
 
 ![enter image description here](chapter_002/img/snippet_027.png)
 
-You will have noticed the final PDF does not seem to have any margin on the `Paragraph` element. This is of course because you explicitly laid out the `Paragraph` manually. `margin` is not considered to be *part of the element*. 
+You will have noticed the final PDF does not seem to have any margin on the `Paragraph` element. This is of course because you explicitly laid out the `Paragraph` manually. `margin` is not considered to be *part of the element*.
 
 After all, think of a browser-based context, where two inline elements have a margin specified. The effective margin that is used will depend on both elements (in fact the horizontal gap between them will typically be the maximum of both their respective margins).
 
@@ -2279,7 +2279,7 @@ if __name__ == "__main__":
 
 When you attempt to run this code, you should get the following assert:
 
-``` 
+```
 AssertionError: Image is too wide to fit inside column / page.
 ```
 
@@ -2313,7 +2313,7 @@ def main():
     # add an Image
     layout.add(
         Image(
-            Path("photo-1517260911058-0fcfd733702f.jpeg"),
+            "https://images.unsplash.com/photo-1517260911058-0fcfd733702f",
             width=Decimal(128),
             height=Decimal(128),
         )
@@ -2532,7 +2532,7 @@ if __name__ == "__main__":
 A QR code (abbreviated from Quick Response code) is a type of matrix barcode (or two-dimensional barcode) invented in 1994 by the Japanese automotive company Denso Wave.
 
 A QR code consists of black squares arranged in a square grid on a white background, which can be read by an imaging device such as a camera, and processed using Reed–Solomon error correction until the image can be appropriately interpreted. The required data is then extracted from patterns that are present in both horizontal and vertical components of the image.
- 
+
 In practice, QR codes often contain data for a locator, identifier, or tracker that points to a website or application.
 
 `borb` also supports QR-codes.
@@ -2613,8 +2613,8 @@ if __name__ == "__main__":
 
 ## 2.8 Adding `Chart` objects to a PDF
 
-Being able to add `Chart` objects to a `Page` can be very useful when creating certain kinds of documents. 
-Test-reports, or sales/revenue documents can often benefit from being illuminated by charts. 
+Being able to add `Chart` objects to a `Page` can be very useful when creating certain kinds of documents.
+Test-reports, or sales/revenue documents can often benefit from being illuminated by charts.
 `borb` supports (almost directly) adding `matplotlib` charts to a `Page`.
 
 In the next example you'll create a PDF `Document` and add a `Chart` to it.
@@ -2693,10 +2693,10 @@ if __name__ == "__main__":
 
 ## 2.9 Adding emoji to a PDF
 
-Emoji are typically a font-related thing, i.e. a font either supports emoji, or it doesn't. 
+Emoji are typically a font-related thing, i.e. a font either supports emoji, or it doesn't.
 As a consequence, you (the end user) may find yourself in a situation where you have a cool font that you'd like to use, but sadly the font doesn't support emoji.
 
-To fix this, `borb` comes bundled with upwards of 500 emoji. 
+To fix this, `borb` comes bundled with upwards of 500 emoji.
 These can easily be inserted into any `Document` or `Page`.
 
 In the next example you'll be using `BrowserLayout` to make it easy to place `Image` objects as inline `LayoutElement`.
@@ -2747,18 +2747,18 @@ if __name__ == "__main__":
 
 ## 2.10 Conclusion
 
-In this section you've learned the basics of creating a new PDF using `borb`. 
-In this section you've learned how various pieces of content are represented by the different `LayoutElement` implementations in `borb`. 
+In this section you've learned the basics of creating a new PDF using `borb`.
+In this section you've learned how various pieces of content are represented by the different `LayoutElement` implementations in `borb`.
 You've worked with text, images, barcodes, qr-codes, emoji, and geometric shapes.
 
 You've briefly explored classes like; `Paragraph`, `Image`, `Shape`, `Emoji`, `OrderedList`, `UnorderedList`, `FlexibleColumnWidthTable` and `FixedColumnWidthTable`.
 
-You've learned how to set various properties like `font_color`, or `background_color` 
+You've learned how to set various properties like `font_color`, or `background_color`
 and even used `horizontal_alignment` , `vertical_alignment` and `text_alignment`.
 
 You've briefly explored `PageLayout`, `BrowserLayout` and even manual layout.
 
-To see how you can use all of those techniques together, 
+To see how you can use all of those techniques together,
 check out some of the deep-dives, where I'll show you how to create an invoice from start to finish.
 
 <div style="page-break-before: always;"></div>
@@ -2949,7 +2949,7 @@ if __name__ == "__main__":
 
 ### 3.1.2 Working with `RomanNumeralOrderedList`
 
-`borb` also supports lists with roman numerals. It works exactly the same as the regular `OrderedList`. 
+`borb` also supports lists with roman numerals. It works exactly the same as the regular `OrderedList`.
 In the next example you'll be creating a simple `Document` featuring a `RomanNumeralOrderedList`:
 
 ```python
@@ -3048,8 +3048,8 @@ if __name__ == "__main__":
 
 ### 3.1.4 Nesting `List` objects
 
-Of course, sometimes you'd like to display a `List` of `Lists`. 
-As you already know, the content of a `List` can be just about anything. 
+Of course, sometimes you'd like to display a `List` of `Lists`.
+As you already know, the content of a `List` can be just about anything.
 So naturally, `borb` supports nested Lists.
 
 In the next example you'll be creating a nested unordered list.
@@ -3179,7 +3179,7 @@ I'll leave that as an exercise ;-)
 
 ## 3.2 Tables
 
-Tables offer another opportunity to present data in a format that is easily processed by the reader of your PDF's. 
+Tables offer another opportunity to present data in a format that is easily processed by the reader of your PDF's.
 You can create tables to represent invoices, itemized bills, forms, Sudoku's and much more.
 
 `borb` offers two main implementations of the base class `Table`:
@@ -3251,7 +3251,7 @@ if __name__ == "__main__":
 
 ![enter image description here](chapter_003/img/snippet_008.png)
 
-This is not exactly the best looking table in the world. 
+This is not exactly the best looking table in the world.
 Let's add some padding to all cells to ensure the text doesn't *stick* to the cell borders so much.
 
 ```python
@@ -3304,10 +3304,10 @@ if __name__ == "__main__":
 
 ![enter image description here](chapter_003/img/snippet_009.png)
 
-That's a lot better already. 
+That's a lot better already.
 
-As mentioned earlier, the precise ratio of the `page_width` that each column occupies is something you can configure. 
-In the next example you'll be setting one column to take up 50% of the `page_width`, 
+As mentioned earlier, the precise ratio of the `page_width` that each column occupies is something you can configure.
+In the next example you'll be setting one column to take up 50% of the `page_width`,
 and divide the remaining space among the other 2.
 
 ```python
@@ -3365,7 +3365,7 @@ if __name__ == "__main__":
 
 ![enter image description here](chapter_003/img/snippet_010.png)
 
-There are some other minor tweaks you can apply. 
+There are some other minor tweaks you can apply.
 To really visualize the next tweak, we should add some more data.
 
 ```python
@@ -3429,7 +3429,7 @@ if __name__ == "__main__":
 
 ### 3.2.2 FlexibleColumnWidthTable
 
-In the next example you're going to create a `Table` similar to the ones you created earlier. 
+In the next example you're going to create a `Table` similar to the ones you created earlier.
 The difference between both kinds of `Table` will become obvious.
 
 ```python
@@ -3539,7 +3539,7 @@ This is more in line with the behavior you'd expect from an `HTML` `<table>` ele
 
 ### 3.2.3 Setting layout properties on individual cells of a `Table`
 
-In the previous examples you've already set some layout properties. You've set padding and applied alternating background colors. Of course, there are use-cases where you'd like to set these properties on individual cell objects. 
+In the previous examples you've already set some layout properties. You've set padding and applied alternating background colors. Of course, there are use-cases where you'd like to set these properties on individual cell objects.
 
 In order to do that, you'll need to construct a `TableCell` object and apply the style there. This may feel like a bit of a workaround, but you've already been using this object without knowing it.
 
@@ -3789,20 +3789,20 @@ if __name__ == "__main__":
     main()
 ```
 
-You'll have noticed that you created a `Table` that expects 6 pieces of content. 
-Yet, you added only 4. 
+You'll have noticed that you created a `Table` that expects 6 pieces of content.
+Yet, you added only 4.
 The remainder will be dealt with by `borb` automatically.
 
 ![enter image description here](chapter_003/img/snippet_016.png)
 
-**Keep in mind the style will be the default style.** 
-If that's not what you want, you should add each TableCell individually, 
+**Keep in mind the style will be the default style.**
+If that's not what you want, you should add each TableCell individually,
 or write a convenience method that builds empty cells with the appropriate style.
 
 ### 3.2.5 Setting `col_span` and `row_span`
 
-Sometimes, you'd like to shake things up a bit. 
-For instance using a `TableCell` that spans multiple rows or columns. 
+Sometimes, you'd like to shake things up a bit.
+For instance using a `TableCell` that spans multiple rows or columns.
 `borb` naturally supports concepts such as `col_span` and `row_span`
 
 In the next example you'll be using `col_span` on a `TableCell` object.
@@ -4065,31 +4065,31 @@ You've seen some pratical differences between the various implementations of `Ta
 
 From wikipedia:
 
-> XFA (also known as XFA forms) stands for XML Forms Architecture, a family of proprietary XML specifications that was suggested and developed by JetForm to enhance the processing of web forms.  
-> It can be also used in PDF files starting with the PDF 1.5 specification. 
-> The XFA specification is referenced as an external specification necessary for full application of the ISO 32000-1 specification (PDF 1.7). 
+> XFA (also known as XFA forms) stands for XML Forms Architecture, a family of proprietary XML specifications that was suggested and developed by JetForm to enhance the processing of web forms.
+> It can be also used in PDF files starting with the PDF 1.5 specification.
+> The XFA specification is referenced as an external specification necessary for full application of the ISO 32000-1 specification (PDF 1.7).
 > The XML Forms Architecture was not standardized as an ISO standard, and has been deprecated in PDF 2.0.
 
 ## 4.2 The `FormField` object
 
 From the PDF specification:
 
-> An interactive form (PDF 1.2)—sometimes referred to as an AcroForm—is a collection of fields for gathering information interactively from the user. 
+> An interactive form (PDF 1.2)—sometimes referred to as an AcroForm—is a collection of fields for gathering information interactively from the user.
 > A PDF document may contain any number of fields appearing on any combination of pages, all of which make up a single, global interactive form spanning the entire document.
 > Arbitrary subsets of these fields can be imported or exported from the document; see 12.7.5, “Form Actions.”
 >
-> Each field in a document’s interactive form shall be defined by a field dictionary (see 12.7.3, “Field Dictionaries”). 
+> Each field in a document’s interactive form shall be defined by a field dictionary (see 12.7.3, “Field Dictionaries”).
 > For purposes of definition and naming, the fields can be organized hierarchically and can inherit attributes from their ancestors in the field hierarchy.
-> 
-> A field’s children in the hierarchy may also include widget annotations (see 12.5.6.19, “Widget Annotations”) that define its appearance on the page. 
-> A field that has children that are fields is called a non-terminal field. 
+>
+> A field’s children in the hierarchy may also include widget annotations (see 12.5.6.19, “Widget Annotations”) that define its appearance on the page.
+> A field that has children that are fields is called a non-terminal field.
 > A field that does not have children that are fields is called a terminal field.
 
-> Interactive forms (see 12.7, “Interactive Forms”) use widget annotations (PDF 1.2) to represent the appearance of fields and to manage user interactions. 
-> As a convenience, when a field has only a single associated widget annotation, the contents of the field dictionary (12.7.3, “Field Dictionaries”) 
+> Interactive forms (see 12.7, “Interactive Forms”) use widget annotations (PDF 1.2) to represent the appearance of fields and to manage user interactions.
+> As a convenience, when a field has only a single associated widget annotation, the contents of the field dictionary (12.7.3, “Field Dictionaries”)
 > and the annotation dictionary may be merged into a single dictionary containing entries that pertain to both a field and an annotation.
 
-`borb` supports AcroForm technology in a way that is indistinguishable from other `LayoutElement` implementations. 
+`borb` supports AcroForm technology in a way that is indistinguishable from other `LayoutElement` implementations.
 To the user, the technical side of forms (especially to the level of how the `Dictionary` objects are structured) is often not that important.
 
 You can add a `FormField` object to a `Page` or `PageLayout` in the same way you'd add a `Paragraph` and everything will be taken care of.
@@ -4097,7 +4097,7 @@ You can add a `FormField` object to a `Page` or `PageLayout` in the same way you
 
 ## 4.3 Adding `FormField` objects to a PDF
 
-`FormField` represents the common base implementation of form fields. 
+`FormField` represents the common base implementation of form fields.
 It handles the logic that is common to `TextField`, `CheckBox`, `DropDownList` and other classes.
 
 ### 4.3.1 Adding a `TextField` to a PDF
@@ -4431,7 +4431,7 @@ if __name__ == "__main__":
 
 ### 4.3.8 Adding a `PushButton` to a PDF
 
-You can also add a `PushButton` to a PDF. 
+You can also add a `PushButton` to a PDF.
 These buttons can be configured (using their `\Action` dictionary) to interact with the PDF in predefined ways.
 The default action (assuming you do not specify anything) is to reset the form (clearing all the input).
 
@@ -4575,7 +4575,7 @@ For more information on how to use `JavaScript` inside a PDF, I recommend the fo
 ## 4.4 Getting the value of a `FormField` in an existing PDF
 
 In this section you'll learn how to retrieve the values that a user filled in from a PDF AcroForm.
-You'll be using the PDF created earlier. 
+You'll be using the PDF created earlier.
 Be sure to open it, fill in some values, and save it in order to get everything ready for this example.
 
 We'll start by creating a PDF with a form in it:
@@ -4841,7 +4841,7 @@ It can be very useful to be able to extract these. Processing an invoice for ins
 
 ### 5.1.1 Extracting the author from a PDF
 
-In the next example you'll start by extracting the author from the PDF. 
+In the next example you'll start by extracting the author from the PDF.
 This is of course assuming this property was set by whatever software created the PDF.
 
 In order to be able to test these examples and get the same result as the book, I am providing a snippet of code here that will generate a very simple PDF;
@@ -4874,9 +4874,9 @@ def main():
     layout.add(
         Paragraph(
             """
-                        Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. 
-                        Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. 
-                        Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. 
+                        Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.
+                        Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.
+                        Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur.
                         Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
                          """
         )
@@ -4935,15 +4935,15 @@ if __name__ == "__main__":
 
 This will print `Joris Schellekens` to the terminal (in the case of the demo-PDF created by the earlier example of course).
 
-Keep in mind that this property (`/Author`) is not mandatory. 
-So the code may simply return (and thus print) `None`. 
+Keep in mind that this property (`/Author`) is not mandatory.
+So the code may simply return (and thus print) `None`.
 This is not a bug, it simply means the `/Author` property was not explicitly set.
 
 ### 5.1.2 Extracting the producer from a PDF
 
 Similarly, you can extract other properties, like the producer. This is typically the name of the piece of software that created the PDF (or last modified the PDF).
 
-This is important. The PDF specification is not always precise or clear-cut. 
+This is important. The PDF specification is not always precise or clear-cut.
 Some PDF software might do things a little differently than others, thus causing potential incompatibility.
 
 You can easily mitigate this by checking the producer property, and separating the problematic files.
@@ -4973,21 +4973,21 @@ if __name__ == "__main__":
     main()
 ```
 
-Of course, now that you know how to extract the author and the producer, 
+Of course, now that you know how to extract the author and the producer,
 you can check out the other methods of `DocumentInfo` and find out even more about any PDF that comes your way.
 
 ### 5.1.3 using XMP meta information
 
 This is from `adobe.com`:
 
-> Adobe’s Extensible Metadata Platform (XMP) is a file labeling technology that lets you embed metadata into files themselves during the content creation process. 
-> With an XMP enabled application, your workgroup can capture meaningful information about a project (such as titles and descriptions, searchable keywords, and up-to-date author and copyright information) in a format that is easily understood by your team as well as by software applications, hardware devices, and even file formats. 
+> Adobe’s Extensible Metadata Platform (XMP) is a file labeling technology that lets you embed metadata into files themselves during the content creation process.
+> With an XMP enabled application, your workgroup can capture meaningful information about a project (such as titles and descriptions, searchable keywords, and up-to-date author and copyright information) in a format that is easily understood by your team as well as by software applications, hardware devices, and even file formats.
 > Best of all, as team members modify files and assets, they can edit and update the metadata in real time during the workflow.>
 
 This next example is similar to the earlier example involving `DocumentInfo`.
 But in stead, we will use `XMPDocumentInfo`. This class offers even more methods to get information from a PDF `Document`.
 
-Keep in mind that XMP is not a requirement for a PDF `Document` to be valid. 
+Keep in mind that XMP is not a requirement for a PDF `Document` to be valid.
 So you may find these methods return `None` when you test them on a `Document` that does not have embedded XMP data.
 
 ```python
@@ -5025,12 +5025,12 @@ xmp.id:54e5adca-494c-4c10-983a-daa03cdae65a
 
 ## 5.2 Extracting text from a PDF
 
-Being able to extract text from a PDF is a fundamental skill. 
+Being able to extract text from a PDF is a fundamental skill.
 In the deep-dive, you'll learn more about PDF syntax, and why text-extraction is a non-trivial thing.
 
 For now, you can start with an easy example where all visible text on the page is extracted.
 
-This extraction process does not take into account any structure that may be present on the page itself. 
+This extraction process does not take into account any structure that may be present on the page itself.
 Hence the name `SimpleTextExtraction`.
 
 You'll be using the same input PDF as earlier (containing a paragraph of lorem ipsum).
@@ -5064,8 +5064,8 @@ if __name__ == "__main__":
 
 Here you've used the alternative method for `PDF.loads` which takes an array of `EventListener` objects as its argument.
 
-`PDF.loads` will open the PDF, and start processing PDF syntax. 
-Whenever it handles certain commands (rendering text, rendering images, switching to a new page, etc), 
+`PDF.loads` will open the PDF, and start processing PDF syntax.
+Whenever it handles certain commands (rendering text, rendering images, switching to a new page, etc),
 it will send out `Event` objects. These can be handled by the appropriate `EventListener` implementation.
 
 `SimpleTextExtraction` is one of those `EventListener` implementations that listens to:
@@ -5091,11 +5091,11 @@ laborum.
 
 ## 5.3 Extracting text using regular expressions
 
-This is a much more advanced way to extract text from a PDF. 
-By using regular expressions, you can easily look for things like "total amount due" followed by some numbers. 
+This is a much more advanced way to extract text from a PDF.
+By using regular expressions, you can easily look for things like "total amount due" followed by some numbers.
 And, in doing so, effectively retrieve the useful data from an invoice.
 
-In the next example you'll be doing exactly that. 
+In the next example you'll be doing exactly that.
 The code is very similar to what you've done earlier.
 
 ```python
@@ -5134,19 +5134,19 @@ if __name__ == "__main__":
     main()
 ```
 
-Like before, you constructed an implementation of `EventListener` and passed it to the `PDF.loads` method. 
+Like before, you constructed an implementation of `EventListener` and passed it to the `PDF.loads` method.
 `RegularExpressionTextExtraction` takes a regular expression as its single argument.
 
-Once the `Document` has been parsed, you can retrieve all matches by specifying a `page_nr`. 
+Once the `Document` has been parsed, you can retrieve all matches by specifying a `page_nr`.
 Pages are numbered from 0.
 
-You'll get back a `typing.List[PDFMatch]` which is meant to behave like a `re.Match` object. 
+You'll get back a `typing.List[PDFMatch]` which is meant to behave like a `re.Match` object.
 Most of its fields and methods are written to work interchangeably with `re.Match`.
 
-Of course, because a PDF has a dimensionality to it (content is located on an x/y plane), 
+Of course, because a PDF has a dimensionality to it (content is located on an x/y plane),
 there are some extra methods. Such as `get_bounding_boxes()` which returns a `typing.List[Rectangle]'.
 
-You may be wondering why a single match against a regular expression would return multiple bounding boxes. 
+You may be wondering why a single match against a regular expression would return multiple bounding boxes.
 This happens when content is matched over multiple lines.
 
 In this example however, the output should be:
@@ -5156,15 +5156,15 @@ In this example however, the output should be:
 	59.500000 740.916000 99.360000 11.100000
 ```
 
-indicating a single match, with text "lorem ipsum dolor", 
+indicating a single match, with text "lorem ipsum dolor",
 with bounding box (lower left corner) at `[59.5, 740.916]` and a width of `99.36` and a height of `11.1`.
 
 <div style="page-break-before: always;"></div>
 
 ## 5.4 Extracting text using its bounding box
 
-Another extraction process relies on the rendering of the PDF itself. 
-Perhaps the PDF's you are processing always have some kind of information at a precise location 
+Another extraction process relies on the rendering of the PDF itself.
+Perhaps the PDF's you are processing always have some kind of information at a precise location
 (e.g. an invoice number in the top right corner).
 
 This implementation of `EventListener` allows you to filter events (i.e. rendering instructions) by providing `borb` with a bounding box.
@@ -5221,15 +5221,15 @@ Lorem ipsum dolor
 
 ## 5.5 Combining regular expressions and bounding boxes
 
-Of course, `borb` is designed to be a library, 
+Of course, `borb` is designed to be a library,
 so the idea of being able to strap together your own tools using the toolkit is very important to me.
 
 In the next example you'll be combining a regular expression expression extraction technique with a bounding box.
 
-First you'll be looking for the precise location of the text "nisi ut aliquip". 
+First you'll be looking for the precise location of the text "nisi ut aliquip".
 Once you have matched this regular expression, you also have its location on the page.
 
-Then you can extend this box, 
+Then you can extend this box,
 knowing the text you'd really like to extract will be on the right of that piece of text.
 
 ```python
@@ -5291,12 +5291,12 @@ if __name__ == "__main__":
     main()
 ```
 
-This example is a lot to take in. 
-Try it out, read through it carefully. 
+This example is a lot to take in.
+Try it out, read through it carefully.
 It's important to understand these basic concepts in `borb` to really get the most out of it.
 
-This example starts out similar to the earlier example ["Extracting text using regular expressions"](#33-extracting-text-using-regular-expressions), 
-it uses the returned `PDFMatch` to determine the location of the text. 
+This example starts out similar to the earlier example ["Extracting text using regular expressions"](#33-extracting-text-using-regular-expressions),
+it uses the returned `PDFMatch` to determine the location of the text.
 With this location it processes the `Document` again, filtering a modified bounding box.
 
 This example prints:
@@ -5305,8 +5305,8 @@ This example prints:
 ex ea commodo conse uat. Duis aute irure dolor in
 ```
 
-This example might seem contrived, but there are definitely use-cases where this exact behavior comes in handy. 
-Imagine processing a `Document`, looking for "amount due", 
+This example might seem contrived, but there are definitely use-cases where this exact behavior comes in handy.
+Imagine processing a `Document`, looking for "amount due",
 and then modifying the bounding box to retrieve the amount and currency that is typically next to it.
 
 The same strategy can be used to extract addresses from invoices, or anything similar really.
@@ -5319,25 +5319,25 @@ The same strategy can be used to extract addresses from invoices, or anything si
 
 From wikipedia:
 
-> In information retrieval, tf–idf, TF*IDF, or TFIDF, short for term frequency–inverse document frequency, is a numerical statistic that is intended to reflect how important a word is to a document in a collection or corpus. 
-> It is often used as a weighting factor in searches of information retrieval, text mining, and user modeling. 
-> The tf–idf value increases proportionally to the number of times a word appears in the document and is offset by the number of documents in the corpus that contain the word, which helps to adjust for the fact that some words appear more frequently in general. 
+> In information retrieval, tf–idf, TF*IDF, or TFIDF, short for term frequency–inverse document frequency, is a numerical statistic that is intended to reflect how important a word is to a document in a collection or corpus.
+> It is often used as a weighting factor in searches of information retrieval, text mining, and user modeling.
+> The tf–idf value increases proportionally to the number of times a word appears in the document and is offset by the number of documents in the corpus that contain the word, which helps to adjust for the fact that some words appear more frequently in general.
 > tf–idf is one of the most popular term-weighting schemes today.
 
 #### 5.6.1.1 Term Frequency
 
 From wikipedia:
 
-> Suppose we have a set of English text documents and wish to rank them by which document is more relevant to the query, "the brown cow". 
-> A simple way to start out is by eliminating documents that do not contain all three words "the", "brown", and "cow", but this still leaves many documents. 
-> To further distinguish them, we might count the number of times each term occurs in each document; the number of times a term occurs in a document is called its term frequency. 
-> However, in the case where the length of documents varies greatly, adjustments are often made (see definition below). 
+> Suppose we have a set of English text documents and wish to rank them by which document is more relevant to the query, "the brown cow".
+> A simple way to start out is by eliminating documents that do not contain all three words "the", "brown", and "cow", but this still leaves many documents.
+> To further distinguish them, we might count the number of times each term occurs in each document; the number of times a term occurs in a document is called its term frequency.
+> However, in the case where the length of documents varies greatly, adjustments are often made (see definition below).
 
 #### 5.6.1.2 Inverse document frequency
 
 From wikipedia:
 
-> Because the term "the" is so common, term frequency will tend to incorrectly emphasize documents which happen to use the word "the" more frequently, without giving enough weight to the more meaningful terms "brown" and "cow". 
+> Because the term "the" is so common, term frequency will tend to incorrectly emphasize documents which happen to use the word "the" more frequently, without giving enough weight to the more meaningful terms "brown" and "cow".
 > The term "the" is not a good keyword to distinguish relevant and non-relevant documents and terms, unlike the less-common words "brown" and "cow". Hence, an inverse document frequency factor is incorporated which diminishes the weight of terms that occur very frequently in the document set and increases the weight of terms that occur rarely.
 
 #### 5.6.1.3 Using TF-IDF in `borb`
@@ -5375,11 +5375,11 @@ def main():
     layout.add(
         Paragraph(
             """
-    Lorem Ipsum is simply dummy text of the printing and typesetting industry. 
-    Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, 
-    when an unknown printer took a galley of type and scrambled it to make a type specimen book. 
-    It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. 
-    It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, 
+    Lorem Ipsum is simply dummy text of the printing and typesetting industry.
+    Lorem Ipsum has been the industry's standard dummy text ever since the 1500s,
+    when an unknown printer took a galley of type and scrambled it to make a type specimen book.
+    It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged.
+    It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages,
     and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum.
     """
         )
@@ -5390,13 +5390,13 @@ def main():
     layout.add(
         Paragraph(
             """
-    Contrary to popular belief, Lorem Ipsum is not simply random text. 
-    It has roots in a piece of classical Latin literature from 45 BC, making it over 2000 years old. 
-    Richard McClintock, a Latin professor at Hampden-Sydney College in Virginia, looked up one of the more obscure Latin words, 
-    consectetur, from a Lorem Ipsum passage, and going through the cites of the word in classical literature, 
-    discovered the undoubtable source. Lorem Ipsum comes from sections 1.10.32 and 1.10.33 of "de Finibus Bonorum et Malorum" 
-    (The Extremes of Good and Evil) by Cicero, written in 45 BC. 
-    This book is a treatise on the theory of ethics, very popular during the Renaissance. 
+    Contrary to popular belief, Lorem Ipsum is not simply random text.
+    It has roots in a piece of classical Latin literature from 45 BC, making it over 2000 years old.
+    Richard McClintock, a Latin professor at Hampden-Sydney College in Virginia, looked up one of the more obscure Latin words,
+    consectetur, from a Lorem Ipsum passage, and going through the cites of the word in classical literature,
+    discovered the undoubtable source. Lorem Ipsum comes from sections 1.10.32 and 1.10.33 of "de Finibus Bonorum et Malorum"
+    (The Extremes of Good and Evil) by Cicero, written in 45 BC.
+    This book is a treatise on the theory of ethics, very popular during the Renaissance.
     The first line of Lorem Ipsum, "Lorem ipsum dolor sit amet..", comes from a line in section 1.10.32.
     """
         )
@@ -5453,9 +5453,9 @@ This outputs:
 
 ```commandline
 /usr/bin/python3.8 /home/joris/Code/borb-examples-dev/chapter_005/src/snippet_010.py
-[('LOREM', 9.100909090909093e-06), 
- ('IPSUM', 9.100909090909093e-06), 
- ('TEXT', 2.737272727272727e-06), 
+[('LOREM', 9.100909090909093e-06),
+ ('IPSUM', 9.100909090909093e-06),
+ ('TEXT', 2.737272727272727e-06),
  ('LATIN', 2.737272727272727e-06)]
 
 Process finished with exit code 0
@@ -5463,7 +5463,7 @@ Process finished with exit code 0
 
 ### 5.6.2 Extracting keywords from a PDF using  textrank
 
-TextRank is a graph-based ranking model for text processing which can be used in order to find the most relevant sentences in text and also to find keywords. 
+TextRank is a graph-based ranking model for text processing which can be used in order to find the most relevant sentences in text and also to find keywords.
 The algorithm is explained in detail in the paper at https://web.eecs.umich.edu/~mihalcea/papers/mihalcea.emnlp04.pdf
 
 ```python
@@ -5504,9 +5504,9 @@ This outputs:
 
 ```commandline
 /usr/bin/python3.8 /home/joris/Code/borb-examples-dev/chapter_005/src/snippet_011.py
-[('LOREM', 9.100909090909093e-06), 
- ('IPSUM', 9.100909090909093e-06), 
- ('TEXT', 2.737272727272727e-06), 
+[('LOREM', 9.100909090909093e-06),
+ ('IPSUM', 9.100909090909093e-06),
+ ('TEXT', 2.737272727272727e-06),
  ('LATIN', 2.737272727272727e-06)]
 
 Process finished with exit code 0
@@ -5516,10 +5516,10 @@ Process finished with exit code 0
 
 ## 5.7 Extracting color-information
 
-This is perhaps a bit more of a tangent, but I can imagine it may be useful. 
+This is perhaps a bit more of a tangent, but I can imagine it may be useful.
 In this particular example you'll be extracting color-information from a PDF.
 
-Given the previous examples, you can easily adapt this technique to build a filter (similar to the location-based filter). 
+Given the previous examples, you can easily adapt this technique to build a filter (similar to the location-based filter).
 
 By doing so, you unlock the possibility of processing a PDF by saying "look for text in the color red" or "look for text in the top right corner, in blue".
 
@@ -5581,10 +5581,10 @@ if __name__ == "__main__":
 
 ![enter image description here](chapter_005/img/snippet_012.png)
 
-This `Document` will serve as the input for the extraction example. 
+This `Document` will serve as the input for the extraction example.
 
-Rather than printing the result of the extraction to the command-line, 
-you'll create an output-pdf. I think it's a lot more visual to actually see the colors that were extracted, 
+Rather than printing the result of the extraction to the command-line,
+you'll create an output-pdf. I think it's a lot more visual to actually see the colors that were extracted,
 rather than having their RGB values printed out on the console.
 
 ```python
@@ -5839,13 +5839,13 @@ Hello World, from Courier!
 ### 5.8.2 Filtering by `font_color`
 
 Being able to filter by `font_color` allows you to extract text in a much more fine-grained way.
-You could filter out only the red text from an invoice, 
+You could filter out only the red text from an invoice,
 or combine this particular filter with other filter implementations and do even crazier things.
 
 This implementation of `EventListener` takes 2 arguments at construction:
 
 - `color` : The `Color` you'd like to keep
-- `maximum_normalized_rgb_distance` :   This is the maximum allowable distance between the `Color` in the PDF and the `color` parameter. This allows you to filter on "everything that looks kinda red" rather than "everything that is this exact shade of red".                                  
+- `maximum_normalized_rgb_distance` :   This is the maximum allowable distance between the `Color` in the PDF and the `color` parameter. This allows you to filter on "everything that looks kinda red" rather than "everything that is this exact shade of red".
                                         The distance is defined as ((r0 - r1)² - (g0 - g1)² + (b0 - b1)²) / 3, with r, g, b being the red, green, blue components of the `Color`.
 
 We're going to start by creating an input PDF with text in various colors.
@@ -6044,18 +6044,18 @@ This should print:
 <PIL.JpegImagePlugin.JpegImageFile image mode=RGB size=2640x3300 at 0x7F3BE441B580>
 ```
 
-What's interesting is that even though you inserted the `Image` objects and specified a particular size, the extracted `Image` is actually a lot larger. 
-This is because PDF simply has its own way of dealing with resizing images. 
-And there are use-cases where you might actually want this behavior. 
+What's interesting is that even though you inserted the `Image` objects and specified a particular size, the extracted `Image` is actually a lot larger.
+This is because PDF simply has its own way of dealing with resizing images.
+And there are use-cases where you might actually want this behavior.
 
-You could embed a tiny example of an `Image` in a `Document`, 
+You could embed a tiny example of an `Image` in a `Document`,
 knowing the recipient can extract the full (much richer) `Image`.
 
-Of course, if you're using this `Image` as a company logo, 
-or part of the header/footer of the `Document`, 
+Of course, if you're using this `Image` as a company logo,
+or part of the header/footer of the `Document`,
 you typically want the image to be as small as possible (while remaining legible).
 
-In one of the upcoming examples you'll see how to subsample an `Image` in a PDF, 
+In one of the upcoming examples you'll see how to subsample an `Image` in a PDF,
 and you'll see firsthand how this technique can help reduce your document's memory footprint.
 
 ### 5.9.1 Modifying images in an existing PDF
@@ -6177,7 +6177,7 @@ The result should look like this:
 As you've found out in a previous example, sometimes the dimensions at which an `Image` is displayed are not the same as the dimensions at which it was stored.
 This can lead to a rather bulky PDF, if each `Image` is substantially larger than its display-dimensions.
 
-In the next example, you'll be fixing that. 
+In the next example, you'll be fixing that.
 Luckily `borb` comes with `ImageFormatOptimization` which does all the heavy lifting for you.
 
 As a benchmark, you can first have a look at the file-characteristics of the original input PDF.
@@ -6232,12 +6232,12 @@ You'll see that the output file looks the same, although there may have been som
 
 ## 5.10 Working with embedded files
 
-PDF is more than just a digital paper-replacement. 
+PDF is more than just a digital paper-replacement.
 PDF also has some features that go beyond "imitating paper".
-For instance PDF allows you embed one or multiple files inside the document. 
+For instance PDF allows you embed one or multiple files inside the document.
 By doing so, you can provide extra resources for whoever reads the document.
 
-In one particular use-case, a german invoicing standard (ZUGFeRD) requires the creator of the invoice to embed an XML representation of the invoice, 
+In one particular use-case, a german invoicing standard (ZUGFeRD) requires the creator of the invoice to embed an XML representation of the invoice,
 to ensure the document can be processed automatically.
 
 In this section you'll handle both extraction of embedded files, and appending embedded files to a `Document`.
@@ -6272,10 +6272,10 @@ def main():
     l.add(
         Paragraph(
             """
-                    Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. 
-                    Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. 
-                    Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. 
-                    Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.    
+                    Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.
+                    Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.
+                    Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur.
+                    Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
                     """
         )
     )
@@ -6300,11 +6300,11 @@ if __name__ == "__main__":
     main()
 ```
 
-The PDF should look something like this: 
+The PDF should look something like this:
 
 ![enter image description here](chapter_005/img/snippet_025_001.png)
 
-Notice the warning you see atop the PDF viewer. 
+Notice the warning you see atop the PDF viewer.
 This may of course vary depending on the viewer you're using.
 If you open the embedded file pane (again depending on your editor) you may see something similar to this:
 
@@ -6387,11 +6387,11 @@ def main():
     l.add(
         Paragraph(
             """
-                    Lorem Ipsum is simply dummy text of the printing and typesetting industry. 
-                    Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, 
-                    when an unknown printer took a galley of type and scrambled it to make a type specimen book. 
-                    It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. 
-                    It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, 
+                    Lorem Ipsum is simply dummy text of the printing and typesetting industry.
+                    Lorem Ipsum has been the industry's standard dummy text ever since the 1500s,
+                    when an unknown printer took a galley of type and scrambled it to make a type specimen book.
+                    It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged.
+                    It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages,
                     and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum.
                     """,
             font_color=HexColor("de6449"),
@@ -6438,9 +6438,9 @@ def main():
     l.add(
         Paragraph(
             """
-                    Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. 
-                    Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. 
-                    Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. 
+                    Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.
+                    Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.
+                    Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur.
                     Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
                     """,
             font_color=HexColor("f1cd2e"),
@@ -6502,7 +6502,7 @@ if __name__ == "__main__":
 
 ![enter image description here](chapter_005/img/snippet_029.png)
 
-You don't have to fully merge both `Document` objects, you can just copy a couple of `Page` objects from one `Document` to another.     
+You don't have to fully merge both `Document` objects, you can just copy a couple of `Page` objects from one `Document` to another.
 In the next example you'll be selecting one `Page` from each `Document` and building a new PDF with them.
 
 You'll start by creating a slightly modified version of the first document from the previous example.
@@ -6545,11 +6545,11 @@ def main():
         l.add(
             Paragraph(
                 """
-                        Lorem Ipsum is simply dummy text of the printing and typesetting industry. 
-                        Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, 
-                        when an unknown printer took a galley of type and scrambled it to make a type specimen book. 
-                        It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. 
-                        It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, 
+                        Lorem Ipsum is simply dummy text of the printing and typesetting industry.
+                        Lorem Ipsum has been the industry's standard dummy text ever since the 1500s,
+                        when an unknown printer took a galley of type and scrambled it to make a type specimen book.
+                        It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged.
+                        It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages,
                         and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum.
                         """,
                 font_color=HexColor("de6449"),
@@ -6726,9 +6726,9 @@ def main():
         l.add(
             Paragraph(
                 """
-                        Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. 
-                        Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. 
-                        Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. 
+                        Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.
+                        Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.
+                        Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur.
                         Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
                         """
             )
@@ -6793,7 +6793,7 @@ You can see (in the thumbnail panel on the left side) that the second page was r
 
 ## 5.13 Rotating pages in PDF documents
 
-In this example you'll be rotating a `Page` 90 degrees clockwise. 
+In this example you'll be rotating a `Page` 90 degrees clockwise.
 You can rotate a `Page` any multiple of 90 degrees.
 
 ```python
@@ -6844,9 +6844,9 @@ def main():
         l.add(
             Paragraph(
                 """
-                        Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. 
-                        Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. 
-                        Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. 
+                        Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.
+                        Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.
+                        Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur.
                         Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
                         """
             )
@@ -6911,7 +6911,7 @@ if __name__ == "__main__":
 
 ## 5.14 Conclusion
 
-In this section you've learned the basics of working with existing PDF documents. 
+In this section you've learned the basics of working with existing PDF documents.
 You've seen how to extract text, regular expressions, images, font-information and color-information.
 
 And you've seen the basics of merging PDF's and removing one or more pages from a PDF.
@@ -6919,7 +6919,7 @@ And you've seen the basics of merging PDF's and removing one or more pages from 
 This section, together with the previous wraps up the basics of what you can do with `borb`.
 
 I would encourage you to continue reading, and more importantly to continue exploring `borb`.
-There are many more options and algorithms that you may find useful. 
+There are many more options and algorithms that you may find useful.
 As a developer, expanding your toolkit with more knowledge is never a bad thing.
 
 <div style="page-break-before: always;"></div>
@@ -6969,9 +6969,9 @@ def main():
     layout.add(
         Paragraph(
             """
-                        Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. 
-                        Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. 
-                        Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. 
+                        Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.
+                        Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.
+                        Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur.
                         Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
                         """
         )
@@ -7013,7 +7013,7 @@ So `borb` does not offer much convenience methods, because it assumes the precis
 
 ## 6.2 Adding text annotations
 
-In this example you'll be creating a text-annotation. 
+In this example you'll be creating a text-annotation.
 This is comparable to adding a pop-up Post-it note to a PDF.
 
 ```python
@@ -7045,9 +7045,9 @@ def main():
     layout.add(
         Paragraph(
             """
-                        Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. 
-                        Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. 
-                        Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. 
+                        Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.
+                        Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.
+                        Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur.
                         Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
                         """
         )
@@ -7102,7 +7102,7 @@ Clicking a link-annotation can:
 - Set the zoom level at which the page is being displayed
 - Set the crop box of the PDF reader
 
-In the next example, you'll create a `Document` with several pages, 
+In the next example, you'll create a `Document` with several pages,
 and provide each of them with a convenient "back to the beginning" link annotation.
 
 ```python
@@ -7148,9 +7148,9 @@ def main():
         layout.add(
             Paragraph(
                 """
-                        Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. 
-                        Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. 
-                        Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. 
+                        Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.
+                        Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.
+                        Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur.
                         Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
                         """
             )
@@ -7183,7 +7183,7 @@ if __name__ == "__main__":
 
 ![enter image description here](chapter_006/img/snippet_003.png)
 
-Try it! Navigate to any `Page` of the `Document` and click the link-annotation. 
+Try it! Navigate to any `Page` of the `Document` and click the link-annotation.
 It should send you straight back to the first `Page`.
 
 You used `DestinationType.FIT` in this example, which forces the viewer software to go to a given page (0 in this case),
@@ -7278,9 +7278,9 @@ def main():
     layout.add(
         Paragraph(
             """
-                        Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. 
-                        Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. 
-                        Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. 
+                        Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.
+                        Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.
+                        Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur.
                         Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
                         """
         )
@@ -7349,9 +7349,9 @@ def main():
     layout.add(
         Paragraph(
             """
-                        Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. 
-                        Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. 
-                        Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. 
+                        Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.
+                        Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.
+                        Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur.
                         Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
                         """
         )
@@ -7399,7 +7399,7 @@ The different types of rubber stamps are limited (the PDF spec only defines a ha
 - `RubberStampAnnotationIconType.SOLD`
 - `RubberStampAnnotationIconType.TOP_SECRET`
 
-And the rendering of the stamp is entirely up to the reader software. 
+And the rendering of the stamp is entirely up to the reader software.
 So this example may look entirely different on your device.
 
 <div style="page-break-before: always;"></div>
@@ -7457,9 +7457,9 @@ def main():
     layout.add(
         Paragraph(
             """
-                        Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. 
-                        Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. 
-                        Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. 
+                        Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.
+                        Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.
+                        Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur.
                         Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
                         """
         )
@@ -7484,7 +7484,7 @@ if __name__ == "__main__":
 
 ![enter image description here](chapter_006/img/snippet_006.png)
 
-Of course, rather than passing a `Rectangle`, you can also use some of the logic you've applied in previous examples. 
+Of course, rather than passing a `Rectangle`, you can also use some of the logic you've applied in previous examples.
 For instance, you can use `RegularExpressionTextExtraction` to look for a regular expression and then redact it.
 This is particularly useful if you're trying to remove structured information such as:
 
@@ -7878,7 +7878,7 @@ The answer is often as straightforward as "your scanner hates you".
 Most of the documents for which this doesn't work are PDF documents that are essentially glorified images.
 They contain all the meta-data needed to constitute a PDF, but their pages are just large (often low-quality) images.
 
-As a consequence, there are no text-rendering instructions in these documents. 
+As a consequence, there are no text-rendering instructions in these documents.
 And most PDF libraries will not be able to handle them.
 
 `borb` however is different, `borb` just loves to help.
@@ -8182,26 +8182,26 @@ Markdown is a very convenient format (for developers and non-technical people) t
 
 You'll be using the following input markdown:
 
-> \# Headings  
+> \# Headings
 > To create a heading, add number signs (#) in front of a word or phrase. The number of number signs you use should correspond to the heading level. For example, to create a heading level three (\<h3\>), use three number signs (e.g., ### My Header).
->  
-> \# Heading level 1  
-> \#\# Heading level 2  
-> \#\#\# Heading level 3  
-> \#\#\#\# Heading level 4  
-> \#\#\#\#\# Heading level 5  
-> \#\#\#\#\#\# Heading level 6  
+>
+> \# Heading level 1
+> \#\# Heading level 2
+> \#\#\# Heading level 3
+> \#\#\#\# Heading level 4
+> \#\#\#\#\# Heading level 5
+> \#\#\#\#\#\# Heading level 6
 >
 > \#\# Alternate Syntax
 > Alternatively, on the line below the text, add any number of == characters for heading level 1 or -- characters for heading level 2.
 >
-> Heading level 1  
+> Heading level 1
 > \===============
 >
-> Heading level 2  
+> Heading level 2
 > \---------------
 >
-> \#\# Heading Best Practices  
+> \#\# Heading Best Practices
 > Markdown applications don’t agree on how to handle a missing space between the number signs (#) and the heading name. For compatibility, always put a space between the number signs and the heading name.
 >
 > You should also put blank lines before and after a heading for compatibility.
@@ -8246,19 +8246,19 @@ This produces the following PDF;
 
 ## 7.6 Exporting HTML as PDF
 
-Another wonderful format for content is HTML. 
-`borb` supports basic HTML to PDF conversion. 
+Another wonderful format for content is HTML.
+`borb` supports basic HTML to PDF conversion.
 Keep an eye out for this functionality in the future, as new features, tags and support will be added gradually.
 
 For this example, you'll be using the following HTML snippet:
 
-> \<html>  
->   \<head>  
->       \<title>Lorem Ipsum\</title>  
->   \</head>  
->       \<p>  
->            Hello World!  
->       \</p>  
+> \<html>
+>   \<head>
+>       \<title>Lorem Ipsum\</title>
+>   \</head>
+>       \<p>
+>            Hello World!
+>       \</p>
 >    \</html>
 
 ```python
@@ -8331,9 +8331,9 @@ From which the bigger objects are built:
 This is an example dictionary object:
 
 ```
-<<  /Root 1 0 R 
-    /Info 2 0 R 
-    /Size 18 
+<<  /Root 1 0 R
+    /Info 2 0 R
+    /Size 18
     /ID [<02c1677f2c452985480d6a68b2cdfe96> <02c1677f2c452985480d6a68b2cdfe96>]
     >>
 ```
@@ -8357,7 +8357,7 @@ is an array containing two hexadecimal string objects.
 
 The cross-reference table in a PDF is one of many tricks designed to speed up a reader. A cross-reference table (further abbreviated as XREF) contains a mapping of all PDF objects and their byte offset.
 
-A conforming reader will start reading a PDF backwards, reading the `startxref` keyword. 
+A conforming reader will start reading a PDF backwards, reading the `startxref` keyword.
 
 This is an example XREF:
 
@@ -8391,8 +8391,8 @@ startxref
 
 Just after the `startxref` keyword you'll find a number representing the byte offset at which the start of the XREF can be found.
 
-The start of the XREF table is delimited with the `xref` keyword. 
-Just after it you'll find two numbers (`0 18`). This means the first object of the PDF starts at number 0, and this XREF table contains 18 objects. 
+The start of the XREF table is delimited with the `xref` keyword.
+Just after it you'll find two numbers (`0 18`). This means the first object of the PDF starts at number 0, and this XREF table contains 18 objects.
 
 Each is responsible for a line like:
 
@@ -8401,8 +8401,8 @@ Each is responsible for a line like:
 ```
 
 This is the 7th line of the XREF, so this line relates to object number 7. It says object 7 can be found at byte offset `0000000273`.
-The second number on that line represents the `generation`. 
-PDF allows you to revise a document. 
+The second number on that line represents the `generation`.
+PDF allows you to revise a document.
 So each object has a generation to signify whether it belongs to a particular revision of the PDF.
 
 The last part of each line is `n` or `f`. `n` means the object is currently is use. Objects marked with `f` should be considered as non-content.
@@ -8422,7 +8422,7 @@ If you follow the `/Root` entry, you'll find something like:
 1 0 obj
 <</Type /Catalog /Pages 3 0 R /Outlines 4 0 R>>
 endobj
-``` 
+```
 
 The `/Pages` entry points to an array (one element per page), which form the beginning of the page-content.
 
@@ -8460,7 +8460,7 @@ stream
             24.000000 0 0 24.000000 59.500000 725.760000 Tm
             (Hello World!) Tj
             ET
-            Q 
+            Q
 
             q
             ... etc ...
@@ -8583,7 +8583,7 @@ Although this is not very practical it will do several things:
 
 - Give you a deeper appreciation for PDF libraries
 - Grant you to power to specify the document exactly as you want, now that you understand PDF at its finest
-- Enable you to write your own `LayoutElement` implementations (if needed) 
+- Enable you to write your own `LayoutElement` implementations (if needed)
 
 In this example, you'll be creating a PDF from scratch, containing "Hello World!", using only the low-level syntax.
 
@@ -8643,7 +8643,7 @@ The reason for the varying degrees of success is not just to do with the diligen
   In `HTML` for instance, a `<p>` element is rendered on a browser (it has coordinates), and all the text inside that element knows it is part of that paragraph. The paragraph itself may be part of some other element (a `<table>` or `<li>`, etc).
 - unstructured document format: no logical structure (or no such structure is mandatory)
 
-PDF is an unstructured format.   
+PDF is an unstructured format.
 You've explored the rendering instructions that make up a `Page`, and you will have noticed there is no indicator to say "all these instructions belong to one paragraph", or "this paragraph belongs to a table".
 You can of course do this (the PDF standard provides so called "tagged" PDF), but is rare to see such PDFs in the wild.
 
@@ -8673,7 +8673,7 @@ class ChunkOfTextRenderEvent(Event, ChunkOfText):
 ```
 
 This class represents the call-back information that is passed to `EventListener` objects.
-Whenever `borb` processes the page content-stream, every operator has the opportunity to send out these `Event` objects to `EventListener` implementations.     
+Whenever `borb` processes the page content-stream, every operator has the opportunity to send out these `Event` objects to `EventListener` implementations.
 
 This is the `ShowText` operator (the `Tj` operator in postscript);
 
@@ -8814,7 +8814,7 @@ from wikipedia.org
 > Syllabification (/sɪˌlæbɪfɪˈkeɪʃən/) or syllabication (/sɪˌlæbɪˈkeɪʃən/), also known as hyphenation, is the separation of a word into syllables, whether spoken, written or signed.
 >
 > The written separation into syllables is usually marked by a hyphen when using English orthography (e.g., syl-la-ble) and with a period when transcribing the actually spoken syllables in the International Phonetic Alphabet (IPA) (e.g., [ˈsɪ.lə.bᵊɫ]).
-> 
+>
 > For presentation purposes, typographers may use an interpunct (Unicode character U+00B7, e.g., syl·la·ble), a special-purpose "hyphenation point" (U+2027, e.g., syl‧la‧ble), or a space (e.g., syl la ble).
 
 At the end of a line, a word is separated in writing into parts, conventionally called "syllables", if it does not fit the line and if moving it to the next line would make the first line much shorter than the others. This can be a particular problem with very long words, and with narrow columns in newspapers.
@@ -8848,7 +8848,7 @@ The hyphenation algorithm is based on the [work of Franklin mark Liang](https://
 9.          a hyphen is allowed at this position
 ```
 
-The rules in aforementioned algorithm are language dependent, and are typically several thousands of rules poured into one file (e.g. `JSON`) which is loaded into a special datastructure (trie) which is optimized for this kind of lookup. 
+The rules in aforementioned algorithm are language dependent, and are typically several thousands of rules poured into one file (e.g. `JSON`) which is loaded into a special datastructure (trie) which is optimized for this kind of lookup.
 
 As an example, let's look at the word "birmingham".
 
@@ -8863,7 +8863,7 @@ As an example, let's look at the word "birmingham".
 |   |   |   |   |   |   |   |   |   |   |   |   |   |   | h |   | a | 2 |   |
 |   | 0 |   | 0 |   | 4 |   | 3 |   | 4 |   | 2 |   | 5 |   | 4 |   | 2 |   |
 
-After having run this algorithm, we know that "Birmingham" can be hyphenated as "Birm-ing-ham", 
+After having run this algorithm, we know that "Birmingham" can be hyphenated as "Birm-ing-ham",
 since those positions yield an odd max value.
 
 This algorithm is rather labour-intensive, so rather than running it on every word (and inserting soft-hyphens for instance),
@@ -8885,7 +8885,7 @@ Whenever the `Paragraph` is performing layout, it will do the following:
 11.             else:
 12.                 switch to next line, next line start with w
 13.         else:
-14.             switch to next line, next line starts with w 
+14.             switch to next line, next line starts with w
 ```
 
 This ensures hyphenation is only called when needed (rather than on every word in the sentence).
@@ -8922,23 +8922,23 @@ def main():
     # Paragraph 1
     l.add(Paragraph("Without hyphenation", font="Helvetica-bold", font_size=Decimal(20)))
     l.add(Paragraph("""
-                    Lorem Ipsum is simply dummy text of the printing and typesetting industry. 
-                    Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, 
-                    when an unknown printer took a galley of type and scrambled it to make a type specimen book. 
-                    It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. 
-                    It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, 
-                    and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum.    
+                    Lorem Ipsum is simply dummy text of the printing and typesetting industry.
+                    Lorem Ipsum has been the industry's standard dummy text ever since the 1500s,
+                    when an unknown printer took a galley of type and scrambled it to make a type specimen book.
+                    It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged.
+                    It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages,
+                    and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum.
                     """))
 
     # Paragraph 2
     l.add(Paragraph("With en-us hyphenation", font="Helvetica-bold", font_size=Decimal(20)))
     l.add(Paragraph("""
-                    Lorem Ipsum is simply dummy text of the printing and typesetting industry. 
-                    Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, 
-                    when an unknown printer took a galley of type and scrambled it to make a type specimen book. 
-                    It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. 
-                    It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, 
-                    and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum.    
+                    Lorem Ipsum is simply dummy text of the printing and typesetting industry.
+                    Lorem Ipsum has been the industry's standard dummy text ever since the 1500s,
+                    when an unknown printer took a galley of type and scrambled it to make a type specimen book.
+                    It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged.
+                    It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages,
+                    and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum.
                     """, hyphenation=Hyphenation("en-us")))
 
     # write
@@ -8979,17 +8979,17 @@ So for this example, representing a sudoku as a `str` will do fine.
 # every . represents an empty cell in the puzzle
 # this is easier to debug/change
 sudoku_str: str = """
- .  6  . | 8  .  3 | .  7  . 
- .  .  1 | .  .  . | .  6  9 
- 7  .  . | .  .  . | .  .  5 
+ .  6  . | 8  .  3 | .  7  .
+ .  .  1 | .  .  . | .  6  9
+ 7  .  . | .  .  . | .  .  5
 ---------+---------+--------
- .  .  . | 9  .  . | .  1  . 
- .  .  . | .  .  . | .  .  4 
- .  .  5 | .  1  . | .  .  . 
+ .  .  . | 9  .  . | .  1  .
+ .  .  . | .  .  . | .  .  4
+ .  .  5 | .  1  . | .  .  .
 ---------+---------+--------
- 5  4  . | .  8  . | .  .  7 
- .  .  . | 5  7  . | .  .  8 
- .  9  7 | 3  .  . | .  .  . 
+ 5  4  . | .  8  . | .  .  7
+ .  .  . | 5  7  . | .  .  8
+ .  9  7 | 3  .  . | .  .  .
 """
 
 # process sudoku_str to remove everything that is not a number or dot
@@ -9015,17 +9015,17 @@ from decimal import Decimal
 # every . represents an empty cell in the puzzle
 # this is easier to debug/change
 sudoku_str: str = """
- .  6  . | 8  .  3 | .  7  . 
- .  .  1 | .  .  . | .  6  9 
- 7  .  . | .  .  . | .  .  5 
+ .  6  . | 8  .  3 | .  7  .
+ .  .  1 | .  .  . | .  6  9
+ 7  .  . | .  .  . | .  .  5
 ---------+---------+--------
- .  .  . | 9  .  . | .  1  . 
- .  .  . | .  .  . | .  .  4 
- .  .  5 | .  1  . | .  .  . 
+ .  .  . | 9  .  . | .  1  .
+ .  .  . | .  .  . | .  .  4
+ .  .  5 | .  1  . | .  .  .
 ---------+---------+--------
- 5  4  . | .  8  . | .  .  7 
- .  .  . | 5  7  . | .  .  8 
- .  9  7 | 3  .  . | .  .  . 
+ 5  4  . | .  8  . | .  .  7
+ .  .  . | 5  7  . | .  .  8
+ .  9  7 | 3  .  . | .  .  .
 """
 
 # process sudoku_str to remove everything that is not a number or dot
@@ -9057,9 +9057,9 @@ def main():
     layout.add(
         Paragraph(
             """
-                    Sudoku is a logic-based, combinatorial number-placement puzzle. 
-                    In classic sudoku, the objective is to fill a 9×9 grid with digits so that each column, each row, 
-                    and each of the nine 3×3 subgrids that compose the grid contains all of the digits from 1 to 9. 
+                    Sudoku is a logic-based, combinatorial number-placement puzzle.
+                    In classic sudoku, the objective is to fill a 9×9 grid with digits so that each column, each row,
+                    and each of the nine 3×3 subgrids that compose the grid contains all of the digits from 1 to 9.
                     The puzzle setter provides a partially completed grid, which for a well-posed puzzle has a single solution.
                     """,
             font="Helvetica-Oblique",
@@ -9094,17 +9094,17 @@ from decimal import Decimal
 # every . represents an empty cell in the puzzle
 # this is easier to debug/change
 sudoku_str: str = """
- .  6  . | 8  .  3 | .  7  . 
- .  .  1 | .  .  . | .  6  9 
- 7  .  . | .  .  . | .  .  5 
+ .  6  . | 8  .  3 | .  7  .
+ .  .  1 | .  .  . | .  6  9
+ 7  .  . | .  .  . | .  .  5
 ---------+---------+--------
- .  .  . | 9  .  . | .  1  . 
- .  .  . | .  .  . | .  .  4 
- .  .  5 | .  1  . | .  .  . 
+ .  .  . | 9  .  . | .  1  .
+ .  .  . | .  .  . | .  .  4
+ .  .  5 | .  1  . | .  .  .
 ---------+---------+--------
- 5  4  . | .  8  . | .  .  7 
- .  .  . | 5  7  . | .  .  8 
- .  9  7 | 3  .  . | .  .  . 
+ 5  4  . | .  8  . | .  .  7
+ .  .  . | 5  7  . | .  .  8
+ .  9  7 | 3  .  . | .  .  .
 """
 
 # process sudoku_str to remove everything that is not a number or dot
@@ -9136,9 +9136,9 @@ def main():
     layout.add(
         Paragraph(
             """
-                    Sudoku is a logic-based, combinatorial number-placement puzzle. 
-                    In classic sudoku, the objective is to fill a 9×9 grid with digits so that each column, each row, 
-                    and each of the nine 3×3 subgrids that compose the grid contains all of the digits from 1 to 9. 
+                    Sudoku is a logic-based, combinatorial number-placement puzzle.
+                    In classic sudoku, the objective is to fill a 9×9 grid with digits so that each column, each row,
+                    and each of the nine 3×3 subgrids that compose the grid contains all of the digits from 1 to 9.
                     The puzzle setter provides a partially completed grid, which for a well-posed puzzle has a single solution.
                     """,
             font="Helvetica-Oblique",
@@ -9207,17 +9207,17 @@ from decimal import Decimal
 # every . represents an empty cell in the puzzle
 # this is easier to debug/change
 sudoku_str: str = """
- .  6  . | 8  .  3 | .  7  . 
- .  .  1 | .  .  . | .  6  9 
- 7  .  . | .  .  . | .  .  5 
+ .  6  . | 8  .  3 | .  7  .
+ .  .  1 | .  .  . | .  6  9
+ 7  .  . | .  .  . | .  .  5
 ---------+---------+--------
- .  .  . | 9  .  . | .  1  . 
- .  .  . | .  .  . | .  .  4 
- .  .  5 | .  1  . | .  .  . 
+ .  .  . | 9  .  . | .  1  .
+ .  .  . | .  .  . | .  .  4
+ .  .  5 | .  1  . | .  .  .
 ---------+---------+--------
- 5  4  . | .  8  . | .  .  7 
- .  .  . | 5  7  . | .  .  8 
- .  9  7 | 3  .  . | .  .  . 
+ 5  4  . | .  8  . | .  .  7
+ .  .  . | 5  7  . | .  .  8
+ .  9  7 | 3  .  . | .  .  .
 """
 
 # process sudoku_str to remove everything that is not a number or dot
@@ -9249,9 +9249,9 @@ def main():
     layout.add(
         Paragraph(
             """
-                    Sudoku is a logic-based, combinatorial number-placement puzzle. 
-                    In classic sudoku, the objective is to fill a 9×9 grid with digits so that each column, each row, 
-                    and each of the nine 3×3 subgrids that compose the grid contains all of the digits from 1 to 9. 
+                    Sudoku is a logic-based, combinatorial number-placement puzzle.
+                    In classic sudoku, the objective is to fill a 9×9 grid with digits so that each column, each row,
+                    and each of the nine 3×3 subgrids that compose the grid contains all of the digits from 1 to 9.
                     The puzzle setter provides a partially completed grid, which for a well-posed puzzle has a single solution.
                     """,
             font="Helvetica-Oblique",
@@ -9358,7 +9358,7 @@ if __name__ == "__main__":
     main()
 ```
 
-Here, we're using a `SingleColumnLayout` since all of the content should be in a single column - we won't have a left and right side of the invoice. 
+Here, we're using a `SingleColumnLayout` since all of the content should be in a single column - we won't have a left and right side of the invoice.
 We're also making the vertical margin smaller here. The default value is to trim the top 10% of the page height as the margin, and we're reducing it down to 2%, since we'll want to use this space for the company logo/name.
 
 Speaking of which, let's add the company logo to the layout:
@@ -10839,9 +10839,9 @@ def main():
     layout.add(
         Paragraph(
             """
-                        Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. 
-                        Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. 
-                        Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. 
+                        Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.
+                        Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.
+                        Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur.
                         Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
                         """
         )
@@ -11013,9 +11013,9 @@ def main():
     layout.add(
         Paragraph(
             """
-                        Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. 
-                        Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. 
-                        Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. 
+                        Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.
+                        Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.
+                        Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur.
                         Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
                         """
         )
@@ -11327,9 +11327,9 @@ def main():
     layout.add(
         Paragraph(
             """
-                        Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. 
-                        Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. 
-                        Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. 
+                        Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.
+                        Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.
+                        Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur.
                         Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
                         """
         )
@@ -11419,7 +11419,7 @@ if __name__ == "__main__":
     main()
 ```
 
-Now we need to turn this into a set of horizontal and vertical clues. 
+Now we need to turn this into a set of horizontal and vertical clues.
 The following code does just that!
 
 ```python
@@ -11659,9 +11659,9 @@ def main():
     layout.add(
         Paragraph(
             """
-    Nonograms, also known as Hanjie, Paint by Numbers, Picross, Griddlers, and Pic-a-Pix, and by various other names, 
-    are picture logic puzzles in which cells in a grid must be colored or left blank according to numbers at the side of the grid to reveal a hidden picture. 
-    In this puzzle type, the numbers are a form of discrete tomography that measures how many unbroken lines of filled-in squares there are in any given row or column. 
+    Nonograms, also known as Hanjie, Paint by Numbers, Picross, Griddlers, and Pic-a-Pix, and by various other names,
+    are picture logic puzzles in which cells in a grid must be colored or left blank according to numbers at the side of the grid to reveal a hidden picture.
+    In this puzzle type, the numbers are a form of discrete tomography that measures how many unbroken lines of filled-in squares there are in any given row or column.
     For example, a clue of "4 8 3" would mean there are sets of four, eight, and three filled squares, in that order, with at least one blank square between successive sets.
                         """,
             font_color=HexColor("#28AFB0"),
@@ -11856,9 +11856,9 @@ def main():
     layout.add(
         Paragraph(
             """
-    Nonograms, also known as Hanjie, Paint by Numbers, Picross, Griddlers, and Pic-a-Pix, and by various other names, 
-    are picture logic puzzles in which cells in a grid must be colored or left blank according to numbers at the side of the grid to reveal a hidden picture. 
-    In this puzzle type, the numbers are a form of discrete tomography that measures how many unbroken lines of filled-in squares there are in any given row or column. 
+    Nonograms, also known as Hanjie, Paint by Numbers, Picross, Griddlers, and Pic-a-Pix, and by various other names,
+    are picture logic puzzles in which cells in a grid must be colored or left blank according to numbers at the side of the grid to reveal a hidden picture.
+    In this puzzle type, the numbers are a form of discrete tomography that measures how many unbroken lines of filled-in squares there are in any given row or column.
     For example, a clue of "4 8 3" would mean there are sets of four, eight, and three filled squares, in that order, with at least one blank square between successive sets.
                         """,
             font_color=HexColor("#28AFB0"),
@@ -12080,9 +12080,9 @@ def main():
     layout.add(
         Paragraph(
             """
-    Nonograms, also known as Hanjie, Paint by Numbers, Picross, Griddlers, and Pic-a-Pix, and by various other names, 
-    are picture logic puzzles in which cells in a grid must be colored or left blank according to numbers at the side of the grid to reveal a hidden picture. 
-    In this puzzle type, the numbers are a form of discrete tomography that measures how many unbroken lines of filled-in squares there are in any given row or column. 
+    Nonograms, also known as Hanjie, Paint by Numbers, Picross, Griddlers, and Pic-a-Pix, and by various other names,
+    are picture logic puzzles in which cells in a grid must be colored or left blank according to numbers at the side of the grid to reveal a hidden picture.
+    In this puzzle type, the numbers are a form of discrete tomography that measures how many unbroken lines of filled-in squares there are in any given row or column.
     For example, a clue of "4 8 3" would mean there are sets of four, eight, and three filled squares, in that order, with at least one blank square between successive sets.
                         """,
             font_color=HexColor("#28AFB0"),
@@ -12152,7 +12152,7 @@ That should look somewhat like this:
 
 ## 9.5 Building a working calculator inside a PDF
 
-We are going to create a method to add some geometric artwork to the upper right corner of a `Page`. This code is not really doing difficult things, it just deals with coordinates and math a bit. 
+We are going to create a method to add some geometric artwork to the upper right corner of a `Page`. This code is not really doing difficult things, it just deals with coordinates and math a bit.
 
 ```python
 #!chapter_009/src/snippet_032.py
@@ -12421,7 +12421,7 @@ function to_string(f){
 	if(f < -99999999){ return '-99999999'; }
 	x = f.toString();
   if(x.length > 8){ x = x.substring(0, 8);}
-	return x;	
+	return x;
 }
 
 function is_number(token){
@@ -12436,11 +12436,11 @@ function apply_operator(a1, a2, o){
 	if(o == '+'){ return a1 + a2; }
 	if(o == '-'){ return a1 - a2; }
 	if(o == 'x'){ return a1 * a2; }
-	if(o == '/'){ 
+	if(o == '/'){
 		if(a2 == 0){
 			return 0;
 		}
-		return a1 / a2; 
+		return a1 / a2;
 	}
 }
 
@@ -12468,7 +12468,7 @@ function process_token(token){
 			return;
 		}
 	}
-	/* 
+	/*
 	 * ARG1
 	 * arg1 is being built
 	 */
@@ -12493,7 +12493,7 @@ function process_token(token){
 			return;
 		}
 	}
-	/* 
+	/*
 	 * ARG1_FLOAT
 	 * arg1 is being built, and a decimal point has been entered
 	 */
@@ -12512,7 +12512,7 @@ function process_token(token){
 			return;
 		}
 	}
-	/* 
+	/*
 	 * BINARY_OPERATOR
 	 * a binary operator was entered
 	 */
@@ -12530,7 +12530,7 @@ function process_token(token){
 			return;
 		}
 	}
-	/* 
+	/*
 	 * ARG2
 	 * arg2 is being built
 	 */
@@ -12583,7 +12583,7 @@ function process_token(token){
 			state = 'EQUALS';
 			return;
 		}
-	}	
+	}
 	if(state == 'EQUALS'){
 		if(token == '='){
 			disp = to_string(apply_operator(parseFloat(disp), arg2, oper));
@@ -12719,8 +12719,8 @@ def main():
     layout.add(
         Paragraph(
             """
-    You can cause an action to occur when a bookmark or link is clicked, or when a page is viewed. 
-    For example, you can use links and bookmarks to jump to different locations in a document, 
+    You can cause an action to occur when a bookmark or link is clicked, or when a page is viewed.
+    For example, you can use links and bookmarks to jump to different locations in a document,
     execute commands from a menu, and perform other actions. """
         )
     )
@@ -12732,8 +12732,8 @@ def main():
         Paragraph(
             """To enhance the interactive qual-
     ity of a document, you can spec-
-    ify actions, such as changing the 
-    zoom value, to occur when a page 
+    ify actions, such as changing the
+    zoom value, to occur when a page
     is opened or closed.""",
             respect_newlines_in_text=True,
         )
