@@ -15,7 +15,7 @@ def main():
     doc: Document = Document()
 
     page: Page = Page()
-    doc.append_page(page)
+    doc.add_page(page)
 
     layout: PageLayout = SingleColumnLayout(page)
 
@@ -30,7 +30,7 @@ def main():
         )
     )
 
-    page.append_annotation(
+    page.add_annotation(
         RedactAnnotation(
             Rectangle(Decimal(405), Decimal(721), Decimal(40), Decimal(8)).grow(
                 Decimal(2)

@@ -18,7 +18,7 @@ def main():
     page: Page = Page()
 
     # add Page to Document
-    doc.append_page(page)
+    doc.add_page(page)
 
     # define layout rectangle
     # fmt: off
@@ -57,7 +57,7 @@ def main():
 
     # this is a quick hack to easily get a rectangle on the page
     # which can be very useful for debugging
-    page.append_annotation(SquareAnnotation(r, stroke_color=HexColor("#ff0000")))
+    page.add_annotation(SquareAnnotation(r, stroke_color=HexColor("#ff0000")))
 
     # store
     with open("output.pdf", "wb") as pdf_file_handle:

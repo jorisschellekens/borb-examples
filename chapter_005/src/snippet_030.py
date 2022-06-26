@@ -21,7 +21,7 @@ def main():
     N: int = 10
     for i in range(0, N):
         p: Page = Page()
-        d.append_page(p)
+        d.add_page(p)
         l: PageLayout = SingleColumnLayout(p)
         l.add(
             Paragraph(

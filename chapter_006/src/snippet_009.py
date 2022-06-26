@@ -17,7 +17,7 @@ def main():
 
     # add page
     page = Page()
-    pdf.append_page(page)
+    pdf.add_page(page)
 
     # add test information
     layout = SingleColumnLayout(page)
@@ -31,7 +31,7 @@ def main():
     layout.add(img)
 
     # add sound annotation
-    page.append_annotation(
+    page.add_annotation(
         SoundAnnotation(img.get_bounding_box(), "/home/joris/Downloads/audioclip.mp3")
     )
 

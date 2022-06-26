@@ -15,7 +15,7 @@ def main():
 
     # Add page
     page = Page()
-    pdf.append_page(page)
+    pdf.add_page(page)
 
     # create PageLayout
     page_layout: PageLayout = SingleColumnLayout(page)

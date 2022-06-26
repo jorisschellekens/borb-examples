@@ -36,7 +36,7 @@ def main():
 
     for r in l.get_table_bounding_boxes_for_page(0):
         r = r.grow(Decimal(5))
-        p.append_annotation(SquareAnnotation(r, stroke_color=X11Color("Green")))
+        p.add_annotation(SquareAnnotation(r, stroke_color=X11Color("Green")))
 
     for t in tables:
 
@@ -44,7 +44,7 @@ def main():
         for c in t._content:
             r = c.get_bounding_box()
             r = r.shrink(Decimal(5))
-            p.append_annotation(SquareAnnotation(r, stroke_color=X11Color("Red")))
+            p.add_annotation(SquareAnnotation(r, stroke_color=X11Color("Red")))
 
     # write
     with open("output.pdf", "wb") as pdf_file_handle:

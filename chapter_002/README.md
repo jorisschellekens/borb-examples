@@ -140,7 +140,7 @@ For now, suffice to say the default parameters are:
 - `padding_top`, `padding_right`, `padding_bottom`, `padding_left` : all set to `Decimal(0)` 
 - `hyphenation` : `None`
 
-#### 2.2.5 Writing the `Document` to disk
+### 2.2.5 Writing the `Document` to disk
 
 ```python
 #!src/snippet_005.py

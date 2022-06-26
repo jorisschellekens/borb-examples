@@ -19,7 +19,7 @@ def main():
 
     # create Page
     page: Page = Page()
-    doc.append_page(page)
+    doc.add_page(page)
 
     # add javascript
     add_document_level_javascript(doc)

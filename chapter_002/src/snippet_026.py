@@ -18,7 +18,7 @@ def main():
     page: Page = Page()
 
     # add Page to Document
-    doc.append_page(page)
+    doc.add_page(page)
 
     # define layout rectangle
     # fmt: off

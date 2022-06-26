@@ -13,7 +13,7 @@ def main():
 
     # add Page
     p: Page = Page()
-    d.append_page(p)
+    d.add_page(p)
 
     # create PageLayout
     l: PageLayout = SingleColumnLayout(p)
@@ -38,8 +38,8 @@ def main():
     }
     """
 
-    # append embedded file
-    d.append_embedded_file("lorem_ipsum.json", file_bytes)
+    # add embedded file
+    d.add_embedded_file("lorem_ipsum.json", file_bytes)
 
     # store
     with open("output.pdf", "wb") as pdf_file_handle:

@@ -21,7 +21,7 @@ def main():
 
     # add Page
     p: Page = Page()
-    d.append_page(p)
+    d.add_page(p)
     page_number: int = 1
 
     # create PageLayout

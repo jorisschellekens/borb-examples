@@ -23,7 +23,7 @@ def main():
     N: int = 10
     for i in range(0, N):
         page: Page = Page()
-        doc.append_page(page)
+        doc.add_page(page)
 
         layout: PageLayout = SingleColumnLayout(page)
 
@@ -50,7 +50,7 @@ def main():
         page_width: Decimal = PageSize.A4_PORTRAIT.value[0]
         page_height: Decimal = PageSize.A4_PORTRAIT.value[1]
         s: Decimal = Decimal(100)
-        page.append_annotation(
+        page.add_annotation(
             LinkAnnotation(
                 Rectangle(
                     page_width / Decimal(2) - s / Decimal(2),

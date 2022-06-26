@@ -36,7 +36,7 @@ def main():
 
     # create/add Page
     p: Page = Page()
-    d.append_page(p)
+    d.add_page(p)
 
     # set PageLayout
     l: PageLayout = SingleColumnLayout(p)

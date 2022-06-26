@@ -30,7 +30,7 @@ def main():
             p = doc_001.get_page(i)
         else:
             p = doc_002.get_page(i)
-        d.append_page(p)
+        d.add_page(p)
 
     # write
     with open("output_003.pdf", "wb") as pdf_file_handle:

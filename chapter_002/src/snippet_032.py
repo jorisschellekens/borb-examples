@@ -17,7 +17,7 @@ def main():
     page: Page = Page()
 
     # add Page to Document
-    doc.append_page(page)
+    doc.add_page(page)
 
     # set a PageLayout
     layout: PageLayout = SingleColumnLayout(page)

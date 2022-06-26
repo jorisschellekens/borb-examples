@@ -10,7 +10,7 @@ def main():
     page: Page = Page()
 
     # add Page to Document
-    doc.append_page(page)
+    doc.add_page(page)
 
 
 if __name__ == "__main__":

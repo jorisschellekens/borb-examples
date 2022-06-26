@@ -22,7 +22,7 @@
     2.2.2 [Creating and adding a `Page`](#222-creating-and-adding-a-page)  
     2.2.3 [Setting a `PageLayout`](#223-setting-a-pagelayout)  
     2.2.4 [Adding a `Paragraph` to the `Page` using `PageLayout`](#224-adding-a-paragraph-to-the-page-using-pagelayout)  
-      2.2.5 [Writing the `Document` to disk](#225-writing-the-document-to-disk)  
+    2.2.5 [Writing the `Document` to disk](#225-writing-the-document-to-disk)  
   2.3 [Using `LayoutElement` sub-classes to represent various types of content](#23-using-layoutelement-sub-classes-to-represent-various-types-of-content)  
   2.4 [Adding text to a PDF](#24-adding-text-to-a-pdf)  
     2.4.1 [Setting the `Font` of a `Paragraph`](#241-setting-the-font-of-a-paragraph)  
@@ -467,7 +467,7 @@ def main():
     page: Page = Page()
 
     # add Page to Document
-    doc.append_page(page)
+    doc.add_page(page)
 
 
 if __name__ == "__main__":
@@ -525,7 +525,7 @@ def main():
     page: Page = Page()
 
     # add Page to Document
-    doc.append_page(page)
+    doc.add_page(page)
 
     # set a PageLayout
     layout: PageLayout = SingleColumnLayout(page)
@@ -558,7 +558,7 @@ def main():
     page: Page = Page()
 
     # add Page to Document
-    doc.append_page(page)
+    doc.add_page(page)
 
     # set a PageLayout
     layout: PageLayout = SingleColumnLayout(page)
@@ -583,7 +583,7 @@ For now, suffice to say the default parameters are:
 - `padding_top`, `padding_right`, `padding_bottom`, `padding_left` : all set to `Decimal(0)` 
 - `hyphenation` : `None`
 
-#### 2.2.5 Writing the `Document` to disk
+### 2.2.5 Writing the `Document` to disk
 
 ```python
 #!chapter_002/src/snippet_005.py
@@ -603,7 +603,7 @@ def main():
     page: Page = Page()
 
     # add Page to Document
-    doc.append_page(page)
+    doc.add_page(page)
 
     # set a PageLayout
     layout: PageLayout = SingleColumnLayout(page)
@@ -685,7 +685,7 @@ def main():
     page: Page = Page()
 
     # add Page to Document
-    doc.append_page(page)
+    doc.add_page(page)
 
     # set a PageLayout
     layout: PageLayout = SingleColumnLayout(page)
@@ -748,7 +748,7 @@ def main():
     page: Page = Page()
 
     # add Page to Document
-    doc.append_page(page)
+    doc.add_page(page)
 
     # set a PageLayout
     layout: PageLayout = SingleColumnLayout(page)
@@ -790,7 +790,7 @@ def main():
     page: Page = Page()
 
     # add Page to Document
-    doc.append_page(page)
+    doc.add_page(page)
 
     # set a PageLayout
     layout: PageLayout = SingleColumnLayout(page)
@@ -868,7 +868,7 @@ def main():
     page: Page = Page()
 
     # add Page to Document
-    doc.append_page(page)
+    doc.add_page(page)
 
     # set a PageLayout
     layout: PageLayout = SingleColumnLayout(page)
@@ -914,7 +914,7 @@ def main():
     page: Page = Page()
 
     # add Page to Document
-    doc.append_page(page)
+    doc.add_page(page)
 
     # set a PageLayout
     layout: PageLayout = SingleColumnLayout(page)
@@ -987,7 +987,7 @@ def main():
     page: Page = Page()
 
     # add Page to Document
-    doc.append_page(page)
+    doc.add_page(page)
 
     # set a PageLayout
     layout: PageLayout = SingleColumnLayout(page)
@@ -1035,7 +1035,7 @@ def main():
     page: Page = Page()
 
     # add Page to Document
-    doc.append_page(page)
+    doc.add_page(page)
 
     # set a PageLayout
     layout: PageLayout = SingleColumnLayout(page)
@@ -1108,7 +1108,7 @@ def main():
     page: Page = Page()
 
     # add Page to Document
-    doc.append_page(page)
+    doc.add_page(page)
 
     # set a PageLayout
     layout: PageLayout = SingleColumnLayout(page)
@@ -1193,7 +1193,7 @@ def main():
     page: Page = Page()
 
     # add Page to Document
-    doc.append_page(page)
+    doc.add_page(page)
 
     # set a PageLayout
     layout: PageLayout = SingleColumnLayout(page)
@@ -1280,7 +1280,7 @@ def main():
     page: Page = Page()
 
     # add Page to Document
-    doc.append_page(page)
+    doc.add_page(page)
 
     # set a PageLayout
     layout: PageLayout = SingleColumnLayout(page)
@@ -1365,7 +1365,7 @@ def main():
     page: Page = Page()
 
     # add Page to Document
-    doc.append_page(page)
+    doc.add_page(page)
 
     # set a PageLayout
     layout: PageLayout = SingleColumnLayout(page)
@@ -1452,7 +1452,7 @@ def main():
     page: Page = Page()
 
     # add Page to Document
-    doc.append_page(page)
+    doc.add_page(page)
 
     # set a PageLayout
     layout: PageLayout = SingleColumnLayout(page)
@@ -1547,7 +1547,7 @@ def main():
     page: Page = Page()
 
     # add Page to Document
-    doc.append_page(page)
+    doc.add_page(page)
 
     # define layout rectangle
     # fmt: off
@@ -1605,7 +1605,7 @@ def main():
     page: Page = Page()
 
     # add Page to Document
-    doc.append_page(page)
+    doc.add_page(page)
 
     # define layout rectangle
     # fmt: off
@@ -1619,7 +1619,7 @@ def main():
 
     # this is a quick hack to easily get a rectangle on the page
     # which can be very useful for debugging
-    page.append_annotation(SquareAnnotation(r, stroke_color=HexColor("#ff0000")))
+    page.add_annotation(SquareAnnotation(r, stroke_color=HexColor("#ff0000")))
 
     # the next line of code uses absolute positioning
     Paragraph("Hello World!", horizontal_alignment=Alignment.LEFT).layout(page, r)
@@ -1659,7 +1659,7 @@ def main():
     page: Page = Page()
 
     # add Page to Document
-    doc.append_page(page)
+    doc.add_page(page)
 
     # define layout rectangle
     # fmt: off
@@ -1673,7 +1673,7 @@ def main():
 
     # this is a quick hack to easily get a rectangle on the page
     # which can be very useful for debugging
-    page.append_annotation(SquareAnnotation(r, stroke_color=HexColor("#ff0000")))
+    page.add_annotation(SquareAnnotation(r, stroke_color=HexColor("#ff0000")))
 
     # the next line of code uses absolute positioning
     Paragraph("Hello World!", horizontal_alignment=Alignment.CENTERED).layout(page, r)
@@ -1713,7 +1713,7 @@ def main():
     page: Page = Page()
 
     # add Page to Document
-    doc.append_page(page)
+    doc.add_page(page)
 
     # define layout rectangle
     # fmt: off
@@ -1727,7 +1727,7 @@ def main():
 
     # this is a quick hack to easily get a rectangle on the page
     # which can be very useful for debugging
-    page.append_annotation(SquareAnnotation(r, stroke_color=HexColor("#ff0000")))
+    page.add_annotation(SquareAnnotation(r, stroke_color=HexColor("#ff0000")))
 
     # the next line of code uses absolute positioning
     Paragraph("Hello World!", horizontal_alignment=Alignment.RIGHT).layout(page, r)
@@ -1775,7 +1775,7 @@ def main():
     page: Page = Page()
 
     # add Page to Document
-    doc.append_page(page)
+    doc.add_page(page)
 
     # define layout rectangle
     # fmt: off
@@ -1789,7 +1789,7 @@ def main():
 
     # this is a quick hack to easily get a rectangle on the page
     # which can be very useful for debugging
-    page.append_annotation(SquareAnnotation(r, stroke_color=HexColor("#ff0000")))
+    page.add_annotation(SquareAnnotation(r, stroke_color=HexColor("#ff0000")))
 
     # the next line of code uses absolute positioning
     Paragraph("Hello World!", vertical_alignment=Alignment.TOP).layout(page, r)
@@ -1829,7 +1829,7 @@ def main():
     page: Page = Page()
 
     # add Page to Document
-    doc.append_page(page)
+    doc.add_page(page)
 
     # define layout rectangle
     # fmt: off
@@ -1843,7 +1843,7 @@ def main():
 
     # this is a quick hack to easily get a rectangle on the page
     # which can be very useful for debugging
-    page.append_annotation(SquareAnnotation(r, stroke_color=HexColor("#ff0000")))
+    page.add_annotation(SquareAnnotation(r, stroke_color=HexColor("#ff0000")))
 
     # the next line of code uses absolute positioning
     Paragraph("Hello World!", vertical_alignment=Alignment.MIDDLE).layout(page, r)
@@ -1883,7 +1883,7 @@ def main():
     page: Page = Page()
 
     # add Page to Document
-    doc.append_page(page)
+    doc.add_page(page)
 
     # define layout rectangle
     # fmt: off
@@ -1897,7 +1897,7 @@ def main():
 
     # this is a quick hack to easily get a rectangle on the page
     # which can be very useful for debugging
-    page.append_annotation(SquareAnnotation(r, stroke_color=HexColor("#ff0000")))
+    page.add_annotation(SquareAnnotation(r, stroke_color=HexColor("#ff0000")))
 
     # the next line of code uses absolute positioning
     Paragraph("Hello World!", vertical_alignment=Alignment.BOTTOM).layout(page, r)
@@ -1970,7 +1970,7 @@ def main():
     page: Page = Page()
 
     # add Page to Document
-    doc.append_page(page)
+    doc.add_page(page)
 
     # define layout rectangle
     # fmt: off
@@ -1984,7 +1984,7 @@ def main():
 
     # this is a quick hack to easily get a rectangle on the page
     # which can be very useful for debugging
-    page.append_annotation(SquareAnnotation(r, stroke_color=HexColor("#ff0000")))
+    page.add_annotation(SquareAnnotation(r, stroke_color=HexColor("#ff0000")))
 
     # add the paragraph to the page
     Paragraph(
@@ -2037,7 +2037,7 @@ def main():
     page: Page = Page()
 
     # add Page to Document
-    doc.append_page(page)
+    doc.add_page(page)
 
     # define layout rectangle
     # fmt: off
@@ -2104,7 +2104,7 @@ def main():
     page: Page = Page()
 
     # add Page to Document
-    doc.append_page(page)
+    doc.add_page(page)
 
     # define layout rectangle
     # fmt: off
@@ -2143,7 +2143,7 @@ def main():
 
     # this is a quick hack to easily get a rectangle on the page
     # which can be very useful for debugging
-    page.append_annotation(SquareAnnotation(r, stroke_color=HexColor("#ff0000")))
+    page.add_annotation(SquareAnnotation(r, stroke_color=HexColor("#ff0000")))
 
     # store
     with open("output.pdf", "wb") as pdf_file_handle:
@@ -2208,7 +2208,7 @@ def main():
     page: Page = Page()
 
     # add Page to Document
-    doc.append_page(page)
+    doc.add_page(page)
 
     # set a PageLayout
     layout: PageLayout = SingleColumnLayout(page)
@@ -2260,7 +2260,7 @@ def main():
     page: Page = Page()
 
     # add Page to Document
-    doc.append_page(page)
+    doc.add_page(page)
 
     # set a PageLayout
     layout: PageLayout = SingleColumnLayout(page)
@@ -2309,7 +2309,7 @@ def main():
     page: Page = Page()
 
     # add Page to Document
-    doc.append_page(page)
+    doc.add_page(page)
 
     # set a PageLayout
     layout: PageLayout = SingleColumnLayout(page)
@@ -2376,7 +2376,7 @@ def main():
     page: Page = Page()
 
     # add Page to Document
-    doc.append_page(page)
+    doc.add_page(page)
 
     # set a PageLayout
     layout: PageLayout = SingleColumnLayout(page)
@@ -2449,7 +2449,7 @@ def main():
     page: Page = Page()
 
     # add Page to Document
-    doc.append_page(page)
+    doc.add_page(page)
 
     # set a PageLayout
     layout: PageLayout = SingleColumnLayout(page)
@@ -2503,7 +2503,7 @@ def main():
     page: Page = Page()
 
     # add Page to Document
-    doc.append_page(page)
+    doc.add_page(page)
 
     # set a PageLayout
     layout: PageLayout = SingleColumnLayout(page)
@@ -2563,7 +2563,7 @@ def main():
     page: Page = Page()
 
     # add Page to Document
-    doc.append_page(page)
+    doc.add_page(page)
 
     # set a PageLayout
     layout: PageLayout = SingleColumnLayout(page)
@@ -2674,7 +2674,7 @@ def main():
     page: Page = Page()
 
     # add Page to Document
-    doc.append_page(page)
+    doc.add_page(page)
 
     # set a PageLayout
     layout: PageLayout = SingleColumnLayout(page)
@@ -2726,7 +2726,7 @@ def main():
     page: Page = Page()
 
     # add Page to Document
-    doc.append_page(page)
+    doc.add_page(page)
 
     # set a PageLayout
     layout: PageLayout = BrowserLayout(page)
@@ -2786,7 +2786,7 @@ def main():
     page: Page = Page()
 
     # add Page to Document
-    doc.append_page(page)
+    doc.add_page(page)
 
     # set a PageLayout
     layout: PageLayout = SingleColumnLayout(page)
@@ -2828,7 +2828,7 @@ def main():
     page: Page = Page()
 
     # add Page to Document
-    doc.append_page(page)
+    doc.add_page(page)
 
     # set a PageLayout
     layout: PageLayout = SingleColumnLayout(page)
@@ -2883,7 +2883,7 @@ def main():
     page: Page = Page()
 
     # add Page to Document
-    doc.append_page(page)
+    doc.add_page(page)
 
     # set a PageLayout
     layout: PageLayout = SingleColumnLayout(page)
@@ -2981,7 +2981,7 @@ def main():
     page: Page = Page()
 
     # add Page to Document
-    doc.append_page(page)
+    doc.add_page(page)
 
     # set a PageLayout
     layout: PageLayout = SingleColumnLayout(page)
@@ -3028,7 +3028,7 @@ def main():
     page: Page = Page()
 
     # add Page to Document
-    doc.append_page(page)
+    doc.add_page(page)
 
     # set a PageLayout
     layout: PageLayout = SingleColumnLayout(page)
@@ -3079,7 +3079,7 @@ def main():
     page: Page = Page()
 
     # add Page to Document
-    doc.append_page(page)
+    doc.add_page(page)
 
     # set a PageLayout
     layout: PageLayout = SingleColumnLayout(page)
@@ -3133,7 +3133,7 @@ def main():
     page: Page = Page()
 
     # add Page to Document
-    doc.append_page(page)
+    doc.add_page(page)
 
     # set a PageLayout
     layout: PageLayout = SingleColumnLayout(page)
@@ -3182,7 +3182,7 @@ def main():
     page: Page = Page()
 
     # add Page to Document
-    doc.append_page(page)
+    doc.add_page(page)
 
     # set a PageLayout
     layout: PageLayout = SingleColumnLayout(page)
@@ -3235,7 +3235,7 @@ def main():
     page: Page = Page()
 
     # add Page to Document
-    doc.append_page(page)
+    doc.add_page(page)
 
     # set a PageLayout
     layout: PageLayout = SingleColumnLayout(page)
@@ -3296,7 +3296,7 @@ def main():
     page: Page = Page()
 
     # add Page to Document
-    doc.append_page(page)
+    doc.add_page(page)
 
     # set a PageLayout
     layout: PageLayout = SingleColumnLayout(page)
@@ -3386,7 +3386,7 @@ def main():
     page: Page = Page()
 
     # add Page to Document
-    doc.append_page(page)
+    doc.add_page(page)
 
     # set a PageLayout
     layout: PageLayout = SingleColumnLayout(page)
@@ -3437,7 +3437,7 @@ def main():
     page: Page = Page()
 
     # add Page to Document
-    doc.append_page(page)
+    doc.add_page(page)
 
     # set a PageLayout
     layout: PageLayout = SingleColumnLayout(page)
@@ -3493,7 +3493,7 @@ def main():
     page: Page = Page()
 
     # add Page to Document
-    doc.append_page(page)
+    doc.add_page(page)
 
     # set a PageLayout
     layout: PageLayout = SingleColumnLayout(page)
@@ -3552,7 +3552,7 @@ def main():
     page: Page = Page()
 
     # add Page to Document
-    doc.append_page(page)
+    doc.add_page(page)
 
     # set a PageLayout
     layout: PageLayout = SingleColumnLayout(page)
@@ -3615,7 +3615,7 @@ def main():
     page: Page = Page()
 
     # add Page to Document
-    doc.append_page(page)
+    doc.add_page(page)
 
     # set a PageLayout
     layout: PageLayout = SingleColumnLayout(page)
@@ -3667,7 +3667,7 @@ def main():
     page: Page = Page()
 
     # add Page to Document
-    doc.append_page(page)
+    doc.add_page(page)
 
     # set a PageLayout
     layout: PageLayout = SingleColumnLayout(page)
@@ -3734,7 +3734,7 @@ def main():
     page: Page = Page()
 
     # add Page to Document
-    doc.append_page(page)
+    doc.add_page(page)
 
     # set a PageLayout
     layout: PageLayout = SingleColumnLayout(page)
@@ -3802,7 +3802,7 @@ def main():
     page: Page = Page()
 
     # add Page to Document
-    doc.append_page(page)
+    doc.add_page(page)
 
     # set a PageLayout
     layout: PageLayout = SingleColumnLayout(page)
@@ -3927,7 +3927,7 @@ def main():
     page: Page = Page()
 
     # add Page to Document
-    doc.append_page(page)
+    doc.add_page(page)
 
     # set a PageLayout
     layout: PageLayout = SingleColumnLayout(page)
@@ -3993,7 +3993,7 @@ def main():
     page: Page = Page()
 
     # add Page to Document
-    doc.append_page(page)
+    doc.add_page(page)
 
     # set a PageLayout
     layout: PageLayout = SingleColumnLayout(page)
@@ -4048,7 +4048,7 @@ def main():
     page: Page = Page()
 
     # add Page to Document
-    doc.append_page(page)
+    doc.add_page(page)
 
     # set a PageLayout
     layout: PageLayout = SingleColumnLayout(page)
@@ -4110,7 +4110,7 @@ def main():
     page: Page = Page()
 
     # add Page to Document
-    doc.append_page(page)
+    doc.add_page(page)
 
     # set a PageLayout
     layout: PageLayout = SingleColumnLayout(page)
@@ -4175,7 +4175,7 @@ def main():
     page: Page = Page()
 
     # add Page to Document
-    doc.append_page(page)
+    doc.add_page(page)
 
     # set a PageLayout
     layout: PageLayout = SingleColumnLayout(page)
@@ -4288,7 +4288,7 @@ def main():
     page: Page = Page()
 
     # add Page to Document
-    doc.append_page(page)
+    doc.add_page(page)
 
     # set a PageLayout
     layout: PageLayout = SingleColumnLayout(page)
@@ -4363,7 +4363,7 @@ def main():
     page: Page = Page()
 
     # add Page to Document
-    doc.append_page(page)
+    doc.add_page(page)
 
     # set a PageLayout
     layout: PageLayout = SingleColumnLayout(page)
@@ -4428,7 +4428,7 @@ def main():
     page: Page = Page()
 
     # add Page to Document
-    doc.append_page(page)
+    doc.add_page(page)
 
     # set a PageLayout
     layout: PageLayout = SingleColumnLayout(page)
@@ -4489,7 +4489,7 @@ def main():
     page: Page = Page()
 
     # add Page to Document
-    doc.append_page(page)
+    doc.add_page(page)
 
     # set a PageLayout
     layout: PageLayout = SingleColumnLayout(page)
@@ -4554,7 +4554,7 @@ def main():
     page: Page = Page()
 
     # add Page to Document
-    doc.append_page(page)
+    doc.add_page(page)
 
     # set a PageLayout
     layout: PageLayout = SingleColumnLayout(page)
@@ -4624,7 +4624,7 @@ def main():
     page: Page = Page()
 
     # add Page to Document
-    doc.append_page(page)
+    doc.add_page(page)
 
     # set a PageLayout
     layout: PageLayout = SingleColumnLayout(page)
@@ -4688,7 +4688,7 @@ def main():
     page: Page = Page()
 
     # add Page to Document
-    doc.append_page(page)
+    doc.add_page(page)
 
     # set a PageLayout
     layout: PageLayout = SingleColumnLayout(page)
@@ -4767,7 +4767,7 @@ def main():
     page: Page = Page()
 
     # add Page to Document
-    doc.append_page(page)
+    doc.add_page(page)
 
     # set a PageLayout
     layout: PageLayout = SingleColumnLayout(page)
@@ -4925,7 +4925,7 @@ def main():
     page: Page = Page()
 
     # add Page to Document
-    doc.append_page(page)
+    doc.add_page(page)
 
     # set a PageLayout
     layout: PageLayout = SingleColumnLayout(page)
@@ -5027,7 +5027,7 @@ def main():
     page: Page = Page()
 
     # add Page to Document
-    doc.append_page(page)
+    doc.add_page(page)
 
     # set a PageLayout
     layout: PageLayout = SingleColumnLayout(page)
@@ -5527,7 +5527,7 @@ def main():
     page: Page = Page()
 
     # add Page to Document
-    doc.append_page(page)
+    doc.add_page(page)
 
     # set a PageLayout
     layout: PageLayout = SingleColumnLayout(page)
@@ -5714,7 +5714,7 @@ def main():
     page: Page = Page()
 
     # add Page to Document
-    doc.append_page(page)
+    doc.add_page(page)
 
     # set a PageLayout
     layout: PageLayout = SingleColumnLayout(page)
@@ -5788,7 +5788,7 @@ def main():
 
     # add Page
     p: Page = Page()
-    doc_out.append_page(p)
+    doc_out.add_page(p)
 
     # add PageLayout
     l: PageLayout = SingleColumnLayout(p)
@@ -5852,7 +5852,7 @@ def main():
     page: Page = Page()
 
     # add Page to Document
-    doc.append_page(page)
+    doc.add_page(page)
 
     # set a PageLayout
     layout: PageLayout = SingleColumnLayout(page)
@@ -5934,7 +5934,7 @@ def main():
     page: Page = Page()
 
     # add Page to Document
-    doc.append_page(page)
+    doc.add_page(page)
 
     # set a PageLayout
     layout: PageLayout = SingleColumnLayout(page)
@@ -6032,7 +6032,7 @@ def main():
     page: Page = Page()
 
     # add Page to Document
-    doc.append_page(page)
+    doc.add_page(page)
 
     # set a PageLayout
     layout: PageLayout = SingleColumnLayout(page)
@@ -6134,7 +6134,7 @@ def main():
     page: Page = Page()
 
     # add Page to Document
-    doc.append_page(page)
+    doc.add_page(page)
 
     # set a PageLayout
     layout: PageLayout = SingleColumnLayout(page)
@@ -6425,7 +6425,7 @@ def main():
 
     # add Page
     p: Page = Page()
-    d.append_page(p)
+    d.add_page(p)
 
     # create PageLayout
     l: PageLayout = SingleColumnLayout(p)
@@ -6450,8 +6450,8 @@ def main():
     }
     """
 
-    # append embedded file
-    d.append_embedded_file("lorem_ipsum.json", file_bytes)
+    # add embedded file
+    d.add_embedded_file("lorem_ipsum.json", file_bytes)
 
     # store
     with open("output.pdf", "wb") as pdf_file_handle:
@@ -6543,7 +6543,7 @@ def main():
 
     d: Document = Document()
     p: Page = Page()
-    d.append_page(p)
+    d.add_page(p)
 
     l: PageLayout = SingleColumnLayout(p)
     l.add(
@@ -6594,7 +6594,7 @@ def main():
 
     d: Document = Document()
     p: Page = Page()
-    d.append_page(p)
+    d.add_page(p)
 
     l: PageLayout = SingleColumnLayout(p)
     l.add(
@@ -6651,7 +6651,7 @@ def main():
         doc_002 = PDF.loads(pdf_file_handle)
 
     # merge
-    doc_001.append_document(doc_002)
+    doc_001.add_document(doc_002)
 
     # write
     with open("output_003.pdf", "wb") as pdf_file_handle:
@@ -6695,7 +6695,7 @@ def main():
     N: int = 10
     for i in range(0, N):
         p: Page = Page()
-        d.append_page(p)
+        d.add_page(p)
         l: PageLayout = SingleColumnLayout(p)
         l.add(
             Paragraph(
@@ -6766,7 +6766,7 @@ def main():
             p = doc_001.get_page(i)
         else:
             p = doc_002.get_page(i)
-        d.append_page(p)
+        d.add_page(p)
 
     # write
     with open("output_003.pdf", "wb") as pdf_file_handle:
@@ -6815,7 +6815,7 @@ def main():
             p = doc_001.get_page(i)
         else:
             p = doc_002.get_page(i)
-        d.append_page(p)
+        d.add_page(p)
 
     # write
     with open("output_003.pdf", "wb") as pdf_file_handle:
@@ -6865,7 +6865,7 @@ def main():
 
     # add Page
     p: Page = Page()
-    d.append_page(p)
+    d.add_page(p)
     page_number: int = 1
 
     # create PageLayout
@@ -6983,7 +6983,7 @@ def main():
 
     # add Page
     p: Page = Page()
-    d.append_page(p)
+    d.add_page(p)
     page_number: int = 1
 
     # create PageLayout
@@ -7125,7 +7125,7 @@ def main():
 
     doc: Document = Document()
     page: Page = Page()
-    doc.append_page(page)
+    doc.add_page(page)
 
     layout: PageLayout = SingleColumnLayout(page)
     layout.add(
@@ -7142,7 +7142,7 @@ def main():
     page_width: Decimal = PageSize.A4_PORTRAIT.value[0]
     page_height: Decimal = PageSize.A4_PORTRAIT.value[1]
     s: Decimal = Decimal(100)
-    page.append_annotation(
+    page.add_annotation(
         PolygonAnnotation(
             LineArtFactory.cartoon_diamond(
                 Rectangle(
@@ -7201,7 +7201,7 @@ def main():
 
     doc: Document = Document()
     page: Page = Page()
-    doc.append_page(page)
+    doc.add_page(page)
 
     layout: PageLayout = SingleColumnLayout(page)
     layout.add(
@@ -7218,7 +7218,7 @@ def main():
     page_width: Decimal = PageSize.A4_PORTRAIT.value[0]
     page_height: Decimal = PageSize.A4_PORTRAIT.value[1]
     s: Decimal = Decimal(100)
-    page.append_annotation(
+    page.add_annotation(
         TextAnnotation(
             Rectangle(
                 page_width / Decimal(2) - s / Decimal(2),
@@ -7294,7 +7294,7 @@ def main():
     N: int = 10
     for i in range(0, N):
         page: Page = Page()
-        doc.append_page(page)
+        doc.add_page(page)
 
         layout: PageLayout = SingleColumnLayout(page)
 
@@ -7321,7 +7321,7 @@ def main():
         page_width: Decimal = PageSize.A4_PORTRAIT.value[0]
         page_height: Decimal = PageSize.A4_PORTRAIT.value[1]
         s: Decimal = Decimal(100)
-        page.append_annotation(
+        page.add_annotation(
             LinkAnnotation(
                 Rectangle(
                     page_width / Decimal(2) - s / Decimal(2),
@@ -7434,7 +7434,7 @@ def main():
     doc: Document = Document()
 
     page: Page = Page()
-    doc.append_page(page)
+    doc.add_page(page)
 
     layout: PageLayout = SingleColumnLayout(page)
     layout.add(
@@ -7451,7 +7451,7 @@ def main():
     page_width: Decimal = PageSize.A4_PORTRAIT.value[0]
     page_height: Decimal = PageSize.A4_PORTRAIT.value[1]
     s: Decimal = Decimal(100)
-    page.append_annotation(
+    page.add_annotation(
         RemoteGoToAnnotation(
             Rectangle(
                 page_width / Decimal(2) - s / Decimal(2),
@@ -7504,7 +7504,7 @@ def main():
     doc: Document = Document()
 
     page: Page = Page()
-    doc.append_page(page)
+    doc.add_page(page)
 
     layout: PageLayout = SingleColumnLayout(page)
 
@@ -7522,7 +7522,7 @@ def main():
     page_width: Decimal = PageSize.A4_PORTRAIT.value[0]
     page_height: Decimal = PageSize.A4_PORTRAIT.value[1]
     s: Decimal = Decimal(100)
-    page.append_stamp_annotation(
+    page.add_annotation(
         RubberStampAnnotation(
             Rectangle(
                 page_width / Decimal(2) - s / Decimal(2),
@@ -7612,7 +7612,7 @@ def main():
     doc: Document = Document()
 
     page: Page = Page()
-    doc.append_page(page)
+    doc.add_page(page)
 
     layout: PageLayout = SingleColumnLayout(page)
 
@@ -7627,7 +7627,7 @@ def main():
         )
     )
 
-    page.append_annotation(
+    page.add_annotation(
         RedactAnnotation(
             Rectangle(Decimal(405), Decimal(721), Decimal(40), Decimal(8)).grow(
                 Decimal(2)
@@ -7744,7 +7744,7 @@ def main():
 
     # add page
     page = Page()
-    pdf.append_page(page)
+    pdf.add_page(page)
 
     # add test information
     layout = SingleColumnLayout(page)
@@ -7765,7 +7765,7 @@ def main():
     # modify annotation
     annot[Name("A")][Name("S")] = Name("JavaScript")
     annot[Name("A")][Name("JS")] = String("app.alert('Hello World!', 3)")
-    page.append_annotation(annot)
+    page.add_annotation(annot)
 
     # attempt to store PDF
     with open(self.output_dir / "output.pdf", "wb") as out_file_handle:
@@ -7807,7 +7807,7 @@ def main():
 
     # add page
     page = Page()
-    pdf.append_page(page)
+    pdf.add_page(page)
 
     # add test information
     layout = SingleColumnLayout(page)
@@ -7821,7 +7821,7 @@ def main():
     layout.add(img)
 
     # add sound annotation
-    page.append_annotation(
+    page.add_annotation(
         SoundAnnotation(img.get_bounding_box(), "/home/joris/Downloads/audioclip.mp3")
     )
 
@@ -7910,7 +7910,7 @@ def main():
 
     # add Page
     p: Page = Page()
-    d.append_page(p)
+    d.add_page(p)
 
     # create PageLayout
     l: PageLayout = SingleColumnLayout(p)
@@ -8005,7 +8005,7 @@ def main():
 
     for r in l.get_table_bounding_boxes_for_page(0):
         r = r.grow(Decimal(5))
-        p.append_annotation(SquareAnnotation(r, stroke_color=X11Color("Green")))
+        p.add_annotation(SquareAnnotation(r, stroke_color=X11Color("Green")))
 
     for t in tables:
 
@@ -8013,7 +8013,7 @@ def main():
         for c in t._content:
             r = c.get_bounding_box()
             r = r.shrink(Decimal(5))
-            p.append_annotation(SquareAnnotation(r, stroke_color=X11Color("Red")))
+            p.add_annotation(SquareAnnotation(r, stroke_color=X11Color("Red")))
 
     # write
     with open("output.pdf", "wb") as pdf_file_handle:
@@ -8125,7 +8125,7 @@ def main():
 
     # create/add Page
     p: Page = Page()
-    d.append_page(p)
+    d.add_page(p)
 
     # set PageLayout
     l: PageLayout = SingleColumnLayout(p)
@@ -8250,7 +8250,7 @@ def main():
     page: Page = Page()
 
     # add Page to Document
-    doc.append_page(page)
+    doc.add_page(page)
 
     # set a PageLayout
     layout: PageLayout = SingleColumnLayout(page)
@@ -9223,7 +9223,7 @@ def main():
 
     # create new Page
     page: Page = Page()
-    doc.append_page(page)
+    doc.add_page(page)
 
     # set PageLayout
     layout: PageLayout = SingleColumnLayout(page)
@@ -9302,7 +9302,7 @@ def main():
 
     # create new Page
     page: Page = Page()
-    doc.append_page(page)
+    doc.add_page(page)
 
     # set PageLayout
     layout: PageLayout = SingleColumnLayout(page)
@@ -9415,7 +9415,7 @@ def main():
 
     # create new Page
     page: Page = Page()
-    doc.append_page(page)
+    doc.add_page(page)
 
     # set PageLayout
     layout: PageLayout = SingleColumnLayout(page)
@@ -9500,7 +9500,7 @@ def main():
 
     # Add page
     page = Page()
-    pdf.append_page(page)
+    pdf.add_page(page)
 
 
 if __name__ == "__main__":
@@ -9527,7 +9527,7 @@ def main():
 
     # Add page
     page = Page()
-    pdf.append_page(page)
+    pdf.add_page(page)
 
     # create PageLayout
     page_layout: PageLayout = SingleColumnLayout(page)
@@ -9562,7 +9562,7 @@ def main():
 
     # Add page
     page = Page()
-    pdf.append_page(page)
+    pdf.add_page(page)
 
     # create PageLayout
     page_layout: PageLayout = SingleColumnLayout(page)
@@ -9706,7 +9706,7 @@ def main():
 
     # Add page
     page = Page()
-    pdf.append_page(page)
+    pdf.add_page(page)
 
     # create PageLayout
     page_layout: PageLayout = SingleColumnLayout(page)
@@ -9866,7 +9866,7 @@ def main():
 
     # Add page
     page = Page()
-    pdf.append_page(page)
+    pdf.add_page(page)
 
     # create PageLayout
     page_layout: PageLayout = SingleColumnLayout(page)
@@ -10231,7 +10231,7 @@ def main():
 
     # Add page
     page = Page()
-    pdf.append_page(page)
+    pdf.add_page(page)
 
     # create PageLayout
     page_layout: PageLayout = SingleColumnLayout(page)
@@ -10484,7 +10484,7 @@ def main():
 
     # Add page
     page = Page()
-    pdf.append_page(page)
+    pdf.add_page(page)
 
     # create PageLayout
     page_layout: PageLayout = SingleColumnLayout(page)
@@ -10562,7 +10562,7 @@ def main():
     page = Page()
 
     # add Page to Document
-    pdf.append_page(page)
+    pdf.add_page(page)
 
     # create PageLayout
     layout: PageLayout = SingleColumnLayout(page)
@@ -10710,7 +10710,7 @@ def main():
     page = Page()
 
     # add Page to Document
-    pdf.append_page(page)
+    pdf.add_page(page)
 
     # create PageLayout
     layout: PageLayout = SingleColumnLayout(page)
@@ -10808,7 +10808,7 @@ def main():
     page = Page()
 
     # add Page to Document
-    pdf.append_page(page)
+    pdf.add_page(page)
 
     # create PageLayout
     layout: PageLayout = SingleColumnLayout(page)
@@ -10853,7 +10853,7 @@ def main():
     )
 
     # let's add the remote go-to annotation
-    page.append_annotation(
+    page.add_annotation(
         RemoteGoToAnnotation(qr_code.get_bounding_box(), uri="https://www.borbpdf.com")
     )
 
@@ -10947,7 +10947,7 @@ def main():
     page = Page()
 
     # add Page to Document
-    pdf.append_page(page)
+    pdf.add_page(page)
 
     # create PageLayout
     layout: PageLayout = SingleColumnLayout(page)
@@ -10992,7 +10992,7 @@ def main():
     )
 
     # let's add the remote go-to annotation
-    page.append_annotation(
+    page.add_annotation(
         RemoteGoToAnnotation(qr_code.get_bounding_box(), uri="https://www.borbpdf.com")
     )
 
@@ -11121,7 +11121,7 @@ def main():
     page = Page()
 
     # add Page to Document
-    pdf.append_page(page)
+    pdf.add_page(page)
 
     # create PageLayout
     layout: PageLayout = SingleColumnLayout(page)
@@ -11166,7 +11166,7 @@ def main():
     )
 
     # let's add the remote go-to annotation
-    page.append_annotation(
+    page.add_annotation(
         RemoteGoToAnnotation(qr_code.get_bounding_box(), uri="https://www.borbpdf.com")
     )
 
@@ -11435,7 +11435,7 @@ def main():
     page = Page()
 
     # add Page to Document
-    pdf.append_page(page)
+    pdf.add_page(page)
 
     # create PageLayout
     layout: PageLayout = SingleColumnLayout(page)
@@ -11480,7 +11480,7 @@ def main():
     )
 
     # let's add the remote go-to annotation
-    page.append_annotation(
+    page.add_annotation(
         RemoteGoToAnnotation(qr_code.get_bounding_box(), uri="https://www.borbpdf.com")
     )
 
@@ -11820,7 +11820,7 @@ def main():
     page = Page()
 
     # add Page to Document
-    pdf.append_page(page)
+    pdf.add_page(page)
 
     # create PageLayout
     layout: PageLayout = SingleColumnLayout(page)
@@ -12017,7 +12017,7 @@ def main():
     page = Page()
 
     # add Page to Document
-    pdf.append_page(page)
+    pdf.add_page(page)
 
     # create PageLayout
     layout: PageLayout = SingleColumnLayout(page)
@@ -12241,7 +12241,7 @@ def main():
     page = Page()
 
     # add Page to Document
-    pdf.append_page(page)
+    pdf.add_page(page)
 
     # create PageLayout
     layout: PageLayout = SingleColumnLayout(page)
@@ -12485,8 +12485,8 @@ from borb.pdf.canvas.layout.annotation.remote_go_to_annotation import (
 def add_invisible_button(r: Rectangle, javascript: str):
     # the next line (commented out) adds a rectangular annotation with red border
     # this makes it a lot easier to debug the calculator
-    # page.append_annotation(SquareAnnotation(r, stroke_color=HexColor("ff0000"), fill_color=None))
-    page.append_annotation(RemoteGoToAnnotation(r, "https://www.borbpdf.com"))
+    # page.add_annotation(SquareAnnotation(r, stroke_color=HexColor("ff0000"), fill_color=None))
+    page.add_annotation(RemoteGoToAnnotation(r, "https://www.borbpdf.com"))
     page[Name("Annots")][-1][Name("A")][Name("S")] = Name("JavaScript")
     page[Name("Annots")][-1][Name("A")][Name("JS")] = String(javascript)
 ```
@@ -12866,7 +12866,7 @@ def main():
 
     # create Page
     page: Page = Page()
-    doc.append_page(page)
+    doc.add_page(page)
 
     # add javascript
     add_document_level_javascript(doc)

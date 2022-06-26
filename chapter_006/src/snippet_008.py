@@ -19,7 +19,7 @@ def main():
 
     # add page
     page = Page()
-    pdf.append_page(page)
+    pdf.add_page(page)
 
     # add test information
     layout = SingleColumnLayout(page)
@@ -40,7 +40,7 @@ def main():
     # modify annotation
     annot[Name("A")][Name("S")] = Name("JavaScript")
     annot[Name("A")][Name("JS")] = String("app.alert('Hello World!', 3)")
-    page.append_annotation(annot)
+    page.add_annotation(annot)
 
     # attempt to store PDF
     with open(self.output_dir / "output.pdf", "wb") as out_file_handle:

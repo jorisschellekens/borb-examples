@@ -40,7 +40,7 @@ def main():
 
     # create new Page
     page: Page = Page()
-    doc.append_page(page)
+    doc.add_page(page)
 
     # set PageLayout
     layout: PageLayout = SingleColumnLayout(page)

@@ -23,7 +23,7 @@ def main():
 
     # add Page
     p: Page = Page()
-    d.append_page(p)
+    d.add_page(p)
 
     # create PageLayout
     l: PageLayout = SingleColumnLayout(p)

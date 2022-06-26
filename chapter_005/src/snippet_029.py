@@ -26,7 +26,7 @@ def main():
         doc_002 = PDF.loads(pdf_file_handle)
 
     # merge
-    doc_001.append_document(doc_002)
+    doc_001.add_document(doc_002)
 
     # write
     with open("output_003.pdf", "wb") as pdf_file_handle:

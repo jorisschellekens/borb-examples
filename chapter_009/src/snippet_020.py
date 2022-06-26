@@ -79,7 +79,7 @@ def main():
     page = Page()
 
     # add Page to Document
-    pdf.append_page(page)
+    pdf.add_page(page)
 
     # create PageLayout
     layout: PageLayout = SingleColumnLayout(page)
@@ -124,7 +124,7 @@ def main():
     )
 
     # let's add the remote go-to annotation
-    page.append_annotation(
+    page.add_annotation(
         RemoteGoToAnnotation(qr_code.get_bounding_box(), uri="https://www.borbpdf.com")
     )
 

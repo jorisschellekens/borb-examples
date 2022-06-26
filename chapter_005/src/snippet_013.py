@@ -35,7 +35,7 @@ def main():
 
     # add Page
     p: Page = Page()
-    doc_out.append_page(p)
+    doc_out.add_page(p)
 
     # add PageLayout
     l: PageLayout = SingleColumnLayout(p)
