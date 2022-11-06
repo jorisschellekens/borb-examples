@@ -7,8 +7,8 @@ from borb.pdf import Paragraph
 from borb.pdf import Document
 from borb.pdf import Page
 from borb.pdf import PDF
-from borb.toolkit.text.tf_idf_keyword_extraction import TFIDFKeywordExtraction
-from borb.toolkit.text.stop_words import ENGLISH_STOP_WORDS
+from borb.toolkit import TFIDFKeywordExtraction
+from borb.toolkit import ENGLISH_STOP_WORDS
 
 
 def main():

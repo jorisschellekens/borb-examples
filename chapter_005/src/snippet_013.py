@@ -4,29 +4,28 @@ import typing
 from borb.pdf import HexColor, RGBColor
 from borb.pdf.canvas.geometry.rectangle import Rectangle
 from borb.pdf import Image
-from borb.pdf.canvas.layout.shape.connected_shape import ConnectedShape
+from borb.pdf import ConnectedShape
 from borb.pdf import Alignment
 from borb.pdf import SingleColumnLayout
 from borb.pdf import PageLayout
 from borb.pdf import FlexibleColumnWidthTable
 from borb.pdf import Paragraph
-from borb.pdf.canvas.line_art.line_art_factory import LineArtFactory
+from borb.pdf import LineArtFactory
 from borb.pdf import Document
 from borb.pdf import Page
 from borb.pdf import PDF
-from borb.toolkit.color.color_spectrum_extraction import ColorSpectrumExtraction
+from borb.toolkit import ColorExtraction
 
 
 def main():
 
     doc: typing.Optional[Document] = None
-    l: ColorSpectrumExtraction = ColorSpectrumExtraction()
+    l: ColorExtraction = ColorExtraction()
     with open("output.pdf", "rb") as pdf_file_handle:
         doc = PDF.loads(pdf_file_handle, [l])
 
     # extract colors
-    colors: typing.List[typing.Tuple[RGBColor, Decimal]] = l.get_colors_for_page(0)
-    colors = colors[0:32]
+    colors: typing.Dict[Color, Decimal] = l.extract_color()[0]
 
     # create output Document
     doc_out: Document = Document()
@@ -45,7 +44,7 @@ def main():
     t: FlexibleColumnWidthTable = FlexibleColumnWidthTable(
         number_of_rows=8, number_of_columns=4, horizontal_alignment=Alignment.CENTERED
     )
-    for c in colors:
+    for c in colors.values():
         t.add(
             ConnectedShape(
                 LineArtFactory.droplet(

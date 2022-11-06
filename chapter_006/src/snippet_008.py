@@ -13,6 +13,7 @@ from borb.pdf.canvas.layout.annotation.remote_go_to_annotation import (
 
 from decimal import Decimal
 
+
 def main():
 
     # create document
@@ -34,7 +35,9 @@ def main():
     layout.add(img)
 
     # create RemoteGoToAnnotation
-    annot: RemoteGoToAnnotation = RemoteGoToAnnotation(img.get_previous_paint_box(), uri="https://www.google.com")
+    annot: RemoteGoToAnnotation = RemoteGoToAnnotation(
+        img.get_previous_paint_box(), uri="https://www.google.com"
+    )
 
     # modify annotation
     annot[Name("A")][Name("S")] = Name("JavaScript")

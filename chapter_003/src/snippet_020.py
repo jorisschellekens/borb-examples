@@ -24,27 +24,25 @@ def main():
     # set a PageLayout
     layout: PageLayout = SingleColumnLayout(page)
 
-    # create an OrderedList
-    list: OrderedList = (
-        OrderedList()
-        .add(Paragraph("Item 1"))
-        .add(Paragraph("Item 2"))
-        .add(Paragraph("Item 4"))
-    )
-
     # create a FlexibleColumnWidthTable
     table: FlexibleColumnWidthTable = (
         FlexibleColumnWidthTable(number_of_columns=3, number_of_rows=2)
         .add(Paragraph("Lorem"))
         .add(Paragraph("Ipsum"))
-        .add(list)
+        .add(Paragraph("Dolor"))
         .add(Paragraph("Sit"))
         .add(Paragraph("Amet"))
         .add(Paragraph("Nunc"))
         .set_padding_on_all_cells(Decimal(2), Decimal(2), Decimal(2), Decimal(2))
     )
 
-    layout.add(table)
+    layout.add(
+        OrderedList()
+        .add(Paragraph("Item 1"))
+        .add(Paragraph("Item 2"))
+        .add(table)
+        .add(Paragraph("Item 4"))
+    )
 
     # store
     with open("output.pdf", "wb") as out_file_handle:

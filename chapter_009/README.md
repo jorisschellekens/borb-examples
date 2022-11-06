@@ -3,7 +3,7 @@
 In this chapter we'll build some practical PDF documents that are ready-to-use.
 This chapter assumes you have a good working knowledge of all the basic `LayoutElement`  concepts.
 
-![enter image description here](img/chapter_illustration.jpg)
+![enter image description here](img/chapter_illustration.png)
 
 <div style="page-break-before: always;"></div>
 

@@ -32,7 +32,9 @@ def main():
 
     # add sound annotation
     page.add_annotation(
-        SoundAnnotation(img.get_previous_paint_box(), "/home/joris/Downloads/audioclip.mp3")
+        SoundAnnotation(
+            img.get_previous_paint_box(), "/home/joris/Downloads/audioclip.mp3"
+        )
     )
 
     # attempt to store PDF

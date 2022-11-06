@@ -6,7 +6,7 @@ Most of these workflows can be boiled down to some simple steps that can be hand
 
 In this section you'll learn the ins and outs of working with existing PDF's.
 
-![enter image description here](img/chapter_illustration.jpg)
+![enter image description here](img/chapter_illustration.png)
 
 <div style="page-break-before: always;"></div>
 

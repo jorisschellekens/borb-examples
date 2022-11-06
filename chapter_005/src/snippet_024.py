@@ -7,7 +7,7 @@ from borb.pdf import Paragraph
 from borb.pdf import Document
 from borb.pdf import Page
 from borb.pdf import PDF
-from borb.toolkit.image.image_format_optimization import ImageFormatOptimization
+from borb.toolkit import ImageFormatOptimization
 
 
 def main():

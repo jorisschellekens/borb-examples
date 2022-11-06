@@ -1,6 +1,6 @@
 # 4 Forms
 
-![enter image description here](img/chapter_illustration.jpg)
+![enter image description here](img/chapter_illustration.png)
 
 <div style="page-break-before: always;"></div>
 
@@ -185,10 +185,12 @@ We could also just set the values using `borb` of course. You'll learn how to do
 Finally, with our form filled in (and saved), we can get the filled in values in the PDF:
 
 ```python
-#!src/snippet_010.py
+#!src/snippet_009.py
 ```
 
 This should print something like:
+
+![enter image description here](img/snippet_009.png)
 
 ```commandline
 /usr/bin/python3.8 /home/joris/Code/borb-examples-dev/example/example_053.py
@@ -214,10 +216,10 @@ Later you'll learn how to remove interactivity by flattening the `Document`.
 ### 4.5.1 Changing the value of a `FormField` in an existing PDF using `borb`
 
 ```python
-#!src/snippet_009.py
+#!src/snippet_010.py
 ```
 
-![enter image description here](img/snippet_009.png)
+![enter image description here](img/snippet_010.png)
 
 ### 4.5.2 Changing the value of a `FormField` in an existing PDF using `JavaScript`
 
@@ -231,11 +233,7 @@ In the next example, you'll be creating a PDF with a simple `JavaScriptPushButto
 #!src/snippet_011.py
 ```
 
-## 4.6 Flattening a `FormField`
-
-:mega: todo :mega:
-
-## 4.7 Conclusion
+## 4.6 Conclusion
 
 In this section you've learned how to build interactive, fillable PDF forms.
 

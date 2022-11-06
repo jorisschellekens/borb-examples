@@ -1,6 +1,6 @@
 # 8 Deep Dive into `borb`
 
-![enter image description here](img/chapter_illustration.jpg)
+![enter image description here](img/chapter_illustration.png)
 
 <div style="page-break-before: always;"></div>
 
@@ -203,79 +203,79 @@ A free copy of which can be found:
 
 | Operator | Number of arguments | Type of arguments | Description                                                                                                                                                                                                                                                                                                                                                                                                   |
 |----------|---------------------|-------------------|---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
-| b | 0                   |                   | Close, fill, and stroke path using nonzero winding number rule                                                                                                                                                                                                                                                                                                                                                |
-| B | 0                   |                   | Fill and then stroke the path, using the nonzero winding number rule to determine the region to fill.                                                                                                                                                                                                                                                                                                         |
-| b* | 0                   |                   | Close, fill, and then stroke the path, using the even-odd rule to determine the region to fill.                                                                                                                                                                                                                                                                                                               |
-| B* | 0                   |                   | Fill and then stroke the path, using the even-odd rule to determine the region to fill.                                                                                                                                                                                                                                                                                                                       |
-| BDC | 2                   |                   | Begin a marked-content sequence with an associated property list, terminated by a balancing EMC operator. tag shall be a name object indicating the role or significance of the sequence. properties shall be either an inline dictionary containing the property list or a name object associated with it in the Properties subdictionary of the current resource dictionary (see 14.6.2, “Property Lists”). |
-| BI | 0                   |                   | Begin an inline image object.                                                                                                                                                                                                                                                                                                                                                                                 |
-| BMC | 1                   |                   | Begin a marked-content sequence terminated by a balancing **EMC** operator. tag shall be a name object indicating the role or significance of the sequence.                                                                                                                                                                                                                                                   |
-| BT |
-| BX |
-| c |
-| cm |
-| CS |
-| cs |
-| d |
-| d0 |
-| d1 |
-| Do |
-| DP | 2                   |                   | Designate a marked-content point with an associated property list. tag shall be a name object indicating the role or significance of the point. properties shall be either an inline dictionary containing the property list or a name object associated with it in the Properties subdictionary of the current resource dictionary (see 14.6.2, “Property Lists”).                                           |
-| EI | 0                   |                   | End an inline image object.                                                                                                                                                                                                                                                                                                                                                                                   |
-| EMC | 0                   |                   | End a marked-content sequence begun by a **BMC** or **BDC** operator.                                                                                                                                                                                                                                                                                                                                         |
-| ET |
-| EX |
-| f | 0                   |                   | Fill the path, using the nonzero winding number rule to determine the region to fill (see 8.5.3.3.2, "Nonzero Winding Number Rule"). Any subpaths that are open shall be implicitly closed before being filled.                                                                                                                                                                                               |
-| F | 0                   |                   | Equivalent to **f**; included only for compatibility. Although PDF reader applications shall be able to accept this operator, PDF writer applications should use **f** instead.                                                                                                                                                                                                                               |
-| f* | 0                   |                   | Fill the path, using the even-odd rule to determine the region to fill (see 8.5.3.3.3, "Even-Odd Rule").                                                                                                                                                                                                                                                                                                      |
-| G |
-| g |
-| gs |
-| h |
-| i |
-| ID | 0                   |                   | Begin the image data for an inline image object.                                                                                                                                                                                                                                                                                                                                                              |
-| j |
-| J |
-| K |
-| k |
-| l | 2                   |                   | Append a straight line segment from the current point to the point (x, y). The new current point shall be (x, y).                                                                                                                                                                                                                                                                                             |
-| m | 2                   |                   | Begin a new subpath by moving the current point to coordinates (x, y), omitting any connecting line segment. If the previous path construction operator in the current path was also m, the new m overrides it; no vestige of the previous m operation remains in the path.                                                                                                                                   |
-| M |
-| MP | 1                   |                   | Designate a marked-content point. tag shall be a name object indicating the role or significance of the point.                                                                                                                                                                                                                                                                                                |
-| n | 0                   |                   | End the path object without filling or stroking it. This operator shall be a path-painting no-op, used primarily for the side effect of changing the current clipping path (see 8.5.4, "Clipping Path Operators").                                                                                                                                                                                            |
-| q |
-| Q |
-| re |
-| RG |
-| rg |
-| ri |
-| s | 0                   |                   | Close and stroke the path.                                                                                                                                                                                                                                                                                                                                                                                    |
-| S | 0                   |                   | Stroke the path.                                                                                                                                                                                                                                                                                                                                                                                              |
-| SC |
-| sc |
-| SCN |
-| scn |
-| sh |
-| T* |
-| Tc |
-| Td |
-| TD |
-| Tf |
-| Tj |
-| TJ |
-| TL |
-| Tm |
-| Tr |
-| Ts |
-| Tw |
-| Tz |
-| v |
-| w |
-| W |
-| W* |
-| y |
-| ' |
-| " |
+| b        | 0                   |                   | Close, fill, and stroke path using nonzero winding number rule                                                                                                                                                                                                                                                                                                                                                |
+| B        | 0                   |                   | Fill and then stroke the path, using the nonzero winding number rule to determine the region to fill.                                                                                                                                                                                                                                                                                                         |
+| b*       | 0                   |                   | Close, fill, and then stroke the path, using the even-odd rule to determine the region to fill.                                                                                                                                                                                                                                                                                                               |
+| B*       | 0                   |                   | Fill and then stroke the path, using the even-odd rule to determine the region to fill.                                                                                                                                                                                                                                                                                                                       |
+| BDC      | 2                   |                   | Begin a marked-content sequence with an associated property list, terminated by a balancing EMC operator. tag shall be a name object indicating the role or significance of the sequence. properties shall be either an inline dictionary containing the property list or a name object associated with it in the Properties subdictionary of the current resource dictionary (see 14.6.2, “Property Lists”). |
+| BI       | 0                   |                   | Begin an inline image object.                                                                                                                                                                                                                                                                                                                                                                                 |
+| BMC      | 1                   |                   | Begin a marked-content sequence terminated by a balancing **EMC** operator. tag shall be a name object indicating the role or significance of the sequence.                                                                                                                                                                                                                                                   |
+| BT       |
+| BX       |
+| c        |
+| cm       |
+| CS       |
+| cs       |
+| d        |
+| d0       |
+| d1       |
+| Do       |
+| DP       | 2                   |                   | Designate a marked-content point with an associated property list. tag shall be a name object indicating the role or significance of the point. properties shall be either an inline dictionary containing the property list or a name object associated with it in the Properties subdictionary of the current resource dictionary (see 14.6.2, “Property Lists”).                                           |
+| EI       | 0                   |                   | End an inline image object.                                                                                                                                                                                                                                                                                                                                                                                   |
+| EMC      | 0                   |                   | End a marked-content sequence begun by a **BMC** or **BDC** operator.                                                                                                                                                                                                                                                                                                                                         |
+| ET       |
+| EX       |
+| f        | 0                   |                   | Fill the path, using the nonzero winding number rule to determine the region to fill (see 8.5.3.3.2, "Nonzero Winding Number Rule"). Any subpaths that are open shall be implicitly closed before being filled.                                                                                                                                                                                               |
+| F        | 0                   |                   | Equivalent to **f**; included only for compatibility. Although PDF reader applications shall be able to accept this operator, PDF writer applications should use **f** instead.                                                                                                                                                                                                                               |
+| f*       | 0                   |                   | Fill the path, using the even-odd rule to determine the region to fill (see 8.5.3.3.3, "Even-Odd Rule").                                                                                                                                                                                                                                                                                                      |
+| G        |
+| g        |
+| gs       |
+| h        |
+| i        |
+| ID       | 0                   |                   | Begin the image data for an inline image object.                                                                                                                                                                                                                                                                                                                                                              |
+| j        |
+| J        |
+| K        |
+| k        |
+| l        | 2                   |                   | Append a straight line segment from the current point to the point (x, y). The new current point shall be (x, y).                                                                                                                                                                                                                                                                                             |
+| m        | 2                   |                   | Begin a new subpath by moving the current point to coordinates (x, y), omitting any connecting line segment. If the previous path construction operator in the current path was also m, the new m overrides it; no vestige of the previous m operation remains in the path.                                                                                                                                   |
+| M        |
+| MP       | 1                   |                   | Designate a marked-content point. tag shall be a name object indicating the role or significance of the point.                                                                                                                                                                                                                                                                                                |
+| n        | 0                   |                   | End the path object without filling or stroking it. This operator shall be a path-painting no-op, used primarily for the side effect of changing the current clipping path (see 8.5.4, "Clipping Path Operators").                                                                                                                                                                                            |
+| q        |
+| Q        |
+| re       |
+| RG       |
+| rg       |
+| ri       |
+| s        | 0                   |                   | Close and stroke the path.                                                                                                                                                                                                                                                                                                                                                                                    |
+| S        | 0                   |                   | Stroke the path.                                                                                                                                                                                                                                                                                                                                                                                              |
+| SC       |
+| sc       |
+| SCN      |
+| scn      |
+| sh       |
+| T*       |
+| Tc       |
+| Td       |
+| TD       |
+| Tf       |
+| Tj       |
+| TJ       |
+| TL       |
+| Tm       |
+| Tr       |
+| Ts       |
+| Tw       |
+| Tz       |
+| v        |
+| w        |
+| W        |
+| W*       |
+| y        |
+| '        |
+| "        |
 
 <div style="page-break-before: always;"></div>
 
@@ -296,6 +296,30 @@ Although this is not very practical it will do several things:
 - Enable you to write your own `LayoutElement` implementations (if needed) 
 
 In this example, you'll be creating a PDF from scratch, containing "Hello World!", using only the low-level syntax.
+
+We'll start by creating an empty `Document` and add an empty `Page`:
+
+```python
+#!src/snippet_001.py
+```
+
+Now we can start writing PostScript operators to the content-stream of the `Page`:
+
+```python
+#!src/snippet_002.py
+```
+
+We've now used a font called `F1` in our `Page`, we need to define that: 
+
+```python
+#!src/snippet_003.py
+```
+
+Finally, we can store the PDF:
+
+```python
+#!src/snippet_004.py
+```
 
 <div style="page-break-before: always;"></div>
 

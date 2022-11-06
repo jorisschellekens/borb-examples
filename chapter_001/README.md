@@ -1,6 +1,6 @@
 # 1 `borb` in action
 
-![enter image description here](img/chapter_illustration.jpg)
+![enter image description here](img/chapter_illustration.png)
 
 <div style="page-break-before: always;"></div>
 
@@ -71,7 +71,7 @@ This book consists of 5 major parts:
 - Deep dive(s)
 - Showcase(s)
 
-### 1.5.1 Creating PDF documents
+### 1.5.1 Creating PDF documents from scratch
 
 In this section you'll learn how to create a PDF from scratch. You'll explore the various `LayoutElement` objects that `borb` has to offer (`Paragraph`,  `Image`, `Table`, etc). You'll play around with the options for all of them (alignment, fonts, colors, layout, etc) and you'll get a good grasp of the basics of how to add content to a PDF.
 
@@ -79,11 +79,25 @@ This section will start out easy, by creating an empty PDF document and examinin
 
 Then you'll explore other layout primitives, such as images and shapes (and their various sub-classes, such as QR-codes).
 
-Once you have a firm grasp of the primitives, you'll learn how to aggregate those in more complex layout elements such as lists and tables.
-
 After having read this section you should be able to code up a small proof of concept for any workflow that requires you to generate a PDF document.
 
-### 1.5.2 Manipulate existing PDF documents
+### 1.5.2 Aggregating content using containers 
+
+Once you have a firm grasp of the primitives, you'll learn how to aggregate those in more complex `LayoutElement` objects such as `List` and `Table` objects.
+
+You'll learn how to use `SmartArt`, which can really elevate your `PDF` and make content so much clearer and easier to understand.
+
+### 1.5.3 Forms
+
+In this section you'll learn how you can leverage forms to retrieve input from users, all in PDF.
+
+You'll explore the classes `borb` has to offer to represent various kinds of user-input such as `TextField`, `DropDownList` and more.
+
+You'll learn how to get content back out of a form in PDF.
+
+Finally, you'll learn how to add `Javascript` actions to a PDF, to make your `PDF` documents even more interactive.
+
+### 1.5.4 Manipulate existing PDF documents
 
 In this section you'll explore the things you can do with an existing PDF document. 
 
@@ -102,7 +116,17 @@ Lastly, you'll also tackle some common questions;
 - Can you change the font of this heading?
 - Etc
 
-### 1.5.3 Heuristics for PDF documents
+### 1.5.5 Annotations
+
+Annotations are halfway between "working with existing PDF's" and "adding new content to a PDF".
+A typical example of an annotation (in the real world that is), is adding a post-it note to a book.
+You're not fundamentally changing the existing book, but you are adding your own content to it.
+
+Similarly, in PDF, annotations can be used to add extra text, images, geometric shapes, links to outside content, and more.
+
+In this section you'll learn all about them.
+
+### 1.5.6 Heuristics for PDF documents
 
 This section talks about some of the more interesting (and difficult) algorithms used when working with PDF.
 PDF is pretty much a "one way" format, it doesn't really lend itself to easily extracting information, or being modified.
@@ -118,7 +142,7 @@ You'll learn how to extract tabular data from a PDF, and you'll jump under the h
 
 You'll also learn how to apply OCR (optical character recognition) to an existing document, so that it can later be processed by `borb` as if it contained text all along.
 
-### 1.5.4 Deep-dive
+### 1.5.7 Deep-dive
 
 This section explores PDF syntax and some of the core concepts in the `borb` library. Although it isn't a must for the day-to-day usage of `borb`, this section will certainly help build your appreciation for some of the limitations of PDF (or even PDF libraries).
 
@@ -126,7 +150,7 @@ You'll learn how content is rendered to a page, how the various layout-algorithm
 
 In this section I want to focus on the beautiful algorithms and data-structures I met along the way while implementing `borb`.
 
-### 1.5.5 Showcases
+### 1.5.8 Showcases
 
 This section provides end-to-end examples for some of the more common document-generation or document-manipulating use-cases. You should read this section last, as its content assumes you have worked your way through the basics beforehand.
 

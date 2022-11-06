@@ -1,8 +1,8 @@
 import typing
 from borb.pdf import Document
 from borb.pdf import PDF
-from borb.toolkit.text.font_color_filter import FontColorFilter
-from borb.toolkit.text.simple_text_extraction import SimpleTextExtraction
+from borb.toolkit import FontColorFilter
+from borb.toolkit import SimpleTextExtraction
 from borb.pdf import X11Color
 
 from decimal import Decimal

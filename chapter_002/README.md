@@ -1,6 +1,6 @@
 # 2 Creating PDF documents from scratch
 
-![enter image description here](img/chapter_illustration.jpg)
+![enter image description here](img/chapter_illustration.png)
 
 <div style="page-break-before: always;"></div>
 
@@ -834,9 +834,11 @@ In order to make sure document creation can go ahead without having to wait for 
 
 ### 2.10.1 Adding dummy text
 
-`borb` comes with the class `Lipsum` (in `borb.pdf.canvas.lipsum.lipsum`) which has two methods:
-- : allowing you to generate the classic lorem ipsum text
-- : allowing you to generate a more Bob Ross inspired dummy text
+`borb` comes with the class `Lipsum` (in `borb.pdf.canvas.lipsum.lipsum`) which has the following methods:
+- `generate_lipsum_text` : allowing you to generate the classic lorem ipsum text
+- `generate_lewis_carroll_text` : allowing you to generate a Lewis Carroll inspired dummy text
+- `generate_jane_austen_text` : allowing you to generate a Jane Austen inspired dummy text
+- and more (check them out, they provide some much-needed distraction from the boring `Lorem Ipsum` classic)
 
 Both methods use a markov model to generate text similar to the text they've been trained on.
 
@@ -851,7 +853,7 @@ Keep in mind the text generated here is random, it might (most probably will) co
 
 <div style="page-break-before: always;"></div>
 
-In this next example you'll be using the more whimsical Bob Ross version.
+In this next example you'll be using the more whimsical Lewis Carroll version.
 
 ```python 
 #!src/snippet_038.py

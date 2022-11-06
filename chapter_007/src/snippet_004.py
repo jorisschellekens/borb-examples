@@ -15,9 +15,7 @@ from PIL import ImageDraw, ImageFont
 def create_image() -> PILImage:
 
     # create new Image
-    img = PILImage.new("RGB",
-                       (256, 256),
-                       color=(255, 255, 255))
+    img = PILImage.new("RGB", (256, 256), color=(255, 255, 255))
 
     # create ImageFont
     # CAUTION: you may need to adjust the path to your particular font directory
@@ -32,7 +30,6 @@ def create_image() -> PILImage:
     output_path: Path = Path(__file__).parent / "image_hello_world.png"
     img.save(output_path, dpi=(600, 600))
     return output_path
-
 
 
 def main():

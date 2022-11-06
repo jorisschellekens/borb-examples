@@ -1,7 +1,7 @@
 import typing
 from borb.pdf import Document
 from borb.pdf import PDF
-from borb.toolkit.text.simple_text_extraction import SimpleTextExtraction
+from borb.toolkit import SimpleTextExtraction
 
 
 def main():

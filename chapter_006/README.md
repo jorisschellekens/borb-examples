@@ -6,7 +6,7 @@ from the PDF-spec:
 > document, or provides a way to interact with the user by means of the mouse and keyboard. PDF includes a
 > wide variety of standard annotation types, described in detail in 12.5.6, “Annotation Types.”
 
-![enter image description here](img/chapter_illustration.jpg)
+![enter image description here](img/chapter_illustration.png)
 
 <div style="page-break-before: always;"></div>
 
@@ -296,16 +296,7 @@ In this example we're going to add a `SoundAnnotation` to a PDF, which plays som
 
 ![enter image description here](img/snippet_009.png)
 
-## 6.9 Adding movie annotations
-
-
-```python
-#!src/snippet_010.py
-```
-
-![enter image description here](img/snippet_010.png)
-
-## 6.10 Conclusion
+## 6.9 Conclusion
 
 In this section you've learned how to work with `Annotation` objects.
 These objects allow you to add content to existing PDF documents.

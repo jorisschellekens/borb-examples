@@ -1,9 +1,7 @@
 import typing
 from borb.pdf import Document
 from borb.pdf import PDF
-from borb.toolkit.text.regular_expression_text_extraction import (
-    RegularExpressionTextExtraction,
-)
+from borb.toolkit import RegularExpressionTextExtraction
 
 
 def main():

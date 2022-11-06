@@ -7,13 +7,8 @@ from borb.pdf import Paragraph
 from borb.pdf import Document
 from borb.pdf import Page
 from borb.pdf import PDF
-from borb.toolkit.text.text_rank_keyword_extraction import TextRankKeywordExtraction
-from borb.toolkit.text.stop_words import ENGLISH_STOP_WORDS
-
-# nltk
-import nltk
-nltk.download('punkt')
-nltk.download('averaged_perceptron_tagger')
+from borb.toolkit import TextRankKeywordExtraction
+from borb.toolkit import ENGLISH_STOP_WORDS
 
 
 def main():

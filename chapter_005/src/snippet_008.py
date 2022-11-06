@@ -4,12 +4,10 @@ from decimal import Decimal
 from borb.pdf.canvas.geometry.rectangle import Rectangle
 from borb.pdf import Document
 from borb.pdf import PDF
-from borb.toolkit.location.location_filter import LocationFilter
-from borb.toolkit.text.regular_expression_text_extraction import (
-    RegularExpressionTextExtraction,
-    PDFMatch,
-)
-from borb.toolkit.text.simple_text_extraction import SimpleTextExtraction
+from borb.toolkit import LocationFilter
+from borb.toolkit import RegularExpressionTextExtraction
+from borb.toolkit import PDFMatch
+from borb.toolkit import SimpleTextExtraction
 
 
 def main():

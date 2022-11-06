@@ -15,7 +15,7 @@ In this section you'll learn how to:
 - Export a PDF to various image formats
 - Export certain formats (HTML, Markdown) to PDF
 
-![enter image description here](img/chapter_illustration.jpg)
+![enter image description here](img/chapter_illustration.png)
 
 <div style="page-break-before: always;"></div>
 
@@ -242,5 +242,9 @@ Check out the examples in the GitHub repository and the tests to find out more s
 <div style="page-break-before: always;"></div>
 
 ## 7.7 Conclusion
+
+In this chapter you've learned some of the more advanced ways of working with `borb` and PDF in general.
+You've learnt how to convert various formats to PDF, and back again. You've applied OCR, and extracted tables.
+The examples in this chapter may not be for everyone, but you will undoubtedly gain a deeper understanding of `borb` and PDF by studying the code.
 
 <div style="page-break-before: always;"></div>

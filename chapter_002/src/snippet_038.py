@@ -21,7 +21,7 @@ def main():
     layout: PageLayout = SingleColumnLayout(page)
 
     # add a Paragraph
-    layout.add(Paragraph(Lipsum.generate_bob_ross_text()))
+    layout.add(Paragraph(Lipsum.generate_lewis_carroll_text()))
 
     # store
     with open("output.pdf", "wb") as pdf_file_handle:

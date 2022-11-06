@@ -6,11 +6,14 @@
   1.3 [Who should read this book?](#13-who-should-read-this-book)  
   1.4 [How to use this book](#14-how-to-use-this-book)  
   1.5 [What you'll be able to do after reading this book](#15-what-youll-be-able-to-do-after-reading-this-book)  
-    1.5.1 [Creating PDF documents](#151-creating-pdf-documents)  
-    1.5.2 [Manipulate existing PDF documents](#152-manipulate-existing-pdf-documents)  
-    1.5.3 [Heuristics for PDF documents](#153-heuristics-for-pdf-documents)  
-    1.5.4 [Deep-dive](#154-deep-dive)  
-    1.5.5 [Showcases](#155-showcases)  
+    1.5.1 [Creating PDF documents from scratch](#151-creating-pdf-documents-from-scratch)  
+    1.5.2 [Aggregating content using containers ](#152-aggregating-content-using-containers-)  
+    1.5.3 [Forms](#153-forms)  
+    1.5.4 [Manipulate existing PDF documents](#154-manipulate-existing-pdf-documents)  
+    1.5.5 [Annotations](#155-annotations)  
+    1.5.6 [Heuristics for PDF documents](#156-heuristics-for-pdf-documents)  
+    1.5.7 [Deep-dive](#157-deep-dive)  
+    1.5.8 [Showcases](#158-showcases)  
   1.6 [The goal of this book](#16-the-goal-of-this-book)  
   1.7 [Software requirements and downloads](#17-software-requirements-and-downloads)  
     1.7.1 [Installation using `pip`](#171-installation-using-pip)  
@@ -68,10 +71,12 @@
     3.2.3 [Setting layout properties on individual cells of a `Table`](#323-setting-layout-properties-on-individual-cells-of-a-table)  
     3.2.4 [Incomplete `Table`](#324-incomplete-table)  
     3.2.5 [Setting `col_span` and `row_span`](#325-setting-col_span-and-row_span)  
+    3.2.6 [Using the `TableUtil` class](#326-using-the-tableutil-class)  
   3.3 [Nesting `Table` in `List` and vice-versa](#33-nesting-table-in-list-and-vice-versa)  
     3.3.1 [Nesting a `Table` in a `List`](#331-nesting-a-table-in-a-list)  
     3.3.2 [Nesting a `List` in a `Table`](#332-nesting-a-list-in-a-table)  
-  3.4 [Conclusion](#34-conclusion)  
+  3.4 [Smart Art](#34-smart-art)  
+  3.5 [Conclusion](#35-conclusion)  
 4 [Forms](#4-forms)  
   4.1 [Acroforms vs XFA](#41-acroforms-vs-xfa)  
   4.2 [The `FormField` object](#42-the-formfield-object)  
@@ -89,8 +94,7 @@
   4.5 [Changing the value of a `FormField` in an existing PDF](#45-changing-the-value-of-a-formfield-in-an-existing-pdf)  
     4.5.1 [Changing the value of a `FormField` in an existing PDF using `borb`](#451-changing-the-value-of-a-formfield-in-an-existing-pdf-using-borb)  
     4.5.2 [Changing the value of a `FormField` in an existing PDF using `JavaScript`](#452-changing-the-value-of-a-formfield-in-an-existing-pdf-using-javascript)  
-  4.6 [Flattening a `FormField`](#46-flattening-a-formfield)  
-  4.7 [Conclusion](#47-conclusion)  
+  4.6 [Conclusion](#46-conclusion)  
 5 [Working with existing PDFs](#5-working-with-existing-pdfs)  
   5.1 [Extracting meta-information](#51-extracting-meta-information)  
     5.1.1 [Extracting the author from a PDF](#511-extracting-the-author-from-a-pdf)  
@@ -131,8 +135,7 @@
     6.6.2 [Applying redaction annotations](#662-applying-redaction-annotations)  
   6.7 [Adding invisible `JavaScript` buttons](#67-adding-invisible-javascript-buttons)  
   6.8 [Adding sound annotations](#68-adding-sound-annotations)  
-  6.9 [Adding movie annotations](#69-adding-movie-annotations)  
-  6.10 [Conclusion](#610-conclusion)  
+  6.9 [Conclusion](#69-conclusion)  
 7 [Heuristics for PDF documents](#7-heuristics-for-pdf-documents)  
   7.1 [Extracting tables from a PDF](#71-extracting-tables-from-a-pdf)  
   7.2 [Performing OCR on a PDF](#72-performing-ocr-on-a-pdf)  
@@ -171,7 +174,7 @@
 
 # 1 `borb` in action
 
-![enter image description here](chapter_001/img/chapter_illustration.jpg)
+![enter image description here](chapter_001/img/chapter_illustration.png)
 
 <div style="page-break-before: always;"></div>
 
@@ -242,7 +245,7 @@ This book consists of 5 major parts:
 - Deep dive(s)
 - Showcase(s)
 
-### 1.5.1 Creating PDF documents
+### 1.5.1 Creating PDF documents from scratch
 
 In this section you'll learn how to create a PDF from scratch. You'll explore the various `LayoutElement` objects that `borb` has to offer (`Paragraph`,  `Image`, `Table`, etc). You'll play around with the options for all of them (alignment, fonts, colors, layout, etc) and you'll get a good grasp of the basics of how to add content to a PDF.
 
@@ -250,11 +253,25 @@ This section will start out easy, by creating an empty PDF document and examinin
 
 Then you'll explore other layout primitives, such as images and shapes (and their various sub-classes, such as QR-codes).
 
-Once you have a firm grasp of the primitives, you'll learn how to aggregate those in more complex layout elements such as lists and tables.
-
 After having read this section you should be able to code up a small proof of concept for any workflow that requires you to generate a PDF document.
 
-### 1.5.2 Manipulate existing PDF documents
+### 1.5.2 Aggregating content using containers 
+
+Once you have a firm grasp of the primitives, you'll learn how to aggregate those in more complex `LayoutElement` objects such as `List` and `Table` objects.
+
+You'll learn how to use `SmartArt`, which can really elevate your `PDF` and make content so much clearer and easier to understand.
+
+### 1.5.3 Forms
+
+In this section you'll learn how you can leverage forms to retrieve input from users, all in PDF.
+
+You'll explore the classes `borb` has to offer to represent various kinds of user-input such as `TextField`, `DropDownList` and more.
+
+You'll learn how to get content back out of a form in PDF.
+
+Finally, you'll learn how to add `Javascript` actions to a PDF, to make your `PDF` documents even more interactive.
+
+### 1.5.4 Manipulate existing PDF documents
 
 In this section you'll explore the things you can do with an existing PDF document. 
 
@@ -273,7 +290,17 @@ Lastly, you'll also tackle some common questions;
 - Can you change the font of this heading?
 - Etc
 
-### 1.5.3 Heuristics for PDF documents
+### 1.5.5 Annotations
+
+Annotations are halfway between "working with existing PDF's" and "adding new content to a PDF".
+A typical example of an annotation (in the real world that is), is adding a post-it note to a book.
+You're not fundamentally changing the existing book, but you are adding your own content to it.
+
+Similarly, in PDF, annotations can be used to add extra text, images, geometric shapes, links to outside content, and more.
+
+In this section you'll learn all about them.
+
+### 1.5.6 Heuristics for PDF documents
 
 This section talks about some of the more interesting (and difficult) algorithms used when working with PDF.
 PDF is pretty much a "one way" format, it doesn't really lend itself to easily extracting information, or being modified.
@@ -289,7 +316,7 @@ You'll learn how to extract tabular data from a PDF, and you'll jump under the h
 
 You'll also learn how to apply OCR (optical character recognition) to an existing document, so that it can later be processed by `borb` as if it contained text all along.
 
-### 1.5.4 Deep-dive
+### 1.5.7 Deep-dive
 
 This section explores PDF syntax and some of the core concepts in the `borb` library. Although it isn't a must for the day-to-day usage of `borb`, this section will certainly help build your appreciation for some of the limitations of PDF (or even PDF libraries).
 
@@ -297,7 +324,7 @@ You'll learn how content is rendered to a page, how the various layout-algorithm
 
 In this section I want to focus on the beautiful algorithms and data-structures I met along the way while implementing `borb`.
 
-### 1.5.5 Showcases
+### 1.5.8 Showcases
 
 This section provides end-to-end examples for some of the more common document-generation or document-manipulating use-cases. You should read this section last, as its content assumes you have worked your way through the basics beforehand.
 
@@ -370,7 +397,7 @@ You're all awesome, and you've helped me out tremendously.
 
 # 2 Creating PDF documents from scratch
 
-![enter image description here](chapter_002/img/chapter_illustration.jpg)
+![enter image description here](chapter_002/img/chapter_illustration.png)
 
 <div style="page-break-before: always;"></div>
 
@@ -678,6 +705,7 @@ from borb.pdf import SingleColumnLayout
 from borb.pdf import Paragraph
 from borb.pdf import PDF
 
+
 def main():
     # create Document
     doc: Document = Document()
@@ -801,8 +829,14 @@ def main():
 
     # download and store the font
     # this is obviously not needed if you already have a ttf font on disk
-    with open("MsMadi-Regular.ttf", "wb") as font_file_handle:
-        font_file_handle.write(requests.get("https://github.com/google/fonts/raw/main/ofl/msmadi/MsMadi-Regular.ttf", stream=True).content)
+    font_path: Path = Path(__file__).parent / "MsMadi-Regular.ttf"
+    with open(font_path, "wb") as font_file_handle:
+        font_file_handle.write(
+            requests.get(
+                "https://github.com/google/fonts/raw/main/ofl/msmadi/MsMadi-Regular.ttf",
+                stream=True,
+            ).content
+        )
 
     # construct the Font object
     font_path: Path = Path(__file__).parent / "MsMadi-Regular.ttf"
@@ -2311,6 +2345,7 @@ from decimal import Decimal
 from pathlib import Path
 import requests
 
+
 def main():
     # create Document
     doc: Document = Document()
@@ -2327,7 +2362,12 @@ def main():
     # download image and store on disk
     # this is obviously not needed if you already have an image on disk
     with open("photo-1517260911058-0fcfd733702f.jpeg", "wb") as jpg_file_handle:
-        jpg_file_handle.write(requests.get("https://images.unsplash.com/photo-1517260911058-0fcfd733702f?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8", stream=True).content)
+        jpg_file_handle.write(
+            requests.get(
+                "https://images.unsplash.com/photo-1517260911058-0fcfd733702f?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8",
+                stream=True,
+            ).content
+        )
 
     # add an Image
     layout.add(
@@ -2778,9 +2818,11 @@ In order to make sure document creation can go ahead without having to wait for 
 
 ### 2.10.1 Adding dummy text
 
-`borb` comes with the class `Lipsum` (in `borb.pdf.canvas.lipsum.lipsum`) which has two methods:
-- : allowing you to generate the classic lorem ipsum text
-- : allowing you to generate a more Bob Ross inspired dummy text
+`borb` comes with the class `Lipsum` (in `borb.pdf.canvas.lipsum.lipsum`) which has the following methods:
+- `generate_lipsum_text` : allowing you to generate the classic lorem ipsum text
+- `generate_lewis_carroll_text` : allowing you to generate a Lewis Carroll inspired dummy text
+- `generate_jane_austen_text` : allowing you to generate a Jane Austen inspired dummy text
+- and more (check them out, they provide some much-needed distraction from the boring `Lorem Ipsum` classic)
 
 Both methods use a markov model to generate text similar to the text they've been trained on.
 
@@ -2827,7 +2869,7 @@ if __name__ == "__main__":
 
 <div style="page-break-before: always;"></div>
 
-In this next example you'll be using the more whimsical Bob Ross version.
+In this next example you'll be using the more whimsical Lewis Carroll version.
 
 ```python
 #!chapter_002/src/snippet_038.py
@@ -2854,7 +2896,7 @@ def main():
     layout: PageLayout = SingleColumnLayout(page)
 
     # add a Paragraph
-    layout.add(Paragraph(Lipsum.generate_bob_ross_text()))
+    layout.add(Paragraph(Lipsum.generate_lewis_carroll_text()))
 
     # store
     with open("output.pdf", "wb") as pdf_file_handle:
@@ -2947,7 +2989,7 @@ check out some of the deep-dives, where I'll show you how to create an invoice f
 
 # 3 Container `LayoutElement` objects
 
-![enter image description here](chapter_003/img/chapter_illustration.jpg)
+![enter image description here](chapter_003/img/chapter_illustration.png)
 
 <div style="page-break-before: always;"></div>
 
@@ -3811,8 +3853,9 @@ def main():
     doc: Document = Document()
 
     # create Page
-    page: Page = Page(width=PageSize.A4_LANDSCAPE.value[0],
-                      height=PageSize.A4_LANDSCAPE.value[1])
+    page: Page = Page(
+        width=PageSize.A4_LANDSCAPE.value[0], height=PageSize.A4_LANDSCAPE.value[1]
+    )
 
     # add Page to Document
     doc.add_page(page)
@@ -4085,6 +4128,64 @@ if __name__ == "__main__":
 
 <div style="page-break-before: always;"></div>
 
+### 3.2.6 Using the `TableUtil` class
+
+If you don't intend to change the default look&feel of your `Table` too much, `borb` comes with the convenience class `TableUtil`.
+This class can convert a 2D array of `typing.Any` to a `Table`. This is a real time-saver if you simply want to dump some tabular data to a PDF.
+
+In the following example, you'll use `TableUtil` to dump a 2D array to a PDF.
+
+```python
+#!chapter_003/src/snippet_019.py
+from decimal import Decimal
+
+from borb.pdf import SingleColumnLayout
+from borb.pdf import PageLayout
+from borb.pdf import TableUtil
+from borb.pdf import Paragraph
+from borb.pdf import Document
+from borb.pdf import Page
+from borb.pdf import PDF
+
+
+def main():
+    # create Document
+    doc: Document = Document()
+
+    # create Page
+    page: Page = Page()
+
+    # add Page to Document
+    doc.add_page(page)
+
+    # set a PageLayout
+    layout: PageLayout = SingleColumnLayout(page)
+
+    # create a FlexibleColumnWidthTable
+    layout.add(
+        TableUtil.from_2d_array(
+            [
+                ["Language", "Number of Questions on StackOverflow"],
+                ["C++", 2103930],
+                ["Java", 4897157],
+                ["Python", 4981167],
+            ]
+        )
+    )
+
+    # store
+    with open("output.pdf", "wb") as out_file_handle:
+        PDF.dumps(out_file_handle, doc)
+
+
+if __name__ == "__main__":
+    main()
+```
+
+This creates the following PDF:
+
+![enter image description here](chapter_003/img/snippet_019.png)
+
 ## 3.3 Nesting `Table` in `List` and vice-versa
 
 ### 3.3.1 Nesting a `Table` in a `List`
@@ -4093,7 +4194,7 @@ You can add a `Table` to a `List`, since `List` accepts any `LayoutElement` as c
 and `Table` implements the `LayoutElement` interface.
 
 ```python
-#!chapter_003/src/snippet_019.py
+#!chapter_003/src/snippet_020.py
 from decimal import Decimal
 
 from borb.pdf import SingleColumnLayout
@@ -4149,14 +4250,14 @@ if __name__ == "__main__":
     main()
 ```
 
-![enter image description here](chapter_003/img/snippet_019.png)
+![enter image description here](chapter_003/img/snippet_020.png)
 
 ### 3.3.2 Nesting a `List` in a `Table`
 
 Conversely, you can also use `List` inside a `Table`.
 
 ```python
-#!chapter_003/src/snippet_020.py
+#!chapter_003/src/snippet_021.py
 from decimal import Decimal
 
 from borb.pdf import SingleColumnLayout
@@ -4214,15 +4315,129 @@ if __name__ == "__main__":
     main()
 ```
 
-![enter image description here](chapter_003/img/snippet_020.png)
+![enter image description here](chapter_003/img/snippet_021.png)
 
-## 3.4 Conclusion
+## 3.4 Smart Art
+
+A `SmartArt` `LayoutElement` is a striking visual representation of your data, process or workflow.
+You can easily create them in `borb` using the `SmartArt` class, which defines several static methods to represent your information.
+
+In this first example, we're going to display a process (represented as `typing.List[str]`) with some blocks and arrows.
+
+```python
+#!chapter_003/src/snippet_022.py
+from decimal import Decimal
+
+from borb.pdf import SingleColumnLayout
+from borb.pdf import PageLayout
+from borb.pdf import Document
+from borb.pdf import Page
+from borb.pdf import PDF
+from borb.pdf import SmartArt
+
+
+def main():
+    # create Document
+    doc: Document = Document()
+
+    # create Page
+    page: Page = Page()
+
+    # add Page to Document
+    doc.add_page(page)
+
+    # set a PageLayout
+    layout: PageLayout = SingleColumnLayout(page)
+
+    # create a SmartArt LayoutElement
+    layout.add(
+        SmartArt.basic_bending_process(["Lorem", "Ipsum", "Dolor", "Sit", "Amet"])
+    )
+
+    # store
+    with open("output.pdf", "wb") as out_file_handle:
+        PDF.dumps(out_file_handle, doc)
+
+
+if __name__ == "__main__":
+    main()
+```
+
+You can see that `borb` will automatically take care of things like  creating the underyling `Paragraph` objects,
+arranging them (using a `Table`) and inserting `ConnectedShape` objects to represent the arrows between blocks.
+
+![enter image description here](chapter_003/img/snippet_022.png)
+
+With `SmartArt` you can bring your ideas to life! You can of course configure the graphics by specifying:
+
+- `font_size`
+- `foreground_color` 
+- `background_color`
+- `font_color`
+
+Although all these parameters are already filled in to sensible defaults. So you can leave them as-is if you prefer less configuration.
+
+Let's look at another example. In this example we'll use `SmartArt` to display opposing ideas.
+It really doesn't take much effort to code this up:
+
+```python
+#!chapter_003/src/snippet_023.py
+from decimal import Decimal
+
+from borb.pdf import SingleColumnLayout
+from borb.pdf import PageLayout
+from borb.pdf import Document
+from borb.pdf import Page
+from borb.pdf import PDF
+from borb.pdf import SmartArt
+
+
+def main():
+    # create Document
+    doc: Document = Document()
+
+    # create Page
+    page: Page = Page()
+
+    # add Page to Document
+    doc.add_page(page)
+
+    # set a PageLayout
+    layout: PageLayout = SingleColumnLayout(page)
+
+    # create a SmartArt LayoutElement
+    layout.add(
+        SmartArt.opposing_ideas(
+            [
+                "Lorem ipsum dolor sit amet.",
+                "Consectetur adipiscing elit, sed do eiusmod.",
+            ]
+        )
+    )
+
+    # store
+    with open("output.pdf", "wb") as out_file_handle:
+        PDF.dumps(out_file_handle, doc)
+
+
+if __name__ == "__main__":
+    main()
+```
+
+And check out the wonderful result!
+
+![enter image description here](chapter_003/img/snippet_023.png)
+
+## 3.5 Conclusion
 
 In this chapter you've learnt how to use the basic `LayoutElement` objects inside larger container-`LayoutElement` objects such as `Table` and `List`.
 You've seen some pratical differences between the various implementations of `Table` and `List` and you've coded up some examples for each of them.
+
+<div style="page-break-before: always;"></div>
+
 # 4 Forms
 
-![enter image description here](chapter_004/img/chapter_illustration.jpg)
+![enter image description here](chapter_004/img/chapter_illustration.png)
 
 <div style="page-break-before: always;"></div>
 
@@ -4805,7 +5020,7 @@ We could also just set the values using `borb` of course. You'll learn how to do
 Finally, with our form filled in (and saved), we can get the filled in values in the PDF:
 
 ```python
-#!chapter_004/src/snippet_010.py
+#!chapter_004/src/snippet_009.py
 from decimal import Decimal
 
 from borb.pdf import HexColor
@@ -4835,6 +5050,8 @@ if __name__ == "__main__":
 
 This should print something like:
 
+![enter image description here](chapter_004/img/snippet_009.png)
+
 ```commandline
 /usr/bin/python3.8 /home/joris/Code/borb-examples-dev/example/example_053.py
 Name             : Schellekens
@@ -4859,7 +5076,7 @@ Later you'll learn how to remove interactivity by flattening the `Document`.
 ### 4.5.1 Changing the value of a `FormField` in an existing PDF using `borb`
 
 ```python
-#!chapter_004/src/snippet_009.py
+#!chapter_004/src/snippet_010.py
 from decimal import Decimal
 
 from borb.pdf import HexColor
@@ -4891,7 +5108,7 @@ if __name__ == "__main__":
     main()
 ```
 
-![enter image description here](chapter_004/img/snippet_009.png)
+![enter image description here](chapter_004/img/snippet_010.png)
 
 ### 4.5.2 Changing the value of a `FormField` in an existing PDF using `JavaScript`
 
@@ -4963,11 +5180,7 @@ if __name__ == "__main__":
     main()
 ```
 
-## 4.6 Flattening a `FormField`
-
-:mega: todo :mega:
-
-## 4.7 Conclusion
+## 4.6 Conclusion
 
 In this section you've learned how to build interactive, fillable PDF forms.
 
@@ -4987,7 +5200,7 @@ Most of these workflows can be boiled down to some simple steps that can be hand
 
 In this section you'll learn the ins and outs of working with existing PDF's.
 
-![enter image description here](chapter_005/img/chapter_illustration.jpg)
+![enter image description here](chapter_005/img/chapter_illustration.png)
 
 <div style="page-break-before: always;"></div>
 
@@ -5205,7 +5418,7 @@ You'll be using the same input PDF as earlier (containing a paragraph of lorem i
 import typing
 from borb.pdf import Document
 from borb.pdf import PDF
-from borb.toolkit.text.simple_text_extraction import SimpleTextExtraction
+from borb.toolkit import SimpleTextExtraction
 
 
 def main():
@@ -5268,9 +5481,7 @@ The code is very similar to what you've done earlier.
 import typing
 from borb.pdf import Document
 from borb.pdf import PDF
-from borb.toolkit.text.regular_expression_text_extraction import (
-    RegularExpressionTextExtraction,
-)
+from borb.toolkit import RegularExpressionTextExtraction
 
 
 def main():
@@ -5344,8 +5555,8 @@ from decimal import Decimal
 from borb.pdf.canvas.geometry.rectangle import Rectangle
 from borb.pdf import Document
 from borb.pdf import PDF
-from borb.toolkit.location.location_filter import LocationFilter
-from borb.toolkit.text.simple_text_extraction import SimpleTextExtraction
+from borb.toolkit import LocationFilter
+from borb.toolkit import SimpleTextExtraction
 
 
 def main():
@@ -5405,12 +5616,10 @@ from decimal import Decimal
 from borb.pdf.canvas.geometry.rectangle import Rectangle
 from borb.pdf import Document
 from borb.pdf import PDF
-from borb.toolkit.location.location_filter import LocationFilter
-from borb.toolkit.text.regular_expression_text_extraction import (
-    RegularExpressionTextExtraction,
-    PDFMatch,
-)
-from borb.toolkit.text.simple_text_extraction import SimpleTextExtraction
+from borb.toolkit import LocationFilter
+from borb.toolkit import RegularExpressionTextExtraction
+from borb.toolkit import PDFMatch
+from borb.toolkit import SimpleTextExtraction
 
 
 def main():
@@ -5591,8 +5800,8 @@ from borb.pdf import Paragraph
 from borb.pdf import Document
 from borb.pdf import Page
 from borb.pdf import PDF
-from borb.toolkit.text.tf_idf_keyword_extraction import TFIDFKeywordExtraction
-from borb.toolkit.text.stop_words import ENGLISH_STOP_WORDS
+from borb.toolkit import TFIDFKeywordExtraction
+from borb.toolkit import ENGLISH_STOP_WORDS
 
 
 def main():
@@ -5642,13 +5851,8 @@ from borb.pdf import Paragraph
 from borb.pdf import Document
 from borb.pdf import Page
 from borb.pdf import PDF
-from borb.toolkit.text.text_rank_keyword_extraction import TextRankKeywordExtraction
-from borb.toolkit.text.stop_words import ENGLISH_STOP_WORDS
-
-# nltk
-import nltk
-nltk.download('punkt')
-nltk.download('averaged_perceptron_tagger')
+from borb.toolkit import TextRankKeywordExtraction
+from borb.toolkit import ENGLISH_STOP_WORDS
 
 
 def main():
@@ -5740,7 +5944,7 @@ def main():
             height=Decimal(256),
         )
     )
-    
+
     # store
     with open("output.pdf", "wb") as out_file_handle:
         PDF.dumps(out_file_handle, doc)
@@ -5766,29 +5970,28 @@ import typing
 from borb.pdf import HexColor, RGBColor
 from borb.pdf.canvas.geometry.rectangle import Rectangle
 from borb.pdf import Image
-from borb.pdf.canvas.layout.shape.connected_shape import ConnectedShape
+from borb.pdf import ConnectedShape
 from borb.pdf import Alignment
 from borb.pdf import SingleColumnLayout
 from borb.pdf import PageLayout
 from borb.pdf import FlexibleColumnWidthTable
 from borb.pdf import Paragraph
-from borb.pdf.canvas.line_art.line_art_factory import LineArtFactory
+from borb.pdf import LineArtFactory
 from borb.pdf import Document
 from borb.pdf import Page
 from borb.pdf import PDF
-from borb.toolkit.color.color_spectrum_extraction import ColorSpectrumExtraction
+from borb.toolkit import ColorExtraction
 
 
 def main():
 
     doc: typing.Optional[Document] = None
-    l: ColorSpectrumExtraction = ColorSpectrumExtraction()
+    l: ColorExtraction = ColorExtraction()
     with open("output.pdf", "rb") as pdf_file_handle:
         doc = PDF.loads(pdf_file_handle, [l])
 
     # extract colors
-    colors: typing.List[typing.Tuple[RGBColor, Decimal]] = l.get_colors_for_page(0)
-    colors = colors[0:32]
+    colors: typing.Dict[Color, Decimal] = l.extract_color()[0]
 
     # create output Document
     doc_out: Document = Document()
@@ -5807,7 +6010,7 @@ def main():
     t: FlexibleColumnWidthTable = FlexibleColumnWidthTable(
         number_of_rows=8, number_of_columns=4, horizontal_alignment=Alignment.CENTERED
     )
-    for c in colors:
+    for c in colors.values():
         t.add(
             ConnectedShape(
                 LineArtFactory.droplet(
@@ -5886,7 +6089,7 @@ And now you can process that PDF and retrieve the fonts;
 import typing
 from borb.pdf import Document
 from borb.pdf import PDF
-from borb.toolkit.text.font_extraction import FontExtraction
+from borb.toolkit import FontExtraction
 
 
 def main():
@@ -5970,8 +6173,8 @@ Now we can run the code to filter on `font_name`:
 import typing
 from borb.pdf import Document
 from borb.pdf import PDF
-from borb.toolkit.text.font_name_filter import FontNameFilter
-from borb.toolkit.text.simple_text_extraction import SimpleTextExtraction
+from borb.toolkit import FontNameFilter
+from borb.toolkit import SimpleTextExtraction
 
 
 def main():
@@ -6072,8 +6275,8 @@ Now we can filter the text in the PDF by selecting the red letters:
 import typing
 from borb.pdf import Document
 from borb.pdf import PDF
-from borb.toolkit.text.font_color_filter import FontColorFilter
-from borb.toolkit.text.simple_text_extraction import SimpleTextExtraction
+from borb.toolkit import FontColorFilter
+from borb.toolkit import SimpleTextExtraction
 from borb.pdf import X11Color
 
 from decimal import Decimal
@@ -6181,14 +6384,14 @@ from borb.pdf import Paragraph
 from borb.pdf import Document
 from borb.pdf import Page
 from borb.pdf import PDF
-from borb.toolkit.text.text_rank_keyword_extraction import TextRankKeywordExtraction
-from borb.toolkit.text.stop_words import ENGLISH_STOP_WORDS
-from borb.toolkit.image.simple_image_extraction import SimpleImageExtraction
+from borb.toolkit import TextRankKeywordExtraction
+from borb.toolkit import ENGLISH_STOP_WORDS
+from borb.toolkit import ImageExtraction
 
 
 def main():
 
-    l: SimpleImageExtraction = SimpleImageExtraction()
+    l: ImageExtraction = ImageExtraction()
 
     # load
     doc: typing.Optional[Document] = None
@@ -6198,7 +6401,7 @@ def main():
     # check whether we have read a Document
     assert doc is not None
 
-    print(l.get_images_for_page(0))
+    print(l.extract_images()[0])
 
 
 if __name__ == "__main__":
@@ -6367,7 +6570,7 @@ from borb.pdf import Paragraph
 from borb.pdf import Document
 from borb.pdf import Page
 from borb.pdf import PDF
-from borb.toolkit.image.image_format_optimization import ImageFormatOptimization
+from borb.toolkit import ImageFormatOptimization
 
 
 def main():
@@ -7101,7 +7304,7 @@ from the PDF-spec:
 > document, or provides a way to interact with the user by means of the mouse and keyboard. PDF includes a
 > wide variety of standard annotation types, described in detail in 12.5.6, “Annotation Types.”
 
-![enter image description here](chapter_006/img/chapter_illustration.jpg)
+![enter image description here](chapter_006/img/chapter_illustration.png)
 
 <div style="page-break-before: always;"></div>
 
@@ -7757,6 +7960,7 @@ from borb.pdf.canvas.layout.annotation.remote_go_to_annotation import (
 
 from decimal import Decimal
 
+
 def main():
 
     # create document
@@ -7778,7 +7982,9 @@ def main():
     layout.add(img)
 
     # create RemoteGoToAnnotation
-    annot: RemoteGoToAnnotation = RemoteGoToAnnotation(img.get_previous_paint_box(), uri="https://www.google.com")
+    annot: RemoteGoToAnnotation = RemoteGoToAnnotation(
+        img.get_previous_paint_box(), uri="https://www.google.com"
+    )
 
     # modify annotation
     annot[Name("A")][Name("S")] = Name("JavaScript")
@@ -7840,7 +8046,9 @@ def main():
 
     # add sound annotation
     page.add_annotation(
-        SoundAnnotation(img.get_previous_paint_box(), "/home/joris/Downloads/audioclip.mp3")
+        SoundAnnotation(
+            img.get_previous_paint_box(), "/home/joris/Downloads/audioclip.mp3"
+        )
     )
 
     # attempt to store PDF
@@ -7854,16 +8062,7 @@ if __name__ == "__main__":
 
 ![enter image description here](chapter_006/img/snippet_009.png)
 
-## 6.9 Adding movie annotations
-
-
-```python
-#!chapter_006/src/snippet_010.py
-```
-
-![enter image description here](chapter_006/img/snippet_010.png)
-
-## 6.10 Conclusion
+## 6.9 Conclusion
 
 In this section you've learned how to work with `Annotation` objects.
 These objects allow you to add content to existing PDF documents.
@@ -7887,7 +8086,7 @@ In this section you'll learn how to:
 - Export a PDF to various image formats
 - Export certain formats (HTML, Markdown) to PDF
 
-![enter image description here](chapter_007/img/chapter_illustration.jpg)
+![enter image description here](chapter_007/img/chapter_illustration.png)
 
 <div style="page-break-before: always;"></div>
 
@@ -8118,9 +8317,7 @@ from PIL import ImageDraw, ImageFont
 def create_image() -> PILImage:
 
     # create new Image
-    img = PILImage.new("RGB",
-                       (256, 256),
-                       color=(255, 255, 255))
+    img = PILImage.new("RGB", (256, 256), color=(255, 255, 255))
 
     # create ImageFont
     # CAUTION: you may need to adjust the path to your particular font directory
@@ -8135,7 +8332,6 @@ def create_image() -> PILImage:
     output_path: Path = Path(__file__).parent / "image_hello_world.png"
     img.save(output_path, dpi=(600, 600))
     return output_path
-
 
 
 def main():
@@ -8333,8 +8529,14 @@ from pathlib import Path
 
 
 def main():
+
+    # read PDF
     input_file: Path = Path(__file__).parent / "output.pdf"
-    PDFToJPG.convert_pdf_to_jpg(input_file, 0).save("output_page_00.jpg")
+    with open(input_file, "rb") as pdf_file_handle:
+        doc = PDF.loads(pdf_file_handle)
+
+    # convert to JPG
+    PDFToJPG.convert_pdf_to_jpg(doc)[0].save("output_page_00.jpg")
 
 
 if __name__ == "__main__":
@@ -8356,11 +8558,17 @@ from borb.toolkit.export.pdf_to_svg import PDFToSVG
 from pathlib import Path
 import xml.etree.ElementTree as ET
 
-def main():
-    input_file: Path = Path(__file__).parent / "output.pdf"
 
+def main():
+
+    # read PDF
+    input_file: Path = Path(__file__).parent / "output.pdf"
+    with open(input_file, "rb") as pdf_file_handle:
+        doc = PDF.loads(pdf_file_handle)
+
+    # write ET.Element
     with open("output_page_00.svg", "wb") as svg_file_handle:
-        svg_file_handle.write(ET.tostring(PDFToSVG.convert_pdf_to_svg(input_file, 0)))
+        svg_file_handle.write(ET.tostring(PDFToSVG.convert_pdf_to_svg(doc)[0]))
 
 
 if __name__ == "__main__":
@@ -8494,11 +8702,15 @@ Check out the examples in the GitHub repository and the tests to find out more s
 
 ## 7.7 Conclusion
 
+In this chapter you've learned some of the more advanced ways of working with `borb` and PDF in general.
+You've learnt how to convert various formats to PDF, and back again. You've applied OCR, and extracted tables.
+The examples in this chapter may not be for everyone, but you will undoubtedly gain a deeper understanding of `borb` and PDF by studying the code.
+
 <div style="page-break-before: always;"></div>
 
 # 8 Deep Dive into `borb`
 
-![enter image description here](chapter_008/img/chapter_illustration.jpg)
+![enter image description here](chapter_008/img/chapter_illustration.png)
 
 <div style="page-break-before: always;"></div>
 
@@ -8701,79 +8913,79 @@ A free copy of which can be found:
 
 | Operator | Number of arguments | Type of arguments | Description                                                                                                                                                                                                                                                                                                                                                                                                   |
 |----------|---------------------|-------------------|---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
-| b | 0                   |                   | Close, fill, and stroke path using nonzero winding number rule                                                                                                                                                                                                                                                                                                                                                |
-| B | 0                   |                   | Fill and then stroke the path, using the nonzero winding number rule to determine the region to fill.                                                                                                                                                                                                                                                                                                         |
-| b* | 0                   |                   | Close, fill, and then stroke the path, using the even-odd rule to determine the region to fill.                                                                                                                                                                                                                                                                                                               |
-| B* | 0                   |                   | Fill and then stroke the path, using the even-odd rule to determine the region to fill.                                                                                                                                                                                                                                                                                                                       |
-| BDC | 2                   |                   | Begin a marked-content sequence with an associated property list, terminated by a balancing EMC operator. tag shall be a name object indicating the role or significance of the sequence. properties shall be either an inline dictionary containing the property list or a name object associated with it in the Properties subdictionary of the current resource dictionary (see 14.6.2, “Property Lists”). |
-| BI | 0                   |                   | Begin an inline image object.                                                                                                                                                                                                                                                                                                                                                                                 |
-| BMC | 1                   |                   | Begin a marked-content sequence terminated by a balancing **EMC** operator. tag shall be a name object indicating the role or significance of the sequence.                                                                                                                                                                                                                                                   |
-| BT |
-| BX |
-| c |
-| cm |
-| CS |
-| cs |
-| d |
-| d0 |
-| d1 |
-| Do |
-| DP | 2                   |                   | Designate a marked-content point with an associated property list. tag shall be a name object indicating the role or significance of the point. properties shall be either an inline dictionary containing the property list or a name object associated with it in the Properties subdictionary of the current resource dictionary (see 14.6.2, “Property Lists”).                                           |
-| EI | 0                   |                   | End an inline image object.                                                                                                                                                                                                                                                                                                                                                                                   |
-| EMC | 0                   |                   | End a marked-content sequence begun by a **BMC** or **BDC** operator.                                                                                                                                                                                                                                                                                                                                         |
-| ET |
-| EX |
-| f | 0                   |                   | Fill the path, using the nonzero winding number rule to determine the region to fill (see 8.5.3.3.2, "Nonzero Winding Number Rule"). Any subpaths that are open shall be implicitly closed before being filled.                                                                                                                                                                                               |
-| F | 0                   |                   | Equivalent to **f**; included only for compatibility. Although PDF reader applications shall be able to accept this operator, PDF writer applications should use **f** instead.                                                                                                                                                                                                                               |
-| f* | 0                   |                   | Fill the path, using the even-odd rule to determine the region to fill (see 8.5.3.3.3, "Even-Odd Rule").                                                                                                                                                                                                                                                                                                      |
-| G |
-| g |
-| gs |
-| h |
-| i |
-| ID | 0                   |                   | Begin the image data for an inline image object.                                                                                                                                                                                                                                                                                                                                                              |
-| j |
-| J |
-| K |
-| k |
-| l | 2                   |                   | Append a straight line segment from the current point to the point (x, y). The new current point shall be (x, y).                                                                                                                                                                                                                                                                                             |
-| m | 2                   |                   | Begin a new subpath by moving the current point to coordinates (x, y), omitting any connecting line segment. If the previous path construction operator in the current path was also m, the new m overrides it; no vestige of the previous m operation remains in the path.                                                                                                                                   |
-| M |
-| MP | 1                   |                   | Designate a marked-content point. tag shall be a name object indicating the role or significance of the point.                                                                                                                                                                                                                                                                                                |
-| n | 0                   |                   | End the path object without filling or stroking it. This operator shall be a path-painting no-op, used primarily for the side effect of changing the current clipping path (see 8.5.4, "Clipping Path Operators").                                                                                                                                                                                            |
-| q |
-| Q |
-| re |
-| RG |
-| rg |
-| ri |
-| s | 0                   |                   | Close and stroke the path.                                                                                                                                                                                                                                                                                                                                                                                    |
-| S | 0                   |                   | Stroke the path.                                                                                                                                                                                                                                                                                                                                                                                              |
-| SC |
-| sc |
-| SCN |
-| scn |
-| sh |
-| T* |
-| Tc |
-| Td |
-| TD |
-| Tf |
-| Tj |
-| TJ |
-| TL |
-| Tm |
-| Tr |
-| Ts |
-| Tw |
-| Tz |
-| v |
-| w |
-| W |
-| W* |
-| y |
-| ' |
-| " |
+| b        | 0                   |                   | Close, fill, and stroke path using nonzero winding number rule                                                                                                                                                                                                                                                                                                                                                |
+| B        | 0                   |                   | Fill and then stroke the path, using the nonzero winding number rule to determine the region to fill.                                                                                                                                                                                                                                                                                                         |
+| b*       | 0                   |                   | Close, fill, and then stroke the path, using the even-odd rule to determine the region to fill.                                                                                                                                                                                                                                                                                                               |
+| B*       | 0                   |                   | Fill and then stroke the path, using the even-odd rule to determine the region to fill.                                                                                                                                                                                                                                                                                                                       |
+| BDC      | 2                   |                   | Begin a marked-content sequence with an associated property list, terminated by a balancing EMC operator. tag shall be a name object indicating the role or significance of the sequence. properties shall be either an inline dictionary containing the property list or a name object associated with it in the Properties subdictionary of the current resource dictionary (see 14.6.2, “Property Lists”). |
+| BI       | 0                   |                   | Begin an inline image object.                                                                                                                                                                                                                                                                                                                                                                                 |
+| BMC      | 1                   |                   | Begin a marked-content sequence terminated by a balancing **EMC** operator. tag shall be a name object indicating the role or significance of the sequence.                                                                                                                                                                                                                                                   |
+| BT       |
+| BX       |
+| c        |
+| cm       |
+| CS       |
+| cs       |
+| d        |
+| d0       |
+| d1       |
+| Do       |
+| DP       | 2                   |                   | Designate a marked-content point with an associated property list. tag shall be a name object indicating the role or significance of the point. properties shall be either an inline dictionary containing the property list or a name object associated with it in the Properties subdictionary of the current resource dictionary (see 14.6.2, “Property Lists”).                                           |
+| EI       | 0                   |                   | End an inline image object.                                                                                                                                                                                                                                                                                                                                                                                   |
+| EMC      | 0                   |                   | End a marked-content sequence begun by a **BMC** or **BDC** operator.                                                                                                                                                                                                                                                                                                                                         |
+| ET       |
+| EX       |
+| f        | 0                   |                   | Fill the path, using the nonzero winding number rule to determine the region to fill (see 8.5.3.3.2, "Nonzero Winding Number Rule"). Any subpaths that are open shall be implicitly closed before being filled.                                                                                                                                                                                               |
+| F        | 0                   |                   | Equivalent to **f**; included only for compatibility. Although PDF reader applications shall be able to accept this operator, PDF writer applications should use **f** instead.                                                                                                                                                                                                                               |
+| f*       | 0                   |                   | Fill the path, using the even-odd rule to determine the region to fill (see 8.5.3.3.3, "Even-Odd Rule").                                                                                                                                                                                                                                                                                                      |
+| G        |
+| g        |
+| gs       |
+| h        |
+| i        |
+| ID       | 0                   |                   | Begin the image data for an inline image object.                                                                                                                                                                                                                                                                                                                                                              |
+| j        |
+| J        |
+| K        |
+| k        |
+| l        | 2                   |                   | Append a straight line segment from the current point to the point (x, y). The new current point shall be (x, y).                                                                                                                                                                                                                                                                                             |
+| m        | 2                   |                   | Begin a new subpath by moving the current point to coordinates (x, y), omitting any connecting line segment. If the previous path construction operator in the current path was also m, the new m overrides it; no vestige of the previous m operation remains in the path.                                                                                                                                   |
+| M        |
+| MP       | 1                   |                   | Designate a marked-content point. tag shall be a name object indicating the role or significance of the point.                                                                                                                                                                                                                                                                                                |
+| n        | 0                   |                   | End the path object without filling or stroking it. This operator shall be a path-painting no-op, used primarily for the side effect of changing the current clipping path (see 8.5.4, "Clipping Path Operators").                                                                                                                                                                                            |
+| q        |
+| Q        |
+| re       |
+| RG       |
+| rg       |
+| ri       |
+| s        | 0                   |                   | Close and stroke the path.                                                                                                                                                                                                                                                                                                                                                                                    |
+| S        | 0                   |                   | Stroke the path.                                                                                                                                                                                                                                                                                                                                                                                              |
+| SC       |
+| sc       |
+| SCN      |
+| scn      |
+| sh       |
+| T*       |
+| Tc       |
+| Td       |
+| TD       |
+| Tf       |
+| Tj       |
+| TJ       |
+| TL       |
+| Tm       |
+| Tr       |
+| Ts       |
+| Tw       |
+| Tz       |
+| v        |
+| w        |
+| W        |
+| W*       |
+| y        |
+| '        |
+| "        |
 
 <div style="page-break-before: always;"></div>
 
@@ -9171,7 +9383,7 @@ In the final PDF you can see the word "survived" was hyphenated as well as the w
 In this chapter we'll build some practical PDF documents that are ready-to-use.
 This chapter assumes you have a good working knowledge of all the basic `LayoutElement`  concepts.
 
-![enter image description here](chapter_009/img/chapter_illustration.jpg)
+![enter image description here](chapter_009/img/chapter_illustration.png)
 
 <div style="page-break-before: always;"></div>
 
@@ -10867,7 +11079,9 @@ def main():
 
     # let's add the remote go-to annotation
     page.add_annotation(
-        RemoteGoToAnnotation(qr_code.get_previous_paint_box(), uri="https://www.borbpdf.com")
+        RemoteGoToAnnotation(
+            qr_code.get_previous_paint_box(), uri="https://www.borbpdf.com"
+        )
     )
 
 
@@ -11004,7 +11218,9 @@ def main():
 
     # let's add the remote go-to annotation
     page.add_annotation(
-        RemoteGoToAnnotation(qr_code.get_previous_paint_box(), uri="https://www.borbpdf.com")
+        RemoteGoToAnnotation(
+            qr_code.get_previous_paint_box(), uri="https://www.borbpdf.com"
+        )
     )
 
     # title
@@ -11176,7 +11392,9 @@ def main():
 
     # let's add the remote go-to annotation
     page.add_annotation(
-        RemoteGoToAnnotation(qr_code.get_previous_paint_box(), uri="https://www.borbpdf.com")
+        RemoteGoToAnnotation(
+            qr_code.get_previous_paint_box(), uri="https://www.borbpdf.com"
+        )
     )
 
     # title
@@ -11490,7 +11708,9 @@ def main():
 
     # let's add the remote go-to annotation
     page.add_annotation(
-        RemoteGoToAnnotation(qr_code.get_previous_paint_box(), uri="https://www.borbpdf.com")
+        RemoteGoToAnnotation(
+            qr_code.get_previous_paint_box(), uri="https://www.borbpdf.com"
+        )
     )
 
     # title
@@ -13022,16 +13242,16 @@ def dropbox_connect() -> dropbox.dropbox_client.Dropbox:
     :return:    a connection to the Dropbox API
     """
     try:
-        dbx = dropbox.Dropbox('<your access key>')
+        dbx = dropbox.Dropbox("<your access key>")
     except AuthError as e:
-        print('Error connecting to Dropbox with access token: ' + str(e))
+        print("Error connecting to Dropbox with access token: " + str(e))
     return dbx
 
 
-if __name__ == '__main__':
+if __name__ == "__main__":
 
     # set up connection
-    dbx:dropbox.dropbox_client.Dropbox = dropbox_connect()
+    dbx: dropbox.dropbox_client.Dropbox = dropbox_connect()
     print(dbx)
 ```
 
@@ -13061,9 +13281,9 @@ def dropbox_connect() -> dropbox.dropbox_client.Dropbox:
     :return:    a connection to the Dropbox API
     """
     try:
-        dbx = dropbox.Dropbox('<your access key>')
+        dbx = dropbox.Dropbox("<your access key>")
     except AuthError as e:
-        print('Error connecting to Dropbox with access token: ' + str(e))
+        print("Error connecting to Dropbox with access token: " + str(e))
     return dbx
 
 
@@ -13090,10 +13310,10 @@ def create_pdf() -> Document:
     return doc
 
 
-if __name__ == '__main__':
+if __name__ == "__main__":
 
     # set up connection
-    dbx:dropbox.dropbox_client.Dropbox = dropbox_connect()
+    dbx: dropbox.dropbox_client.Dropbox = dropbox_connect()
     print(dbx)
 
     # create PDF
@@ -13128,9 +13348,9 @@ def dropbox_connect() -> dropbox.dropbox_client.Dropbox:
     :return:    a connection to the Dropbox API
     """
     try:
-        dbx = dropbox.Dropbox('<your access key>')
+        dbx = dropbox.Dropbox("<your access key>")
     except AuthError as e:
-        print('Error connecting to Dropbox with access token: ' + str(e))
+        print("Error connecting to Dropbox with access token: " + str(e))
     return dbx
 
 
@@ -13169,19 +13389,21 @@ def document_to_bytes(pdf: Document) -> bytes:
     return buffer.getvalue()
 
 
-if __name__ == '__main__':
+if __name__ == "__main__":
 
     # set up connection
-    dbx:dropbox.dropbox_client.Dropbox = dropbox_connect()
+    dbx: dropbox.dropbox_client.Dropbox = dropbox_connect()
     print(dbx)
 
     # create PDF
     pdf: Document = create_pdf()
 
     # upload
-    dbx.files_upload(document_to_bytes(pdf),
-                     '/pdfs/hello_world.pdf',
-                     mode=dropbox.files.WriteMode("overwrite"))
+    dbx.files_upload(
+        document_to_bytes(pdf),
+        "/pdfs/hello_world.pdf",
+        mode=dropbox.files.WriteMode("overwrite"),
+    )
 ```
 
 That's it. You should now have a folder `pdfs` on your dropbox, containing a pdf `hello_world.pdf`.

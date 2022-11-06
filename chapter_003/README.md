@@ -1,6 +1,6 @@
 # 3 Container `LayoutElement` objects
 
-![enter image description here](img/chapter_illustration.jpg)
+![enter image description here](img/chapter_illustration.png)
 
 <div style="page-break-before: always;"></div>
 
@@ -266,6 +266,21 @@ Of course, you can do the same for `row_span`:
 
 <div style="page-break-before: always;"></div>
 
+### 3.2.6 Using the `TableUtil` class
+
+If you don't intend to change the default look&feel of your `Table` too much, `borb` comes with the convenience class `TableUtil`.
+This class can convert a 2D array of `typing.Any` to a `Table`. This is a real time-saver if you simply want to dump some tabular data to a PDF.
+
+In the following example, you'll use `TableUtil` to dump a 2D array to a PDF.
+
+```python
+#!src/snippet_019.py
+```
+
+This creates the following PDF:
+
+![enter image description here](img/snippet_019.png)
+
 ## 3.3 Nesting `Table` in `List` and vice-versa
 
 ### 3.3.1 Nesting a `Table` in a `List`
@@ -274,22 +289,60 @@ You can add a `Table` to a `List`, since `List` accepts any `LayoutElement` as c
 and `Table` implements the `LayoutElement` interface.
 
 ```python
-#!src/snippet_019.py
+#!src/snippet_020.py
 ```
 
-![enter image description here](img/snippet_019.png)
+![enter image description here](img/snippet_020.png)
 
 ### 3.3.2 Nesting a `List` in a `Table`
 
 Conversely, you can also use `List` inside a `Table`.
 
 ```python
-#!src/snippet_020.py
+#!src/snippet_021.py
 ```
 
-![enter image description here](img/snippet_020.png)
+![enter image description here](img/snippet_021.png)
 
-## 3.4 Conclusion
+## 3.4 Smart Art
+
+A `SmartArt` `LayoutElement` is a striking visual representation of your data, process or workflow.
+You can easily create them in `borb` using the `SmartArt` class, which defines several static methods to represent your information.
+
+In this first example, we're going to display a process (represented as `typing.List[str]`) with some blocks and arrows.
+
+```python
+#!src/snippet_022.py
+```
+
+You can see that `borb` will automatically take care of things like  creating the underyling `Paragraph` objects,
+arranging them (using a `Table`) and inserting `ConnectedShape` objects to represent the arrows between blocks.
+
+![enter image description here](img/snippet_022.png)
+
+With `SmartArt` you can bring your ideas to life! You can of course configure the graphics by specifying:
+
+- `font_size`
+- `foreground_color` 
+- `background_color`
+- `font_color`
+
+Although all these parameters are already filled in to sensible defaults. So you can leave them as-is if you prefer less configuration.
+
+Let's look at another example. In this example we'll use `SmartArt` to display opposing ideas.
+It really doesn't take much effort to code this up:
+
+```python
+#!src/snippet_023.py
+```
+
+And check out the wonderful result!
+
+![enter image description here](img/snippet_023.png)
+
+## 3.5 Conclusion
 
 In this chapter you've learnt how to use the basic `LayoutElement` objects inside larger container-`LayoutElement` objects such as `Table` and `List`.
 You've seen some pratical differences between the various implementations of `Table` and `List` and you've coded up some examples for each of them.
+
+<div style="page-break-before: always;"></div>

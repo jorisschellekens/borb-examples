@@ -18,8 +18,9 @@ def main():
     doc: Document = Document()
 
     # create Page
-    page: Page = Page(width=PageSize.A4_LANDSCAPE.value[0],
-                      height=PageSize.A4_LANDSCAPE.value[1])
+    page: Page = Page(
+        width=PageSize.A4_LANDSCAPE.value[0], height=PageSize.A4_LANDSCAPE.value[1]
+    )
 
     # add Page to Document
     doc.add_page(page)

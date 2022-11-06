@@ -5,6 +5,7 @@ from borb.pdf import SingleColumnLayout
 from borb.pdf import Paragraph
 from borb.pdf import PDF
 
+
 def main():
     # create Document
     doc: Document = Document()

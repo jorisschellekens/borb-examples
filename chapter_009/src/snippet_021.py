@@ -127,7 +127,9 @@ def main():
 
     # let's add the remote go-to annotation
     page.add_annotation(
-        RemoteGoToAnnotation(qr_code.get_previous_paint_box(), uri="https://www.borbpdf.com")
+        RemoteGoToAnnotation(
+            qr_code.get_previous_paint_box(), uri="https://www.borbpdf.com"
+        )
     )
 
     # title

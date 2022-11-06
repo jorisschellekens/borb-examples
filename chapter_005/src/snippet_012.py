@@ -37,7 +37,7 @@ def main():
             height=Decimal(256),
         )
     )
-    
+
     # store
     with open("output.pdf", "wb") as out_file_handle:
         PDF.dumps(out_file_handle, doc)

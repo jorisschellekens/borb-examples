@@ -27,8 +27,14 @@ def main():
 
     # download and store the font
     # this is obviously not needed if you already have a ttf font on disk
-    with open("MsMadi-Regular.ttf", "wb") as font_file_handle:
-        font_file_handle.write(requests.get("https://github.com/google/fonts/raw/main/ofl/msmadi/MsMadi-Regular.ttf", stream=True).content)
+    font_path: Path = Path(__file__).parent / "MsMadi-Regular.ttf"
+    with open(font_path, "wb") as font_file_handle:
+        font_file_handle.write(
+            requests.get(
+                "https://github.com/google/fonts/raw/main/ofl/msmadi/MsMadi-Regular.ttf",
+                stream=True,
+            ).content
+        )
 
     # construct the Font object
     font_path: Path = Path(__file__).parent / "MsMadi-Regular.ttf"

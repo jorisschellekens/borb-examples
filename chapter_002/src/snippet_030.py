@@ -9,6 +9,7 @@ from decimal import Decimal
 from pathlib import Path
 import requests
 
+
 def main():
     # create Document
     doc: Document = Document()
@@ -25,7 +26,12 @@ def main():
     # download image and store on disk
     # this is obviously not needed if you already have an image on disk
     with open("photo-1517260911058-0fcfd733702f.jpeg", "wb") as jpg_file_handle:
-        jpg_file_handle.write(requests.get("https://images.unsplash.com/photo-1517260911058-0fcfd733702f?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8", stream=True).content)
+        jpg_file_handle.write(
+            requests.get(
+                "https://images.unsplash.com/photo-1517260911058-0fcfd733702f?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8",
+                stream=True,
+            ).content
+        )
 
     # add an Image
     layout.add(

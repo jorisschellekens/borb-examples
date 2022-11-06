@@ -2,9 +2,7 @@ from decimal import Decimal
 
 from borb.pdf import SingleColumnLayout
 from borb.pdf import PageLayout
-from borb.pdf import OrderedList
-from borb.pdf import FlexibleColumnWidthTable
-from borb.pdf import TableCell
+from borb.pdf import TableUtil
 from borb.pdf import Paragraph
 from borb.pdf import Document
 from borb.pdf import Page
@@ -25,23 +23,15 @@ def main():
     layout: PageLayout = SingleColumnLayout(page)
 
     # create a FlexibleColumnWidthTable
-    table: FlexibleColumnWidthTable = (
-        FlexibleColumnWidthTable(number_of_columns=3, number_of_rows=2)
-        .add(Paragraph("Lorem"))
-        .add(Paragraph("Ipsum"))
-        .add(Paragraph("Dolor"))
-        .add(Paragraph("Sit"))
-        .add(Paragraph("Amet"))
-        .add(Paragraph("Nunc"))
-        .set_padding_on_all_cells(Decimal(2), Decimal(2), Decimal(2), Decimal(2))
-    )
-
     layout.add(
-        OrderedList()
-        .add(Paragraph("Item 1"))
-        .add(Paragraph("Item 2"))
-        .add(table)
-        .add(Paragraph("Item 4"))
+        TableUtil.from_2d_array(
+            [
+                ["Language", "Number of Questions on StackOverflow"],
+                ["C++", 2103930],
+                ["Java", 4897157],
+                ["Python", 4981167],
+            ]
+        )
     )
 
     # store
