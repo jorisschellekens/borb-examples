@@ -1,7 +1,12 @@
 from decimal import Decimal
 
 from borb.pdf import HexColor
+from borb.pdf import CountryDropDownList
+from borb.pdf import TextField
+from borb.pdf import SingleColumnLayout
 from borb.pdf import PageLayout
+from borb.pdf import FixedColumnWidthTable
+from borb.pdf import Paragraph
 from borb.pdf import Document
 from borb.pdf import Page
 from borb.pdf import PDF
@@ -9,16 +14,34 @@ from borb.pdf import PDF
 
 def main():
 
-    # open document
-    doc: typing.Optional[Document] = None
-    with open("output.pdf", "rb") as pdf_file_handle:
-        doc = PDF.loads(pdf_file_handle)
-    assert doc is not None
+    # create Document
+    doc: Document = Document()
 
-    # get
-    print("Name: %s" % doc.get_page(0).get_form_field_value("name"))
-    print("Firstname: %s" % doc.get_page(0).get_form_field_value("firstname"))
-    print("Country: %s" % doc.get_page(0).get_form_field_value("country"))
+    # create Page
+    page: Page = Page()
+
+    # add Page to Document
+    doc.add_page(page)
+
+    # set a PageLayout
+    layout: PageLayout = SingleColumnLayout(page)
+
+    # add FixedColumnWidthTable containing Paragraph and TextField objects
+    layout.add(
+        FixedColumnWidthTable(number_of_columns=2, number_of_rows=3)
+        .add(Paragraph("Name:"))
+        .add(TextField(field_name="name", font_color=HexColor("f1cd2e")))
+        .add(Paragraph("Firstname:"))
+        .add(TextField(field_name="firstname", font_color=HexColor("f1cd2e")))
+        .add(Paragraph("Country"))
+        .add(CountryDropDownList(field_name="country"))
+        .set_padding_on_all_cells(Decimal(2), Decimal(2), Decimal(2), Decimal(2))
+        .no_borders()
+    )
+
+    # store
+    with open("output.pdf", "wb") as pdf_file_handle:
+        PDF.dumps(pdf_file_handle, doc)
 
 
 if __name__ == "__main__":

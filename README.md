@@ -2309,11 +2309,17 @@ def main():
     layout: PageLayout = SingleColumnLayout(page)
 
     # add an Image
-    layout.add(
-        Image(
-            "https://images.unsplash.com/photo-1625604029887-45f9c2f7cbc9?ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8"
+    #   **note** I've wrapped the code in a try/except block, so I can automatically run
+    #   all snippets in this ebook. But of course, you should not do so in production-grade
+    #   code
+    try:
+        layout.add(
+            Image(
+                "https://images.unsplash.com/photo-1625604029887-45f9c2f7cbc9?ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8"
+            )
         )
-    )
+    except AssertionError as ae:
+        print("borb threw an assert: %s" % str(ae))
 
     # store
     with open("output.pdf", "wb") as pdf_file_handle:
@@ -4803,17 +4809,8 @@ if __name__ == "__main__":
 
 ### 4.3.6 Adding a `CheckBox` to a PDF
 
-:mega: todo :mega:
-
-### 4.3.7 Adding a `RadioButton` to a PDF
-
-:mega: todo :mega:
-
-### 4.3.8 Adding a `PushButton` to a PDF
-
-You can also add a `PushButton` to a PDF. 
-These buttons can be configured (using their `\Action` dictionary) to interact with the PDF in predefined ways.
-The default action (assuming you do not specify anything) is to reset the form (clearing all the input).
+Let's extend our form to include a `CheckBox`.
+We'll use this `CheckBox` to allow the user to answer a simple yes/no question.
 
 ```python
 #!chapter_004/src/snippet_006.py
@@ -4822,6 +4819,7 @@ from decimal import Decimal
 from borb.pdf import HexColor
 from borb.pdf import CountryDropDownList
 from borb.pdf import TextField
+from borb.pdf import CheckBox
 from borb.pdf import SingleColumnLayout
 from borb.pdf import PageLayout
 from borb.pdf import FixedColumnWidthTable
@@ -4829,7 +4827,6 @@ from borb.pdf import Paragraph
 from borb.pdf import Document
 from borb.pdf import Page
 from borb.pdf import PDF
-from borb.pdf import PushButton
 from borb.pdf import Alignment
 
 
@@ -4856,8 +4853,8 @@ def main():
         .add(TextField(field_name="firstname", font_color=HexColor("f1cd2e")))
         .add(Paragraph("Country"))
         .add(CountryDropDownList(field_name="country"))
-        .add(Paragraph(" "))
-        .add(PushButton("Clear!", horizontal_alignment=Alignment.RIGHT))
+        .add(Paragraph("Do you want to receive promotional emails?"))
+        .add(CheckBox())
         .set_padding_on_all_cells(Decimal(2), Decimal(2), Decimal(2), Decimal(2))
         .no_borders()
     )
@@ -4871,7 +4868,73 @@ if __name__ == "__main__":
     main()
 ```
 
+The output PDF should look like this:
+
 ![enter image description here](chapter_004/img/snippet_006.png)
+
+### 4.3.7 Adding a `RadioButton` to a PDF
+
+:mega: TODO: currently not supported in `borb` :mega:
+
+### 4.3.8 Adding a `PushButton` to a PDF
+
+You can also add a `PushButton` to a PDF. 
+These buttons can be configured (using their `\Action` dictionary) to interact with the PDF in predefined ways.
+The default action (assuming you do not specify anything) is to reset the form (clearing all the input).
+
+```python
+#!chapter_004/src/snippet_007.py
+from decimal import Decimal
+
+from borb.pdf import HexColor
+from borb.pdf import CountryDropDownList
+from borb.pdf import TextField
+from borb.pdf import SingleColumnLayout
+from borb.pdf import PageLayout
+from borb.pdf import FixedColumnWidthTable
+from borb.pdf import Paragraph
+from borb.pdf import Document
+from borb.pdf import Page
+from borb.pdf import PDF
+
+
+def main():
+
+    # create Document
+    doc: Document = Document()
+
+    # create Page
+    page: Page = Page()
+
+    # add Page to Document
+    doc.add_page(page)
+
+    # set a PageLayout
+    layout: PageLayout = SingleColumnLayout(page)
+
+    # add FixedColumnWidthTable containing Paragraph and TextField objects
+    layout.add(
+        FixedColumnWidthTable(number_of_columns=2, number_of_rows=3)
+        .add(Paragraph("Name:"))
+        .add(TextField(field_name="name", font_color=HexColor("f1cd2e")))
+        .add(Paragraph("Firstname:"))
+        .add(TextField(field_name="firstname", font_color=HexColor("f1cd2e")))
+        .add(Paragraph("Country"))
+        .add(CountryDropDownList(field_name="country"))
+        .set_padding_on_all_cells(Decimal(2), Decimal(2), Decimal(2), Decimal(2))
+        .no_borders()
+    )
+
+    # store
+    with open("output.pdf", "wb") as pdf_file_handle:
+        PDF.dumps(pdf_file_handle, doc)
+
+
+if __name__ == "__main__":
+    main()
+```
+
+![enter image description here](chapter_004/img/snippet_007.png)
 
 ### 4.3.9 Adding a `JavaScriptPushButton` to a PDF
 
@@ -4880,7 +4943,7 @@ These buttons can be configured to have any (compliant) `JavaScript` script asso
 In this example you'll create a `Document` that shows an alert box whenever the `PushButton` gets pressed.
 
 ```python
-#!chapter_004/src/snippet_007.py
+#!chapter_004/src/snippet_008.py
 from decimal import Decimal
 
 from borb.pdf import HexColor
@@ -4941,11 +5004,11 @@ if __name__ == "__main__":
     main()
 ```
 
-![enter image description here](chapter_004/img/snippet_007_001.png)
+![enter image description here](chapter_004/img/snippet_008_001.png)
 
 When clicked, this shows a popup:
 
-![enter image description here](chapter_004/img/snippet_007_002.jpg)
+![enter image description here](chapter_004/img/snippet_008_002.jpg)
 
 For more information on how to use `JavaScript` inside a PDF, I recommend the following resources:
 - https://helpx.adobe.com/acrobat/using/applying-actions-scripts-pdfs.html
@@ -4961,7 +5024,7 @@ Be sure to open it, fill in some values, and save it in order to get everything 
 We'll start by creating a PDF with a form in it:
 
 ```python
-#!chapter_004/src/snippet_008.py
+#!chapter_004/src/snippet_009.py
 from decimal import Decimal
 
 from borb.pdf import HexColor
@@ -5012,7 +5075,7 @@ if __name__ == "__main__":
     main()
 ```
 
-![enter image description here](chapter_004/img/snippet_008.png)
+![enter image description here](chapter_004/img/snippet_009.png)
 
 Now we can either set the values in the form by opening the PDF and typing something (make sure to save the PDF when Adobe asks you to do so).
 We could also just set the values using `borb` of course. You'll learn how to do that shortly.
@@ -5020,7 +5083,7 @@ We could also just set the values using `borb` of course. You'll learn how to do
 Finally, with our form filled in (and saved), we can get the filled in values in the PDF:
 
 ```python
-#!chapter_004/src/snippet_009.py
+#!chapter_004/src/snippet_010.py
 from decimal import Decimal
 
 from borb.pdf import HexColor
@@ -5050,10 +5113,10 @@ if __name__ == "__main__":
 
 This should print something like:
 
-![enter image description here](chapter_004/img/snippet_009.png)
+![enter image description here](chapter_004/img/snippet_010.png)
 
 ```commandline
-/usr/bin/python3.8 /home/joris/Code/borb-examples-dev/example/example_053.py
+/usr/bin/python3.8 /home/joris/Code/borb-examples-dev/example/snippet_010.py
 Name             : Schellekens
 Firstname        : Joris
 Country          : Belgium
@@ -5076,7 +5139,7 @@ Later you'll learn how to remove interactivity by flattening the `Document`.
 ### 4.5.1 Changing the value of a `FormField` in an existing PDF using `borb`
 
 ```python
-#!chapter_004/src/snippet_010.py
+#!chapter_004/src/snippet_011.py
 from decimal import Decimal
 
 from borb.pdf import HexColor
@@ -5108,7 +5171,7 @@ if __name__ == "__main__":
     main()
 ```
 
-![enter image description here](chapter_004/img/snippet_010.png)
+![enter image description here](chapter_004/img/snippet_011.png)
 
 ### 4.5.2 Changing the value of a `FormField` in an existing PDF using `JavaScript`
 
@@ -5119,7 +5182,7 @@ You could pre-fill address fields with `JavaScript`, for instance filling in som
 In the next example, you'll be creating a PDF with a simple `JavaScriptPushButton` that triggers a piece of `JavaScript` to set a `TextField`.
 
 ```python
-#!chapter_004/src/snippet_011.py
+#!chapter_004/src/snippet_012.py
 from decimal import Decimal
 
 from borb.pdf import HexColor
@@ -5877,14 +5940,21 @@ if __name__ == "__main__":
 This outputs:
 
 ```commandline
-/usr/bin/python3.8 /home/joris/Code/borb-examples-dev/chapter_005/src/snippet_011.py
-[('LOREM', 9.100909090909093e-06), 
- ('IPSUM', 9.100909090909093e-06), 
- ('TEXT', 2.737272727272727e-06), 
- ('LATIN', 2.737272727272727e-06)]
-
+/usr/bin/python3.8 /home/joris/Code/borb-examples-dev/chapter_005/src/snippet_011.py 
+[('LOREM', 0.12325162789434786), 
+ ('IPSUM', 0.11962425634248006), 
+ ('FROM', 0.039769960489979723), 
+ ('LINE', 0.025411263503150646), 
+ ('SIMPLY', 0.024239653360280115), 
+ ('POPULAR', 0.021090820818629064), 
+ ('LATIN', 0.02000870808599614), 
+ ..
+]
 Process finished with exit code 0
+
 ```
+
+**\* Keep in min textrank is a non-deterministic algorithm. Its output may vary between runs.**
 
 <div style="page-break-before: always;"></div>
 
@@ -5969,7 +6039,6 @@ from decimal import Decimal
 import typing
 from borb.pdf import HexColor, RGBColor
 from borb.pdf.canvas.geometry.rectangle import Rectangle
-from borb.pdf import Image
 from borb.pdf import ConnectedShape
 from borb.pdf import Alignment
 from borb.pdf import SingleColumnLayout
@@ -6008,19 +6077,20 @@ def main():
 
     # add Table
     t: FlexibleColumnWidthTable = FlexibleColumnWidthTable(
-        number_of_rows=8, number_of_columns=4, horizontal_alignment=Alignment.CENTERED
+        number_of_rows=3, number_of_columns=3, horizontal_alignment=Alignment.CENTERED
     )
-    for c in colors.values():
+    for c in colors.keys():
         t.add(
             ConnectedShape(
                 LineArtFactory.droplet(
                     Rectangle(Decimal(0), Decimal(0), Decimal(32), Decimal(32))
                 ),
-                stroke_color=c[0],
-                fill_color=c[0],
+                stroke_color=c,
+                fill_color=c,
             )
         )
     t.set_padding_on_all_cells(Decimal(5), Decimal(5), Decimal(5), Decimal(5))
+    t.no_borders()
     l.add(t)
 
     # store
@@ -6384,8 +6454,6 @@ from borb.pdf import Paragraph
 from borb.pdf import Document
 from borb.pdf import Page
 from borb.pdf import PDF
-from borb.toolkit import TextRankKeywordExtraction
-from borb.toolkit import ENGLISH_STOP_WORDS
 from borb.toolkit import ImageExtraction
 
 
@@ -6948,9 +7016,13 @@ import typing
 from borb.pdf import Document
 from borb.pdf import PDF
 
-import typing
 from decimal import Decimal
+import typing
 
+from borb.pdf import HexColor
+from borb.pdf import SingleColumnLayout
+from borb.pdf import PageLayout
+from borb.pdf import Paragraph
 from borb.pdf import Document
 from borb.pdf import Page
 from borb.pdf import PDF
@@ -6958,29 +7030,36 @@ from borb.pdf import PDF
 
 def main():
 
-    # open doc_001
-    doc_001: typing.Optional[Document] = Document()
-    with open("output_001.pdf", "rb") as pdf_file_handle:
-        doc_001 = PDF.loads(pdf_file_handle)
-
-    # open doc_002
-    doc_002: typing.Optional[Document] = Document()
-    with open("output_002.pdf", "rb") as pdf_file_handle:
-        doc_002 = PDF.loads(pdf_file_handle)
-
-    # create new document
     d: Document = Document()
-    for i in range(0, 10):
-        p: typing.Optional[Page] = None
-        if i % 2 == 0:
-            p = doc_001.get_page(i)
-        else:
-            p = doc_002.get_page(i)
-        d.add_page(p)
 
-    # write
-    with open("output_003.pdf", "wb") as pdf_file_handle:
-        PDF.dumps(pdf_file_handle, d)
+    N: int = 10
+    for i in range(0, N):
+        p: Page = Page()
+        d.add_page(p)
+        l: PageLayout = SingleColumnLayout(p)
+        l.add(
+            Paragraph(
+                "Page %d of %d" % (i + 1, N),
+                font_color=HexColor("56cbf9"),
+                font_size=Decimal(24),
+            )
+        )
+        l.add(
+            Paragraph(
+                """
+                        Lorem Ipsum is simply dummy text of the printing and typesetting industry. 
+                        Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, 
+                        when an unknown printer took a galley of type and scrambled it to make a type specimen book. 
+                        It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. 
+                        It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, 
+                        and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum.
+                        """,
+                font_color=HexColor("f1cd2e"),
+            )
+        )
+
+    with open("output_002.pdf", "wb") as pdf_out_handle:
+        PDF.dumps(pdf_out_handle, d)
 
 
 if __name__ == "__main__":
@@ -9007,6 +9086,156 @@ Although this is not very practical it will do several things:
 
 In this example, you'll be creating a PDF from scratch, containing "Hello World!", using only the low-level syntax.
 
+We'll start by creating an empty `Document` and add an empty `Page`:
+
+```python
+#!chapter_008/src/snippet_001.py
+def main():
+    
+    # create empty Document
+    pdf: Document = Document()
+    
+    # add empty Page
+    page = Page()
+    pdf.add_page(page)
+
+if __name__ == "__main__":
+    main()```
+
+Now we can start writing PostScript operators to the content-stream of the `Page`:
+
+```python
+#!chapter_008/src/snippet_002.py
+def main():
+    
+    # create empty Document
+    pdf: Document = Document()
+    
+    # add empty Page
+    page = Page()
+    pdf.add_page(page)
+
+    # create content stream
+    content_stream = Stream()
+    content_stream[
+        Name("DecodedBytes")
+    ] = b"""
+        q
+        BT
+        /F1 24 Tf            
+        59 742 Td            
+        (Lorem Ipsum) Tj
+        ET
+        Q
+    """
+    content_stream[Name("Bytes")] = zlib.compress(content_stream["DecodedBytes"], 9)
+    content_stream[Name("Filter")] = Name("FlateDecode")
+    content_stream[Name("Length")] = bDecimal(len(content_stream["Bytes"]))
+
+    # set content of page
+    page[Name("Contents")] = content_stream
+
+
+if __name__ == "__main__":
+    main()```
+
+We've now used a font called `F1` in our `Page`, we need to define that: 
+
+```python
+#!chapter_008/src/snippet_003.py
+def main():
+    
+    # create empty Document
+    pdf: Document = Document()
+    
+    # add empty Page
+    page = Page()
+    pdf.add_page(page)
+
+    # create content stream
+    content_stream = Stream()
+    content_stream[
+        Name("DecodedBytes")
+    ] = b"""
+        q
+        BT
+        /F1 24 Tf            
+        59 742 Td            
+        (Lorem Ipsum) Tj
+        ET
+        Q
+    """
+    content_stream[Name("Bytes")] = zlib.compress(content_stream["DecodedBytes"], 9)
+    content_stream[Name("Filter")] = Name("FlateDecode")
+    content_stream[Name("Length")] = bDecimal(len(content_stream["Bytes"]))
+
+    # set content of page
+    page[Name("Contents")] = content_stream
+
+    # set Font
+    page[Name("Resources")] = Dictionary()
+    page["Resources"][Name("Font")] = Dictionary()
+    page["Resources"]["Font"][Name("F1")] = Dictionary()
+    page["Resources"]["Font"]["F1"][Name("Type")] = Name("Font")
+    page["Resources"]["Font"]["F1"][Name("Subtype")] = Name("Type1")
+    page["Resources"]["Font"]["F1"][Name("Name")] = Name("F1")
+    page["Resources"]["Font"]["F1"][Name("BaseFont")] = Name("Helvetica")
+    page["Resources"]["Font"]["F1"][Name("Encoding")] = Name("MacRomanEncoding")
+
+
+if __name__ == "__main__":
+    main()```
+
+Finally, we can store the PDF:
+
+```python
+#!chapter_008/src/snippet_004.py
+def main():
+    
+    # create empty Document
+    pdf: Document = Document()
+    
+    # add empty Page
+    page = Page()
+    pdf.add_page(page)
+
+    # create content stream
+    content_stream = Stream()
+    content_stream[
+        Name("DecodedBytes")
+    ] = b"""
+        q
+        BT
+        /F1 24 Tf            
+        59 742 Td            
+        (Lorem Ipsum) Tj
+        ET
+        Q
+    """
+    content_stream[Name("Bytes")] = zlib.compress(content_stream["DecodedBytes"], 9)
+    content_stream[Name("Filter")] = Name("FlateDecode")
+    content_stream[Name("Length")] = bDecimal(len(content_stream["Bytes"]))
+
+    # set content of page
+    page[Name("Contents")] = content_stream
+
+    # set Font
+    page[Name("Resources")] = Dictionary()
+    page["Resources"][Name("Font")] = Dictionary()
+    page["Resources"]["Font"][Name("F1")] = Dictionary()
+    page["Resources"]["Font"]["F1"][Name("Type")] = Name("Font")
+    page["Resources"]["Font"]["F1"][Name("Subtype")] = Name("Type1")
+    page["Resources"]["Font"]["F1"][Name("Name")] = Name("F1")
+    page["Resources"]["Font"]["F1"][Name("BaseFont")] = Name("Helvetica")
+    page["Resources"]["Font"]["F1"][Name("Encoding")] = Name("MacRomanEncoding")
+
+    # store PDF
+    with open("output.pdf", "wb") as pdf_file_handle:
+        PDF.dumps(pdf_file_handle, pdf)
+
+if __name__ == "__main__":
+    main()```
+
 <div style="page-break-before: always;"></div>
 
 ## 8.6 Fonts in PDF
@@ -9224,7 +9453,54 @@ finally, `SimpleTextExtraction` stores the reconstituted text (to ensure fast lo
 
 ### 8.7.2 Paragraph extraction and disjoint set
 
-:mega: todo :mega:
+Extracting characters of text and joining them together is already a hard problem.
+But trying to find a `Paragraph` is even more complicated. To do so, `borb` first attempts to find lines of text.
+This logic resides in the `SimpleLineOfTextExtraction` class.
+
+Put simply, `SimpleLineOfTextExtraction` is notified of the same `Event` objects we discussed earlier.
+It stores them and later uses a highly efficient datastructure to merge `Event` objects that together form a `LineOfText`.
+
+This datastructure is a union-find datastructure (also known as a disjoint set).
+A disjoint set is a data structure that stores a collection of disjoint (non-overlapping) sets. 
+Equivalently, it stores a partition of a set into disjoint subsets. It provides operations for adding new sets, merging sets (replacing them by their union), and finding a representative member of a set. The last operation makes it possible to find out efficiently if any two elements are in the same or different sets. 
+
+To perform a sequence of m addition, union, or find operations on a disjoint-set forest with n nodes requires total time `O(m*α(n))`, where `α(n)` is the extremely slow-growing inverse Ackermann function. 
+Disjoint-set forests do not guarantee this performance on a per-operation basis. Individual union and find operations can take longer than a constant times α(n) time, but each operation causes the disjoint-set forest to adjust itself so that successive operations are faster. 
+Disjoint-set forests are both asymptotically optimal and practically efficient. 
+
+You can see this datastructure in action on lines 60 to 75 of `SimpleLineOfTextExtraction`:
+
+```python
+        for c0 in chunks_of_text_disjoint_set:
+            for c1 in chunks_of_text_disjoint_set:
+                if c0 == c1:
+                    continue
+                r0 = c0._baseline_bounding_box
+                r1 = c1._baseline_bounding_box
+                if r0.y != r1.y:
+                    continue
+                gap = max(r1.x - (r0.x + r0.width), r0.x - (r1.x + r1.width))
+                space_gap = (
+                    c0.get_space_character_width_estimate_in_user_space()
+                    if r0.x < r1.x
+                    else c1.get_space_character_width_estimate_in_user_space()
+                )
+                if gap < space_gap * Decimal(2):
+                    chunks_of_text_disjoint_set.union(c0, c1)
+```
+
+Once the PDF has been reconsituted into `LineOfText` objects, it can be further aggregated into `Paragraph` objects.
+This is done by the `SimpleParagraphExtraction` class. This class uses 2 parameters when deciding on when to merge `LineOfText` objects into a `Paragraph`.
+
+- The horizontal overlap of two `LineOfText` objects
+- The leading between two `LineOfText` objects
+
+These may need to be tweaked for optimal results.
+
+By hooking into this chain, you can build an `EventListener` that processes `Paragraph` objects (rather than having to deal with low-level instructions).
+
+`borb` already contains such a class; `PDFToMP3`, which uses Google Text-to-Speech to store the spoken text of a `Paragraph` as an MP3. This class can optionally prefix all these spoken utterances with the coordinates of the `Paragraph` in a human-legible way.
+This produces output such as: "first page, top right, An introduction to Python"
 
 <div style="page-break-before: always;"></div>
 

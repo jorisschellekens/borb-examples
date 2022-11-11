@@ -126,11 +126,20 @@ One of the key usecases of `DropDownList` is when you're using it to allow the u
 
 ### 4.3.6 Adding a `CheckBox` to a PDF
 
-:mega: todo :mega:
+Let's extend our form to include a `CheckBox`.
+We'll use this `CheckBox` to allow the user to answer a simple yes/no question.
+
+```python
+#!src/snippet_006.py
+```
+
+The output PDF should look like this:
+
+![enter image description here](img/snippet_006.png)
 
 ### 4.3.7 Adding a `RadioButton` to a PDF
 
-:mega: todo :mega:
+:mega: TODO: currently not supported in `borb` :mega:
 
 ### 4.3.8 Adding a `PushButton` to a PDF
 
@@ -139,10 +148,10 @@ These buttons can be configured (using their `\Action` dictionary) to interact w
 The default action (assuming you do not specify anything) is to reset the form (clearing all the input).
 
 ```python
-#!src/snippet_006.py
+#!src/snippet_007.py
 ```
 
-![enter image description here](img/snippet_006.png)
+![enter image description here](img/snippet_007.png)
 
 ### 4.3.9 Adding a `JavaScriptPushButton` to a PDF
 
@@ -151,14 +160,14 @@ These buttons can be configured to have any (compliant) `JavaScript` script asso
 In this example you'll create a `Document` that shows an alert box whenever the `PushButton` gets pressed.
 
 ```python
-#!src/snippet_007.py
+#!src/snippet_008.py
 ```
 
-![enter image description here](img/snippet_007_001.png)
+![enter image description here](img/snippet_008_001.png)
 
 When clicked, this shows a popup:
 
-![enter image description here](img/snippet_007_002.jpg)
+![enter image description here](img/snippet_008_002.jpg)
 
 For more information on how to use `JavaScript` inside a PDF, I recommend the following resources:
 - https://helpx.adobe.com/acrobat/using/applying-actions-scripts-pdfs.html
@@ -174,10 +183,10 @@ Be sure to open it, fill in some values, and save it in order to get everything 
 We'll start by creating a PDF with a form in it:
 
 ```python
-#!src/snippet_008.py
+#!src/snippet_009.py
 ```
 
-![enter image description here](img/snippet_008.png)
+![enter image description here](img/snippet_009.png)
 
 Now we can either set the values in the form by opening the PDF and typing something (make sure to save the PDF when Adobe asks you to do so).
 We could also just set the values using `borb` of course. You'll learn how to do that shortly.
@@ -185,15 +194,15 @@ We could also just set the values using `borb` of course. You'll learn how to do
 Finally, with our form filled in (and saved), we can get the filled in values in the PDF:
 
 ```python
-#!src/snippet_009.py
+#!src/snippet_010.py
 ```
 
 This should print something like:
 
-![enter image description here](img/snippet_009.png)
+![enter image description here](img/snippet_010.png)
 
 ```commandline
-/usr/bin/python3.8 /home/joris/Code/borb-examples-dev/example/example_053.py
+/usr/bin/python3.8 /home/joris/Code/borb-examples-dev/example/snippet_010.py
 Name             : Schellekens
 Firstname        : Joris
 Country          : Belgium
@@ -216,10 +225,10 @@ Later you'll learn how to remove interactivity by flattening the `Document`.
 ### 4.5.1 Changing the value of a `FormField` in an existing PDF using `borb`
 
 ```python
-#!src/snippet_010.py
+#!src/snippet_011.py
 ```
 
-![enter image description here](img/snippet_010.png)
+![enter image description here](img/snippet_011.png)
 
 ### 4.5.2 Changing the value of a `FormField` in an existing PDF using `JavaScript`
 
@@ -230,7 +239,7 @@ You could pre-fill address fields with `JavaScript`, for instance filling in som
 In the next example, you'll be creating a PDF with a simple `JavaScriptPushButton` that triggers a piece of `JavaScript` to set a `TextField`.
 
 ```python
-#!src/snippet_011.py
+#!src/snippet_012.py
 ```
 
 ## 4.6 Conclusion

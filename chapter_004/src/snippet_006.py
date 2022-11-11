@@ -3,6 +3,7 @@ from decimal import Decimal
 from borb.pdf import HexColor
 from borb.pdf import CountryDropDownList
 from borb.pdf import TextField
+from borb.pdf import CheckBox
 from borb.pdf import SingleColumnLayout
 from borb.pdf import PageLayout
 from borb.pdf import FixedColumnWidthTable
@@ -10,7 +11,6 @@ from borb.pdf import Paragraph
 from borb.pdf import Document
 from borb.pdf import Page
 from borb.pdf import PDF
-from borb.pdf import PushButton
 from borb.pdf import Alignment
 
 
@@ -37,8 +37,8 @@ def main():
         .add(TextField(field_name="firstname", font_color=HexColor("f1cd2e")))
         .add(Paragraph("Country"))
         .add(CountryDropDownList(field_name="country"))
-        .add(Paragraph(" "))
-        .add(PushButton("Clear!", horizontal_alignment=Alignment.RIGHT))
+        .add(Paragraph("Do you want to receive promotional emails?"))
+        .add(CheckBox())
         .set_padding_on_all_cells(Decimal(2), Decimal(2), Decimal(2), Decimal(2))
         .no_borders()
     )

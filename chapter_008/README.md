@@ -538,7 +538,54 @@ finally, `SimpleTextExtraction` stores the reconstituted text (to ensure fast lo
 
 ### 8.7.2 Paragraph extraction and disjoint set
 
-:mega: todo :mega:
+Extracting characters of text and joining them together is already a hard problem.
+But trying to find a `Paragraph` is even more complicated. To do so, `borb` first attempts to find lines of text.
+This logic resides in the `SimpleLineOfTextExtraction` class.
+
+Put simply, `SimpleLineOfTextExtraction` is notified of the same `Event` objects we discussed earlier.
+It stores them and later uses a highly efficient datastructure to merge `Event` objects that together form a `LineOfText`.
+
+This datastructure is a union-find datastructure (also known as a disjoint set).
+A disjoint set is a data structure that stores a collection of disjoint (non-overlapping) sets. 
+Equivalently, it stores a partition of a set into disjoint subsets. It provides operations for adding new sets, merging sets (replacing them by their union), and finding a representative member of a set. The last operation makes it possible to find out efficiently if any two elements are in the same or different sets. 
+
+To perform a sequence of m addition, union, or find operations on a disjoint-set forest with n nodes requires total time `O(m*α(n))`, where `α(n)` is the extremely slow-growing inverse Ackermann function. 
+Disjoint-set forests do not guarantee this performance on a per-operation basis. Individual union and find operations can take longer than a constant times α(n) time, but each operation causes the disjoint-set forest to adjust itself so that successive operations are faster. 
+Disjoint-set forests are both asymptotically optimal and practically efficient. 
+
+You can see this datastructure in action on lines 60 to 75 of `SimpleLineOfTextExtraction`:
+
+```python
+        for c0 in chunks_of_text_disjoint_set:
+            for c1 in chunks_of_text_disjoint_set:
+                if c0 == c1:
+                    continue
+                r0 = c0._baseline_bounding_box
+                r1 = c1._baseline_bounding_box
+                if r0.y != r1.y:
+                    continue
+                gap = max(r1.x - (r0.x + r0.width), r0.x - (r1.x + r1.width))
+                space_gap = (
+                    c0.get_space_character_width_estimate_in_user_space()
+                    if r0.x < r1.x
+                    else c1.get_space_character_width_estimate_in_user_space()
+                )
+                if gap < space_gap * Decimal(2):
+                    chunks_of_text_disjoint_set.union(c0, c1)
+```
+
+Once the PDF has been reconsituted into `LineOfText` objects, it can be further aggregated into `Paragraph` objects.
+This is done by the `SimpleParagraphExtraction` class. This class uses 2 parameters when deciding on when to merge `LineOfText` objects into a `Paragraph`.
+
+- The horizontal overlap of two `LineOfText` objects
+- The leading between two `LineOfText` objects
+
+These may need to be tweaked for optimal results.
+
+By hooking into this chain, you can build an `EventListener` that processes `Paragraph` objects (rather than having to deal with low-level instructions).
+
+`borb` already contains such a class; `PDFToMP3`, which uses Google Text-to-Speech to store the spoken text of a `Paragraph` as an MP3. This class can optionally prefix all these spoken utterances with the coordinates of the `Paragraph` in a human-legible way.
+This produces output such as: "first page, top right, An introduction to Python"
 
 <div style="page-break-before: always;"></div>
 

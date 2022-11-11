@@ -10,8 +10,6 @@ from borb.pdf import Paragraph
 from borb.pdf import Document
 from borb.pdf import Page
 from borb.pdf import PDF
-from borb.pdf import JavaScriptPushButton
-from borb.pdf import Alignment
 
 
 def main():
@@ -30,21 +28,13 @@ def main():
 
     # add FixedColumnWidthTable containing Paragraph and TextField objects
     layout.add(
-        FixedColumnWidthTable(number_of_columns=2, number_of_rows=4)
+        FixedColumnWidthTable(number_of_columns=2, number_of_rows=3)
         .add(Paragraph("Name:"))
         .add(TextField(field_name="name", font_color=HexColor("f1cd2e")))
         .add(Paragraph("Firstname:"))
         .add(TextField(field_name="firstname", font_color=HexColor("f1cd2e")))
         .add(Paragraph("Country"))
         .add(CountryDropDownList(field_name="country"))
-        .add(Paragraph(" "))
-        .add(
-            JavaScriptPushButton(
-                text="Popup!",
-                javascript="app.alert('Hello World!', 3)",
-                horizontal_alignment=Alignment.RIGHT,
-            )
-        )
         .set_padding_on_all_cells(Decimal(2), Decimal(2), Decimal(2), Decimal(2))
         .no_borders()
     )

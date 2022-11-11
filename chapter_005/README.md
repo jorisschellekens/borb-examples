@@ -311,14 +311,21 @@ The algorithm is explained in detail in the paper at https://web.eecs.umich.edu/
 This outputs:
 
 ```commandline
-/usr/bin/python3.8 /home/joris/Code/borb-examples-dev/chapter_005/src/snippet_011.py
-[('LOREM', 9.100909090909093e-06), 
- ('IPSUM', 9.100909090909093e-06), 
- ('TEXT', 2.737272727272727e-06), 
- ('LATIN', 2.737272727272727e-06)]
-
+/usr/bin/python3.8 /home/joris/Code/borb-examples-dev/chapter_005/src/snippet_011.py 
+[('LOREM', 0.12325162789434786), 
+ ('IPSUM', 0.11962425634248006), 
+ ('FROM', 0.039769960489979723), 
+ ('LINE', 0.025411263503150646), 
+ ('SIMPLY', 0.024239653360280115), 
+ ('POPULAR', 0.021090820818629064), 
+ ('LATIN', 0.02000870808599614), 
+ ..
+]
 Process finished with exit code 0
+
 ```
+
+**\* Keep in min textrank is a non-deterministic algorithm. Its output may vary between runs.**
 
 <div style="page-break-before: always;"></div>
 

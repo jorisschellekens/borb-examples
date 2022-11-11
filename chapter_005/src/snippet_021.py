@@ -7,8 +7,6 @@ from borb.pdf import Paragraph
 from borb.pdf import Document
 from borb.pdf import Page
 from borb.pdf import PDF
-from borb.toolkit import TextRankKeywordExtraction
-from borb.toolkit import ENGLISH_STOP_WORDS
 from borb.toolkit import ImageExtraction
 
 

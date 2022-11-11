@@ -3,7 +3,6 @@ from decimal import Decimal
 import typing
 from borb.pdf import HexColor, RGBColor
 from borb.pdf.canvas.geometry.rectangle import Rectangle
-from borb.pdf import Image
 from borb.pdf import ConnectedShape
 from borb.pdf import Alignment
 from borb.pdf import SingleColumnLayout
@@ -42,19 +41,20 @@ def main():
 
     # add Table
     t: FlexibleColumnWidthTable = FlexibleColumnWidthTable(
-        number_of_rows=8, number_of_columns=4, horizontal_alignment=Alignment.CENTERED
+        number_of_rows=3, number_of_columns=3, horizontal_alignment=Alignment.CENTERED
     )
-    for c in colors.values():
+    for c in colors.keys():
         t.add(
             ConnectedShape(
                 LineArtFactory.droplet(
                     Rectangle(Decimal(0), Decimal(0), Decimal(32), Decimal(32))
                 ),
-                stroke_color=c[0],
-                fill_color=c[0],
+                stroke_color=c,
+                fill_color=c,
             )
         )
     t.set_padding_on_all_cells(Decimal(5), Decimal(5), Decimal(5), Decimal(5))
+    t.no_borders()
     l.add(t)
 
     # store
