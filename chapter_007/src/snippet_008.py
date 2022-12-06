@@ -1,14 +1,11 @@
 from borb.pdf import PDF
 from borb.toolkit.export.pdf_to_jpg import PDFToJPG
 
-from pathlib import Path
-
 
 def main():
 
     # read PDF
-    input_file: Path = Path(__file__).parent / "output.pdf"
-    with open(input_file, "rb") as pdf_file_handle:
+    with open("output.pdf", "rb") as pdf_file_handle:
         doc = PDF.loads(pdf_file_handle)
 
     # convert to JPG

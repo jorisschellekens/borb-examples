@@ -10,6 +10,7 @@ from decimal import Decimal
 
 
 def main():
+
     # create Document
     doc: Document = Document()
 

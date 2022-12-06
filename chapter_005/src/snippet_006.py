@@ -18,7 +18,7 @@ def main():
     assert doc is not None
 
     # print matching groups
-    for i, m in enumerate(l.get_matches_for_page(0)):
+    for i, m in enumerate(l.get_matches()[0]):
         print("%d %s" % (i, m.group(0)))
         for r in m.get_bounding_boxes():
             print(

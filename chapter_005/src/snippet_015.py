@@ -16,7 +16,7 @@ def main():
     assert doc is not None
 
     # print the names of the Fonts
-    print(l.get_font_names_for_page(0))
+    print(l.get_font_names()[0])
 
 
 if __name__ == "__main__":

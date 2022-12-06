@@ -29,7 +29,7 @@ def main():
     assert doc is not None
 
     # print the text inside the Rectangle of interest
-    print(l0.get_text_for_page(0))
+    print(l0.get_text()[0])
 
 
 if __name__ == "__main__":

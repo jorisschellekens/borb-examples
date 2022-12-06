@@ -24,7 +24,7 @@ def main():
     assert doc is not None
 
     # find match
-    m: typing.Optional[PDFMatch] = next(iter(l0.get_matches_for_page(0)), None)
+    m: typing.Optional[PDFMatch] = next(iter(l0.get_matches()[0]), None)
     assert m is not None
 
     # get page width
@@ -46,7 +46,7 @@ def main():
     assert doc is not None
 
     # get text
-    print(l2.get_text_for_page(0))
+    print(l2.get_text()[0])
 
 
 if __name__ == "__main__":

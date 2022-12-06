@@ -241,7 +241,50 @@ Check out the examples in the GitHub repository and the tests to find out more s
 
 <div style="page-break-before: always;"></div>
 
-## 7.7 Conclusion
+## 7.7 Replacing text in an existing PDF
+
+One recurring question is "How do replace X by Y in this PDF?".
+By now, you should know that this is not really all that easy.
+
+Finding text is a heuristic process, which can become exceedingly difficult if the PDF
+does not have a simple layout. As soon as we have multiple-columns, tables, or combinations thereof it becomes
+harder and harder to match a regular expression against the visible text of a PDF.
+
+Removing content can be done by inserting and applying a `RedactAnnotation` (which is part of the standard).
+
+Inserting content afterwards again requires knowledge of the structure of the PDF (which is typically missing in PDF documents found in the wild).
+The problem is reflow. Replacing "Bob" by "Robert" means you have to shift every subsequent character by 3 places.
+
+`borb` supports a very rudimentary form of find/replace in its `SimpleFindReplace` class (in `toolkit`).
+
+In this example we'll explore one of these simple usecases.
+We're going to be start by creating a PDF.
+
+```python
+#!src/snippet_012.py
+```
+
+This PDF should look like the one below:
+
+![enter image description here](img/snippet_012.png)
+
+The problem being that my name is not **Jots Schellekens**.
+
+Now let's apply `SimpleFindReplace` to fix our little mistake:
+
+```python
+#!src/snippet_013.py
+```
+
+![enter image description here](img/snippet_013.png)
+
+Much better!
+
+**Keep in mind** that `SimpleFindReplace` does not handle complex re-flow.
+It only handles cases where you want to replace some text by some other text, without
+any influence on surrounding text.
+
+## 7.8 Conclusion
 
 In this chapter you've learned some of the more advanced ways of working with `borb` and PDF in general.
 You've learnt how to convert various formats to PDF, and back again. You've applied OCR, and extracted tables.

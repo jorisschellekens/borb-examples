@@ -162,7 +162,8 @@ def exec_chapter_007():
     exec_file(parent / Path('chapter_007/src/snippet_009.py'))
     exec_file(parent / Path('chapter_007/src/snippet_010.py'))
     exec_file(parent / Path('chapter_007/src/snippet_011.py'))
-
+    exec_file(parent / Path('chapter_007/src/snippet_012.py'))
+    exec_file(parent / Path('chapter_007/src/snippet_013.py'))
 
 def exec_chapter_009():
     print("executing chapter_009:")

@@ -325,7 +325,7 @@ Process finished with exit code 0
 
 ```
 
-**\* Keep in min textrank is a non-deterministic algorithm. Its output may vary between runs.**
+**\* Keep in mind textrank is a non-deterministic algorithm. Its output may vary between runs.**
 
 <div style="page-break-before: always;"></div>
 

@@ -22,7 +22,7 @@ def main():
     # check whether we have read a Document
     assert doc is not None
 
-    print(l.extract_images()[0])
+    print(l.get_images()[0])
 
 
 if __name__ == "__main__":

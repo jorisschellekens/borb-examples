@@ -143,7 +143,8 @@
   7.4 [Exporting PDF as an SVG image](#74-exporting-pdf-as-an-svg-image)  
   7.5 [Exporting Markdown as PDF](#75-exporting-markdown-as-pdf)  
   7.6 [Exporting HTML as PDF](#76-exporting-html-as-pdf)  
-  7.7 [Conclusion](#77-conclusion)  
+  7.7 [Replacing text in an existing PDF](#77-replacing-text-in-an-existing-pdf)  
+  7.8 [Conclusion](#78-conclusion)  
 8 [Deep Dive into `borb`](#8-deep-dive-into-borb)  
   8.1 [About PDF](#81-about-pdf)  
   8.2 [The XREF table](#82-the-xref-table)  
@@ -5496,7 +5497,7 @@ def main():
     assert doc is not None
 
     # print the text on the first Page
-    print(l.get_text_for_page(0))
+    print(l.get_text()[0])
 
 
 if __name__ == "__main__":
@@ -5561,7 +5562,7 @@ def main():
     assert doc is not None
 
     # print matching groups
-    for i, m in enumerate(l.get_matches_for_page(0)):
+    for i, m in enumerate(l.get_matches()[0]):
         print("%d %s" % (i, m.group(0)))
         for r in m.get_bounding_boxes():
             print(
@@ -5643,7 +5644,7 @@ def main():
     assert doc is not None
 
     # print the text inside the Rectangle of interest
-    print(l0.get_text_for_page(0))
+    print(l0.get_text()[0])
 
 
 if __name__ == "__main__":
@@ -5699,7 +5700,7 @@ def main():
     assert doc is not None
 
     # find match
-    m: typing.Optional[PDFMatch] = next(iter(l0.get_matches_for_page(0)), None)
+    m: typing.Optional[PDFMatch] = next(iter(l0.get_matches()[0]), None)
     assert m is not None
 
     # get page width
@@ -5721,7 +5722,7 @@ def main():
     assert doc is not None
 
     # get text
-    print(l2.get_text_for_page(0))
+    print(l2.get_text()[0])
 
 
 if __name__ == "__main__":
@@ -5879,7 +5880,7 @@ def main():
     # check whether we have read a Document
     assert doc is not None
 
-    print(l.get_keywords_for_page(0))
+    print(l.get_keywords()[0])
 
 
 if __name__ == "__main__":
@@ -5930,7 +5931,7 @@ def main():
     # check whether we have read a Document
     assert doc is not None
 
-    print(l.get_keywords_for_page(0))
+    print(l.get_keywords()[0])
 
 
 if __name__ == "__main__":
@@ -5954,7 +5955,7 @@ Process finished with exit code 0
 
 ```
 
-**\* Keep in min textrank is a non-deterministic algorithm. Its output may vary between runs.**
+**\* Keep in mind textrank is a non-deterministic algorithm. Its output may vary between runs.**
 
 <div style="page-break-before: always;"></div>
 
@@ -6060,7 +6061,7 @@ def main():
         doc = PDF.loads(pdf_file_handle, [l])
 
     # extract colors
-    colors: typing.Dict[Color, Decimal] = l.extract_color()[0]
+    colors: typing.Dict[Color, Decimal] = l.get_color()[0]
 
     # create output Document
     doc_out: Document = Document()
@@ -6174,7 +6175,7 @@ def main():
     assert doc is not None
 
     # print the names of the Fonts
-    print(l.get_font_names_for_page(0))
+    print(l.get_font_names()[0])
 
 
 if __name__ == "__main__":
@@ -6265,7 +6266,7 @@ def main():
     assert doc is not None
 
     # print the names of the Fonts
-    print(l1.get_text_for_page(0))
+    print(l1.get_text()[0])
 
 
 if __name__ == "__main__":
@@ -6370,7 +6371,7 @@ def main():
     assert doc is not None
 
     # print the names of the Fonts
-    print(l1.get_text_for_page(0))
+    print(l1.get_text()[0])
 
 
 if __name__ == "__main__":
@@ -6469,7 +6470,7 @@ def main():
     # check whether we have read a Document
     assert doc is not None
 
-    print(l.extract_images()[0])
+    print(l.get_images()[0])
 
 
 if __name__ == "__main__":
@@ -8292,10 +8293,10 @@ def main():
     p: Page = doc.get_page(0)
 
     # get Table(s)
-    tables: typing.List[Table] = l.get_tables_for_page(0)
+    tables: typing.List[Table] = l.get_tables()[0]
     assert len(tables) > 0
 
-    for r in l.get_table_bounding_boxes_for_page(0):
+    for r in l.get_table_bounding_boxes()[0]:
         r = r.grow(Decimal(5))
         p.add_annotation(SquareAnnotation(r, stroke_color=X11Color("Green")))
 
@@ -8515,7 +8516,7 @@ def main():
     with open("output_002.pdf", "rb") as pdf_file_handle:
         doc = PDF.loads(pdf_file_handle, [l])
 
-    print(l.get_text_for_page(0))
+    print(l.get_text()[0])
 
 
 if __name__ == "__main__":
@@ -8550,6 +8551,7 @@ from decimal import Decimal
 
 
 def main():
+
     # create Document
     doc: Document = Document()
 
@@ -8604,14 +8606,11 @@ Now let's export this as an Image.
 from borb.pdf import PDF
 from borb.toolkit.export.pdf_to_jpg import PDFToJPG
 
-from pathlib import Path
-
 
 def main():
 
     # read PDF
-    input_file: Path = Path(__file__).parent / "output.pdf"
-    with open(input_file, "rb") as pdf_file_handle:
+    with open("output.pdf", "rb") as pdf_file_handle:
         doc = PDF.loads(pdf_file_handle)
 
     # convert to JPG
@@ -8697,12 +8696,13 @@ from borb.pdf import Document
 from borb.pdf import PDF
 from borb.toolkit.export.markdown_to_pdf.markdown_to_pdf import MarkdownToPDF
 
+from pathlib import Path
 
 def main():
 
     # read entire markdown file
     markdown_str: str = ""
-    with open("snippet_010.md", "r") as md_file_handle:
+    with open(Path(__file__).parent / "snippet_010.md", "r") as md_file_handle:
         markdown_str = md_file_handle.read()
 
     # convert
@@ -8747,12 +8747,13 @@ from borb.pdf import Document
 from borb.pdf import PDF
 from borb.toolkit.export.html_to_pdf.html_to_pdf import HTMLToPDF
 
+from pathlib import Path
 
 def main():
 
     # read entire markdown file
     html_str: str = ""
-    with open("snippet_011.html", "r") as md_file_handle:
+    with open(Path(__file__).parent / "snippet_011.html", "r") as md_file_handle:
         html_str = md_file_handle.read()
 
     # convert
@@ -8779,7 +8780,116 @@ Check out the examples in the GitHub repository and the tests to find out more s
 
 <div style="page-break-before: always;"></div>
 
-## 7.7 Conclusion
+## 7.7 Replacing text in an existing PDF
+
+One recurring question is "How do replace X by Y in this PDF?".
+By now, you should know that this is not really all that easy.
+
+Finding text is a heuristic process, which can become exceedingly difficult if the PDF
+does not have a simple layout. As soon as we have multiple-columns, tables, or combinations thereof it becomes
+harder and harder to match a regular expression against the visible text of a PDF.
+
+Removing content can be done by inserting and applying a `RedactAnnotation` (which is part of the standard).
+
+Inserting content afterwards again requires knowledge of the structure of the PDF (which is typically missing in PDF documents found in the wild).
+The problem is reflow. Replacing "Bob" by "Robert" means you have to shift every subsequent character by 3 places.
+
+`borb` supports a very rudimentary form of find/replace in its `SimpleFindReplace` class (in `toolkit`).
+
+In this example we'll explore one of these simple usecases.
+We're going to be start by creating a PDF.
+
+```python
+#!chapter_007/src/snippet_012.py
+from borb.pdf import Document
+from borb.pdf import Page
+from borb.pdf import PageLayout, SingleColumnLayout
+from borb.pdf import Table, FixedColumnWidthTable
+from borb.pdf import Paragraph
+from borb.pdf import PDF
+
+from decimal import Decimal
+
+
+def main():
+
+    # create empty Document
+    doc: Document = Document()
+
+    # add new Page
+    pge: Page = Page()
+    doc.add_page(pge)
+
+    # set PageLayout
+    lay: PageLayout = SingleColumnLayout(pge)
+
+    # add Table
+    tab: Table = FixedColumnWidthTable(number_of_columns=2, number_of_rows=3)
+    tab.add(Paragraph("Name:", font="Helvetica-Bold"))
+    tab.add(Paragraph("Schellekens"))
+    tab.add(Paragraph("Firstname:", font="Helvetica-Bold"))
+    tab.add(Paragraph("Jots"))
+    tab.add(Paragraph("Title:", font="Helvetica-Bold"))
+    tab.add(Paragraph("CEO borb"))
+    tab.set_padding_on_all_cells(Decimal(5), Decimal(5), Decimal(5), Decimal(5))
+    lay.add(tab)
+
+    # store
+    with open("output.pdf", 'wb') as pdf_file_handle:
+        PDF.dumps(pdf_file_handle, doc)
+
+if __name__ == "__main__":
+    main()
+```
+
+This PDF should look like the one below:
+
+![enter image description here](chapter_007/img/snippet_012.png)
+
+The problem being that my name is not **Jots Schellekens**.
+
+Now let's apply `SimpleFindReplace` to fix our little mistake:
+
+```python
+#!chapter_007/src/snippet_013.py
+from borb.pdf import Document
+from borb.pdf import PDF
+from borb.toolkit import SimpleFindReplace
+
+import typing
+
+
+def main():
+
+    # attempt to read a PDF
+    doc: typing.Optional[Document] = None
+    with open("output.pdf", "rb") as pdf_file_handle:
+        doc = PDF.loads(pdf_file_handle)
+
+    # check whether we actually read a PDF
+    assert doc is not None
+
+    # find/replace
+    doc = SimpleFindReplace.sub("Jots", "Joris", doc)
+
+    # store
+    with open("output2.pdf", "wb") as pdf_file_handle:
+        PDF.dumps(pdf_file_handle, doc)
+
+
+if __name__ == "__main__":
+    main()
+```
+
+![enter image description here](chapter_007/img/snippet_013.png)
+
+Much better!
+
+**Keep in mind** that `SimpleFindReplace` does not handle complex re-flow.
+It only handles cases where you want to replace some text by some other text, without
+any influence on surrounding text.
+
+## 7.8 Conclusion
 
 In this chapter you've learned some of the more advanced ways of working with `borb` and PDF in general.
 You've learnt how to convert various formats to PDF, and back again. You've applied OCR, and extracted tables.

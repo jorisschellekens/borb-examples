@@ -24,7 +24,7 @@ def main():
         doc = PDF.loads(pdf_file_handle, [l])
 
     # extract colors
-    colors: typing.Dict[Color, Decimal] = l.extract_color()[0]
+    colors: typing.Dict[Color, Decimal] = l.get_color()[0]
 
     # create output Document
     doc_out: Document = Document()
