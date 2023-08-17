@@ -9211,6 +9211,7 @@ def main():
 
 if __name__ == "__main__":
     main()
+
 ```
 
 Now we can start writing PostScript operators to the content-stream of the `Page`:
@@ -9249,6 +9250,7 @@ def main():
 
 if __name__ == "__main__":
     main()
+
 ```
 
 We've now used a font called `F1` in our `Page`, we need to define that: 
@@ -9297,6 +9299,7 @@ def main():
 
 if __name__ == "__main__":
     main()
+
 ```
 
 Finally, we can store the PDF:
@@ -9348,6 +9351,7 @@ def main():
 
 if __name__ == "__main__":
     main()
+
 ```
 
 <div style="page-break-before: always;"></div>
