@@ -449,6 +449,7 @@ def main():
 
 if __name__ == "__main__":
     main()
+
 ```
 
 If you were to look at the class definition of `Document` you'd see:
@@ -501,6 +502,7 @@ def main():
 
 if __name__ == "__main__":
     main()
+
 ```
 
 The default constructor for `Page` also sets the page size to match that of an A4 paper, in portrait mode.
@@ -562,6 +564,7 @@ def main():
 
 if __name__ == "__main__":
     main()
+
 ```
 
 `SingleColumnLayout` takes the `Page` being laid out as its parameter, anything you add to the `PageLayout` using the `add` method will get added to the `Page`. When the `Page` can no longer hold the content, a new `Page` will be created automatically, and the `PageLayout` will use the new `Page` in stead.
@@ -598,6 +601,7 @@ def main():
 
 if __name__ == "__main__":
     main()
+
 ```
 
 The default constructor for `Paragraph` accepts a `str` and nothing more. Of course, in later sections you'll learn how to customize everything from the font down to the color being used.
@@ -647,6 +651,7 @@ def main():
 
 if __name__ == "__main__":
     main()
+
 ```
 
 ![enter image description here](chapter_002/img/snippet_005.png)
@@ -730,6 +735,7 @@ def main():
 
 if __name__ == "__main__":
     main()
+
 ```
 
 Upon closer inspection, you'll find the constructor of `Paragraph` takes an argument `font` which can either be of type `str` or `Font`.
@@ -793,6 +799,7 @@ def main():
 
 if __name__ == "__main__":
     main()
+
 ```
 
 ![enter image description here](chapter_002/img/snippet_007.png)
@@ -853,6 +860,7 @@ def main():
 
 if __name__ == "__main__":
     main()
+
 ```
 
 ![enter image description here](chapter_002/img/snippet_008.png)
@@ -927,6 +935,7 @@ def main():
 
 if __name__ == "__main__":
     main()
+
 ```
 
 ![enter image description here](chapter_002/img/snippet_009.png)
@@ -980,6 +989,7 @@ def main():
 
 if __name__ == "__main__":
     main()
+
 ```
 
 ![enter image description here](chapter_002/img/snippet_010.png)
@@ -1046,6 +1056,7 @@ def main():
 
 if __name__ == "__main__":
     main()
+
 ```
 
 ![enter image description here](chapter_002/img/snippet_011.png)
@@ -1094,6 +1105,7 @@ def main():
 
 if __name__ == "__main__":
     main()
+
 ```
 
 ![enter image description here](chapter_002/img/snippet_012.png)
@@ -1198,6 +1210,7 @@ def main():
 
 if __name__ == "__main__":
     main()
+
 ```
 
 ![enter image description here](chapter_002/img/snippet_013.png)
@@ -1283,6 +1296,7 @@ def main():
 
 if __name__ == "__main__":
     main()
+
 ```
 
 ![enter image description here](chapter_002/img/snippet_014.png)
@@ -1370,6 +1384,7 @@ def main():
 
 if __name__ == "__main__":
     main()
+
 ```
 
 ![enter image description here](chapter_002/img/snippet_015.png)
@@ -1455,6 +1470,7 @@ def main():
 
 if __name__ == "__main__":
     main()
+
 ```
 
 ![enter image description here](chapter_002/img/snippet_016.png)
@@ -1542,6 +1558,7 @@ def main():
 
 if __name__ == "__main__":
     main()
+
 ```
 
 ![enter image description here](chapter_002/img/snippet_017.png)
@@ -1614,6 +1631,7 @@ def main():
 
 if __name__ == "__main__":
     main()
+
 ```
 
 ![enter image description here](chapter_002/img/snippet_018.png)
@@ -1676,6 +1694,7 @@ def main():
 
 if __name__ == "__main__":
     main()
+
 ```
 
 ![enter image description here](chapter_002/img/snippet_019.png)
@@ -1730,6 +1749,7 @@ def main():
 
 if __name__ == "__main__":
     main()
+
 ```
 
 ![enter image description here](chapter_002/img/snippet_020.png)
@@ -1784,6 +1804,7 @@ def main():
 
 if __name__ == "__main__":
     main()
+
 ```
 
 ![enter image description here](chapter_002/img/snippet_021.png)
@@ -1846,6 +1867,7 @@ def main():
 
 if __name__ == "__main__":
     main()
+
 ```
 
 ![enter image description here](chapter_002/img/snippet_022.png)
@@ -1900,6 +1922,7 @@ def main():
 
 if __name__ == "__main__":
     main()
+
 ```
 
 ![enter image description here](chapter_002/img/snippet_023.png)
@@ -1954,6 +1977,7 @@ def main():
 
 if __name__ == "__main__":
     main()
+
 ```
 
 ![enter image description here](chapter_002/img/snippet_024.png)
@@ -2047,6 +2071,7 @@ def main():
 
 if __name__ == "__main__":
     main()
+
 ```
 
 ![enter image description here](chapter_002/img/snippet_025.png)
@@ -2111,6 +2136,7 @@ def main():
 
 if __name__ == "__main__":
     main()
+
 ```
 
 ![enter image description here](chapter_002/img/snippet_026.png)
@@ -2196,6 +2222,7 @@ def main():
 
 if __name__ == "__main__":
     main()
+
 ```
 
 ![enter image description here](chapter_002/img/snippet_027.png)
@@ -2273,6 +2300,7 @@ def main():
 
 if __name__ == "__main__":
     main()
+
 ```
 
 ![enter image description here](chapter_002/img/snippet_028.png)
@@ -2329,6 +2357,7 @@ def main():
 
 if __name__ == "__main__":
     main()
+
 ```
 
 When you attempt to run this code, you should get the following assert:
@@ -2392,6 +2421,7 @@ def main():
 
 if __name__ == "__main__":
     main()
+
 ```
 
 ![enter image description here](chapter_002/img/snippet_030.png)
@@ -2463,6 +2493,7 @@ def main():
 
 if __name__ == "__main__":
     main()
+
 ```
 
 ![enter image description here](chapter_002/img/snippet_031.png)
@@ -2533,6 +2564,7 @@ def main():
 
 if __name__ == "__main__":
     main()
+
 ```
 
 ![enter image description here](chapter_002/img/snippet_032.png)
@@ -2589,6 +2621,7 @@ def main():
 
 if __name__ == "__main__":
     main()
+
 ```
 
 ![enter image description here](chapter_002/img/snippet_033.png)
@@ -2647,6 +2680,7 @@ def main():
 
 if __name__ == "__main__":
     main()
+
 ```
 
 ![enter image description here](chapter_002/img/snippet_034.png)
@@ -2751,6 +2785,7 @@ def main():
 
 if __name__ == "__main__":
     main()
+
 ```
 
 ![enter image description here](chapter_002/img/snippet_035.png)
@@ -2810,6 +2845,7 @@ def main():
 
 if __name__ == "__main__":
     main()
+
 ```
 
 ![enter image description here](chapter_002/img/snippet_036.png)
@@ -2870,6 +2906,7 @@ def main():
 
 if __name__ == "__main__":
     main()
+
 ```
 
 ![enter image description here](chapter_002/img/snippet_037.png)
@@ -2912,6 +2949,7 @@ def main():
 
 if __name__ == "__main__":
     main()
+
 ```
 
 ![enter image description here](chapter_002/img/snippet_038.png)
@@ -2968,6 +3006,7 @@ def main():
 
 if __name__ == "__main__":
     main()
+
 ```
 
 The result should look somewhat like this. Although the actual image may differ (if Unsplash suddenly decides to serve some other image as being more relevant for the keywords in the example).
@@ -3070,6 +3109,7 @@ def main():
 
 if __name__ == "__main__":
     main()
+
 ```
 
 ![enter image description here](chapter_003/img/snippet_001.png)
@@ -3117,6 +3157,7 @@ def main():
 
 if __name__ == "__main__":
     main()
+
 ```
 
 ![enter image description here](chapter_003/img/snippet_002.png)
@@ -3174,6 +3215,7 @@ def main():
 
 if __name__ == "__main__":
     main()
+
 ```
 
 ![enter image description here](chapter_003/img/snippet_003.png)
@@ -3224,6 +3266,7 @@ def main():
 
 if __name__ == "__main__":
     main()
+
 ```
 
 ![enter image description here](chapter_003/img/snippet_004.png)
@@ -3273,6 +3316,7 @@ def main():
 
 if __name__ == "__main__":
     main()
+
 ```
 
 ![enter image description here](chapter_003/img/snippet_005.png)
@@ -3338,6 +3382,7 @@ def main():
 
 if __name__ == "__main__":
     main()
+
 ```
 
 ![enter image description here](chapter_003/img/snippet_006.png)
@@ -3399,6 +3444,7 @@ def main():
 
 if __name__ == "__main__":
     main()
+
 ```
 
 ![enter image description here](chapter_003/img/snippet_007.png)
@@ -3478,6 +3524,7 @@ def main():
 
 if __name__ == "__main__":
     main()
+
 ```
 
 ![enter image description here](chapter_003/img/snippet_008.png)
@@ -3531,6 +3578,7 @@ def main():
 
 if __name__ == "__main__":
     main()
+
 ```
 
 ![enter image description here](chapter_003/img/snippet_009.png)
@@ -3592,6 +3640,7 @@ def main():
 
 if __name__ == "__main__":
     main()
+
 ```
 
 ![enter image description here](chapter_003/img/snippet_010.png)
@@ -3654,6 +3703,7 @@ def main():
 
 if __name__ == "__main__":
     main()
+
 ```
 
 ![enter image description here](chapter_003/img/snippet_011.png)
@@ -3705,6 +3755,7 @@ def main():
 
 if __name__ == "__main__":
     main()
+
 ```
 
 ![enter image description here](chapter_003/img/snippet_012.png)
@@ -3757,6 +3808,7 @@ def main():
 
 if __name__ == "__main__":
     main()
+
 ```
 
 ![enter image description here](chapter_003/img/snippet_013.png)
@@ -3830,6 +3882,7 @@ def main():
 
 if __name__ == "__main__":
     main()
+
 ```
 
 ![enter image description here](chapter_003/img/snippet_014.png)
@@ -3953,6 +4006,7 @@ def main():
 
 if __name__ == "__main__":
     main()
+
 ```
 
 ![enter image description here](chapter_003/img/snippet_015.png)
@@ -4010,6 +4064,7 @@ def main():
 
 if __name__ == "__main__":
     main()
+
 ```
 
 You'll have noticed that you created a `Table` that expects 6 pieces of content. 
@@ -4076,6 +4131,7 @@ def main():
 
 if __name__ == "__main__":
     main()
+
 ```
 
 ![enter image description here](chapter_003/img/snippet_017.png)
@@ -4129,6 +4185,7 @@ def main():
 
 if __name__ == "__main__":
     main()
+
 ```
 
 ![enter image description here](chapter_003/img/snippet_018.png)
@@ -4187,6 +4244,7 @@ def main():
 
 if __name__ == "__main__":
     main()
+
 ```
 
 This creates the following PDF:
@@ -4255,6 +4313,7 @@ def main():
 
 if __name__ == "__main__":
     main()
+
 ```
 
 ![enter image description here](chapter_003/img/snippet_020.png)
@@ -4320,6 +4379,7 @@ def main():
 
 if __name__ == "__main__":
     main()
+
 ```
 
 ![enter image description here](chapter_003/img/snippet_021.png)
@@ -4368,6 +4428,7 @@ def main():
 
 if __name__ == "__main__":
     main()
+
 ```
 
 You can see that `borb` will automatically take care of things like  creating the underyling `Paragraph` objects,
@@ -4429,6 +4490,7 @@ def main():
 
 if __name__ == "__main__":
     main()
+
 ```
 
 And check out the wonderful result!
@@ -4538,6 +4600,7 @@ def main():
 
 if __name__ == "__main__":
     main()
+
 ```
 
 The output `Document` should look like this.
@@ -4613,6 +4676,7 @@ def main():
 
 if __name__ == "__main__":
     main()
+
 ```
 
 This does not really have an impact on the form when it's editable:
@@ -4679,6 +4743,7 @@ def main():
 
 if __name__ == "__main__":
     main()
+
 ```
 
 ![enter image description here](chapter_004/img/snippet_003.png)
@@ -4744,6 +4809,7 @@ def main():
 
 if __name__ == "__main__":
     main()
+
 ```
 
 ![enter image description here](chapter_004/img/snippet_004.png)
@@ -4804,6 +4870,7 @@ def main():
 
 if __name__ == "__main__":
     main()
+
 ```
 
 ![enter image description here](chapter_004/img/snippet_005.png)
@@ -4867,6 +4934,7 @@ def main():
 
 if __name__ == "__main__":
     main()
+
 ```
 
 The output PDF should look like this:
@@ -4933,6 +5001,7 @@ def main():
 
 if __name__ == "__main__":
     main()
+
 ```
 
 ![enter image description here](chapter_004/img/snippet_007.png)
@@ -5003,6 +5072,7 @@ def main():
 
 if __name__ == "__main__":
     main()
+
 ```
 
 ![enter image description here](chapter_004/img/snippet_008_001.png)
@@ -5074,6 +5144,7 @@ def main():
 
 if __name__ == "__main__":
     main()
+
 ```
 
 ![enter image description here](chapter_004/img/snippet_009.png)
@@ -5110,6 +5181,7 @@ def main():
 
 if __name__ == "__main__":
     main()
+
 ```
 
 This should print something like:
@@ -5170,6 +5242,7 @@ def main():
 
 if __name__ == "__main__":
     main()
+
 ```
 
 ![enter image description here](chapter_004/img/snippet_011.png)
@@ -5242,6 +5315,7 @@ def main():
 
 if __name__ == "__main__":
     main()
+
 ```
 
 ## 4.6 Conclusion
@@ -5336,6 +5410,7 @@ def main():
 
 if __name__ == "__main__":
     main()
+
 ```
 
 The PDF doesn't really look all that special when you open it.
@@ -5373,6 +5448,7 @@ def main():
 
 if __name__ == "__main__":
     main()
+
 ```
 
 This will print `Joris Schellekens` to the terminal (in the case of the demo-PDF created by the earlier example of course).
@@ -5413,6 +5489,7 @@ def main():
 
 if __name__ == "__main__":
     main()
+
 ```
 
 Of course, now that you know how to extract the author and the producer, 
@@ -5455,6 +5532,7 @@ def main():
 
 if __name__ == "__main__":
     main()
+
 ```
 
 For the document I tested, this printed:
@@ -5502,6 +5580,7 @@ def main():
 
 if __name__ == "__main__":
     main()
+
 ```
 
 Here you've used the alternative method for `PDF.loads` which takes an array of `EventListener` objects as its argument.
@@ -5572,6 +5651,7 @@ def main():
 
 if __name__ == "__main__":
     main()
+
 ```
 
 Like before, you constructed an implementation of `EventListener` and passed it to the `PDF.loads` method. 
@@ -5649,6 +5729,7 @@ def main():
 
 if __name__ == "__main__":
     main()
+
 ```
 
 This prints:
@@ -5727,6 +5808,7 @@ def main():
 
 if __name__ == "__main__":
     main()
+
 ```
 
 This example is a lot to take in. 
@@ -5847,6 +5929,7 @@ def main():
 
 if __name__ == "__main__":
     main()
+
 ```
 
 This should produce a `Document` like this:
@@ -5885,6 +5968,7 @@ def main():
 
 if __name__ == "__main__":
     main()
+
 ```
 
 This outputs:
@@ -5936,6 +6020,7 @@ def main():
 
 if __name__ == "__main__":
     main()
+
 ```
 
 This outputs:
@@ -6023,6 +6108,7 @@ def main():
 
 if __name__ == "__main__":
     main()
+
 ```
 
 ![enter image description here](chapter_005/img/snippet_012.png)
@@ -6101,6 +6187,7 @@ def main():
 
 if __name__ == "__main__":
     main()
+
 ```
 
 ![enter image description here](chapter_005/img/snippet_013.png)
@@ -6149,6 +6236,7 @@ def main():
 
 if __name__ == "__main__":
     main()
+
 ```
 
 ![enter image description here](chapter_005/img/snippet_014.png)
@@ -6180,6 +6268,7 @@ def main():
 
 if __name__ == "__main__":
     main()
+
 ```
 
 This prints:
@@ -6231,6 +6320,7 @@ def main():
 
 if __name__ == "__main__":
     main()
+
 ```
 
 This generates the following PDF:
@@ -6271,6 +6361,7 @@ def main():
 
 if __name__ == "__main__":
     main()
+
 ```
 
 This should print:
@@ -6333,6 +6424,7 @@ def main():
 
 if __name__ == "__main__":
     main()
+
 ```
 
 This generates the following PDF:
@@ -6376,6 +6468,7 @@ def main():
 
 if __name__ == "__main__":
     main()
+
 ```
 
 This should print:
@@ -6438,6 +6531,7 @@ def main():
 
 if __name__ == "__main__":
     main()
+
 ```
 
 ![enter image description here](chapter_005/img/snippet_020.png)
@@ -6475,6 +6569,7 @@ def main():
 
 if __name__ == "__main__":
     main()
+
 ```
 
 This should print:
@@ -6536,6 +6631,7 @@ def main():
 
 if __name__ == "__main__":
     main()
+
 ```
 
 This code prints:
@@ -6607,6 +6703,7 @@ def main():
 
 if __name__ == "__main__":
     main()
+
 ```
 
 The result should look like this:
@@ -6659,6 +6756,7 @@ def main():
 
 if __name__ == "__main__":
     main()
+
 ```
 
 When you check out the file-stats on the output-file, the difference is astonishing:
@@ -6739,6 +6837,7 @@ def main():
 
 if __name__ == "__main__":
     main()
+
 ```
 
 The PDF should look something like this: 
@@ -6781,6 +6880,7 @@ def main():
 
 if __name__ == "__main__":
     main()
+
 ```
 
 This should print:
@@ -6845,6 +6945,7 @@ def main():
 
 if __name__ == "__main__":
     main()
+
 ```
 
 ![enter image description here](chapter_005/img/snippet_027.png)
@@ -6894,6 +6995,7 @@ def main():
 
 if __name__ == "__main__":
     main()
+
 ```
 
 ![enter image description here](chapter_005/img/snippet_028.png)
@@ -6939,6 +7041,7 @@ def main():
 
 if __name__ == "__main__":
     main()
+
 ```
 
 ![enter image description here](chapter_005/img/snippet_029.png)
@@ -7003,6 +7106,7 @@ def main():
 
 if __name__ == "__main__":
     main()
+
 ```
 
 The page number is printed atop each page, to make it easier to identify them later.
@@ -7065,6 +7169,7 @@ def main():
 
 if __name__ == "__main__":
     main()
+
 ```
 
 ![enter image description here](chapter_005/img/snippet_031.png)
@@ -7114,6 +7219,7 @@ def main():
 
 if __name__ == "__main__":
     main()
+
 ```
 
 The final document alternates pages between both input documents (which is obvious from the color and page numbers).
@@ -7193,6 +7299,7 @@ def main():
 
 if __name__ == "__main__":
     main()
+
 ```
 
 ![enter image description here](chapter_005/img/snippet_033.png)
@@ -7235,6 +7342,7 @@ def main():
 
 if __name__ == "__main__":
     main()
+
 ```
 
 ![enter image description here](chapter_005/img/snippet_034.png)
@@ -7311,6 +7419,7 @@ def main():
 
 if __name__ == "__main__":
     main()
+
 ```
 
 ![enter image description here](chapter_005/img/snippet_035.png)
@@ -7355,6 +7464,7 @@ def main():
 
 if __name__ == "__main__":
     main()
+
 ```
 
 ![enter image description here](chapter_005/img/snippet_036.png)
@@ -7452,6 +7562,7 @@ def main():
 
 if __name__ == "__main__":
     main()
+
 ```
 
 ![enter image description here](chapter_006/img/snippet_001.png)
@@ -7528,6 +7639,7 @@ def main():
 
 if __name__ == "__main__":
     main()
+
 ```
 
 You can customize quite a few aspects of this particular annotation:
@@ -7631,6 +7743,7 @@ def main():
 
 if __name__ == "__main__":
     main()
+
 ```
 
 ![enter image description here](chapter_006/img/snippet_003.png)
@@ -7760,6 +7873,7 @@ def main():
 
 if __name__ == "__main__":
     main()
+
 ```
 
 ![enter image description here](chapter_006/img/snippet_004.png)
@@ -7831,6 +7945,7 @@ def main():
 
 if __name__ == "__main__":
     main()
+
 ```
 
 ![enter image description here](chapter_006/img/snippet_005.png)
@@ -7932,6 +8047,7 @@ def main():
 
 if __name__ == "__main__":
     main()
+
 ```
 
 ![enter image description here](chapter_006/img/snippet_006.png)
@@ -8010,6 +8126,7 @@ def main():
 
 if __name__ == "__main__":
     main()
+
 ```
 
 ![enter image description here](chapter_006/img/snippet_007.png)
@@ -8078,6 +8195,7 @@ def main():
 
 if __name__ == "__main__":
     main()
+
 ```
 
 ![enter image description here](chapter_006/img/snippet_008.png)
@@ -8138,6 +8256,7 @@ def main():
 
 if __name__ == "__main__":
     main()
+
 ```
 
 ![enter image description here](chapter_006/img/snippet_009.png)
@@ -8249,6 +8368,7 @@ def main():
 
 if __name__ == "__main__":
     main()
+
 ```
 
 This creates a PDF that looks like this:
@@ -8315,6 +8435,7 @@ def main():
 
 if __name__ == "__main__":
     main()
+
 ```
 
 ![enter image description here](chapter_007/img/snippet_002.png)
@@ -8374,6 +8495,7 @@ def create_image() -> PILImage:
 
     # return
     return img
+
 ```
 
 Now you can build a `Document` with this `Image`
@@ -8439,6 +8561,7 @@ def main():
 
 if __name__ == "__main__":
     main()
+
 ```
 
 The document should look something like this:
@@ -8482,6 +8605,7 @@ def main():
 
 if __name__ == "__main__":
     main()
+
 ```
 
 ![enter image description here](chapter_007/img/snippet_005_001.png)
@@ -8521,6 +8645,7 @@ def main():
 
 if __name__ == "__main__":
     main()
+
 ```
 
 This prints:
@@ -8595,6 +8720,7 @@ def main():
 
 if __name__ == "__main__":
     main()
+
 ```
 
 ![enter image description here](chapter_007/img/snippet_007.png)
@@ -8619,6 +8745,7 @@ def main():
 
 if __name__ == "__main__":
     main()
+
 ```
 
 ![enter image description here](chapter_007/img/snippet_008.jpg)
@@ -8651,6 +8778,7 @@ def main():
 
 if __name__ == "__main__":
     main()
+
 ```
 
 ![enter image description here](chapter_007/img/snippet_009.jpg)
@@ -8716,6 +8844,7 @@ def main():
 
 if __name__ == "__main__":
     main()
+
 ```
 
 This produces the following PDF;
@@ -8767,6 +8896,7 @@ def main():
 
 if __name__ == "__main__":
     main()
+
 ```
 
 Which ends up producing the following PDF:
@@ -8840,6 +8970,7 @@ def main():
 
 if __name__ == "__main__":
     main()
+
 ```
 
 This PDF should look like the one below:
@@ -8879,6 +9010,7 @@ def main():
 
 if __name__ == "__main__":
     main()
+
 ```
 
 ![enter image description here](chapter_007/img/snippet_013.png)
@@ -9809,6 +9941,7 @@ sudoku_str: str = """
 # process sudoku_str to remove everything that is not a number or dot
 for c in "\t\n|+- ":
     sudoku_str = sudoku_str.replace(c, "")
+
 ```
 
 Next we're going to build a `Document` containing the basic information.
@@ -9883,6 +10016,7 @@ def main():
 
 if __name__ == "__main__":
     main()
+
 ```
 
 We can render the sudoku in a `Document` by using a `FlexibleColumnWidthTable`
@@ -9994,6 +10128,7 @@ def main():
 
 if __name__ == "__main__":
     main()
+
 ```
 
 Finally, we can store the `Document`
@@ -10109,6 +10244,7 @@ def main():
 
 if __name__ == "__main__":
     main()
+
 ```
 
 That should yield a wonderful little puzzle in a PDF, like so:
@@ -10135,6 +10271,7 @@ def main():
 
 if __name__ == "__main__":
     main()
+
 ```
 
 Since we don't want to deal with calculating coordinates - we can delegate this to a `PageLayout` which manages all of the content and its positions:
@@ -10166,6 +10303,7 @@ def main():
 
 if __name__ == "__main__":
     main()
+
 ```
 
 Here, we're using a `SingleColumnLayout` since all of the content should be in a single column - we won't have a left and right side of the invoice. 
@@ -10209,6 +10347,7 @@ def main():
 
 if __name__ == "__main__":
     main()
+
 ```
 
 Here, we're adding an element to the layout - an `Image`. Through its constructor, we're adding a URL pointing to the image resource and setting its `width` and `height`.
@@ -10264,6 +10403,7 @@ def _build_invoice_information():
     table_001.set_padding_on_all_cells(Decimal(2), Decimal(2), Decimal(2), Decimal(2))
     table_001.no_borders()
     return table_001
+
 ```
 
 Here, we're making a simple `Table` with 5 rows and 3 columns. The rows correspond to the street address, city/state, phone, email address and company website. Each row will have `0..3` values (columns). Each text element is added as a `Paragraph`, which we've aligned to the right via `Alignment.RIGHT`, and accept styling arguments such as font.
@@ -10355,6 +10495,7 @@ def main():
 
 if __name__ == "__main__":
     main()
+
 ```
 
 Great! Now we'll want to add the billing and shipping information as well. It'll conveniently be placed in a table, just like the company information. For brevity's sake, we'll also opt to make a separate helper function to build this info, and then we can simply add it in our main method:
@@ -10394,6 +10535,7 @@ def _build_billing_and_shipping_information():
     table_001.set_padding_on_all_cells(Decimal(2), Decimal(2), Decimal(2), Decimal(2))
     table_001.no_borders()
     return table_001
+
 ```
 
 Let's call this in the main method as well:
@@ -10516,6 +10658,7 @@ def main():
 
 if __name__ == "__main__":
     main()
+
 ```
 
 With our basic information sorted out (company info and billing/shipping info) - we'll want to add an itemized description. These will be the goods/services that our supposed company offered to someone and are also typically done in a table-like fashion beneath the information we've already added.
@@ -10537,6 +10680,7 @@ class Product:
         self.quantity: int = quantity
         assert price_per_sku >= 0
         self.price_per_sku: float = price_per_sku
+
 ```
 
 Now we can build a method `_build_itemized_description_table` that will render these products and their prices to the PDF:
@@ -10644,6 +10788,7 @@ def _build_itemized_description_table(products: typing.List["Product"] = []):
     table_001.set_padding_on_all_cells(Decimal(2), Decimal(2), Decimal(2), Decimal(2))
     table_001.no_borders()
     return table_001
+
 ```
 
 Let's call this method with some dummy `Product` items:
@@ -10893,6 +11038,7 @@ def main():
 
 if __name__ == "__main__":
     main()
+
 ```
 
 Finally, you can store the PDF to disk
@@ -11148,6 +11294,7 @@ def main():
 
 if __name__ == "__main__":
     main()
+
 ```
 
 The final PDF should look somewhat like this:
@@ -11190,6 +11337,7 @@ def main():
 
 if __name__ == "__main__":
     main()
+
 ```
 
 We'd like to add some geometric artwork to our flyer in the upper right corner. We're going to write a separate method to do that. Then we can later re-use this method (for instance on every `Page` in the `Document`).
@@ -11254,6 +11402,7 @@ def add_gray_artwork_to_upper_right_corner(page: Page) -> None:
                 stroke_color=rg,
                 fill_color=rg,
             ).paint(page, Rectangle(x, y, M, M))
+
 ```
 
 Now that we've defined this method, we can call it in the main body of our script to add the artwork to the PDF.
@@ -11342,6 +11491,7 @@ def main():
 
 if __name__ == "__main__":
     main()
+
 ```
 
 Next we're going to add our company contact details, so people know where to reach us:
@@ -11481,6 +11631,7 @@ def main():
 
 if __name__ == "__main__":
     main()
+
 ```
 
 Now we can add a few titles and subtitles and some promotional blurb;
@@ -11651,6 +11802,7 @@ def main():
 
 if __name__ == "__main__":
     main()
+
 ```
 
 Images make things more visually interesting. Let's add an `Image` with some core product features next to it;
@@ -11872,6 +12024,7 @@ def main():
 
 if __name__ == "__main__":
     main()
+
 ```
 
 Let's add a footer to the bottom of the page. We're going to put this in a separate method (so that we could call it later on, if we ever need to apply it to other pages in the PDF).
@@ -11924,6 +12077,7 @@ def add_colored_artwork_to_bottom_right_corner(page: Page) -> None:
         stroke_color=HexColor("283592"),
         fill_color=HexColor("283592"),
     ).paint(page, r)
+
 ```
 
 Now we can call this method in the main body;
@@ -12191,6 +12345,7 @@ def main():
 
 if __name__ == "__main__":
     main()
+
 ```
 
 The final PDF should look somewhat like this:
@@ -12220,6 +12375,7 @@ def main():
 
 if __name__ == "__main__":
     main()
+
 ```
 
 Now we need to turn this into a set of horizontal and vertical clues. 
@@ -12308,6 +12464,7 @@ def main():
 
 if __name__ == "__main__":
     main()
+
 ```
 
 For this PDF we're going to use a custom `Font`. Let's first download the `ttf`
@@ -12327,6 +12484,7 @@ with open("IndieFlower-Regular.ttf", "wb") as ffh:
             allow_redirects=True,
         ).content
     )
+
 ```
 
 Now we can create a skeleton document containing our title and explanation blurb:
@@ -12474,6 +12632,7 @@ def main():
 
 if __name__ == "__main__":
     main()
+
 ```
 
 We're going to represent the nonogram as a `Table`.
@@ -12495,6 +12654,7 @@ def empty_cell_without_borders():
         border_bottom=False,
         border_left=False,
     )
+
 ```
 
 And now we can get on with building the `Table`:
@@ -12719,6 +12879,7 @@ def main():
 
 if __name__ == "__main__":
     main()
+
 ```
 
 Finally, we can store the `PDF`:
@@ -12947,6 +13108,7 @@ def main():
 
 if __name__ == "__main__":
     main()
+
 ```
 
 That should look somewhat like this:
@@ -13017,6 +13179,7 @@ def add_gray_artwork_to_upper_right_corner(page: Page) -> None:
                 stroke_color=rg,
                 fill_color=rg,
             ).paint(page, Rectangle(x, y, M, M))
+
 ```
 
 Similarly, I want to add some geometric artwork to the bottom of the page to balance things out a bit. I'm going to write another separate method for that.
@@ -13067,6 +13230,7 @@ def add_colored_artwork_to_bottom_right_corner(page: "Page") -> None:
         stroke_color=HexColor("56cbf9"),
         fill_color=HexColor("56cbf9"),
     ).paint(page, r)
+
 ```
 
 Now we're going to create a method that adds the image of a calculator to our `Page`. Here we are using absolute layout, since we want to make absolutely sure that our `Image` is located at the same coordinates every time (even if we were to change the text around it).
@@ -13092,6 +13256,7 @@ def add_calculator_image(page: "Page"):
             Decimal(128),
         ),
     )
+
 ```
 
 Next up we will be adding a lot of "buttons" (they are actually annotations with associated javascript actions). To make it a bit easier on ourselves we'll separate this logic into its own method.
@@ -13112,6 +13277,7 @@ def add_invisible_button(r: "Rectangle", javascript: str):
     page.add_annotation(RemoteGoToAnnotation(r, "https://www.borbpdf.com"))
     page[Name("Annots")][-1][Name("A")][Name("S")] = Name("JavaScript")
     page[Name("Annots")][-1][Name("A")][Name("JS")] = String(javascript)
+
 ```
 
 Now we are ready to add all the buttons, and have them call our main Javascript (which will be inserted later on).
@@ -13192,6 +13358,7 @@ def add_action_annotations(page: "Page"):
         Rectangle(Decimal(257), Decimal(541), Decimal(13), Decimal(21)),
         "process_token('AC')",
     )
+
 ```
 
 This part is easy, we add document level Javascript to our PDF. This script has everything in it to make our calculator actually work.
@@ -13442,6 +13609,7 @@ app.runtimeHighlightColor = ["RGB", 47/255, 53/255, 51/255];
     kids_01["Names"].append(global_js_dictionary)
 
     names["JavaScript"]["Kids"].append(kids_01)
+
 ```
 
 In order to display the result of the calculations, we need to add a `TextField` that the JavaScript can modify.
@@ -13462,6 +13630,7 @@ def add_display(page: "Page"):
     r1 = Rectangle(Decimal(264), Decimal(587), Decimal(65), Decimal(15))
     display_field = TextField(value="", font_size=Decimal(13))
     display_field.paint(page, r1)
+
 ```
 
 Now we can build our `Document`
@@ -13586,6 +13755,7 @@ def main():
     # store PDF
     with open(Path("output.pdf"), "wb") as pdf_file_handle:
         PDF.dumps(pdf_file_handle, doc)
+
 ```
 
 Look at the stunning PDF you made:
@@ -13647,6 +13817,7 @@ if __name__ == "__main__":
     # set up connection
     dbx: dropbox.dropbox_client.Dropbox = dropbox_connect()
     print(dbx)
+
 ```
 
 
@@ -13712,6 +13883,7 @@ if __name__ == "__main__":
 
     # create PDF
     pdf: Document = create_pdf()
+
 ```
 
 
@@ -13798,6 +13970,7 @@ if __name__ == "__main__":
         "/pdfs/hello_world.pdf",
         mode=dropbox.files.WriteMode("overwrite"),
     )
+
 ```
 
 That's it. You should now have a folder `pdfs` on your dropbox, containing a pdf `hello_world.pdf`.

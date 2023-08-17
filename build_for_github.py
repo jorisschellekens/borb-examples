@@ -65,6 +65,11 @@ def _update_python_insert_decls(root: Path, ls: typing.List[str]) -> typing.List
             with open(path_to_code, "r") as nfh:
                 ls_out.extend(nfh.readlines())
 
+            # insert newline if needed
+            if ls_out[-1].strip() != '':
+                print(f'fixing missing newline at snippet {path_to_code}')
+                ls_out.append('\n')
+
             # update
             ls_out.append("```\n")
 
