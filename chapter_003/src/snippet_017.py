@@ -29,8 +29,8 @@ def main():
         .add(Paragraph("Lorem"))
         .add(Paragraph("Ipsum"))
         .add(Paragraph("Dolor"))
-        # set col_span to 2
-        .add(TableCell(Paragraph("Sit"), col_span=2))
+        # set column_span to 2
+        .add(TableCell(Paragraph("Sit"), column_span=2))
         .add(Paragraph("Amet"))
         .set_padding_on_all_cells(Decimal(2), Decimal(2), Decimal(2), Decimal(2))
     )

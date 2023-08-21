@@ -49,7 +49,7 @@ def _build_itemized_description_table(products: typing.List["Product"] = []):
                 font="Helvetica-Bold",
                 horizontal_alignment=Alignment.RIGHT,
             ),
-            col_span=3,
+            column_span=3,
         )
     )
     table_001.add(
@@ -64,7 +64,7 @@ def _build_itemized_description_table(products: typing.List["Product"] = []):
                 font="Helvetica-Bold",
                 horizontal_alignment=Alignment.RIGHT,
             ),
-            col_span=3,
+            column_span=3,
         )
     )
     table_001.add(TableCell(Paragraph("$ 0.00", horizontal_alignment=Alignment.RIGHT)))
@@ -76,7 +76,7 @@ def _build_itemized_description_table(products: typing.List["Product"] = []):
             Paragraph(
                 "Taxes", font="Helvetica-Bold", horizontal_alignment=Alignment.RIGHT
             ),
-            col_span=3,
+            column_span=3,
         )
     )
     table_001.add(
@@ -90,7 +90,7 @@ def _build_itemized_description_table(products: typing.List["Product"] = []):
             Paragraph(
                 "Total", font="Helvetica-Bold", horizontal_alignment=Alignment.RIGHT
             ),
-            col_span=3,
+            column_span=3,
         )
     )
     table_001.add(
