@@ -946,7 +946,7 @@ This is a section header slide (the artwork on the left side is chosen at random
 
 Charts can be placed side-by-side with their explanatory text:
 
-![enter image description here](img/snippet_041_003.png)
+![enter image description here](img/snippet_042_003.png)
 
 Images are perfectly aligned:
 
@@ -958,7 +958,7 @@ And adding a `Map` has never been easier, of course completely in the color-sche
 
 Quotes can be a nice thought-provoking touch to a presentation:
 
-![enter image description here](img/snippet_041_006.png)
+![enter image description here](img/snippet_042_006.png)
 
 Tables are a must-have for any business communication:
 
