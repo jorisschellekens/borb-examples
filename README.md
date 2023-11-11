@@ -49,8 +49,8 @@
   2.5 [Adding `Image` objects to a PDF](#25-adding-image-objects-to-a-pdf)  
   2.6 [Adding line-art to a PDF using `Shape` objects](#26-adding-line-art-to-a-pdf-using-shape-objects)  
     2.6.1 [Adding line-art using `LineArtFactory`](#261-adding-line-art-using-lineartfactory)  
-  2.6.2 [Adding a `ProgressBar` to a PDF](#262-adding-a-progressbar-to-a-pdf)  
-  2.6.3 [Adding a `Map` to a PDF](#263-adding-a-map-to-a-pdf)  
+    2.6.2 [Adding a `ProgressBar` to a PDF](#262-adding-a-progressbar-to-a-pdf)  
+    2.6.3 [Adding a `Map` to a PDF](#263-adding-a-map-to-a-pdf)  
   2.7 [Adding barcodes and QR-codes to a PDF](#27-adding-barcodes-and-qr-codes-to-a-pdf)  
     2.7.1 [Adding a `Barcode` to a `Page`](#271-adding-a-barcode-to-a-page)  
       2.7.1.1 [Setting the `stroke_color` and `fill_color` of a `Barcode`](#2711-setting-the-stroke_color-and-fill_color-of-a-barcode)  
@@ -2509,7 +2509,7 @@ The initial bounding box you pass to the `LineArtFactory.sticky_note` function i
 
 This ensures you can still do things with these points, should you so desire.
 
-## 2.6.2 Adding a `ProgressBar` to a PDF
+### 2.6.2 Adding a `ProgressBar` to a PDF
 
 The `ProgressBar` (and its cousin `ProgressSquare`) represent an easy way to visualize a process/task that is **being executed** or that has executed with some **degree of success**.
 You can construct it using a `percentage` (which defaults to 0).
@@ -2569,7 +2569,7 @@ if __name__ == "__main__":
 
 ![enter image description here](chapter_002/img/snippet_032.png)
 
-## 2.6.3 Adding a `Map` to a PDF
+### 2.6.3 Adding a `Map` to a PDF
 
 The `Map` is a kind of `Shapes` object, which represents a collection of `ConnectedShape` or `DisconnectedShape` objects.
 `borb` comes with 3 `Map` objects pre-installed:

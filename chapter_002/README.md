@@ -710,7 +710,7 @@ The initial bounding box you pass to the `LineArtFactory.sticky_note` function i
 
 This ensures you can still do things with these points, should you so desire.
 
-## 2.6.2 Adding a `ProgressBar` to a PDF
+### 2.6.2 Adding a `ProgressBar` to a PDF
 
 The `ProgressBar` (and its cousin `ProgressSquare`) represent an easy way to visualize a process/task that is **being executed** or that has executed with some **degree of success**.
 You can construct it using a `percentage` (which defaults to 0).
@@ -725,7 +725,7 @@ Let's make a report:
 
 ![enter image description here](img/snippet_032.png)
 
-## 2.6.3 Adding a `Map` to a PDF
+### 2.6.3 Adding a `Map` to a PDF
 
 The `Map` is a kind of `Shapes` object, which represents a collection of `ConnectedShape` or `DisconnectedShape` objects.
 `borb` comes with 3 `Map` objects pre-installed:
