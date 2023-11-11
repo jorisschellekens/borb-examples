@@ -1,15 +1,7 @@
 import math
-from decimal import Decimal
 
-import keyring
-from borb.pdf import Document
 from borb.pdf import Lipsum
-from borb.pdf import PDF
-from borb.pdf import Page
-from borb.pdf import PageLayout
-from borb.pdf import SingleColumnLayout
 from borb.pdf import SlideTemplate
-from borb.pdf.canvas.layout.image.unsplash import Unsplash
 
 
 def main():
