@@ -719,7 +719,7 @@ I can imagine you might use this in testing reports, to indicate how many tests 
 
 Let's make a report:
 
-```commandline
+```python
 #!src/snippet_032.py
 ```
 
