@@ -920,7 +920,55 @@ The result should look somewhat like this. Although the actual image may differ 
 
 <div style="page-break-before: always;"></div>
 
-## 2.11 Conclusion
+## 2.11 Templates
+
+Since `v2.1.18` `borb` has some beautiful, and easy-to-use built-in templates.
+A template allows you to create PDF documents even more easily. The trade-off is that you are limited to a particular style/color-scheme.
+
+Nevertheless, templates are a welcome addition:
+
+- They only take a few lines of code to produce a visually appealing PDF.
+- They can be the inspiration to develop a template with your company style, and theming.
+
+In the next example, we'll be using `SlideTemplate`, which generates a PDF that resembles a slideshow.
+
+```python
+#!src/snippet_042.py
+```
+
+This is the title slide:
+
+![enter image description here](img/snippet_042_001.png)
+
+This is a section header slide (the artwork on the left side is chosen at random by `borb`):
+
+![enter image description here](img/snippet_042_002.png)
+
+Charts can be placed side-by-side with their explanatory text:
+
+![enter image description here](img/snippet_041_003.png)
+
+Images are perfectly aligned:
+
+![enter image description here](img/snippet_042_004.png)
+
+And adding a `Map` has never been easier, of course completely in the color-scheme:
+
+![enter image description here](img/snippet_042_005.png)
+
+Quotes can be a nice thought-provoking touch to a presentation:
+
+![enter image description here](img/snippet_041_006.png)
+
+Tables are a must-have for any business communication:
+
+![enter image description here](img/snippet_042_007.png)
+
+We musn't forget about text, the basic building block:
+
+![enter image description here](img/snippet_042_008.png)
+
+## 2.12 Conclusion
 
 In this section you've learned the basics of creating a new PDF using `borb`. 
 In this section you've learned how various pieces of content are represented by the different `LayoutElement` implementations in `borb`. 

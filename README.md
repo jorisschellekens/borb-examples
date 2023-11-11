@@ -61,7 +61,8 @@
   2.10 [Quick prototyping](#210-quick-prototyping)  
     2.10.1 [Adding dummy text](#2101-adding-dummy-text)  
     2.10.2 [Adding dummy images](#2102-adding-dummy-images)  
-  2.11 [Conclusion](#211-conclusion)  
+  2.11 [Templates](#211-templates)  
+  2.12 [Conclusion](#212-conclusion)  
 3 [Container `LayoutElement` objects](#3-container-layoutelement-objects)  
   3.1 [Lists](#31-lists)  
     3.1.1 [Working with `OrderedList`](#311-working-with-orderedlist)  
@@ -3145,7 +3146,219 @@ The result should look somewhat like this. Although the actual image may differ 
 
 <div style="page-break-before: always;"></div>
 
-## 2.11 Conclusion
+## 2.11 Templates
+
+Since `v2.1.18` `borb` has some beautiful, and easy-to-use built-in templates.
+A template allows you to create PDF documents even more easily. The trade-off is that you are limited to a particular style/color-scheme.
+
+Nevertheless, templates are a welcome addition:
+
+- They only take a few lines of code to produce a visually appealing PDF.
+- They can be the inspiration to develop a template with your company style, and theming.
+
+In the next example, we'll be using `SlideTemplate`, which generates a PDF that resembles a slideshow.
+
+```python
+#!chapter_002/src/snippet_042.py
+import math
+from decimal import Decimal
+
+import keyring
+from borb.pdf import Document
+from borb.pdf import Lipsum
+from borb.pdf import PDF
+from borb.pdf import Page
+from borb.pdf import PageLayout
+from borb.pdf import SingleColumnLayout
+from borb.pdf import SlideTemplate
+from borb.pdf.canvas.layout.image.unsplash import Unsplash
+
+
+def main():
+
+    (SlideTemplate()
+    .add_title_slide(
+        author="Joris Schellekens",
+        date="Nov. 11 2023",
+        subtitle="A beautiful and simple addition to borb",
+        title="SlideTemplate",
+        version="2.0.19",
+    )
+    # bar chart
+    .add_section_title_slide(
+        title="Bar Chart", subtitle="Dolor Sit Amet", nr="01"
+    )
+    .add_barchart_and_text_slide(
+        xs=[40, 60],
+        labels=["Consectetur", "Nunc"],
+        title="Lorem Ipsum",
+        subtitle="Dolor Sit Amet",
+        text=Lipsum.generate_lipsum_text(5),
+    )
+    # big number
+    .add_section_title_slide(
+        title="Big number", subtitle="Dolor Sit Amet", nr="02"
+    )
+    .add_big_number_and_text_slide(
+        big_number="95%",
+        title="Lorem Ipsum",
+        subtitle="Dolor Sit Amet",
+        text=Lipsum.generate_lipsum_text(5),
+    )
+    # image
+    .add_section_title_slide(title="Image", subtitle="Dolor Sit Amet", nr="03")
+    .add_image_and_text_slide(
+        image_url="https://images.unsplash.com/photo-1497436072909-60f360e1d4b1",
+        subtitle="Dolor Sit Amet",
+        title="Lorem Ipsum",
+        text=Lipsum.generate_lipsum_text(5),
+    )
+    .add_image_slide(
+        image_url="https://images.unsplash.com/photo-1497436072909-60f360e1d4b1"
+    )
+    # line chart
+    .add_section_title_slide(
+        title="Line Chart", subtitle="Dolor Sit Amet", nr="04"
+    )
+    .add_linechart_and_text_slide(
+        xs=[[i for i in range(0, 360)], [i for i in range(0, 360)]],
+        ys=[
+            [math.sin(math.radians(i)) for i in range(0, 360)],
+            [math.cos(math.radians(i)) for i in range(0, 360)],
+        ],
+        labels=["sin(x)", "cos(x)"],
+        title="Lorem Ipsum",
+        subtitle="Dolor Sit Amet",
+        text=Lipsum.generate_lipsum_text(5),
+    )
+    .add_linechart_slide(
+        xs=[[i for i in range(0, 360)], [i for i in range(0, 360)]],
+        ys=[
+            [math.sin(math.radians(i)) for i in range(0, 360)],
+            [math.cos(math.radians(i)) for i in range(0, 360)],
+        ],
+        labels=["sin(x)", "cos(x)"],
+    )
+    # map
+    .add_section_title_slide(title="Map", subtitle="Dolor Sit Amet", nr="05")
+    .add_map_of_the_contiguous_united_states_and_text_slide(
+        marked_states=["Texas"],
+        subtitle="Dolor Sit Amet",
+        title="Lorem Ipsum",
+        text=Lipsum.generate_lipsum_text(5),
+    )
+    .add_map_of_the_contiguous_united_states_slide(marked_states=["Texas"])
+    .add_map_of_the_world_and_text_slide(
+        marked_countries=["Poland"],
+        subtitle="Dolor Sit Amet",
+        title="Lorem Ipsum",
+        text=Lipsum.generate_lipsum_text(5),
+    )
+    .add_map_of_the_world_slide(marked_countries=["Poland"])
+    # pie chart
+    .add_section_title_slide(
+        title="Pie Chart", subtitle="Dolor Sit Amet", nr="06"
+    )
+    .add_piechart_and_text_slide(
+        xs=[10, 20, 30, 5],
+        labels=["Lorem", "Ipsum", "Dolor", "Sit"],
+        title="Lorem Ipsum",
+        subtitle="Dolor Sit Amet",
+        text=Lipsum.generate_lipsum_text(5),
+    )
+    .add_piechart_slide(
+        xs=[10, 20, 30, 5], labels=["Lorem", "Ipsum", "Dolor", "Sit"]
+    )
+    # quote
+    .add_section_title_slide(title="Quote", subtitle="Dolor Sit Amet", nr="07")
+    .add_quote_and_text_slide(
+        quote_author="Robert Frost",
+        quote_text="Two roads diverged in a wood, and I, I took the one less travelled by, and that has made all the difference.",
+        title="Lorem Ipsum",
+        subtitle="Dolor Sit Amet",
+        text=Lipsum.generate_lipsum_text(5),
+    )
+    .add_quote_slide(
+        quote_author="Robert Frost",
+        quote_text="Two roads diverged in a wood, and I, I took the one less travelled by, and that has made all the difference.",
+    )
+    # single column text
+    .add_section_title_slide(
+        title="Single Column Text", subtitle="Dolor Sit Amet", nr="08"
+    )
+    .add_single_column_text_slide(
+        title="Lorem Ipsum",
+        subtitle="Dolor Sit Amet",
+        text=Lipsum.generate_lipsum_text(10),
+    )
+    # table
+    .add_section_title_slide(title="Table", subtitle="Dolor Sit Amet", nr="09")
+    .add_table_and_text_slide(
+        tabular_data=[
+            ["", "Lorem", "Ipsum", "Dolor"],
+            [2001, 0, 1, 20],
+            [2002, 1, 34, 34],
+        ],
+        title="Lorem Ipsum",
+        subtitle="Dolor Sit Amet",
+        text=Lipsum.generate_lipsum_text(5),
+    )
+    .add_table_slide(
+        tabular_data=[
+            ["", "Lorem", "Ipsum", "Dolor"],
+            [2001, 0, 1, 20],
+            [2002, 1, 34, 34],
+        ]
+    )
+    # two column text
+    .add_section_title_slide(
+        title="Two Column Text", subtitle="Dolor Sit Amet", nr="10"
+    )
+    .add_two_column_text_slide(
+        text_left=Lipsum.generate_lipsum_text(5),
+        text_right=Lipsum.generate_lipsum_text(5),
+        title="Lorem Ipsum",
+        subtitle="Dolor Sit Amet",
+    )).save("output.pdf")
+
+if __name__ == "__main__":
+    main()
+
+```
+
+This is the title slide:
+
+![enter image description here](chapter_002/img/snippet_042_001.png)
+
+This is a section header slide (the artwork on the left side is chosen at random by `borb`):
+
+![enter image description here](chapter_002/img/snippet_042_002.png)
+
+Charts can be placed side-by-side with their explanatory text:
+
+![enter image description here](chapter_002/img/snippet_041_003.png)
+
+Images are perfectly aligned:
+
+![enter image description here](chapter_002/img/snippet_042_004.png)
+
+And adding a `Map` has never been easier, of course completely in the color-scheme:
+
+![enter image description here](chapter_002/img/snippet_042_005.png)
+
+Quotes can be a nice thought-provoking touch to a presentation:
+
+![enter image description here](chapter_002/img/snippet_041_006.png)
+
+Tables are a must-have for any business communication:
+
+![enter image description here](chapter_002/img/snippet_042_007.png)
+
+We musn't forget about text, the basic building block:
+
+![enter image description here](chapter_002/img/snippet_042_008.png)
+
+## 2.12 Conclusion
 
 In this section you've learned the basics of creating a new PDF using `borb`. 
 In this section you've learned how various pieces of content are represented by the different `LayoutElement` implementations in `borb`. 
