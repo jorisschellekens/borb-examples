@@ -1,12 +1,12 @@
 import typing
 from decimal import Decimal
 
-from borb.pdf.canvas.geometry.rectangle import Rectangle
 from borb.pdf import Document
 from borb.pdf import PDF
+from borb.pdf.canvas.geometry.rectangle import Rectangle
 from borb.toolkit import LocationFilter
-from borb.toolkit import RegularExpressionTextExtraction
 from borb.toolkit import PDFMatch
+from borb.toolkit import RegularExpressionTextExtraction
 from borb.toolkit import SimpleTextExtraction
 
 

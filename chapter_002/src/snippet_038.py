@@ -1,13 +1,15 @@
+from borb.pdf import ChunkOfText
 from borb.pdf import Document
-from borb.pdf import Page
-from borb.pdf import SingleColumnLayout
-from borb.pdf import PageLayout
-from borb.pdf import Paragraph
+from borb.pdf import InlineFlow
 from borb.pdf import PDF
-from borb.pdf.canvas.lipsum.lipsum import Lipsum
+from borb.pdf import Page
+from borb.pdf import PageLayout
+from borb.pdf import SingleColumnLayout
+from borb.pdf.canvas.layout.emoji.emoji import Emojis
 
 
 def main():
+
     # create Document
     doc: Document = Document()
 
@@ -19,9 +21,13 @@ def main():
 
     # set a PageLayout
     layout: PageLayout = SingleColumnLayout(page)
+    flow: InlineFlow = InlineFlow()
 
     # add a Paragraph
-    layout.add(Paragraph(Lipsum.generate_lewis_carroll_text()))
+    flow.add(ChunkOfText("Hello"))
+    flow.add(Emojis.EARTH_AMERICAS.value)
+    flow.add(ChunkOfText("!"))
+    layout.add(flow)
 
     # store
     with open("output.pdf", "wb") as pdf_file_handle:

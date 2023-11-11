@@ -1,19 +1,16 @@
 import typing
-import requests
-from borb.pdf.canvas.font.simple_font.true_type_font import TrueTypeFont
-from borb.pdf.canvas.font.font import Font
+from decimal import Decimal
+from pathlib import Path
 
+import requests
 # new imports
 from borb.pdf import Document
+from borb.pdf import HexColor
 from borb.pdf import Page
-from borb.pdf import PDF
-from borb.pdf import SingleColumnLayout
 from borb.pdf import PageLayout
 from borb.pdf import Paragraph
-from borb.pdf import HexColor
-
-from pathlib import Path
-from decimal import Decimal
+from borb.pdf import SingleColumnLayout
+from borb.pdf.canvas.font.simple_font.true_type_font import TrueTypeFont
 
 
 def calculate_horizontal_and_vertical_clues():

@@ -1,36 +1,13 @@
-from borb.pdf import Document
-from borb.pdf import Page
-from borb.pdf import SingleColumnLayout
-from borb.pdf import PageLayout
-from borb.pdf import Paragraph
-from borb.pdf import PDF
-from borb.pdf import Chart
-
 from decimal import Decimal
 
-import matplotlib.pyplot as MatPlotLibPlot
-import numpy as np
-import pandas as pd
-
-
-def create_plot() -> None:
-    # build DataFrame
-    df = pd.DataFrame(
-        {
-            "X": range(1, 101),
-            "Y": np.random.randn(100) * 15 + range(1, 101),
-            "Z": (np.random.randn(100) * 15 + range(1, 101)) * 2,
-        }
-    )
-
-    # plot
-    fig = MatPlotLibPlot.figure(dpi=600)
-    ax = fig.add_subplot(111, projection="3d")
-    ax.scatter(df["X"], df["Y"], df["Z"], c="skyblue", s=60)
-    ax.view_init(30, 185)
-
-    # return
-    return MatPlotLibPlot.gcf()
+from borb.pdf import Barcode
+from borb.pdf import BarcodeType
+from borb.pdf import Document
+from borb.pdf import HexColor
+from borb.pdf import PDF
+from borb.pdf import Page
+from borb.pdf import PageLayout
+from borb.pdf import SingleColumnLayout
 
 
 def main():
@@ -47,7 +24,16 @@ def main():
     layout: PageLayout = SingleColumnLayout(page)
 
     # add a Paragraph
-    layout.add(Chart(create_plot(), width=Decimal(256), height=Decimal(256)))
+    layout.add(
+        Barcode(
+            "1234567896120",
+            width=Decimal(128),
+            height=Decimal(128),
+            stroke_color=HexColor("E2C044"),
+            fill_color=HexColor("587B7F"),
+            type=BarcodeType.EAN_14,
+        )
+    )
 
     # store
     with open("output.pdf", "wb") as pdf_file_handle:

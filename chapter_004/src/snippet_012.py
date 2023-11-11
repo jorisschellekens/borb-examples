@@ -1,17 +1,17 @@
 from decimal import Decimal
 
-from borb.pdf import HexColor
-from borb.pdf import CountryDropDownList
-from borb.pdf import TextField
-from borb.pdf import SingleColumnLayout
-from borb.pdf import PageLayout
-from borb.pdf import FixedColumnWidthTable
-from borb.pdf import Paragraph
-from borb.pdf import Document
-from borb.pdf import Page
-from borb.pdf import PDF
-from borb.pdf import JavaScriptPushButton
 from borb.pdf import Alignment
+from borb.pdf import CountryDropDownList
+from borb.pdf import Document
+from borb.pdf import FixedColumnWidthTable
+from borb.pdf import HexColor
+from borb.pdf import JavaScriptPushButton
+from borb.pdf import PDF
+from borb.pdf import Page
+from borb.pdf import PageLayout
+from borb.pdf import Paragraph
+from borb.pdf import SingleColumnLayout
+from borb.pdf import TextField
 
 
 def main():

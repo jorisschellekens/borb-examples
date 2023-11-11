@@ -1,18 +1,16 @@
 from decimal import Decimal
 
-from borb.pdf.canvas.layout.annotation.text_annotation import (
-    TextAnnotation,
-    TextAnnotationIconType,
-)
+from borb.pdf import Document
 from borb.pdf import HexColor
-from borb.pdf.canvas.geometry.rectangle import Rectangle
-from borb.pdf import SingleColumnLayout
+from borb.pdf import PDF
+from borb.pdf import Page
 from borb.pdf import PageLayout
 from borb.pdf import Paragraph
-from borb.pdf import Document
-from borb.pdf import Page
+from borb.pdf import SingleColumnLayout
+from borb.pdf.canvas.geometry.rectangle import Rectangle
+from borb.pdf.canvas.layout.annotation.text_annotation import TextAnnotation
+from borb.pdf.canvas.layout.annotation.text_annotation import TextAnnotationIconType
 from borb.pdf.page.page_size import PageSize
-from borb.pdf import PDF
 
 
 def main():

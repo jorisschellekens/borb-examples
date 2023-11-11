@@ -1,17 +1,7 @@
 import typing
-from borb.pdf import Document
-from borb.pdf import PDF
-
-import typing
-from decimal import Decimal
 
 from borb.pdf import Document
-from borb.pdf import Page
 from borb.pdf import PDF
-from borb.pdf import MultiColumnLayout
-from borb.pdf import PageLayout
-from borb.pdf import Paragraph
-from borb.pdf import HexColor
 
 
 def main():

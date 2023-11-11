@@ -1,11 +1,13 @@
-from borb.pdf import Document
-from borb.pdf import Page
-from borb.pdf import PageLayout, SingleColumnLayout
-from borb.pdf import Table, FixedColumnWidthTable
-from borb.pdf import Paragraph
-from borb.pdf import PDF
-
 from decimal import Decimal
+
+from borb.pdf import Document
+from borb.pdf import FixedColumnWidthTable
+from borb.pdf import PDF
+from borb.pdf import Page
+from borb.pdf import PageLayout
+from borb.pdf import Paragraph
+from borb.pdf import SingleColumnLayout
+from borb.pdf import Table
 
 
 def main():

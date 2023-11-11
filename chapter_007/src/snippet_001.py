@@ -1,17 +1,15 @@
 from decimal import Decimal
 
-import typing
-from borb.pdf import HexColor, X11Color
 from borb.pdf import Alignment
-from borb.pdf import SingleColumnLayout
-from borb.pdf import PageLayout
-from borb.pdf import TableCell
-from borb.pdf import FlexibleColumnWidthTable
-from borb.pdf import Table
-from borb.pdf import Paragraph
 from borb.pdf import Document
-from borb.pdf import Page
+from borb.pdf import FlexibleColumnWidthTable
+from borb.pdf import HexColor
 from borb.pdf import PDF
+from borb.pdf import Page
+from borb.pdf import PageLayout
+from borb.pdf import Paragraph
+from borb.pdf import SingleColumnLayout
+from borb.pdf import TableCell
 
 
 def main():

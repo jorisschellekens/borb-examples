@@ -1,15 +1,15 @@
-import typing
 from pathlib import Path
 
+from PIL import Image as PILImage  # type: ignore [import]
+from PIL import ImageDraw
+from PIL import ImageFont
+from borb.pdf import Document
 from borb.pdf import Image
-from borb.pdf import SingleColumnLayout
+from borb.pdf import PDF
+from borb.pdf import Page
 from borb.pdf import PageLayout
 from borb.pdf import Paragraph
-from borb.pdf import Document
-from borb.pdf import Page
-from borb.pdf import PDF
-from PIL import Image as PILImage  # type: ignore [import]
-from PIL import ImageDraw, ImageFont
+from borb.pdf import SingleColumnLayout
 
 
 def create_image() -> PILImage:

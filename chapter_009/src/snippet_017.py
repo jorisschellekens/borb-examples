@@ -1,12 +1,13 @@
 # new imports
-from borb.pdf import ConnectedShape
+import random
+import typing
 from decimal import Decimal
+
+from borb.pdf import ConnectedShape
+from borb.pdf import HexColor
 from borb.pdf import Page
-from borb.pdf import HexColor, X11Color
 from borb.pdf.canvas.geometry.rectangle import Rectangle
 from borb.pdf.page.page_size import PageSize
-import typing
-import random
 
 
 def add_gray_artwork_to_upper_right_corner(page: Page) -> None:

@@ -1,15 +1,16 @@
-from borb.pdf import Document
-from borb.pdf import Page
-from borb.pdf import PDF
-from borb.pdf.canvas.geometry.rectangle import Rectangle
-from borb.pdf import MultiColumnLayout
-from borb.pdf import PageLayout
-from borb.pdf import Paragraph
-from borb.pdf import HexColor
-from borb.pdf.canvas.layout.image.barcode import Barcode, BarcodeType
-
 from decimal import Decimal
 from pathlib import Path
+
+from borb.pdf import Document
+from borb.pdf import HexColor
+from borb.pdf import MultiColumnLayout
+from borb.pdf import PDF
+from borb.pdf import Page
+from borb.pdf import PageLayout
+from borb.pdf import Paragraph
+from borb.pdf.canvas.geometry.rectangle import Rectangle
+from borb.pdf.canvas.layout.image.barcode import Barcode
+from borb.pdf.canvas.layout.image.barcode import BarcodeType
 
 
 def main():

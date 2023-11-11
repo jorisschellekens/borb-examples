@@ -1,10 +1,10 @@
+from decimal import Decimal
+
 from borb.pdf import Document
+from borb.pdf import PDF
 from borb.pdf import Page
 from borb.pdf import Paragraph
-from borb.pdf import PDF
 from borb.pdf.canvas.geometry.rectangle import Rectangle
-
-from decimal import Decimal
 
 
 def main():

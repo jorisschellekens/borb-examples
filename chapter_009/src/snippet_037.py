@@ -1,8 +1,7 @@
-from borb.io.read.types import Decimal as bDecimal
-from borb.io.read.types import String
-from borb.io.read.types import Stream
 from borb.io.read.types import Dictionary
 from borb.io.read.types import List
+from borb.io.read.types import Stream
+from borb.io.read.types import String
 from borb.pdf import Document
 
 

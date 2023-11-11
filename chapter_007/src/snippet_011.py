@@ -1,8 +1,9 @@
+from pathlib import Path
+
 from borb.pdf import Document
 from borb.pdf import PDF
 from borb.toolkit.export.html_to_pdf.html_to_pdf import HTMLToPDF
 
-from pathlib import Path
 
 def main():
 

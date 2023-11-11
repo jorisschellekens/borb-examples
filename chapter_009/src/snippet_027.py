@@ -1,6 +1,3 @@
-from borb.pdf.canvas.font.simple_font.true_type_font import TrueTypeFont
-from borb.pdf.canvas.font.font import Font
-
 # Download Font
 import requests
 

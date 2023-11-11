@@ -48,6 +48,9 @@
     2.4.5 [Using margin and padding on `Paragraph` objects](#245-using-margin-and-padding-on-paragraph-objects)  
   2.5 [Adding `Image` objects to a PDF](#25-adding-image-objects-to-a-pdf)  
   2.6 [Adding line-art to a PDF using `Shape` objects](#26-adding-line-art-to-a-pdf-using-shape-objects)  
+    2.6.1 [Adding line-art using `LineArtFactory`](#261-adding-line-art-using-lineartfactory)  
+  2.6.2 [Adding a `ProgressBar` to a PDF](#262-adding-a-progressbar-to-a-pdf)  
+  2.6.3 [Adding a `Map` to a PDF](#263-adding-a-map-to-a-pdf)  
   2.7 [Adding barcodes and QR-codes to a PDF](#27-adding-barcodes-and-qr-codes-to-a-pdf)  
     2.7.1 [Adding a `Barcode` to a `Page`](#271-adding-a-barcode-to-a-page)  
       2.7.1.1 [Setting the `stroke_color` and `fill_color` of a `Barcode`](#2711-setting-the-stroke_color-and-fill_color-of-a-barcode)  
@@ -578,8 +581,8 @@ Finally, you can add some content to the `Page` (or rather the `PageLayout`) and
 from borb.pdf import Document
 from borb.pdf import Page
 from borb.pdf import PageLayout
-from borb.pdf import SingleColumnLayout
 from borb.pdf import Paragraph
+from borb.pdf import SingleColumnLayout
 
 
 def main():
@@ -621,11 +624,11 @@ For now, suffice to say the default parameters are:
 ```python
 #!chapter_002/src/snippet_005.py
 from borb.pdf import Document
+from borb.pdf import PDF
 from borb.pdf import Page
 from borb.pdf import PageLayout
-from borb.pdf import SingleColumnLayout
 from borb.pdf import Paragraph
-from borb.pdf import PDF
+from borb.pdf import SingleColumnLayout
 
 
 def main():
@@ -705,11 +708,11 @@ You'll start with the same boilerplate code you used last time:
 ```python
 #!chapter_002/src/snippet_006.py
 from borb.pdf import Document
+from borb.pdf import PDF
 from borb.pdf import Page
 from borb.pdf import PageLayout
-from borb.pdf import SingleColumnLayout
 from borb.pdf import Paragraph
-from borb.pdf import PDF
+from borb.pdf import SingleColumnLayout
 
 
 def main():
@@ -769,11 +772,11 @@ Now that you know, you can easily change the (implicit) `Helvetica` for somethin
 ```python
 #!chapter_002/src/snippet_007.py
 from borb.pdf import Document
+from borb.pdf import PDF
 from borb.pdf import Page
 from borb.pdf import PageLayout
-from borb.pdf import SingleColumnLayout
 from borb.pdf import Paragraph
-from borb.pdf import PDF
+from borb.pdf import SingleColumnLayout
 
 
 def main():
@@ -808,18 +811,17 @@ Alternatively, you can construct a new `Font` object, based on a TTF file.
 
 ```python
 #!chapter_002/src/snippet_008.py
+from pathlib import Path
+
+import requests
 from borb.pdf import Document
+from borb.pdf import PDF
 from borb.pdf import Page
 from borb.pdf import PageLayout
-from borb.pdf import SingleColumnLayout
 from borb.pdf import Paragraph
-from borb.pdf import PDF
-
+from borb.pdf import SingleColumnLayout
 # not an easy import
 from borb.pdf.canvas.font.simple_font.true_type_font import TrueTypeFont
-
-from pathlib import Path
-import requests
 
 
 def main():
@@ -904,12 +906,12 @@ In this example, you're creating the base Hello World, with a different color th
 ```python
 #!chapter_002/src/snippet_009.py
 from borb.pdf import Document
+from borb.pdf import HexColor
+from borb.pdf import PDF
 from borb.pdf import Page
 from borb.pdf import PageLayout
-from borb.pdf import SingleColumnLayout
 from borb.pdf import Paragraph
-from borb.pdf import PDF
-from borb.pdf import HexColor
+from borb.pdf import SingleColumnLayout
 
 
 def main():
@@ -948,15 +950,15 @@ In the next example, you'll start from the boilerplate Hello World example, and 
 
 ```python
 #!chapter_002/src/snippet_010.py
+from decimal import Decimal
+
 from borb.pdf import Document
+from borb.pdf import HSVColor
+from borb.pdf import PDF
 from borb.pdf import Page
 from borb.pdf import PageLayout
-from borb.pdf import SingleColumnLayout
 from borb.pdf import Paragraph
-from borb.pdf import PDF
-from borb.pdf import HSVColor
-
-from decimal import Decimal
+from borb.pdf import SingleColumnLayout
 
 
 def main():
@@ -1025,11 +1027,11 @@ In the next example you'll change the Hello World example to use an `X11Color`
 ```python
 #!chapter_002/src/snippet_011.py
 from borb.pdf import Document
+from borb.pdf import PDF
 from borb.pdf import Page
 from borb.pdf import PageLayout
-from borb.pdf import SingleColumnLayout
 from borb.pdf import Paragraph
-from borb.pdf import PDF
+from borb.pdf import SingleColumnLayout
 from borb.pdf import X11Color
 
 
@@ -1074,12 +1076,12 @@ In the next example you'll create the boilerplate Hello World example, using a `
 ```python
 #!chapter_002/src/snippet_012.py
 from borb.pdf import Document
+from borb.pdf import PDF
 from borb.pdf import Page
 from borb.pdf import PageLayout
-from borb.pdf import SingleColumnLayout
-from borb.pdf import Paragraph
-from borb.pdf import PDF
 from borb.pdf import Pantone
+from borb.pdf import Paragraph
+from borb.pdf import SingleColumnLayout
 
 
 def main():
@@ -1140,21 +1142,21 @@ To use a triadic harmony successfully, the colors should be carefully balanced -
 
 ```python
 #!chapter_002/src/snippet_013.py
+from decimal import Decimal
+
+from borb.pdf import ConnectedShape
 from borb.pdf import Document
-from borb.pdf import Page
-from borb.pdf import PageLayout
-from borb.pdf import SingleColumnLayout
-from borb.pdf import Paragraph
-from borb.pdf import PDF
+from borb.pdf import FixedColumnWidthTable
 from borb.pdf import HSVColor
 from borb.pdf import HexColor
+from borb.pdf import PDF
+from borb.pdf import Page
+from borb.pdf import PageLayout
 from borb.pdf import Pantone
-from borb.pdf import FixedColumnWidthTable
-from borb.pdf import ConnectedShape
-from borb.pdf.canvas.line_art.line_art_factory import LineArtFactory
+from borb.pdf import Paragraph
+from borb.pdf import SingleColumnLayout
 from borb.pdf.canvas.geometry.rectangle import Rectangle
-
-from decimal import Decimal
+from borb.pdf.canvas.line_art.line_art_factory import LineArtFactory
 
 
 def main():
@@ -1227,20 +1229,21 @@ The split-complimentary color scheme is often a good choice for beginners, becau
 
 ```python
 #!chapter_002/src/snippet_014.py
-from borb.pdf import Document
-from borb.pdf import Page
-from borb.pdf import SingleColumnLayout
-from borb.pdf import PageLayout
-from borb.pdf import Paragraph
-from borb.pdf import PDF
-from borb.pdf import HSVColor, HexColor
-from borb.pdf import Pantone
-from borb.pdf import FixedColumnWidthTable
-from borb.pdf import ConnectedShape
-from borb.pdf.canvas.line_art.line_art_factory import LineArtFactory
-from borb.pdf.canvas.geometry.rectangle import Rectangle
-
 from decimal import Decimal
+
+from borb.pdf import ConnectedShape
+from borb.pdf import Document
+from borb.pdf import FixedColumnWidthTable
+from borb.pdf import HSVColor
+from borb.pdf import HexColor
+from borb.pdf import PDF
+from borb.pdf import Page
+from borb.pdf import PageLayout
+from borb.pdf import Pantone
+from borb.pdf import Paragraph
+from borb.pdf import SingleColumnLayout
+from borb.pdf.canvas.geometry.rectangle import Rectangle
+from borb.pdf.canvas.line_art.line_art_factory import LineArtFactory
 
 
 def main():
@@ -1315,20 +1318,21 @@ Choose one color to dominate, a second to support. The third color is used (alon
 
 ```python
 #!chapter_002/src/snippet_015.py
-from borb.pdf import Document
-from borb.pdf import Page
-from borb.pdf import SingleColumnLayout
-from borb.pdf import PageLayout
-from borb.pdf import Paragraph
-from borb.pdf import PDF
-from borb.pdf import HSVColor, HexColor
-from borb.pdf import Pantone
-from borb.pdf import FixedColumnWidthTable
-from borb.pdf import ConnectedShape
-from borb.pdf.canvas.line_art.line_art_factory import LineArtFactory
-from borb.pdf.canvas.geometry.rectangle import Rectangle
-
 from decimal import Decimal
+
+from borb.pdf import ConnectedShape
+from borb.pdf import Document
+from borb.pdf import FixedColumnWidthTable
+from borb.pdf import HSVColor
+from borb.pdf import HexColor
+from borb.pdf import PDF
+from borb.pdf import Page
+from borb.pdf import PageLayout
+from borb.pdf import Pantone
+from borb.pdf import Paragraph
+from borb.pdf import SingleColumnLayout
+from borb.pdf.canvas.geometry.rectangle import Rectangle
+from borb.pdf.canvas.line_art.line_art_factory import LineArtFactory
 
 
 def main():
@@ -1401,20 +1405,21 @@ You should also pay attention to the balance between warm and cool colors in you
 
 ```python
 #!chapter_002/src/snippet_016.py
-from borb.pdf import Document
-from borb.pdf import Page
-from borb.pdf import SingleColumnLayout
-from borb.pdf import PageLayout
-from borb.pdf import Paragraph
-from borb.pdf import PDF
-from borb.pdf import HSVColor, HexColor
-from borb.pdf import Pantone
-from borb.pdf import FixedColumnWidthTable
-from borb.pdf import ConnectedShape
-from borb.pdf.canvas.line_art.line_art_factory import LineArtFactory
-from borb.pdf.canvas.geometry.rectangle import Rectangle
-
 from decimal import Decimal
+
+from borb.pdf import ConnectedShape
+from borb.pdf import Document
+from borb.pdf import FixedColumnWidthTable
+from borb.pdf import HSVColor
+from borb.pdf import HexColor
+from borb.pdf import PDF
+from borb.pdf import Page
+from borb.pdf import PageLayout
+from borb.pdf import Pantone
+from borb.pdf import Paragraph
+from borb.pdf import SingleColumnLayout
+from borb.pdf.canvas.geometry.rectangle import Rectangle
+from borb.pdf.canvas.line_art.line_art_factory import LineArtFactory
 
 
 def main():
@@ -1489,20 +1494,21 @@ You should also pay attention to the balance between warm and cool colors in you
 
 ```python
 #!chapter_002/src/snippet_017.py
+from decimal import Decimal
+
 from borb.pdf import Document
+from borb.pdf import FixedColumnWidthTable
+from borb.pdf import PDF
 from borb.pdf import Page
-from borb.pdf import SingleColumnLayout
 from borb.pdf import PageLayout
 from borb.pdf import Paragraph
-from borb.pdf import PDF
-from borb.pdf.canvas.color.color import HSVColor, HexColor
+from borb.pdf import SingleColumnLayout
+from borb.pdf.canvas.color.color import HSVColor
+from borb.pdf.canvas.color.color import HexColor
 from borb.pdf.canvas.color.pantone import Pantone
-from borb.pdf import FixedColumnWidthTable
+from borb.pdf.canvas.geometry.rectangle import Rectangle
 from borb.pdf.canvas.layout.shape.connected_shape import ConnectedShape
 from borb.pdf.canvas.line_art.line_art_factory import LineArtFactory
-from borb.pdf.canvas.geometry.rectangle import Rectangle
-
-from decimal import Decimal
 
 
 def main():
@@ -1592,13 +1598,13 @@ You'll be adding content at an exact location, and specifying the bounding box. 
 
 ```python
 #!chapter_002/src/snippet_018.py
+from decimal import Decimal
+
 from borb.pdf import Document
+from borb.pdf import PDF
 from borb.pdf import Page
 from borb.pdf import Paragraph
-from borb.pdf import PDF
 from borb.pdf.canvas.geometry.rectangle import Rectangle
-
-from decimal import Decimal
 
 
 def main():
@@ -1648,16 +1654,16 @@ You'll start by trying out `Alignment.LEFT`
 
 ```python
 #!chapter_002/src/snippet_019.py
+from decimal import Decimal
+
+from borb.pdf import Alignment
 from borb.pdf import Document
+from borb.pdf import HexColor
+from borb.pdf import PDF
 from borb.pdf import Page
 from borb.pdf import Paragraph
-from borb.pdf import PDF
 from borb.pdf.canvas.geometry.rectangle import Rectangle
-from borb.pdf import Alignment
 from borb.pdf.canvas.layout.annotation.square_annotation import SquareAnnotation
-from borb.pdf import HexColor
-
-from decimal import Decimal
 
 
 def main():
@@ -1703,16 +1709,16 @@ Now you can try `Alignment.CENTERED`
 
 ```python
 #!chapter_002/src/snippet_020.py
+from decimal import Decimal
+
+from borb.pdf import Alignment
 from borb.pdf import Document
+from borb.pdf import HexColor
+from borb.pdf import PDF
 from borb.pdf import Page
 from borb.pdf import Paragraph
-from borb.pdf import PDF
 from borb.pdf.canvas.geometry.rectangle import Rectangle
-from borb.pdf import Alignment
 from borb.pdf.canvas.layout.annotation.square_annotation import SquareAnnotation
-from borb.pdf import HexColor
-
-from decimal import Decimal
 
 
 def main():
@@ -1758,16 +1764,16 @@ and finally `Alignment.RIGHT`
 
 ```python
 #!chapter_002/src/snippet_021.py
+from decimal import Decimal
+
+from borb.pdf import Alignment
 from borb.pdf import Document
+from borb.pdf import HexColor
+from borb.pdf import PDF
 from borb.pdf import Page
 from borb.pdf import Paragraph
-from borb.pdf import PDF
 from borb.pdf.canvas.geometry.rectangle import Rectangle
-from borb.pdf import Alignment
 from borb.pdf.canvas.layout.annotation.square_annotation import SquareAnnotation
-from borb.pdf import HexColor
-
-from decimal import Decimal
 
 
 def main():
@@ -1821,16 +1827,16 @@ This should make it clear where and how the paragraph is being laid out.
 
 ```python
 #!chapter_002/src/snippet_022.py
+from decimal import Decimal
+
+from borb.pdf import Alignment
 from borb.pdf import Document
+from borb.pdf import HexColor
+from borb.pdf import PDF
 from borb.pdf import Page
 from borb.pdf import Paragraph
-from borb.pdf import PDF
 from borb.pdf.canvas.geometry.rectangle import Rectangle
-from borb.pdf import Alignment
 from borb.pdf.canvas.layout.annotation.square_annotation import SquareAnnotation
-from borb.pdf import HexColor
-
-from decimal import Decimal
 
 
 def main():
@@ -1876,16 +1882,16 @@ Now you'll try the same for `Alignment.MIDDLE`.
 
 ```python
 #!chapter_002/src/snippet_023.py
+from decimal import Decimal
+
+from borb.pdf import Alignment
 from borb.pdf import Document
+from borb.pdf import HexColor
+from borb.pdf import PDF
 from borb.pdf import Page
 from borb.pdf import Paragraph
-from borb.pdf import PDF
 from borb.pdf.canvas.geometry.rectangle import Rectangle
-from borb.pdf import Alignment
 from borb.pdf.canvas.layout.annotation.square_annotation import SquareAnnotation
-from borb.pdf import HexColor
-
-from decimal import Decimal
 
 
 def main():
@@ -1931,16 +1937,16 @@ And lastly, you can try setting the alignment to `Alignment.BOTTOM`.
 
 ```python
 #!chapter_002/src/snippet_024.py
+from decimal import Decimal
+
+from borb.pdf import Alignment
 from borb.pdf import Document
+from borb.pdf import HexColor
+from borb.pdf import PDF
 from borb.pdf import Page
 from borb.pdf import Paragraph
-from borb.pdf import PDF
 from borb.pdf.canvas.geometry.rectangle import Rectangle
-from borb.pdf import Alignment
 from borb.pdf.canvas.layout.annotation.square_annotation import SquareAnnotation
-from borb.pdf import HexColor
-
-from decimal import Decimal
 
 
 def main():
@@ -2018,15 +2024,14 @@ In the next example, you'll be creating a `Paragraph` with `text_alignment` set 
 #!chapter_002/src/snippet_025.py
 from decimal import Decimal
 
-from borb.pdf import X11Color
-from borb.pdf.canvas.geometry.rectangle import Rectangle
 from borb.pdf import Alignment
-from borb.pdf import Paragraph
 from borb.pdf import Document
-from borb.pdf import Page
-from borb.pdf import PDF
-from borb.pdf.canvas.layout.annotation.square_annotation import SquareAnnotation
 from borb.pdf import HexColor
+from borb.pdf import PDF
+from borb.pdf import Page
+from borb.pdf import Paragraph
+from borb.pdf.canvas.geometry.rectangle import Rectangle
+from borb.pdf.canvas.layout.annotation.square_annotation import SquareAnnotation
 
 
 def main():
@@ -2086,16 +2091,14 @@ In the next example, you'll explore how to set borders on a `Paragraph`;
 
 ```python
 #!chapter_002/src/snippet_026.py
+from decimal import Decimal
+
 from borb.pdf import Document
+from borb.pdf import PDF
 from borb.pdf import Page
 from borb.pdf import Paragraph
-from borb.pdf import PDF
-from borb.pdf.canvas.geometry.rectangle import Rectangle
-from borb.pdf import Alignment
-from borb.pdf.canvas.layout.annotation.square_annotation import SquareAnnotation
 from borb.pdf import X11Color
-
-from decimal import Decimal
+from borb.pdf.canvas.geometry.rectangle import Rectangle
 
 
 def main():
@@ -2154,16 +2157,16 @@ In the next example you'll be doing just that:
 
 ```python
 #!chapter_002/src/snippet_027.py
+from decimal import Decimal
+
 from borb.pdf import Document
+from borb.pdf import HexColor
+from borb.pdf import PDF
 from borb.pdf import Page
 from borb.pdf import Paragraph
-from borb.pdf import PDF
+from borb.pdf import X11Color
 from borb.pdf.canvas.geometry.rectangle import Rectangle
-from borb.pdf import Alignment
 from borb.pdf.canvas.layout.annotation.square_annotation import SquareAnnotation
-from borb.pdf import X11Color, HexColor
-
-from decimal import Decimal
 
 
 def main():
@@ -2253,22 +2256,25 @@ Being able to add images to your PDF is one of the core skills. It can be useful
 There are convenience classes to enable you to easily add:
 
 - Barcodes
-- QR codes
 - Charts
 - Emoji
+- Maps
+- Progressbars
+- QR codes
+
 
 In the next example, you'll be adding an `Image` to a `Page`, by specifying its URL.
 
 ```python
 #!chapter_002/src/snippet_028.py
-from borb.pdf import Document
-from borb.pdf import Page
-from borb.pdf import SingleColumnLayout
-from borb.pdf import PageLayout
-from borb.pdf import PDF
-from borb.pdf import Image
-
 from decimal import Decimal
+
+from borb.pdf import Document
+from borb.pdf import Image
+from borb.pdf import PDF
+from borb.pdf import Page
+from borb.pdf import PageLayout
+from borb.pdf import SingleColumnLayout
 
 
 def main():
@@ -2315,13 +2321,11 @@ You can verify that `borb` gives you a nice assert if you try to add something t
 ```python
 #!chapter_002/src/snippet_029.py
 from borb.pdf import Document
-from borb.pdf import Page
-from borb.pdf import SingleColumnLayout
-from borb.pdf import PageLayout
-from borb.pdf import PDF
 from borb.pdf import Image
-
-from decimal import Decimal
+from borb.pdf import PDF
+from borb.pdf import Page
+from borb.pdf import PageLayout
+from borb.pdf import SingleColumnLayout
 
 
 def main():
@@ -2370,16 +2374,16 @@ In the next example, you'll insert an `Image` by using its path (on disk).
 
 ```python
 #!chapter_002/src/snippet_030.py
-from borb.pdf import Document
-from borb.pdf import Page
-from borb.pdf import SingleColumnLayout
-from borb.pdf import PageLayout
-from borb.pdf import PDF
-from borb.pdf import Image
-
 from decimal import Decimal
 from pathlib import Path
+
 import requests
+from borb.pdf import Document
+from borb.pdf import Image
+from borb.pdf import PDF
+from borb.pdf import Page
+from borb.pdf import PageLayout
+from borb.pdf import SingleColumnLayout
 
 
 def main():
@@ -2430,6 +2434,8 @@ if __name__ == "__main__":
 
 ## 2.6 Adding line-art to a PDF using `Shape` objects
 
+### 2.6.1 Adding line-art using `LineArtFactory`
+
 One of the main goals of `borb` is to put the user first. I would like PDF to become as accessible as other digital document formats (e.g. Microsoft Words).
 
 This goal is reflected in both large and small features in `borb`. One of these small things is the line-art factory. Rather than forcing the end-user to draw complicated line-art by hand, `LineArtFactory` contains a ton of methods that enable you to easily draw the most common shapes on the `Page`.
@@ -2446,18 +2452,17 @@ In the next example, you'll create a PDF with a sticky note shape in it.
 
 ```python
 #!chapter_002/src/snippet_031.py
-from borb.pdf import Document
-from borb.pdf import Page
-from borb.pdf import SingleColumnLayout
-from borb.pdf import PageLayout
-from borb.pdf import PDF
-from borb.pdf import Image
-from borb.pdf.canvas.geometry.rectangle import Rectangle
-from borb.pdf import ConnectedShape
-from borb.pdf.canvas.line_art.line_art_factory import LineArtFactory
-from borb.pdf import X11Color
-
 from decimal import Decimal
+
+from borb.pdf import ConnectedShape
+from borb.pdf import Document
+from borb.pdf import PDF
+from borb.pdf import Page
+from borb.pdf import PageLayout
+from borb.pdf import SingleColumnLayout
+from borb.pdf import X11Color
+from borb.pdf.canvas.geometry.rectangle import Rectangle
+from borb.pdf.canvas.line_art.line_art_factory import LineArtFactory
 
 
 def main():
@@ -2504,6 +2509,90 @@ The initial bounding box you pass to the `LineArtFactory.sticky_note` function i
 
 This ensures you can still do things with these points, should you so desire.
 
+## 2.6.2 Adding a `ProgressBar` to a PDF
+
+The `ProgressBar` (and its cousin `ProgressSquare`) represent an easy way to visualize a process/task that is **being executed** or that has executed with some **degree of success**.
+You can construct it using a `percentage` (which defaults to 0).
+
+I can imagine you might use this in testing reports, to indicate how many tests in a particular category failed/passed.
+
+Let's make a report:
+
+```commandline
+#!src/snippet_032.py
+```
+
+![enter image description here](chapter_002/img/snippet_032.png)
+
+## 2.6.3 Adding a `Map` to a PDF
+
+The `Map` is a kind of `Shapes` object, which represents a collection of `ConnectedShape` or `DisconnectedShape` objects.
+`borb` comes with 3 `Map` objects pre-installed:
+
+- **MapOfEurope**: This implementation of `Map` represents Europe. Europe is a continent comprising the westernmost peninsulas of Eurasia, located entirely in the Northern Hemisphere and mostly in the Eastern Hemisphere. It shares the continental landmass of Afro-Eurasia with both Africa and Asia. It is bordered by the Arctic Ocean to the north, the Atlantic Ocean to the west, the Mediterranean Sea to the south, and Asia to the east. Europe is commonly considered to be separated from Asia by the watershed of the Ural Mountains, the Ural River, the Caspian Sea, the Greater Caucasus, the Black Sea and the waterways of the Turkish straits.
+- **MapOfTheUnitedStates**: This implementation of `Map` represents the United States and its territories. The United States currently administers three territories in the Caribbean Sea and eleven in the Pacific Ocean. Five territories (American Samoa, Guam, the Northern Mariana Islands, Puerto Rico, and the U.S. Virgin Islands) are permanently inhabited, unincorporated territories; the other nine are small islands, atolls, and reefs with no native (or permanent) population. Of the nine, only one is classified as an incorporated territory (Palmyra Atoll). Two additional territories (Bajo Nuevo Bank and Serranilla Bank) are claimed by the United States but administered by Colombia.
+- **MapOfTheWorld**:
+
+You can `pop` items from a `Map` to remove them.
+And of course you can set the `fill_color` and `stroke_color` of an item to highlight it.
+In the next example we'll create a `MapOfTheWorld` and highlight Poland.
+
+```python
+#!chapter_002/src/snippet_033.py
+from decimal import Decimal
+
+from borb.pdf import Alignment
+from borb.pdf import Document
+from borb.pdf import HexColor
+from borb.pdf import MapOfTheWorld
+from borb.pdf import PDF
+from borb.pdf import Page
+from borb.pdf import PageLayout
+from borb.pdf import Paragraph
+from borb.pdf import SingleColumnLayout
+
+
+def main():
+
+    # create Document
+    doc: Document = Document()
+
+    # create Page
+    page: Page = Page()
+
+    # add Page to Document
+    doc.add_page(page)
+
+    # set a PageLayout
+    layout: PageLayout = SingleColumnLayout(page)
+
+    # add some text
+    layout.add(Paragraph("Olympic Summer Games Paris 2024",
+                         font_size=Decimal(20),
+                         font_color=HexColor("#0b5394")))
+    layout.add(Paragraph("Find out all about the athletes, sports, schedules, venues, mascot and much more."))
+
+    # add MapOfTheWorld
+    layout.add(MapOfTheWorld(
+            horizontal_alignment=Alignment.CENTERED,
+            fill_color=HexColor("#eeeeee"),
+            stroke_color=HexColor("#ffffff"),
+            line_width=Decimal(0.1),
+        ).set_fill_color(fill_color=HexColor("#0b5394"), key="France")
+    )
+
+    # store
+    with open("output.pdf", "wb") as pdf_file_handle:
+        PDF.dumps(pdf_file_handle, doc)
+
+
+if __name__ == "__main__":
+    main()
+
+```
+
+![enter image description here](chapter_002/img/snippet_033.png)
+
 <div style="page-break-before: always;"></div>
 
 ## 2.7 Adding barcodes and QR-codes to a PDF
@@ -2522,16 +2611,16 @@ In the next example you'll be adding an `EAN_14` code to a `Page`.
 The python script is very straightforward:
 
 ```python
-#!chapter_002/src/snippet_032.py
-from borb.pdf import Document
-from borb.pdf import Page
-from borb.pdf import SingleColumnLayout
-from borb.pdf import PageLayout
-from borb.pdf import Paragraph
-from borb.pdf import PDF
-from borb.pdf import Barcode, BarcodeType
-
+#!chapter_002/src/snippet_034.py
 from decimal import Decimal
+
+from borb.pdf import Barcode
+from borb.pdf import BarcodeType
+from borb.pdf import Document
+from borb.pdf import PDF
+from borb.pdf import Page
+from borb.pdf import PageLayout
+from borb.pdf import SingleColumnLayout
 
 
 def main():
@@ -2567,7 +2656,7 @@ if __name__ == "__main__":
 
 ```
 
-![enter image description here](chapter_002/img/snippet_032.png)
+![enter image description here](chapter_002/img/snippet_034.png)
 
 #### 2.7.1.1 Setting the `stroke_color` and `fill_color` of a `Barcode`
 
@@ -2576,17 +2665,17 @@ Of course, if your company's brand color happens to be something other than blac
 In the next example, you'll be tweaking the `stroke_color` and `fill_color` of a `Barcode` to make sure it pops.
 
 ```python
-#!chapter_002/src/snippet_033.py
-from borb.pdf import Document
-from borb.pdf import Page
-from borb.pdf import SingleColumnLayout
-from borb.pdf import PageLayout
-from borb.pdf import Paragraph
-from borb.pdf import PDF
-from borb.pdf import Barcode, BarcodeType
-from borb.pdf import HexColor
-
+#!chapter_002/src/snippet_035.py
 from decimal import Decimal
+
+from borb.pdf import Barcode
+from borb.pdf import BarcodeType
+from borb.pdf import Document
+from borb.pdf import HexColor
+from borb.pdf import PDF
+from borb.pdf import Page
+from borb.pdf import PageLayout
+from borb.pdf import SingleColumnLayout
 
 
 def main():
@@ -2624,7 +2713,7 @@ if __name__ == "__main__":
 
 ```
 
-![enter image description here](chapter_002/img/snippet_033.png)
+![enter image description here](chapter_002/img/snippet_035.png)
 
 ### 2.7.2 Adding a QR-code to the `Page`
 
@@ -2638,16 +2727,16 @@ In practice, QR codes often contain data for a locator, identifier, or tracker t
 The code from the previous example doesn't really change that much, other than setting a different `type`
 
 ```python
-#!chapter_002/src/snippet_034.py
-from borb.pdf import Document
-from borb.pdf import Page
-from borb.pdf import SingleColumnLayout
-from borb.pdf import PageLayout
-from borb.pdf import Paragraph
-from borb.pdf import PDF
-from borb.pdf import Barcode, BarcodeType
-
+#!chapter_002/src/snippet_036.py
 from decimal import Decimal
+
+from borb.pdf import Barcode
+from borb.pdf import BarcodeType
+from borb.pdf import Document
+from borb.pdf import PDF
+from borb.pdf import Page
+from borb.pdf import PageLayout
+from borb.pdf import SingleColumnLayout
 
 
 def main():
@@ -2683,7 +2772,7 @@ if __name__ == "__main__":
 
 ```
 
-![enter image description here](chapter_002/img/snippet_034.png)
+![enter image description here](chapter_002/img/snippet_036.png)
 
 ### 2.7.3 Other supported barcodes
 
@@ -2726,20 +2815,18 @@ This example does have some extra dependencies:
 
 
 ```python
-#!chapter_002/src/snippet_035.py
-from borb.pdf import Document
-from borb.pdf import Page
-from borb.pdf import SingleColumnLayout
-from borb.pdf import PageLayout
-from borb.pdf import Paragraph
-from borb.pdf import PDF
-from borb.pdf import Chart
-
+#!chapter_002/src/snippet_037.py
 from decimal import Decimal
 
 import matplotlib.pyplot as MatPlotLibPlot
 import numpy as np
 import pandas as pd
+from borb.pdf import Chart
+from borb.pdf import Document
+from borb.pdf import PDF
+from borb.pdf import Page
+from borb.pdf import PageLayout
+from borb.pdf import SingleColumnLayout
 
 
 def create_plot() -> None:
@@ -2788,7 +2875,7 @@ if __name__ == "__main__":
 
 ```
 
-![enter image description here](chapter_002/img/snippet_035.png)
+![enter image description here](chapter_002/img/snippet_037.png)
 
 <div style="page-break-before: always;"></div>
 
@@ -2805,16 +2892,15 @@ You can achieve the same effect using `SingleColumnLayout` (or `MultiColumnLayou
 but `HeterogeneousParagraph` is not as generic as `InlineFlow`.
 
 ```python
-#!chapter_002/src/snippet_036.py
-from borb.pdf import Document
-from borb.pdf import Page
-from borb.pdf import SingleColumnLayout
-from borb.pdf import PageLayout
-from borb.pdf import Paragraph
-from borb.pdf import PDF
-from borb.pdf.canvas.layout.emoji.emoji import Emojis
+#!chapter_002/src/snippet_038.py
 from borb.pdf import ChunkOfText
+from borb.pdf import Document
 from borb.pdf import InlineFlow
+from borb.pdf import PDF
+from borb.pdf import Page
+from borb.pdf import PageLayout
+from borb.pdf import SingleColumnLayout
+from borb.pdf.canvas.layout.emoji.emoji import Emojis
 
 
 def main():
@@ -2848,7 +2934,7 @@ if __name__ == "__main__":
 
 ```
 
-![enter image description here](chapter_002/img/snippet_036.png)
+![enter image description here](chapter_002/img/snippet_038.png)
 
 <div style="page-break-before: always;"></div>
 
@@ -2873,13 +2959,13 @@ In this first example you'll be using the classic `Lorem Ipsum Dolor Sit Amet`.
 Keep in mind the text generated here is random, it might (most probably will) come out different on your device.
 
 ```python
-#!chapter_002/src/snippet_037.py
+#!chapter_002/src/snippet_039.py
 from borb.pdf import Document
+from borb.pdf import PDF
 from borb.pdf import Page
-from borb.pdf import SingleColumnLayout
 from borb.pdf import PageLayout
 from borb.pdf import Paragraph
-from borb.pdf import PDF
+from borb.pdf import SingleColumnLayout
 from borb.pdf.canvas.lipsum.lipsum import Lipsum
 
 
@@ -2909,20 +2995,20 @@ if __name__ == "__main__":
 
 ```
 
-![enter image description here](chapter_002/img/snippet_037.png)
+![enter image description here](chapter_002/img/snippet_039.png)
 
 <div style="page-break-before: always;"></div>
 
 In this next example you'll be using the more whimsical Lewis Carroll version.
 
 ```python
-#!chapter_002/src/snippet_038.py
+#!chapter_002/src/snippet_040.py
 from borb.pdf import Document
+from borb.pdf import PDF
 from borb.pdf import Page
-from borb.pdf import SingleColumnLayout
 from borb.pdf import PageLayout
 from borb.pdf import Paragraph
-from borb.pdf import PDF
+from borb.pdf import SingleColumnLayout
 from borb.pdf.canvas.lipsum.lipsum import Lipsum
 
 
@@ -2952,7 +3038,7 @@ if __name__ == "__main__":
 
 ```
 
-![enter image description here](chapter_002/img/snippet_038.png)
+![enter image description here](chapter_002/img/snippet_040.png)
 
 <div style="page-break-before: always;"></div>
 
@@ -2965,17 +3051,16 @@ You will need to provide an API key in order to ensure you have access to these 
 You can pass a desired dimension to the method. `borb` will attempt to find the `Image` whose aspect ratio best matches the one you provided. That way, if the `Image` needs to be scaled down or up, you will experience minimal distortions.
 
 ```python
-#!chapter_002/src/snippet_039.py
-from borb.pdf import Document
-from borb.pdf import Page
-from borb.pdf import SingleColumnLayout
-from borb.pdf import PageLayout
-from borb.pdf import Paragraph
-from borb.pdf import PDF
-from borb.pdf.canvas.layout.image.unsplash import Unsplash
-
+#!chapter_002/src/snippet_041.py
 from decimal import Decimal
+
 import keyring
+from borb.pdf import Document
+from borb.pdf import PDF
+from borb.pdf import Page
+from borb.pdf import PageLayout
+from borb.pdf import SingleColumnLayout
+from borb.pdf.canvas.layout.image.unsplash import Unsplash
 
 
 def main():
@@ -3011,7 +3096,7 @@ if __name__ == "__main__":
 
 The result should look somewhat like this. Although the actual image may differ (if Unsplash suddenly decides to serve some other image as being more relevant for the keywords in the example).
 
-![enter image description here](chapter_002/img/snippet_039.png)
+![enter image description here](chapter_002/img/snippet_041.png)
 
 <div style="page-break-before: always;"></div>
 
@@ -3071,13 +3156,13 @@ In this first list-related example, you'll be creating a list with 3 items. The 
 
 ```python
 #!chapter_003/src/snippet_001.py
+from borb.pdf import Document
 from borb.pdf import OrderedList
-from borb.pdf import SingleColumnLayout
+from borb.pdf import PDF
+from borb.pdf import Page
 from borb.pdf import PageLayout
 from borb.pdf import Paragraph
-from borb.pdf import Document
-from borb.pdf import Page
-from borb.pdf import PDF
+from borb.pdf import SingleColumnLayout
 
 
 def main():
@@ -3119,14 +3204,14 @@ Try out the next example, where each item in the `List` has a different color.
 
 ```python
 #!chapter_003/src/snippet_002.py
+from borb.pdf import Document
 from borb.pdf import HexColor
 from borb.pdf import OrderedList
-from borb.pdf import SingleColumnLayout
+from borb.pdf import PDF
+from borb.pdf import Page
 from borb.pdf import PageLayout
 from borb.pdf import Paragraph
-from borb.pdf import Document
-from borb.pdf import Page
-from borb.pdf import PDF
+from borb.pdf import SingleColumnLayout
 
 
 def main():
@@ -3169,16 +3254,16 @@ In the next example you'll create a list containing a `Paragraph`, an `Image` an
 #!chapter_003/src/snippet_003.py
 from decimal import Decimal
 
-from borb.pdf.canvas.layout.emoji.emoji import Emojis
+from borb.pdf import Document
 from borb.pdf import HexColor
 from borb.pdf import Image
 from borb.pdf import OrderedList
-from borb.pdf import SingleColumnLayout
+from borb.pdf import PDF
+from borb.pdf import Page
 from borb.pdf import PageLayout
 from borb.pdf import Paragraph
-from borb.pdf import Document
-from borb.pdf import Page
-from borb.pdf import PDF
+from borb.pdf import SingleColumnLayout
+from borb.pdf.canvas.layout.emoji.emoji import Emojis
 
 
 def main():
@@ -3227,13 +3312,13 @@ In the next example you'll be creating a simple `Document` featuring a `RomanNum
 
 ```python
 #!chapter_003/src/snippet_004.py
-from borb.pdf import RomanNumeralOrderedList
-from borb.pdf import SingleColumnLayout
+from borb.pdf import Document
+from borb.pdf import PDF
+from borb.pdf import Page
 from borb.pdf import PageLayout
 from borb.pdf import Paragraph
-from borb.pdf import Document
-from borb.pdf import Page
-from borb.pdf import PDF
+from borb.pdf import RomanNumeralOrderedList
+from borb.pdf import SingleColumnLayout
 
 
 def main():
@@ -3277,13 +3362,13 @@ if __name__ == "__main__":
 
 ```python
 #!chapter_003/src/snippet_005.py
-from borb.pdf import UnorderedList
-from borb.pdf import SingleColumnLayout
+from borb.pdf import Document
+from borb.pdf import PDF
+from borb.pdf import Page
 from borb.pdf import PageLayout
 from borb.pdf import Paragraph
-from borb.pdf import Document
-from borb.pdf import Page
-from borb.pdf import PDF
+from borb.pdf import SingleColumnLayout
+from borb.pdf import UnorderedList
 
 
 def main():
@@ -3331,13 +3416,13 @@ In the next example you'll be creating a nested unordered list.
 
 ```python
 #!chapter_003/src/snippet_006.py
-from borb.pdf import UnorderedList
-from borb.pdf import SingleColumnLayout
+from borb.pdf import Document
+from borb.pdf import PDF
+from borb.pdf import Page
 from borb.pdf import PageLayout
 from borb.pdf import Paragraph
-from borb.pdf import Document
-from borb.pdf import Page
-from borb.pdf import PDF
+from borb.pdf import SingleColumnLayout
+from borb.pdf import UnorderedList
 
 
 def main():
@@ -3393,13 +3478,13 @@ Of course, you can do the same for ordered lists as well.
 
 ```python
 #!chapter_003/src/snippet_007.py
+from borb.pdf import Document
 from borb.pdf import OrderedList
-from borb.pdf import SingleColumnLayout
+from borb.pdf import PDF
+from borb.pdf import Page
 from borb.pdf import PageLayout
 from borb.pdf import Paragraph
-from borb.pdf import Document
-from borb.pdf import Page
-from borb.pdf import PDF
+from borb.pdf import SingleColumnLayout
 
 
 def main():
@@ -3482,15 +3567,13 @@ In the next example, you'll be creating a simple `FixedColumnWidthTable` with 3 
 
 ```python
 #!chapter_003/src/snippet_008.py
-from decimal import Decimal
-
-from borb.pdf import SingleColumnLayout
-from borb.pdf import PageLayout
-from borb.pdf import FixedColumnWidthTable
-from borb.pdf import Paragraph
 from borb.pdf import Document
-from borb.pdf import Page
+from borb.pdf import FixedColumnWidthTable
 from borb.pdf import PDF
+from borb.pdf import Page
+from borb.pdf import PageLayout
+from borb.pdf import Paragraph
+from borb.pdf import SingleColumnLayout
 
 
 def main():
@@ -3536,13 +3619,13 @@ Let's add some padding to all cells to ensure the text doesn't *stick* to the ce
 #!chapter_003/src/snippet_009.py
 from decimal import Decimal
 
-from borb.pdf import SingleColumnLayout
-from borb.pdf import PageLayout
-from borb.pdf import FixedColumnWidthTable
-from borb.pdf import Paragraph
 from borb.pdf import Document
-from borb.pdf import Page
+from borb.pdf import FixedColumnWidthTable
 from borb.pdf import PDF
+from borb.pdf import Page
+from borb.pdf import PageLayout
+from borb.pdf import Paragraph
+from borb.pdf import SingleColumnLayout
 
 
 def main():
@@ -3593,13 +3676,13 @@ and divide the remaining space among the other 2.
 #!chapter_003/src/snippet_010.py
 from decimal import Decimal
 
-from borb.pdf import SingleColumnLayout
-from borb.pdf import PageLayout
-from borb.pdf import FixedColumnWidthTable
-from borb.pdf import Paragraph
 from borb.pdf import Document
-from borb.pdf import Page
+from borb.pdf import FixedColumnWidthTable
 from borb.pdf import PDF
+from borb.pdf import Page
+from borb.pdf import PageLayout
+from borb.pdf import Paragraph
+from borb.pdf import SingleColumnLayout
 
 
 def main():
@@ -3652,14 +3735,14 @@ To really visualize the next tweak, we should add some more data.
 #!chapter_003/src/snippet_011.py
 from decimal import Decimal
 
-from borb.pdf import X11Color
-from borb.pdf import SingleColumnLayout
-from borb.pdf import PageLayout
-from borb.pdf import FixedColumnWidthTable
-from borb.pdf import Paragraph
 from borb.pdf import Document
-from borb.pdf import Page
+from borb.pdf import FixedColumnWidthTable
 from borb.pdf import PDF
+from borb.pdf import Page
+from borb.pdf import PageLayout
+from borb.pdf import Paragraph
+from borb.pdf import SingleColumnLayout
+from borb.pdf import X11Color
 
 
 def main():
@@ -3715,13 +3798,13 @@ The difference between both kinds of `Table` will become obvious.
 
 ```python
 #!chapter_003/src/snippet_012.py
-from borb.pdf import SingleColumnLayout
-from borb.pdf import PageLayout
-from borb.pdf import FlexibleColumnWidthTable
-from borb.pdf import Paragraph
 from borb.pdf import Document
-from borb.pdf import Page
+from borb.pdf import FlexibleColumnWidthTable
 from borb.pdf import PDF
+from borb.pdf import Page
+from borb.pdf import PageLayout
+from borb.pdf import Paragraph
+from borb.pdf import SingleColumnLayout
 
 
 def main():
@@ -3766,13 +3849,13 @@ Let's set the padding. That'll make this `Table` look a bit better.
 #!chapter_003/src/snippet_013.py
 from decimal import Decimal
 
-from borb.pdf import SingleColumnLayout
-from borb.pdf import PageLayout
-from borb.pdf import FlexibleColumnWidthTable
-from borb.pdf import Paragraph
 from borb.pdf import Document
-from borb.pdf import Page
+from borb.pdf import FlexibleColumnWidthTable
 from borb.pdf import PDF
+from borb.pdf import Page
+from borb.pdf import PageLayout
+from borb.pdf import Paragraph
+from borb.pdf import SingleColumnLayout
 
 
 def main():
@@ -3830,15 +3913,15 @@ In the next example, you'll be setting the background color of an individual cel
 #!chapter_003/src/snippet_014.py
 from decimal import Decimal
 
-from borb.pdf import X11Color
-from borb.pdf import SingleColumnLayout
-from borb.pdf import PageLayout
-from borb.pdf import TableCell
-from borb.pdf import FlexibleColumnWidthTable
-from borb.pdf import Paragraph
 from borb.pdf import Document
-from borb.pdf import Page
+from borb.pdf import FlexibleColumnWidthTable
 from borb.pdf import PDF
+from borb.pdf import Page
+from borb.pdf import PageLayout
+from borb.pdf import Paragraph
+from borb.pdf import SingleColumnLayout
+from borb.pdf import TableCell
+from borb.pdf import X11Color
 
 
 def main():
@@ -3895,17 +3978,17 @@ In the next example you'll build a feature-comparison matrix for several mobile 
 #!chapter_003/src/snippet_015.py
 from decimal import Decimal
 
-from borb.pdf.canvas.layout.emoji.emoji import Emojis
 from borb.pdf import Alignment
-from borb.pdf import SingleColumnLayout
-from borb.pdf import PageLayout
-from borb.pdf import TableCell
-from borb.pdf import FlexibleColumnWidthTable
-from borb.pdf import Paragraph
 from borb.pdf import Document
-from borb.pdf import Page
-from borb.pdf.page.page_size import PageSize
+from borb.pdf import FlexibleColumnWidthTable
 from borb.pdf import PDF
+from borb.pdf import Page
+from borb.pdf import PageLayout
+from borb.pdf import Paragraph
+from borb.pdf import SingleColumnLayout
+from borb.pdf import TableCell
+from borb.pdf.canvas.layout.emoji.emoji import Emojis
+from borb.pdf.page.page_size import PageSize
 
 
 def main():
@@ -4025,13 +4108,13 @@ In the next example you'll create an incomplete `Table` and watch how the `Table
 #!chapter_003/src/snippet_016.py
 from decimal import Decimal
 
-from borb.pdf import SingleColumnLayout
-from borb.pdf import PageLayout
-from borb.pdf import FlexibleColumnWidthTable
-from borb.pdf import Paragraph
 from borb.pdf import Document
-from borb.pdf import Page
+from borb.pdf import FlexibleColumnWidthTable
 from borb.pdf import PDF
+from borb.pdf import Page
+from borb.pdf import PageLayout
+from borb.pdf import Paragraph
+from borb.pdf import SingleColumnLayout
 
 
 def main():
@@ -4089,14 +4172,14 @@ In the next example you'll be using `col_span` on a `TableCell` object.
 #!chapter_003/src/snippet_017.py
 from decimal import Decimal
 
-from borb.pdf import SingleColumnLayout
-from borb.pdf import PageLayout
-from borb.pdf import FlexibleColumnWidthTable
-from borb.pdf import TableCell
-from borb.pdf import Paragraph
 from borb.pdf import Document
-from borb.pdf import Page
+from borb.pdf import FlexibleColumnWidthTable
 from borb.pdf import PDF
+from borb.pdf import Page
+from borb.pdf import PageLayout
+from borb.pdf import Paragraph
+from borb.pdf import SingleColumnLayout
+from borb.pdf import TableCell
 
 
 def main():
@@ -4142,15 +4225,14 @@ Of course, you can do the same for `row_span`:
 #!chapter_003/src/snippet_018.py
 from decimal import Decimal
 
-from borb.pdf import SingleColumnLayout
-from borb.pdf import PageLayout
-
-from borb.pdf import FlexibleColumnWidthTable
-from borb.pdf import TableCell
-from borb.pdf import Paragraph
 from borb.pdf import Document
-from borb.pdf import Page
+from borb.pdf import FlexibleColumnWidthTable
 from borb.pdf import PDF
+from borb.pdf import Page
+from borb.pdf import PageLayout
+from borb.pdf import Paragraph
+from borb.pdf import SingleColumnLayout
+from borb.pdf import TableCell
 
 
 def main():
@@ -4201,15 +4283,12 @@ In the following example, you'll use `TableUtil` to dump a 2D array to a PDF.
 
 ```python
 #!chapter_003/src/snippet_019.py
-from decimal import Decimal
-
-from borb.pdf import SingleColumnLayout
-from borb.pdf import PageLayout
-from borb.pdf import TableUtil
-from borb.pdf import Paragraph
 from borb.pdf import Document
-from borb.pdf import Page
 from borb.pdf import PDF
+from borb.pdf import Page
+from borb.pdf import PageLayout
+from borb.pdf import SingleColumnLayout
+from borb.pdf import TableUtil
 
 
 def main():
@@ -4262,15 +4341,14 @@ and `Table` implements the `LayoutElement` interface.
 #!chapter_003/src/snippet_020.py
 from decimal import Decimal
 
-from borb.pdf import SingleColumnLayout
-from borb.pdf import PageLayout
-from borb.pdf import OrderedList
-from borb.pdf import FlexibleColumnWidthTable
-from borb.pdf import TableCell
-from borb.pdf import Paragraph
 from borb.pdf import Document
-from borb.pdf import Page
+from borb.pdf import FlexibleColumnWidthTable
+from borb.pdf import OrderedList
 from borb.pdf import PDF
+from borb.pdf import Page
+from borb.pdf import PageLayout
+from borb.pdf import Paragraph
+from borb.pdf import SingleColumnLayout
 
 
 def main():
@@ -4326,15 +4404,14 @@ Conversely, you can also use `List` inside a `Table`.
 #!chapter_003/src/snippet_021.py
 from decimal import Decimal
 
-from borb.pdf import SingleColumnLayout
-from borb.pdf import PageLayout
-from borb.pdf import OrderedList
-from borb.pdf import FlexibleColumnWidthTable
-from borb.pdf import TableCell
-from borb.pdf import Paragraph
 from borb.pdf import Document
-from borb.pdf import Page
+from borb.pdf import FlexibleColumnWidthTable
+from borb.pdf import OrderedList
 from borb.pdf import PDF
+from borb.pdf import Page
+from borb.pdf import PageLayout
+from borb.pdf import Paragraph
+from borb.pdf import SingleColumnLayout
 
 
 def main():
@@ -4393,13 +4470,11 @@ In this first example, we're going to display a process (represented as `typing.
 
 ```python
 #!chapter_003/src/snippet_022.py
-from decimal import Decimal
-
-from borb.pdf import SingleColumnLayout
-from borb.pdf import PageLayout
 from borb.pdf import Document
-from borb.pdf import Page
 from borb.pdf import PDF
+from borb.pdf import Page
+from borb.pdf import PageLayout
+from borb.pdf import SingleColumnLayout
 from borb.pdf import SmartArt
 
 
@@ -4450,13 +4525,11 @@ It really doesn't take much effort to code this up:
 
 ```python
 #!chapter_003/src/snippet_023.py
-from decimal import Decimal
-
-from borb.pdf import SingleColumnLayout
-from borb.pdf import PageLayout
 from borb.pdf import Document
-from borb.pdf import Page
 from borb.pdf import PDF
+from borb.pdf import Page
+from borb.pdf import PageLayout
+from borb.pdf import SingleColumnLayout
 from borb.pdf import SmartArt
 
 
@@ -4557,14 +4630,14 @@ In the next example you'll be using a `Table` in conjunction with `TextField` ob
 #!chapter_004/src/snippet_001.py
 from decimal import Decimal
 
-from borb.pdf import TextField
-from borb.pdf import SingleColumnLayout
-from borb.pdf import PageLayout
-from borb.pdf import FixedColumnWidthTable
-from borb.pdf import Paragraph
 from borb.pdf import Document
-from borb.pdf import Page
+from borb.pdf import FixedColumnWidthTable
 from borb.pdf import PDF
+from borb.pdf import Page
+from borb.pdf import PageLayout
+from borb.pdf import Paragraph
+from borb.pdf import SingleColumnLayout
+from borb.pdf import TextField
 
 
 def main():
@@ -4631,15 +4704,15 @@ For instance, you can also set the `font_color`.
 #!chapter_004/src/snippet_002.py
 from decimal import Decimal
 
-from borb.pdf import HexColor
-from borb.pdf import TextField
-from borb.pdf import SingleColumnLayout
-from borb.pdf import PageLayout
-from borb.pdf import FixedColumnWidthTable
-from borb.pdf import Paragraph
 from borb.pdf import Document
-from borb.pdf import Page
+from borb.pdf import FixedColumnWidthTable
+from borb.pdf import HexColor
 from borb.pdf import PDF
+from borb.pdf import Page
+from borb.pdf import PageLayout
+from borb.pdf import Paragraph
+from borb.pdf import SingleColumnLayout
+from borb.pdf import TextField
 
 
 def main():
@@ -4698,15 +4771,15 @@ In the next example you'll be updating the code you wrote earlier to generate a 
 #!chapter_004/src/snippet_003.py
 from decimal import Decimal
 
-from borb.pdf import HexColor
-from borb.pdf import TextField
-from borb.pdf import SingleColumnLayout
-from borb.pdf import PageLayout
-from borb.pdf import FixedColumnWidthTable
-from borb.pdf import Paragraph
 from borb.pdf import Document
-from borb.pdf import Page
+from borb.pdf import FixedColumnWidthTable
+from borb.pdf import HexColor
 from borb.pdf import PDF
+from borb.pdf import Page
+from borb.pdf import PageLayout
+from borb.pdf import Paragraph
+from borb.pdf import SingleColumnLayout
+from borb.pdf import TextField
 
 
 def main():
@@ -4758,16 +4831,16 @@ A `DropDownList` can be constructed with `typing.List[str]` and will allow the u
 #!chapter_004/src/snippet_004.py
 from decimal import Decimal
 
-from borb.pdf import HexColor
-from borb.pdf import DropDownList
-from borb.pdf import TextField
-from borb.pdf import SingleColumnLayout
-from borb.pdf import PageLayout
-from borb.pdf import FixedColumnWidthTable
-from borb.pdf import Paragraph
 from borb.pdf import Document
-from borb.pdf import Page
+from borb.pdf import DropDownList
+from borb.pdf import FixedColumnWidthTable
+from borb.pdf import HexColor
 from borb.pdf import PDF
+from borb.pdf import Page
+from borb.pdf import PageLayout
+from borb.pdf import Paragraph
+from borb.pdf import SingleColumnLayout
+from borb.pdf import TextField
 
 
 def main():
@@ -4824,16 +4897,16 @@ One of the key usecases of `DropDownList` is when you're using it to allow the u
 #!chapter_004/src/snippet_005.py
 from decimal import Decimal
 
-from borb.pdf import HexColor
 from borb.pdf import CountryDropDownList
-from borb.pdf import TextField
-from borb.pdf import SingleColumnLayout
-from borb.pdf import PageLayout
-from borb.pdf import FixedColumnWidthTable
-from borb.pdf import Paragraph
 from borb.pdf import Document
-from borb.pdf import Page
+from borb.pdf import FixedColumnWidthTable
+from borb.pdf import HexColor
 from borb.pdf import PDF
+from borb.pdf import Page
+from borb.pdf import PageLayout
+from borb.pdf import Paragraph
+from borb.pdf import SingleColumnLayout
+from borb.pdf import TextField
 
 
 def main():
@@ -4884,18 +4957,17 @@ We'll use this `CheckBox` to allow the user to answer a simple yes/no question.
 #!chapter_004/src/snippet_006.py
 from decimal import Decimal
 
-from borb.pdf import HexColor
-from borb.pdf import CountryDropDownList
-from borb.pdf import TextField
 from borb.pdf import CheckBox
-from borb.pdf import SingleColumnLayout
-from borb.pdf import PageLayout
-from borb.pdf import FixedColumnWidthTable
-from borb.pdf import Paragraph
+from borb.pdf import CountryDropDownList
 from borb.pdf import Document
-from borb.pdf import Page
+from borb.pdf import FixedColumnWidthTable
+from borb.pdf import HexColor
 from borb.pdf import PDF
-from borb.pdf import Alignment
+from borb.pdf import Page
+from borb.pdf import PageLayout
+from borb.pdf import Paragraph
+from borb.pdf import SingleColumnLayout
+from borb.pdf import TextField
 
 
 def main():
@@ -4955,16 +5027,16 @@ The default action (assuming you do not specify anything) is to reset the form (
 #!chapter_004/src/snippet_007.py
 from decimal import Decimal
 
-from borb.pdf import HexColor
 from borb.pdf import CountryDropDownList
-from borb.pdf import TextField
-from borb.pdf import SingleColumnLayout
-from borb.pdf import PageLayout
-from borb.pdf import FixedColumnWidthTable
-from borb.pdf import Paragraph
 from borb.pdf import Document
-from borb.pdf import Page
+from borb.pdf import FixedColumnWidthTable
+from borb.pdf import HexColor
 from borb.pdf import PDF
+from borb.pdf import Page
+from borb.pdf import PageLayout
+from borb.pdf import Paragraph
+from borb.pdf import SingleColumnLayout
+from borb.pdf import TextField
 
 
 def main():
@@ -5016,18 +5088,18 @@ In this example you'll create a `Document` that shows an alert box whenever the 
 #!chapter_004/src/snippet_008.py
 from decimal import Decimal
 
-from borb.pdf import HexColor
-from borb.pdf import CountryDropDownList
-from borb.pdf import TextField
-from borb.pdf import SingleColumnLayout
-from borb.pdf import PageLayout
-from borb.pdf import FixedColumnWidthTable
-from borb.pdf import Paragraph
-from borb.pdf import Document
-from borb.pdf import Page
-from borb.pdf import PDF
-from borb.pdf import JavaScriptPushButton
 from borb.pdf import Alignment
+from borb.pdf import CountryDropDownList
+from borb.pdf import Document
+from borb.pdf import FixedColumnWidthTable
+from borb.pdf import HexColor
+from borb.pdf import JavaScriptPushButton
+from borb.pdf import PDF
+from borb.pdf import Page
+from borb.pdf import PageLayout
+from borb.pdf import Paragraph
+from borb.pdf import SingleColumnLayout
+from borb.pdf import TextField
 
 
 def main():
@@ -5098,16 +5170,16 @@ We'll start by creating a PDF with a form in it:
 #!chapter_004/src/snippet_009.py
 from decimal import Decimal
 
-from borb.pdf import HexColor
 from borb.pdf import CountryDropDownList
-from borb.pdf import TextField
-from borb.pdf import SingleColumnLayout
-from borb.pdf import PageLayout
-from borb.pdf import FixedColumnWidthTable
-from borb.pdf import Paragraph
 from borb.pdf import Document
-from borb.pdf import Page
+from borb.pdf import FixedColumnWidthTable
+from borb.pdf import HexColor
 from borb.pdf import PDF
+from borb.pdf import Page
+from borb.pdf import PageLayout
+from borb.pdf import Paragraph
+from borb.pdf import SingleColumnLayout
+from borb.pdf import TextField
 
 
 def main():
@@ -5156,12 +5228,7 @@ Finally, with our form filled in (and saved), we can get the filled in values in
 
 ```python
 #!chapter_004/src/snippet_010.py
-from decimal import Decimal
-
-from borb.pdf import HexColor
-from borb.pdf import PageLayout
 from borb.pdf import Document
-from borb.pdf import Page
 from borb.pdf import PDF
 
 
@@ -5213,12 +5280,7 @@ Later you'll learn how to remove interactivity by flattening the `Document`.
 
 ```python
 #!chapter_004/src/snippet_011.py
-from decimal import Decimal
-
-from borb.pdf import HexColor
-from borb.pdf import PageLayout
 from borb.pdf import Document
-from borb.pdf import Page
 from borb.pdf import PDF
 
 
@@ -5259,18 +5321,18 @@ In the next example, you'll be creating a PDF with a simple `JavaScriptPushButto
 #!chapter_004/src/snippet_012.py
 from decimal import Decimal
 
-from borb.pdf import HexColor
-from borb.pdf import CountryDropDownList
-from borb.pdf import TextField
-from borb.pdf import SingleColumnLayout
-from borb.pdf import PageLayout
-from borb.pdf import FixedColumnWidthTable
-from borb.pdf import Paragraph
-from borb.pdf import Document
-from borb.pdf import Page
-from borb.pdf import PDF
-from borb.pdf import JavaScriptPushButton
 from borb.pdf import Alignment
+from borb.pdf import CountryDropDownList
+from borb.pdf import Document
+from borb.pdf import FixedColumnWidthTable
+from borb.pdf import HexColor
+from borb.pdf import JavaScriptPushButton
+from borb.pdf import PDF
+from borb.pdf import Page
+from borb.pdf import PageLayout
+from borb.pdf import Paragraph
+from borb.pdf import SingleColumnLayout
+from borb.pdf import TextField
 
 
 def main():
@@ -5364,13 +5426,15 @@ In order to be able to test these examples and get the same result as the book, 
 
 ```python
 #!chapter_005/src/snippet_001.py
-from borb.io.read.types import Name, String, Dictionary
-from borb.pdf import SingleColumnLayout
+from borb.io.read.types import Dictionary
+from borb.io.read.types import Name
+from borb.io.read.types import String
+from borb.pdf import Document
+from borb.pdf import PDF
+from borb.pdf import Page
 from borb.pdf import PageLayout
 from borb.pdf import Paragraph
-from borb.pdf import Document
-from borb.pdf import Page
-from borb.pdf import PDF
+from borb.pdf import SingleColumnLayout
 
 
 def main():
@@ -5428,6 +5492,7 @@ Now, let's assume you're getting this PDF (perhaps via email, or some automated 
 ```python
 #!chapter_005/src/snippet_002.py
 import typing
+
 from borb.pdf import Document
 from borb.pdf import PDF
 
@@ -5469,6 +5534,7 @@ You can easily mitigate this by checking the producer property, and separating t
 ```python
 #!chapter_005/src/snippet_003.py
 import typing
+
 from borb.pdf import Document
 from borb.pdf import PDF
 
@@ -5512,6 +5578,7 @@ So you may find these methods return `None` when you test them on a `Document` t
 ```python
 #!chapter_005/src/snippet_004.py
 import typing
+
 from borb.pdf import Document
 from borb.pdf import PDF
 
@@ -5558,6 +5625,7 @@ You'll be using the same input PDF as earlier (containing a paragraph of lorem i
 ```python
 #!chapter_005/src/snippet_005.py
 import typing
+
 from borb.pdf import Document
 from borb.pdf import PDF
 from borb.toolkit import SimpleTextExtraction
@@ -5622,6 +5690,7 @@ The code is very similar to what you've done earlier.
 ```python
 #!chapter_005/src/snippet_006.py
 import typing
+
 from borb.pdf import Document
 from borb.pdf import PDF
 from borb.toolkit import RegularExpressionTextExtraction
@@ -5696,9 +5765,9 @@ In the next example you'll be using the coordinates from the previous example, t
 import typing
 from decimal import Decimal
 
-from borb.pdf.canvas.geometry.rectangle import Rectangle
 from borb.pdf import Document
 from borb.pdf import PDF
+from borb.pdf.canvas.geometry.rectangle import Rectangle
 from borb.toolkit import LocationFilter
 from borb.toolkit import SimpleTextExtraction
 
@@ -5758,12 +5827,12 @@ knowing the text you'd really like to extract will be on the right of that piece
 import typing
 from decimal import Decimal
 
-from borb.pdf.canvas.geometry.rectangle import Rectangle
 from borb.pdf import Document
 from borb.pdf import PDF
+from borb.pdf.canvas.geometry.rectangle import Rectangle
 from borb.toolkit import LocationFilter
-from borb.toolkit import RegularExpressionTextExtraction
 from borb.toolkit import PDFMatch
+from borb.toolkit import RegularExpressionTextExtraction
 from borb.toolkit import SimpleTextExtraction
 
 
@@ -5868,13 +5937,12 @@ You'll be creating a `Document` containing information about "Lorem Ipsum".
 
 ```python
 #!chapter_005/src/snippet_009.py
-from borb.io.read.types import Name, String, Dictionary
-from borb.pdf import SingleColumnLayout
+from borb.pdf import Document
+from borb.pdf import PDF
+from borb.pdf import Page
 from borb.pdf import PageLayout
 from borb.pdf import Paragraph
-from borb.pdf import Document
-from borb.pdf import Page
-from borb.pdf import PDF
+from borb.pdf import SingleColumnLayout
 
 
 def main():
@@ -5940,15 +6008,10 @@ Now you can unleash `TFIDFKeywordExtraction` on the `Document` you made;
 #!chapter_005/src/snippet_010.py
 import typing
 
-from borb.io.read.types import Name, String, Dictionary
-from borb.pdf import SingleColumnLayout
-from borb.pdf import PageLayout
-from borb.pdf import Paragraph
 from borb.pdf import Document
-from borb.pdf import Page
 from borb.pdf import PDF
-from borb.toolkit import TFIDFKeywordExtraction
 from borb.toolkit import ENGLISH_STOP_WORDS
+from borb.toolkit import TFIDFKeywordExtraction
 
 
 def main():
@@ -5992,15 +6055,9 @@ The algorithm is explained in detail in the paper at https://web.eecs.umich.edu/
 #!chapter_005/src/snippet_011.py
 import typing
 
-from borb.io.read.types import Name, String, Dictionary
-from borb.pdf import SingleColumnLayout
-from borb.pdf import PageLayout
-from borb.pdf import Paragraph
 from borb.pdf import Document
-from borb.pdf import Page
 from borb.pdf import PDF
 from borb.toolkit import TextRankKeywordExtraction
-from borb.toolkit import ENGLISH_STOP_WORDS
 
 
 def main():
@@ -6061,17 +6118,16 @@ To start this example, you'll be creating a PDF containing multiple colors. You'
 
 ```python
 #!chapter_005/src/snippet_012.py
-from borb.io.read.types import Name, String, Dictionary
-from borb.pdf import SingleColumnLayout
-from borb.pdf import PageLayout
-from borb.pdf import Paragraph
+from decimal import Decimal
+
 from borb.pdf import Document
-from borb.pdf import Page
-from borb.pdf import PDF
 from borb.pdf import HexColor
 from borb.pdf import Image
-
-from decimal import Decimal
+from borb.pdf import PDF
+from borb.pdf import Page
+from borb.pdf import PageLayout
+from borb.pdf import Paragraph
+from borb.pdf import SingleColumnLayout
 
 
 def main():
@@ -6121,21 +6177,20 @@ rather than having their RGB values printed out on the console.
 
 ```python
 #!chapter_005/src/snippet_013.py
+import typing
 from decimal import Decimal
 
-import typing
-from borb.pdf import HexColor, RGBColor
-from borb.pdf.canvas.geometry.rectangle import Rectangle
-from borb.pdf import ConnectedShape
 from borb.pdf import Alignment
-from borb.pdf import SingleColumnLayout
-from borb.pdf import PageLayout
-from borb.pdf import FlexibleColumnWidthTable
-from borb.pdf import Paragraph
-from borb.pdf import LineArtFactory
+from borb.pdf import ConnectedShape
 from borb.pdf import Document
-from borb.pdf import Page
+from borb.pdf import FlexibleColumnWidthTable
+from borb.pdf import LineArtFactory
 from borb.pdf import PDF
+from borb.pdf import Page
+from borb.pdf import PageLayout
+from borb.pdf import Paragraph
+from borb.pdf import SingleColumnLayout
+from borb.pdf.canvas.geometry.rectangle import Rectangle
 from borb.toolkit import ColorExtraction
 
 
@@ -6203,13 +6258,12 @@ You'll start by creating a PDF with several fonts;
 
 ```python
 #!chapter_005/src/snippet_014.py
-from borb.pdf import UnorderedList
-from borb.pdf import SingleColumnLayout
+from borb.pdf import Document
+from borb.pdf import PDF
+from borb.pdf import Page
 from borb.pdf import PageLayout
 from borb.pdf import Paragraph
-from borb.pdf import Document
-from borb.pdf import Page
-from borb.pdf import PDF
+from borb.pdf import SingleColumnLayout
 
 
 def main():
@@ -6246,6 +6300,7 @@ And now you can process that PDF and retrieve the fonts;
 ```python
 #!chapter_005/src/snippet_015.py
 import typing
+
 from borb.pdf import Document
 from borb.pdf import PDF
 from borb.toolkit import FontExtraction
@@ -6287,13 +6342,12 @@ First things first though, let's create an example PDF with text in different fo
 
 ```python
 #!chapter_005/src/snippet_016.py
-from borb.pdf import UnorderedList
-from borb.pdf import SingleColumnLayout
+from borb.pdf import Document
+from borb.pdf import PDF
+from borb.pdf import Page
 from borb.pdf import PageLayout
 from borb.pdf import Paragraph
-from borb.pdf import Document
-from borb.pdf import Page
-from borb.pdf import PDF
+from borb.pdf import SingleColumnLayout
 
 
 def main():
@@ -6332,6 +6386,7 @@ Now we can run the code to filter on `font_name`:
 ```python
 #!chapter_005/src/snippet_017.py
 import typing
+
 from borb.pdf import Document
 from borb.pdf import PDF
 from borb.toolkit import FontNameFilter
@@ -6386,13 +6441,12 @@ We're going to start by creating an input PDF with text in various colors.
 
 ```python
 #!chapter_005/src/snippet_018.py
-from borb.pdf import UnorderedList
-from borb.pdf import SingleColumnLayout
+from borb.pdf import Document
+from borb.pdf import PDF
+from borb.pdf import Page
 from borb.pdf import PageLayout
 from borb.pdf import Paragraph
-from borb.pdf import Document
-from borb.pdf import Page
-from borb.pdf import PDF
+from borb.pdf import SingleColumnLayout
 from borb.pdf import X11Color
 
 
@@ -6436,13 +6490,13 @@ Now we can filter the text in the PDF by selecting the red letters:
 ```python
 #!chapter_005/src/snippet_019.py
 import typing
+from decimal import Decimal
+
 from borb.pdf import Document
 from borb.pdf import PDF
+from borb.pdf import X11Color
 from borb.toolkit import FontColorFilter
 from borb.toolkit import SimpleTextExtraction
-from borb.pdf import X11Color
-
-from decimal import Decimal
 
 
 def main():
@@ -6488,16 +6542,14 @@ To get started, let's briefly re-iterate one of the earlier examples about inser
 
 ```python
 #!chapter_005/src/snippet_020.py
-from borb.io.read.types import Name, String, Dictionary
-from borb.pdf import SingleColumnLayout
-from borb.pdf import PageLayout
-from borb.pdf import Paragraph
-from borb.pdf import Document
-from borb.pdf import Page
-from borb.pdf import PDF
-from borb.pdf import Image
-
 from decimal import Decimal
+
+from borb.pdf import Document
+from borb.pdf import Image
+from borb.pdf import PDF
+from borb.pdf import Page
+from borb.pdf import PageLayout
+from borb.pdf import SingleColumnLayout
 
 
 def main():
@@ -6542,12 +6594,7 @@ Now that you have an input `Document`, let's go ahead and extract the `Image` fr
 #!chapter_005/src/snippet_021.py
 import typing
 
-from borb.io.read.types import Name, String, Dictionary
-from borb.pdf import SingleColumnLayout
-from borb.pdf import PageLayout
-from borb.pdf import Paragraph
 from borb.pdf import Document
-from borb.pdf import Page
 from borb.pdf import PDF
 from borb.toolkit import ImageExtraction
 
@@ -6605,12 +6652,7 @@ First you'll be exploring the PDF, using the JSON-like structure `borb` has crea
 #!chapter_005/src/snippet_022.py
 import typing
 
-from borb.io.read.types import Name, String, Dictionary
-from borb.pdf import SingleColumnLayout
-from borb.pdf import PageLayout
-from borb.pdf import Paragraph
 from borb.pdf import Document
-from borb.pdf import Page
 from borb.pdf import PDF
 
 
@@ -6653,15 +6695,9 @@ First, you'll write this simple function to convert an `Image` to its sepia coun
 #!chapter_005/src/snippet_023.py
 import typing
 
-from borb.io.read.types import Name, String, Dictionary
-from borb.pdf import SingleColumnLayout
-from borb.pdf import PageLayout
-from borb.pdf import Paragraph
-from borb.pdf import Document
-from borb.pdf import Page
-from borb.pdf import PDF
-
 from PIL import Image as PILImage
+from borb.pdf import Document
+from borb.pdf import PDF
 
 
 def modify_image(image: PILImage.Image):
@@ -6729,12 +6765,7 @@ Now you can use the following code to optimize the `Image` dimensions:
 #!chapter_005/src/snippet_024.py
 import typing
 
-from borb.io.read.types import Name, String, Dictionary
-from borb.pdf import SingleColumnLayout
-from borb.pdf import PageLayout
-from borb.pdf import Paragraph
 from borb.pdf import Document
-from borb.pdf import Page
 from borb.pdf import PDF
 from borb.toolkit import ImageFormatOptimization
 
@@ -6787,12 +6818,12 @@ In this example, you'll be creating a `Document` containing one `Paragraph`, and
 
 ```python
 #!chapter_005/src/snippet_025.py
-from borb.pdf import SingleColumnLayout
+from borb.pdf import Document
+from borb.pdf import PDF
+from borb.pdf import Page
 from borb.pdf import PageLayout
 from borb.pdf import Paragraph
-from borb.pdf import Document
-from borb.pdf import Page
-from borb.pdf import PDF
+from borb.pdf import SingleColumnLayout
 
 
 def main():
@@ -6857,6 +6888,7 @@ Now that you can embed files in a PDF, let's see how you can retrieve those file
 ```python
 #!chapter_005/src/snippet_026.py
 import typing
+
 from borb.pdf import Document
 from borb.pdf import PDF
 
@@ -6903,19 +6935,13 @@ You'll start by creating two methods that each create (and write) a PDF document
 
 ```python
 #!chapter_005/src/snippet_027.py
-import typing
 from borb.pdf import Document
-from borb.pdf import PDF
-
-import typing
-
 from borb.pdf import HexColor
-from borb.pdf import SingleColumnLayout
+from borb.pdf import PDF
+from borb.pdf import Page
 from borb.pdf import PageLayout
 from borb.pdf import Paragraph
-from borb.pdf import Document
-from borb.pdf import Page
-from borb.pdf import PDF
+from borb.pdf import SingleColumnLayout
 
 
 def main():
@@ -6955,19 +6981,13 @@ Now you can write a second (similar) PDF document:
 
 ```python
 #!chapter_005/src/snippet_028.py
-import typing
 from borb.pdf import Document
-from borb.pdf import PDF
-
-import typing
-
 from borb.pdf import HexColor
-from borb.pdf import SingleColumnLayout
+from borb.pdf import PDF
+from borb.pdf import Page
 from borb.pdf import PageLayout
 from borb.pdf import Paragraph
-from borb.pdf import Document
-from borb.pdf import Page
-from borb.pdf import PDF
+from borb.pdf import SingleColumnLayout
 
 
 def main():
@@ -7005,17 +7025,8 @@ Finally, you can write the main method, which will create both documents, read t
 ```python
 #!chapter_005/src/snippet_029.py
 import typing
-from borb.pdf import Document
-from borb.pdf import PDF
 
-import typing
-
-from borb.pdf import HexColor
-from borb.pdf import SingleColumnLayout
-from borb.pdf import PageLayout
-from borb.pdf import Paragraph
 from borb.pdf import Document
-from borb.pdf import Page
 from borb.pdf import PDF
 
 
@@ -7054,20 +7065,15 @@ This document has 10 pages.
 
 ```python
 #!chapter_005/src/snippet_030.py
-import typing
-from borb.pdf import Document
-from borb.pdf import PDF
-
 from decimal import Decimal
-import typing
 
+from borb.pdf import Document
 from borb.pdf import HexColor
-from borb.pdf import SingleColumnLayout
+from borb.pdf import PDF
+from borb.pdf import Page
 from borb.pdf import PageLayout
 from borb.pdf import Paragraph
-from borb.pdf import Document
-from borb.pdf import Page
-from borb.pdf import PDF
+from borb.pdf import SingleColumnLayout
 
 
 def main():
@@ -7117,20 +7123,15 @@ The second document will also have 10 pages. The page number will also be displa
 
 ```python
 #!chapter_005/src/snippet_031.py
-import typing
-from borb.pdf import Document
-from borb.pdf import PDF
-
 from decimal import Decimal
-import typing
 
+from borb.pdf import Document
 from borb.pdf import HexColor
-from borb.pdf import SingleColumnLayout
+from borb.pdf import PDF
+from borb.pdf import Page
 from borb.pdf import PageLayout
 from borb.pdf import Paragraph
-from borb.pdf import Document
-from borb.pdf import Page
-from borb.pdf import PDF
+from borb.pdf import SingleColumnLayout
 
 
 def main():
@@ -7179,15 +7180,10 @@ To build the merged document you'll be selecting a page from each input document
 ```python
 #!chapter_005/src/snippet_032.py
 import typing
+
 from borb.pdf import Document
 from borb.pdf import PDF
-
-import typing
-from decimal import Decimal
-
-from borb.pdf import Document
 from borb.pdf import Page
-from borb.pdf import PDF
 
 
 def main():
@@ -7238,20 +7234,15 @@ First of course, we need to create a `Document` to start with;
 
 ```python
 #!chapter_005/src/snippet_033.py
-import typing
-from borb.pdf import Document
-from borb.pdf import PDF
-
-import typing
 from decimal import Decimal
 
 from borb.pdf import Document
-from borb.pdf import Page
-from borb.pdf import PDF
+from borb.pdf import HexColor
 from borb.pdf import MultiColumnLayout
+from borb.pdf import PDF
+from borb.pdf import Page
 from borb.pdf import PageLayout
 from borb.pdf import Paragraph
-from borb.pdf import HexColor
 
 
 def main():
@@ -7309,19 +7300,9 @@ Now that we have a substantial `Document`, we can remove a `Page` from it;
 ```python
 #!chapter_005/src/snippet_034.py
 import typing
-from borb.pdf import Document
-from borb.pdf import PDF
-
-import typing
-from decimal import Decimal
 
 from borb.pdf import Document
-from borb.pdf import Page
 from borb.pdf import PDF
-from borb.pdf import MultiColumnLayout
-from borb.pdf import PageLayout
-from borb.pdf import Paragraph
-from borb.pdf import HexColor
 
 
 def main():
@@ -7358,20 +7339,15 @@ You can rotate a `Page` any multiple of 90 degrees.
 
 ```python
 #!chapter_005/src/snippet_035.py
-import typing
-from borb.pdf import Document
-from borb.pdf import PDF
-
-import typing
 from decimal import Decimal
 
 from borb.pdf import Document
-from borb.pdf import Page
-from borb.pdf import PDF
+from borb.pdf import HexColor
 from borb.pdf import MultiColumnLayout
+from borb.pdf import PDF
+from borb.pdf import Page
 from borb.pdf import PageLayout
 from borb.pdf import Paragraph
-from borb.pdf import HexColor
 
 
 def main():
@@ -7431,19 +7407,9 @@ Now let's rotate a `Page`:
 ```python
 #!chapter_005/src/snippet_036.py
 import typing
-from borb.pdf import Document
-from borb.pdf import PDF
-
-import typing
-from decimal import Decimal
 
 from borb.pdf import Document
-from borb.pdf import Page
 from borb.pdf import PDF
-from borb.pdf import MultiColumnLayout
-from borb.pdf import PageLayout
-from borb.pdf import Paragraph
-from borb.pdf import HexColor
 
 
 def main():
@@ -7508,17 +7474,17 @@ You can do this with a PDF that was just created, or with an existing PDF.
 #!chapter_006/src/snippet_001.py
 from decimal import Decimal
 
-from borb.pdf.canvas.layout.annotation.polygon_annotion import PolygonAnnotation
+from borb.pdf import Document
 from borb.pdf import HexColor
-from borb.pdf.canvas.geometry.rectangle import Rectangle
-from borb.pdf import SingleColumnLayout
+from borb.pdf import PDF
+from borb.pdf import Page
 from borb.pdf import PageLayout
 from borb.pdf import Paragraph
+from borb.pdf import SingleColumnLayout
+from borb.pdf.canvas.geometry.rectangle import Rectangle
+from borb.pdf.canvas.layout.annotation.polygon_annotion import PolygonAnnotation
 from borb.pdf.canvas.line_art.line_art_factory import LineArtFactory
-from borb.pdf import Document
-from borb.pdf import Page
 from borb.pdf.page.page_size import PageSize
-from borb.pdf import PDF
 
 
 def main():
@@ -7583,19 +7549,17 @@ This is comparable to adding a pop-up Post-it note to a PDF.
 #!chapter_006/src/snippet_002.py
 from decimal import Decimal
 
-from borb.pdf.canvas.layout.annotation.text_annotation import (
-    TextAnnotation,
-    TextAnnotationIconType,
-)
+from borb.pdf import Document
 from borb.pdf import HexColor
-from borb.pdf.canvas.geometry.rectangle import Rectangle
-from borb.pdf import SingleColumnLayout
+from borb.pdf import PDF
+from borb.pdf import Page
 from borb.pdf import PageLayout
 from borb.pdf import Paragraph
-from borb.pdf import Document
-from borb.pdf import Page
+from borb.pdf import SingleColumnLayout
+from borb.pdf.canvas.geometry.rectangle import Rectangle
+from borb.pdf.canvas.layout.annotation.text_annotation import TextAnnotation
+from borb.pdf.canvas.layout.annotation.text_annotation import TextAnnotationIconType
 from borb.pdf.page.page_size import PageSize
-from borb.pdf import PDF
 
 
 def main():
@@ -7673,19 +7637,17 @@ and provide each of them with a convenient "back to the beginning" link annotati
 #!chapter_006/src/snippet_003.py
 from decimal import Decimal
 
-from borb.pdf.canvas.layout.annotation.link_annotation import (
-    LinkAnnotation,
-    DestinationType,
-)
+from borb.pdf import Document
 from borb.pdf import HexColor
-from borb.pdf.canvas.geometry.rectangle import Rectangle
-from borb.pdf import SingleColumnLayout
+from borb.pdf import PDF
+from borb.pdf import Page
 from borb.pdf import PageLayout
 from borb.pdf import Paragraph
-from borb.pdf import Document
-from borb.pdf import Page
+from borb.pdf import SingleColumnLayout
+from borb.pdf.canvas.geometry.rectangle import Rectangle
+from borb.pdf.canvas.layout.annotation.link_annotation import DestinationType
+from borb.pdf.canvas.layout.annotation.link_annotation import LinkAnnotation
 from borb.pdf.page.page_size import PageSize
-from borb.pdf import PDF
 
 
 def main():
@@ -7818,18 +7780,17 @@ This can be particularly useful if your PDF is part of a document-process where 
 #!chapter_006/src/snippet_004.py
 from decimal import Decimal
 
+from borb.pdf import Document
+from borb.pdf import PDF
+from borb.pdf import Page
+from borb.pdf import PageLayout
+from borb.pdf import Paragraph
+from borb.pdf import SingleColumnLayout
+from borb.pdf.canvas.geometry.rectangle import Rectangle
 from borb.pdf.canvas.layout.annotation.remote_go_to_annotation import (
     RemoteGoToAnnotation,
 )
-from borb.pdf import HexColor
-from borb.pdf.canvas.geometry.rectangle import Rectangle
-from borb.pdf import SingleColumnLayout
-from borb.pdf import PageLayout
-from borb.pdf import Paragraph
-from borb.pdf import Document
-from borb.pdf import Page
 from borb.pdf.page.page_size import PageSize
-from borb.pdf import PDF
 
 
 def main():
@@ -7889,18 +7850,16 @@ In the next example, you'll be adding a rubber stamp annotation to a simple "lor
 #!chapter_006/src/snippet_005.py
 from decimal import Decimal
 
-from borb.pdf.canvas.layout.annotation.rubber_stamp_annotation import (
-    RubberStampAnnotation,
-    RubberStampAnnotationIconType,
-)
-from borb.pdf.canvas.geometry.rectangle import Rectangle
-from borb.pdf import SingleColumnLayout
+from borb.pdf import Document
+from borb.pdf import PDF
+from borb.pdf import Page
 from borb.pdf import PageLayout
 from borb.pdf import Paragraph
-from borb.pdf import Document
-from borb.pdf import Page
+from borb.pdf import SingleColumnLayout
+from borb.pdf.canvas.geometry.rectangle import Rectangle
+from borb.pdf.canvas.layout.annotation.rubber_stamp_annotation import RubberStampAnnotation
+from borb.pdf.canvas.layout.annotation.rubber_stamp_annotation import RubberStampAnnotationIconType
 from borb.pdf.page.page_size import PageSize
-from borb.pdf import PDF
 
 
 def main():
@@ -8002,14 +7961,14 @@ Redaction annotations are simply another kind of annotation, so all the methods 
 #!chapter_006/src/snippet_006.py
 from decimal import Decimal
 
-from borb.pdf.canvas.layout.annotation.redact_annotation import RedactAnnotation
-from borb.pdf.canvas.geometry.rectangle import Rectangle
-from borb.pdf import SingleColumnLayout
+from borb.pdf import Document
+from borb.pdf import PDF
+from borb.pdf import Page
 from borb.pdf import PageLayout
 from borb.pdf import Paragraph
-from borb.pdf import Document
-from borb.pdf import Page
-from borb.pdf import PDF
+from borb.pdf import SingleColumnLayout
+from borb.pdf.canvas.geometry.rectangle import Rectangle
+from borb.pdf.canvas.layout.annotation.redact_annotation import RedactAnnotation
 
 
 def main():
@@ -8106,6 +8065,7 @@ In this example you'll be applying the redaction annotations you added to the `D
 ```python
 #!chapter_006/src/snippet_007.py
 import typing
+
 from borb.pdf import Document
 from borb.pdf import PDF
 
@@ -8142,20 +8102,18 @@ You're going to add some `JavaScript` to the button's onclick.
 
 ```python
 #!chapter_006/src/snippet_008.py
-import typing
+from decimal import Decimal
+
+from borb.io.read.types import Name
+from borb.io.read.types import String
 from borb.pdf import Document
-from borb.pdf import PDF
-from borb.io.read.types import Name, String
-from borb.pdf.canvas.geometry.rectangle import Rectangle
-from borb.pdf import SingleColumnLayout
-from borb.pdf import PageLayout
-from borb.pdf import Page
 from borb.pdf import Image
+from borb.pdf import PDF
+from borb.pdf import Page
+from borb.pdf import SingleColumnLayout
 from borb.pdf.canvas.layout.annotation.remote_go_to_annotation import (
     RemoteGoToAnnotation,
 )
-
-from decimal import Decimal
 
 
 def main():
@@ -8210,16 +8168,14 @@ In this example we're going to add a `SoundAnnotation` to a PDF, which plays som
 
 ```python
 #!chapter_006/src/snippet_009.py
-import typing
-from borb.pdf import Document
-from borb.pdf import PDF
-from borb.pdf.canvas.geometry.rectangle import Rectangle
-from borb.pdf import SingleColumnLayout
-from borb.pdf import PageLayout
-from borb.pdf import Page
-from borb.pdf import Image
-from borb.pdf.canvas.layout.annotation.sound_annotation import SoundAnnotation
 from decimal import Decimal
+
+from borb.pdf import Document
+from borb.pdf import Image
+from borb.pdf import PDF
+from borb.pdf import Page
+from borb.pdf import SingleColumnLayout
+from borb.pdf.canvas.layout.annotation.sound_annotation import SoundAnnotation
 
 
 def main():
@@ -8303,18 +8259,16 @@ In order to provide `borb` with a challenge, let's create a `Table` with:
 #!chapter_007/src/snippet_001.py
 from decimal import Decimal
 
-import typing
-from borb.pdf import HexColor, X11Color
 from borb.pdf import Alignment
-from borb.pdf import SingleColumnLayout
-from borb.pdf import PageLayout
-from borb.pdf import TableCell
-from borb.pdf import FlexibleColumnWidthTable
-from borb.pdf import Table
-from borb.pdf import Paragraph
 from borb.pdf import Document
-from borb.pdf import Page
+from borb.pdf import FlexibleColumnWidthTable
+from borb.pdf import HexColor
 from borb.pdf import PDF
+from borb.pdf import Page
+from borb.pdf import PageLayout
+from borb.pdf import Paragraph
+from borb.pdf import SingleColumnLayout
+from borb.pdf import TableCell
 
 
 def main():
@@ -8382,22 +8336,16 @@ This is something I do a lot, adding annotations is a quick and easy way to debu
 
 ```python
 #!chapter_007/src/snippet_002.py
+import typing
 from decimal import Decimal
 
-import typing
-from borb.pdf import HexColor, X11Color
-from borb.pdf import Alignment
-from borb.pdf import SingleColumnLayout
-from borb.pdf import PageLayout
-from borb.pdf import TableCell
-from borb.pdf import FlexibleColumnWidthTable
-from borb.pdf import Table
-from borb.pdf import Paragraph
 from borb.pdf import Document
-from borb.pdf import Page
 from borb.pdf import PDF
-from borb.toolkit.table.table_detection_by_lines import TableDetectionByLines
+from borb.pdf import Page
+from borb.pdf import Table
+from borb.pdf import X11Color
 from borb.pdf.canvas.layout.annotation.square_annotation import SquareAnnotation
+from borb.toolkit.table.table_detection_by_lines import TableDetectionByLines
 
 
 def main():
@@ -8472,12 +8420,9 @@ This `Image` will then be inserted in a PDF.
 
 ```python
 #!chapter_007/src/snippet_003.py
-import typing
-from pathlib import Path
-
-from borb.pdf import PDF
 from PIL import Image as PILImage  # type: ignore [import]
-from PIL import ImageDraw, ImageFont
+from PIL import ImageDraw
+from PIL import ImageFont
 
 
 def create_image() -> PILImage:
@@ -8502,18 +8447,18 @@ Now you can build a `Document` with this `Image`
 
 ```python
 #!chapter_007/src/snippet_004.py
-import typing
 from pathlib import Path
 
+from PIL import Image as PILImage  # type: ignore [import]
+from PIL import ImageDraw
+from PIL import ImageFont
+from borb.pdf import Document
 from borb.pdf import Image
-from borb.pdf import SingleColumnLayout
+from borb.pdf import PDF
+from borb.pdf import Page
 from borb.pdf import PageLayout
 from borb.pdf import Paragraph
-from borb.pdf import Document
-from borb.pdf import Page
-from borb.pdf import PDF
-from PIL import Image as PILImage  # type: ignore [import]
-from PIL import ImageDraw, ImageFont
+from borb.pdf import SingleColumnLayout
 
 
 def create_image() -> PILImage:
@@ -8577,11 +8522,11 @@ Now you can apply OCR to this `Document`:
 
 ```python
 #!chapter_007/src/snippet_005.py
+from pathlib import Path
+
 from borb.pdf import Document
 from borb.pdf import PDF
 from borb.toolkit.ocr.ocr_as_optional_content_group import OCRAsOptionalContentGroup
-
-from pathlib import Path
 
 
 def main():
@@ -8664,15 +8609,15 @@ In the next example you'll be creating a PDF with different fonts, font-sizes an
 
 ```python
 #!chapter_007/src/snippet_007.py
+from decimal import Decimal
+
 from borb.pdf import Document
-from borb.pdf import Page
-from borb.pdf import SingleColumnLayout
-from borb.pdf import PageLayout
-from borb.pdf import Paragraph
 from borb.pdf import Image
 from borb.pdf import PDF
-
-from decimal import Decimal
+from borb.pdf import Page
+from borb.pdf import PageLayout
+from borb.pdf import Paragraph
+from borb.pdf import SingleColumnLayout
 
 
 def main():
@@ -8757,11 +8702,11 @@ if __name__ == "__main__":
 
 ```python
 #!chapter_007/src/snippet_009.py
+import xml.etree.ElementTree as ET
+from pathlib import Path
+
 from borb.pdf import PDF
 from borb.toolkit.export.pdf_to_svg import PDFToSVG
-
-from pathlib import Path
-import xml.etree.ElementTree as ET
 
 
 def main():
@@ -8820,11 +8765,12 @@ Using `borb`, you can transform Markdown to PDF;
 
 ```python
 #!chapter_007/src/snippet_010.py
+from pathlib import Path
+
 from borb.pdf import Document
 from borb.pdf import PDF
 from borb.toolkit.export.markdown_to_pdf.markdown_to_pdf import MarkdownToPDF
 
-from pathlib import Path
 
 def main():
 
@@ -8872,11 +8818,12 @@ For this example, you'll be using the following HTML snippet:
 
 ```python
 #!chapter_007/src/snippet_011.py
+from pathlib import Path
+
 from borb.pdf import Document
 from borb.pdf import PDF
 from borb.toolkit.export.html_to_pdf.html_to_pdf import HTMLToPDF
 
-from pathlib import Path
 
 def main():
 
@@ -8931,14 +8878,16 @@ We're going to be start by creating a PDF.
 
 ```python
 #!chapter_007/src/snippet_012.py
-from borb.pdf import Document
-from borb.pdf import Page
-from borb.pdf import PageLayout, SingleColumnLayout
-from borb.pdf import Table, FixedColumnWidthTable
-from borb.pdf import Paragraph
-from borb.pdf import PDF
-
 from decimal import Decimal
+
+from borb.pdf import Document
+from borb.pdf import FixedColumnWidthTable
+from borb.pdf import PDF
+from borb.pdf import Page
+from borb.pdf import PageLayout
+from borb.pdf import Paragraph
+from borb.pdf import SingleColumnLayout
+from borb.pdf import Table
 
 
 def main():
@@ -8983,11 +8932,11 @@ Now let's apply `SimpleFindReplace` to fix our little mistake:
 
 ```python
 #!chapter_007/src/snippet_013.py
+import typing
+
 from borb.pdf import Document
 from borb.pdf import PDF
 from borb.toolkit import SimpleFindReplace
-
-import typing
 
 
 def main():
@@ -9948,15 +9897,14 @@ Next we're going to build a `Document` containing the basic information.
 
 ```python
 #!chapter_009/src/snippet_002.py
+from decimal import Decimal
+
 from borb.pdf import Document
+from borb.pdf import HexColor
 from borb.pdf import Page
-from borb.pdf import PDF
-from borb.pdf import SingleColumnLayout
 from borb.pdf import PageLayout
 from borb.pdf import Paragraph
-from borb.pdf import HexColor
-
-from decimal import Decimal
+from borb.pdf import SingleColumnLayout
 
 # represent the sudoku as a plaintext str
 # every . represents an empty cell in the puzzle
@@ -10023,18 +9971,18 @@ We can render the sudoku in a `Document` by using a `FlexibleColumnWidthTable`
 
 ```python
 #!chapter_009/src/snippet_003.py
+from decimal import Decimal
+
+from borb.pdf import Alignment
 from borb.pdf import Document
+from borb.pdf import FlexibleColumnWidthTable
+from borb.pdf import HexColor
 from borb.pdf import Page
-from borb.pdf import PDF
-from borb.pdf import SingleColumnLayout
 from borb.pdf import PageLayout
 from borb.pdf import Paragraph
-from borb.pdf import HexColor
-from borb.pdf import FlexibleColumnWidthTable
-from borb.pdf import Table, TableCell
-from borb.pdf import Alignment
-
-from decimal import Decimal
+from borb.pdf import SingleColumnLayout
+from borb.pdf import Table
+from borb.pdf import TableCell
 
 # represent the sudoku as a plaintext str
 # every . represents an empty cell in the puzzle
@@ -10135,18 +10083,19 @@ Finally, we can store the `Document`
 
 ```python
 #!chapter_009/src/snippet_004.py
+from decimal import Decimal
+
+from borb.pdf import Alignment
 from borb.pdf import Document
-from borb.pdf import Page
+from borb.pdf import FlexibleColumnWidthTable
+from borb.pdf import HexColor
 from borb.pdf import PDF
-from borb.pdf import SingleColumnLayout
+from borb.pdf import Page
 from borb.pdf import PageLayout
 from borb.pdf import Paragraph
-from borb.pdf import HexColor
-from borb.pdf import FlexibleColumnWidthTable
-from borb.pdf import Table, TableCell
-from borb.pdf import Alignment
-
-from decimal import Decimal
+from borb.pdf import SingleColumnLayout
+from borb.pdf import Table
+from borb.pdf import TableCell
 
 # represent the sudoku as a plaintext str
 # every . represents an empty cell in the puzzle
@@ -10278,13 +10227,13 @@ Since we don't want to deal with calculating coordinates - we can delegate this 
 
 ```python
 #!chapter_009/src/snippet_006.py
+from decimal import Decimal
+
 from borb.pdf import Document
 from borb.pdf import Page
-
+from borb.pdf import PageLayout
 # New imports
 from borb.pdf import SingleColumnLayout
-from borb.pdf import PageLayout
-from decimal import Decimal
 
 
 def main():
@@ -10313,14 +10262,14 @@ Speaking of which, let's add the company logo to the layout:
 
 ```python
 #!chapter_009/src/snippet_007.py
-from borb.pdf import Document
-from borb.pdf import Page
-from borb.pdf import SingleColumnLayout
-from borb.pdf import PageLayout
 from decimal import Decimal
 
+from borb.pdf import Document
 # New imports
 from borb.pdf import Image
+from borb.pdf import Page
+from borb.pdf import PageLayout
+from borb.pdf import SingleColumnLayout
 
 
 def main():
@@ -10359,11 +10308,12 @@ A common format for brevity (which incidentally also makes the code cleaner) is 
 ```python
 #!chapter_009/src/snippet_008.py
 # New imports
+import random
+from datetime import datetime
+
+from borb.pdf import Alignment
 from borb.pdf import FixedColumnWidthTable
 from borb.pdf import Paragraph
-from borb.pdf import Alignment
-from datetime import datetime
-import random
 
 
 def _build_invoice_information():
@@ -10414,17 +10364,18 @@ Now, back in our main method, we can call `_build_invoice_information()` to popu
 
 ```python
 #!chapter_009/src/snippet_009.py
-from borb.pdf import Document
-from borb.pdf import Page
-from borb.pdf import SingleColumnLayout
-from borb.pdf import PageLayout
-from decimal import Decimal
-from borb.pdf import Image
-from borb.pdf import FixedColumnWidthTable
-from borb.pdf import Paragraph
-from borb.pdf import Alignment
-from datetime import datetime
 import random
+from datetime import datetime
+from decimal import Decimal
+
+from borb.pdf import Alignment
+from borb.pdf import Document
+from borb.pdf import FixedColumnWidthTable
+from borb.pdf import Image
+from borb.pdf import Page
+from borb.pdf import PageLayout
+from borb.pdf import Paragraph
+from borb.pdf import SingleColumnLayout
 
 
 def _build_invoice_information():
@@ -10503,7 +10454,8 @@ Great! Now we'll want to add the billing and shipping information as well. It'll
 ```python
 #!chapter_009/src/snippet_010.py
 # New imports
-from borb.pdf import HexColor, X11Color
+from borb.pdf import HexColor
+from borb.pdf import X11Color
 
 
 def _build_billing_and_shipping_information():
@@ -10542,18 +10494,20 @@ Let's call this in the main method as well:
 
 ```python
 #!chapter_009/src/snippet_011.py
-from borb.pdf import Document
-from borb.pdf import Page
-from borb.pdf import SingleColumnLayout
-from borb.pdf import PageLayout
-from decimal import Decimal
-from borb.pdf import Image
-from borb.pdf import FixedColumnWidthTable
-from borb.pdf import Paragraph
-from borb.pdf import Alignment
-from borb.pdf import HexColor, X11Color
-from datetime import datetime
 import random
+from datetime import datetime
+from decimal import Decimal
+
+from borb.pdf import Alignment
+from borb.pdf import Document
+from borb.pdf import FixedColumnWidthTable
+from borb.pdf import HexColor
+from borb.pdf import Image
+from borb.pdf import Page
+from borb.pdf import PageLayout
+from borb.pdf import Paragraph
+from borb.pdf import SingleColumnLayout
+from borb.pdf import X11Color
 
 
 def _build_invoice_information():
@@ -10688,8 +10642,9 @@ Now we can build a method `_build_itemized_description_table` that will render t
 ```python
 #!chapter_009/src/snippet_013.py
 # New Imports
-from borb.pdf import TableCell
 import typing
+
+from borb.pdf import TableCell
 
 
 def _build_itemized_description_table(products: typing.List["Product"] = []):
@@ -10795,20 +10750,22 @@ Let's call this method with some dummy `Product` items:
 
 ```python
 #!chapter_009/src/snippet_014.py
-from borb.pdf import Document
-from borb.pdf import Page
-from borb.pdf import SingleColumnLayout
-from borb.pdf import PageLayout
-from decimal import Decimal
-from borb.pdf import Image
-from borb.pdf import FixedColumnWidthTable
-from borb.pdf import Paragraph
-from borb.pdf import Alignment
-from borb.pdf import HexColor, X11Color
-from borb.pdf import TableCell
-from datetime import datetime
 import random
 import typing
+from datetime import datetime
+from decimal import Decimal
+
+from borb.pdf import Alignment
+from borb.pdf import Document
+from borb.pdf import FixedColumnWidthTable
+from borb.pdf import HexColor
+from borb.pdf import Image
+from borb.pdf import Page
+from borb.pdf import PageLayout
+from borb.pdf import Paragraph
+from borb.pdf import SingleColumnLayout
+from borb.pdf import TableCell
+from borb.pdf import X11Color
 
 
 class Product:
@@ -11045,22 +11002,23 @@ Finally, you can store the PDF to disk
 
 ```python
 #!chapter_009/src/snippet_015.py
-from borb.pdf import Document
-from borb.pdf import Page
-from borb.pdf import SingleColumnLayout
-from borb.pdf import PageLayout
-from decimal import Decimal
-from borb.pdf import Image
-from borb.pdf import FixedColumnWidthTable
-from borb.pdf import Paragraph
-from borb.pdf import Alignment
-from borb.pdf import HexColor, X11Color
-from borb.pdf import TableCell
-from borb.pdf import PDF
-
-from datetime import datetime
 import random
 import typing
+from datetime import datetime
+from decimal import Decimal
+
+from borb.pdf import Alignment
+from borb.pdf import Document
+from borb.pdf import FixedColumnWidthTable
+from borb.pdf import HexColor
+from borb.pdf import Image
+from borb.pdf import PDF
+from borb.pdf import Page
+from borb.pdf import PageLayout
+from borb.pdf import Paragraph
+from borb.pdf import SingleColumnLayout
+from borb.pdf import TableCell
+from borb.pdf import X11Color
 
 
 class Product:
@@ -11316,9 +11274,8 @@ These are the steps to creating a PDF document using borb:
 #!chapter_009/src/snippet_016.py
 from borb.pdf import Document
 from borb.pdf import Page
-from borb.pdf import PDF
-from borb.pdf import SingleColumnLayout
 from borb.pdf import PageLayout
+from borb.pdf import SingleColumnLayout
 
 
 def main():
@@ -11345,14 +11302,15 @@ We'd like to add some geometric artwork to our flyer in the upper right corner. 
 ```python
 #!chapter_009/src/snippet_017.py
 # new imports
-from borb.pdf import ConnectedShape
+import random
+import typing
 from decimal import Decimal
+
+from borb.pdf import ConnectedShape
+from borb.pdf import HexColor
 from borb.pdf import Page
-from borb.pdf import HexColor, X11Color
 from borb.pdf.canvas.geometry.rectangle import Rectangle
 from borb.pdf.page.page_size import PageSize
-import typing
-import random
 
 
 def add_gray_artwork_to_upper_right_corner(page: Page) -> None:
@@ -11409,18 +11367,18 @@ Now that we've defined this method, we can call it in the main body of our scrip
 
 ```python
 #!chapter_009/src/snippet_018.py
-from borb.pdf import Document
-from borb.pdf import Page
-from borb.pdf import PDF
-from borb.pdf import SingleColumnLayout
-from borb.pdf import PageLayout
-from borb.pdf import ConnectedShape
+import random
+import typing
 from decimal import Decimal
-from borb.pdf import HexColor, X11Color
+
+from borb.pdf import ConnectedShape
+from borb.pdf import Document
+from borb.pdf import HexColor
+from borb.pdf import Page
+from borb.pdf import PageLayout
+from borb.pdf import SingleColumnLayout
 from borb.pdf.canvas.geometry.rectangle import Rectangle
 from borb.pdf.page.page_size import PageSize
-import typing
-import random
 
 
 def add_gray_artwork_to_upper_right_corner(page: Page) -> None:
@@ -11498,26 +11456,26 @@ Next we're going to add our company contact details, so people know where to rea
 
 ```python
 #!chapter_009/src/snippet_019.py
-from borb.pdf import Document
-from borb.pdf import Page
-from borb.pdf import PDF
-from borb.pdf import SingleColumnLayout
-from borb.pdf import PageLayout
-from borb.pdf.canvas.layout.shape.connected_shape import ConnectedShape
+import random
+import typing
 from decimal import Decimal
-from borb.pdf import HexColor, X11Color
-from borb.pdf.canvas.geometry.rectangle import Rectangle
-from borb.pdf.page.page_size import PageSize
-from borb.pdf import Paragraph
-from borb.pdf.canvas.layout.image.barcode import Barcode, BarcodeType
-from borb.pdf.canvas.layout.layout_element import LayoutElement
+
+from borb.pdf import Document
 from borb.pdf import FlexibleColumnWidthTable
+from borb.pdf import HexColor
+from borb.pdf import Page
+from borb.pdf import PageLayout
+from borb.pdf import Paragraph
+from borb.pdf import SingleColumnLayout
+from borb.pdf.canvas.geometry.rectangle import Rectangle
 from borb.pdf.canvas.layout.annotation.remote_go_to_annotation import (
     RemoteGoToAnnotation,
 )
-
-import typing
-import random
+from borb.pdf.canvas.layout.image.barcode import Barcode
+from borb.pdf.canvas.layout.image.barcode import BarcodeType
+from borb.pdf.canvas.layout.layout_element import LayoutElement
+from borb.pdf.canvas.layout.shape.connected_shape import ConnectedShape
+from borb.pdf.page.page_size import PageSize
 
 
 def add_gray_artwork_to_upper_right_corner(page: Page) -> None:
@@ -11638,26 +11596,26 @@ Now we can add a few titles and subtitles and some promotional blurb;
 
 ```python
 #!chapter_009/src/snippet_020.py
-from borb.pdf import Document
-from borb.pdf import Page
-from borb.pdf import PDF
-from borb.pdf import SingleColumnLayout
-from borb.pdf import PageLayout
-from borb.pdf.canvas.layout.shape.connected_shape import ConnectedShape
+import random
+import typing
 from decimal import Decimal
-from borb.pdf import HexColor, X11Color
-from borb.pdf.canvas.geometry.rectangle import Rectangle
-from borb.pdf.page.page_size import PageSize
-from borb.pdf import Paragraph
-from borb.pdf.canvas.layout.image.barcode import Barcode, BarcodeType
-from borb.pdf.canvas.layout.layout_element import LayoutElement
+
+from borb.pdf import Document
 from borb.pdf import FlexibleColumnWidthTable
+from borb.pdf import HexColor
+from borb.pdf import Page
+from borb.pdf import PageLayout
+from borb.pdf import Paragraph
+from borb.pdf import SingleColumnLayout
+from borb.pdf.canvas.geometry.rectangle import Rectangle
 from borb.pdf.canvas.layout.annotation.remote_go_to_annotation import (
     RemoteGoToAnnotation,
 )
-
-import typing
-import random
+from borb.pdf.canvas.layout.image.barcode import Barcode
+from borb.pdf.canvas.layout.image.barcode import BarcodeType
+from borb.pdf.canvas.layout.layout_element import LayoutElement
+from borb.pdf.canvas.layout.shape.connected_shape import ConnectedShape
+from borb.pdf.page.page_size import PageSize
 
 
 def add_gray_artwork_to_upper_right_corner(page: Page) -> None:
@@ -11809,30 +11767,30 @@ Images make things more visually interesting. Let's add an `Image` with some cor
 
 ```python
 #!chapter_009/src/snippet_021.py
-from borb.pdf import Document
-from borb.pdf import Page
-from borb.pdf import PDF
-from borb.pdf import SingleColumnLayout
-from borb.pdf import PageLayout
-from borb.pdf.canvas.layout.shape.connected_shape import ConnectedShape
+import random
+import typing
 from decimal import Decimal
-from borb.pdf import HexColor, X11Color
-from borb.pdf.canvas.geometry.rectangle import Rectangle
-from borb.pdf.page.page_size import PageSize
-from borb.pdf import Paragraph
-from borb.pdf.canvas.layout.image.barcode import Barcode, BarcodeType
-from borb.pdf.canvas.layout.layout_element import LayoutElement
+
+from borb.pdf import Document
+from borb.pdf import FixedColumnWidthTable
 from borb.pdf import FlexibleColumnWidthTable
+from borb.pdf import HexColor
+from borb.pdf import Image
+from borb.pdf import Page
+from borb.pdf import PageLayout
+from borb.pdf import Paragraph
+from borb.pdf import SingleColumnLayout
+from borb.pdf import TableCell
+from borb.pdf import UnorderedList
+from borb.pdf.canvas.geometry.rectangle import Rectangle
 from borb.pdf.canvas.layout.annotation.remote_go_to_annotation import (
     RemoteGoToAnnotation,
 )
-from borb.pdf import FixedColumnWidthTable
-from borb.pdf import TableCell
-from borb.pdf import Image
-from borb.pdf import UnorderedList
-
-import typing
-import random
+from borb.pdf.canvas.layout.image.barcode import Barcode
+from borb.pdf.canvas.layout.image.barcode import BarcodeType
+from borb.pdf.canvas.layout.layout_element import LayoutElement
+from borb.pdf.canvas.layout.shape.connected_shape import ConnectedShape
+from borb.pdf.page.page_size import PageSize
 
 
 def add_gray_artwork_to_upper_right_corner(page: Page) -> None:
@@ -12084,31 +12042,31 @@ Now we can call this method in the main body;
 
 ```python
 #!chapter_009/src/snippet_023.py
-from borb.pdf import Document
-from borb.pdf import Page
-from borb.pdf import PDF
-from borb.pdf import SingleColumnLayout
-from borb.pdf import PageLayout
-from borb.pdf.canvas.layout.shape.connected_shape import ConnectedShape
+import random
+import typing
 from decimal import Decimal
-from borb.pdf import HexColor, X11Color
-from borb.pdf.canvas.geometry.rectangle import Rectangle
-from borb.pdf.page.page_size import PageSize
-from borb.pdf import Paragraph
-from borb.pdf.canvas.layout.image.barcode import Barcode, BarcodeType
-from borb.pdf.canvas.layout.layout_element import LayoutElement
+
+from borb.pdf import Document
+from borb.pdf import FixedColumnWidthTable
 from borb.pdf import FlexibleColumnWidthTable
+from borb.pdf import HexColor
+from borb.pdf import Image
+from borb.pdf import Page
+from borb.pdf import PageLayout
+from borb.pdf import Paragraph
+from borb.pdf import SingleColumnLayout
+from borb.pdf import TableCell
+from borb.pdf import UnorderedList
+from borb.pdf.canvas.geometry.rectangle import Rectangle
 from borb.pdf.canvas.layout.annotation.remote_go_to_annotation import (
     RemoteGoToAnnotation,
 )
-from borb.pdf import FixedColumnWidthTable
-from borb.pdf import TableCell
-from borb.pdf import Image
-from borb.pdf import UnorderedList
+from borb.pdf.canvas.layout.image.barcode import Barcode
+from borb.pdf.canvas.layout.image.barcode import BarcodeType
+from borb.pdf.canvas.layout.layout_element import LayoutElement
+from borb.pdf.canvas.layout.shape.connected_shape import ConnectedShape
 from borb.pdf.canvas.line_art.line_art_factory import LineArtFactory
-
-import typing
-import random
+from borb.pdf.page.page_size import PageSize
 
 
 def add_gray_artwork_to_upper_right_corner(page: Page) -> None:
@@ -12471,9 +12429,6 @@ For this PDF we're going to use a custom `Font`. Let's first download the `ttf`
 
 ```python
 #!chapter_009/src/snippet_027.py
-from borb.pdf.canvas.font.simple_font.true_type_font import TrueTypeFont
-from borb.pdf.canvas.font.font import Font
-
 # Download Font
 import requests
 
@@ -12492,21 +12447,18 @@ Now we can create a skeleton document containing our title and explanation blurb
 ```python
 #!chapter_009/src/snippet_028.py
 import typing
-import requests
-from borb.pdf.canvas.font.simple_font.true_type_font import TrueTypeFont
-from borb.pdf.canvas.font.font import Font
+from decimal import Decimal
+from pathlib import Path
 
+import requests
 # new imports
 from borb.pdf import Document
+from borb.pdf import HexColor
 from borb.pdf import Page
-from borb.pdf import PDF
-from borb.pdf import SingleColumnLayout
 from borb.pdf import PageLayout
 from borb.pdf import Paragraph
-from borb.pdf import HexColor
-
-from pathlib import Path
-from decimal import Decimal
+from borb.pdf import SingleColumnLayout
+from borb.pdf.canvas.font.simple_font.true_type_font import TrueTypeFont
 
 
 def calculate_horizontal_and_vertical_clues():
@@ -12662,24 +12614,21 @@ And now we can get on with building the `Table`:
 ```python
 #!chapter_009/src/snippet_030.py
 import typing
-import requests
-from borb.pdf.canvas.font.simple_font.true_type_font import TrueTypeFont
-from borb.pdf.canvas.font.font import Font
-from borb.pdf import Document
-from borb.pdf import Page
-from borb.pdf import PDF
-from borb.pdf import SingleColumnLayout
-from borb.pdf import PageLayout
-from borb.pdf import Paragraph
-from borb.pdf import HexColor
-from borb.pdf import TableCell
+from decimal import Decimal
+from pathlib import Path
 
+import requests
+from borb.pdf import Alignment
+from borb.pdf import Document
 # new imports
 from borb.pdf import FixedColumnWidthTable
-from borb.pdf import Alignment
-
-from pathlib import Path
-from decimal import Decimal
+from borb.pdf import HexColor
+from borb.pdf import Page
+from borb.pdf import PageLayout
+from borb.pdf import Paragraph
+from borb.pdf import SingleColumnLayout
+from borb.pdf import TableCell
+from borb.pdf.canvas.font.simple_font.true_type_font import TrueTypeFont
 
 ascii_art: str = """
 ■...........■..
@@ -12887,24 +12836,22 @@ Finally, we can store the `PDF`:
 ```python
 #!chapter_009/src/snippet_031.py
 import typing
-import requests
-from borb.pdf.canvas.font.simple_font.true_type_font import TrueTypeFont
-from borb.pdf.canvas.font.font import Font
-from borb.pdf import Document
-from borb.pdf import Page
-from borb.pdf import PDF
-from borb.pdf import SingleColumnLayout
-from borb.pdf import PageLayout
-from borb.pdf import Paragraph
-from borb.pdf import HexColor
-from borb.pdf import TableCell
+from decimal import Decimal
+from pathlib import Path
 
+import requests
+from borb.pdf import Alignment
+from borb.pdf import Document
 # new imports
 from borb.pdf import FixedColumnWidthTable
-from borb.pdf import Alignment
-
-from pathlib import Path
-from decimal import Decimal
+from borb.pdf import HexColor
+from borb.pdf import PDF
+from borb.pdf import Page
+from borb.pdf import PageLayout
+from borb.pdf import Paragraph
+from borb.pdf import SingleColumnLayout
+from borb.pdf import TableCell
+from borb.pdf.canvas.font.simple_font.true_type_font import TrueTypeFont
 
 ascii_art: str = """
 ■...........■..
@@ -13122,14 +13069,15 @@ We are going to create a method to add some geometric artwork to the upper right
 ```python
 #!chapter_009/src/snippet_032.py
 # new imports
-from borb.pdf.canvas.layout.shape.connected_shape import ConnectedShape
-from decimal import Decimal
-from borb.pdf import HexColor, X11Color
-from borb.pdf.canvas.geometry.rectangle import Rectangle
-from borb.pdf.page.page_size import PageSize
-from borb.pdf import Page
-import typing
 import random
+import typing
+from decimal import Decimal
+
+from borb.pdf import HexColor
+from borb.pdf import Page
+from borb.pdf.canvas.geometry.rectangle import Rectangle
+from borb.pdf.canvas.layout.shape.connected_shape import ConnectedShape
+from borb.pdf.page.page_size import PageSize
 
 
 def add_gray_artwork_to_upper_right_corner(page: Page) -> None:
@@ -13237,8 +13185,9 @@ Now we're going to create a method that adds the image of a calculator to our `P
 
 ```python
 #!chapter_009/src/snippet_034.py
-from borb.pdf import Image
 from decimal import Decimal
+
+from borb.pdf import Image
 
 
 def add_calculator_image(page: "Page"):
@@ -13365,11 +13314,10 @@ This part is easy, we add document level Javascript to our PDF. This script has 
 
 ```python
 #!chapter_009/src/snippet_037.py
-from borb.io.read.types import Decimal as bDecimal
-from borb.io.read.types import String
-from borb.io.read.types import Stream
 from borb.io.read.types import Dictionary
 from borb.io.read.types import List
+from borb.io.read.types import Stream
+from borb.io.read.types import String
 from borb.pdf import Document
 
 
@@ -13637,18 +13585,19 @@ Now we can build our `Document`
 
 ```python
 #!chapter_009/src/snippet_039.py
-from borb.pdf import Document
-from borb.pdf import Page
-from borb.pdf import PDF
-from borb.pdf.canvas.geometry.rectangle import Rectangle
-from borb.pdf import MultiColumnLayout
-from borb.pdf import PageLayout
-from borb.pdf import Paragraph
-from borb.pdf import HexColor
-from borb.pdf.canvas.layout.image.barcode import Barcode, BarcodeType
-
 from decimal import Decimal
 from pathlib import Path
+
+from borb.pdf import Document
+from borb.pdf import HexColor
+from borb.pdf import MultiColumnLayout
+from borb.pdf import PDF
+from borb.pdf import Page
+from borb.pdf import PageLayout
+from borb.pdf import Paragraph
+from borb.pdf.canvas.geometry.rectangle import Rectangle
+from borb.pdf.canvas.layout.image.barcode import Barcode
+from borb.pdf.canvas.layout.image.barcode import BarcodeType
 
 
 def main():
@@ -13827,17 +13776,12 @@ I'm not going to go into the details of that here, since that's not really the p
 
 ```python
 #!chapter_009/src/snippet_041.py
+import dropbox
 from borb.pdf import Document
 from borb.pdf import Page
-from borb.pdf import PDF
-from borb.pdf import SingleColumnLayout
 from borb.pdf import PageLayout
 from borb.pdf import Paragraph
-
-import dropbox
-
-from decimal import Decimal
-from pathlib import Path
+from borb.pdf import SingleColumnLayout
 
 
 def dropbox_connect() -> dropbox.dropbox_client.Dropbox:
@@ -13893,19 +13837,15 @@ Once we have those, we just need to call the appropriate method of the `dropbox`
 
 ```python
 #!chapter_009/src/snippet_042.py
-from borb.pdf import Document
-from borb.pdf import Page
-from borb.pdf import PDF
-from borb.pdf import SingleColumnLayout
-from borb.pdf import PageLayout
-from borb.pdf import Paragraph
+import io
 
 import dropbox
-
-from decimal import Decimal
-from pathlib import Path
-
-import io
+from borb.pdf import Document
+from borb.pdf import PDF
+from borb.pdf import Page
+from borb.pdf import PageLayout
+from borb.pdf import Paragraph
+from borb.pdf import SingleColumnLayout
 
 
 def dropbox_connect() -> dropbox.dropbox_client.Dropbox:

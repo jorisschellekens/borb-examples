@@ -1,8 +1,9 @@
+from pathlib import Path
+
 from borb.pdf import Document
 from borb.pdf import PDF
 from borb.toolkit.export.markdown_to_pdf.markdown_to_pdf import MarkdownToPDF
 
-from pathlib import Path
 
 def main():
 

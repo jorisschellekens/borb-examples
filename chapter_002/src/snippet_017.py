@@ -1,17 +1,18 @@
+from decimal import Decimal
+
 from borb.pdf import Document
+from borb.pdf import FixedColumnWidthTable
+from borb.pdf import PDF
 from borb.pdf import Page
-from borb.pdf import SingleColumnLayout
 from borb.pdf import PageLayout
 from borb.pdf import Paragraph
-from borb.pdf import PDF
-from borb.pdf.canvas.color.color import HSVColor, HexColor
+from borb.pdf import SingleColumnLayout
+from borb.pdf.canvas.color.color import HSVColor
+from borb.pdf.canvas.color.color import HexColor
 from borb.pdf.canvas.color.pantone import Pantone
-from borb.pdf import FixedColumnWidthTable
+from borb.pdf.canvas.geometry.rectangle import Rectangle
 from borb.pdf.canvas.layout.shape.connected_shape import ConnectedShape
 from borb.pdf.canvas.line_art.line_art_factory import LineArtFactory
-from borb.pdf.canvas.geometry.rectangle import Rectangle
-
-from decimal import Decimal
 
 
 def main():

@@ -1,9 +1,10 @@
 # New imports
+import random
+from datetime import datetime
+
+from borb.pdf import Alignment
 from borb.pdf import FixedColumnWidthTable
 from borb.pdf import Paragraph
-from borb.pdf import Alignment
-from datetime import datetime
-import random
 
 
 def _build_invoice_information():

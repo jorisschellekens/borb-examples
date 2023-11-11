@@ -1,8 +1,8 @@
+import xml.etree.ElementTree as ET
+from pathlib import Path
+
 from borb.pdf import PDF
 from borb.toolkit.export.pdf_to_svg import PDFToSVG
-
-from pathlib import Path
-import xml.etree.ElementTree as ET
 
 
 def main():

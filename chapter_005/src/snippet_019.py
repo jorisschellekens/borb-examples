@@ -1,11 +1,11 @@
 import typing
+from decimal import Decimal
+
 from borb.pdf import Document
 from borb.pdf import PDF
+from borb.pdf import X11Color
 from borb.toolkit import FontColorFilter
 from borb.toolkit import SimpleTextExtraction
-from borb.pdf import X11Color
-
-from decimal import Decimal
 
 
 def main():

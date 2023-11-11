@@ -1,13 +1,11 @@
-import typing
-from borb.pdf import Document
-from borb.pdf import PDF
-from borb.pdf.canvas.geometry.rectangle import Rectangle
-from borb.pdf import SingleColumnLayout
-from borb.pdf import PageLayout
-from borb.pdf import Page
-from borb.pdf import Image
-from borb.pdf.canvas.layout.annotation.sound_annotation import SoundAnnotation
 from decimal import Decimal
+
+from borb.pdf import Document
+from borb.pdf import Image
+from borb.pdf import PDF
+from borb.pdf import Page
+from borb.pdf import SingleColumnLayout
+from borb.pdf.canvas.layout.annotation.sound_annotation import SoundAnnotation
 
 
 def main():

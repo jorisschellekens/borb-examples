@@ -1,17 +1,15 @@
 from decimal import Decimal
 
-from borb.pdf.canvas.layout.annotation.rubber_stamp_annotation import (
-    RubberStampAnnotation,
-    RubberStampAnnotationIconType,
-)
-from borb.pdf.canvas.geometry.rectangle import Rectangle
-from borb.pdf import SingleColumnLayout
+from borb.pdf import Document
+from borb.pdf import PDF
+from borb.pdf import Page
 from borb.pdf import PageLayout
 from borb.pdf import Paragraph
-from borb.pdf import Document
-from borb.pdf import Page
+from borb.pdf import SingleColumnLayout
+from borb.pdf.canvas.geometry.rectangle import Rectangle
+from borb.pdf.canvas.layout.annotation.rubber_stamp_annotation import RubberStampAnnotation
+from borb.pdf.canvas.layout.annotation.rubber_stamp_annotation import RubberStampAnnotationIconType
 from borb.pdf.page.page_size import PageSize
-from borb.pdf import PDF
 
 
 def main():

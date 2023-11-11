@@ -1,16 +1,12 @@
-from borb.pdf import Document
-from borb.pdf import Page
-from borb.pdf import PDF
-from borb.pdf import SingleColumnLayout
-from borb.pdf import PageLayout
-from borb.pdf import Paragraph
+import io
 
 import dropbox
-
-from decimal import Decimal
-from pathlib import Path
-
-import io
+from borb.pdf import Document
+from borb.pdf import PDF
+from borb.pdf import Page
+from borb.pdf import PageLayout
+from borb.pdf import Paragraph
+from borb.pdf import SingleColumnLayout
 
 
 def dropbox_connect() -> dropbox.dropbox_client.Dropbox:

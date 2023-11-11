@@ -1,13 +1,11 @@
+from decimal import Decimal
+
 from borb.pdf import Document
+from borb.pdf import PDF
 from borb.pdf import Page
 from borb.pdf import Paragraph
-from borb.pdf import PDF
-from borb.pdf.canvas.geometry.rectangle import Rectangle
-from borb.pdf import Alignment
-from borb.pdf.canvas.layout.annotation.square_annotation import SquareAnnotation
 from borb.pdf import X11Color
-
-from decimal import Decimal
+from borb.pdf.canvas.geometry.rectangle import Rectangle
 
 
 def main():

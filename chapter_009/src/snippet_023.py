@@ -1,28 +1,28 @@
-from borb.pdf import Document
-from borb.pdf import Page
-from borb.pdf import PDF
-from borb.pdf import SingleColumnLayout
-from borb.pdf import PageLayout
-from borb.pdf.canvas.layout.shape.connected_shape import ConnectedShape
+import random
+import typing
 from decimal import Decimal
-from borb.pdf import HexColor, X11Color
-from borb.pdf.canvas.geometry.rectangle import Rectangle
-from borb.pdf.page.page_size import PageSize
-from borb.pdf import Paragraph
-from borb.pdf.canvas.layout.image.barcode import Barcode, BarcodeType
-from borb.pdf.canvas.layout.layout_element import LayoutElement
+
+from borb.pdf import Document
+from borb.pdf import FixedColumnWidthTable
 from borb.pdf import FlexibleColumnWidthTable
+from borb.pdf import HexColor
+from borb.pdf import Image
+from borb.pdf import Page
+from borb.pdf import PageLayout
+from borb.pdf import Paragraph
+from borb.pdf import SingleColumnLayout
+from borb.pdf import TableCell
+from borb.pdf import UnorderedList
+from borb.pdf.canvas.geometry.rectangle import Rectangle
 from borb.pdf.canvas.layout.annotation.remote_go_to_annotation import (
     RemoteGoToAnnotation,
 )
-from borb.pdf import FixedColumnWidthTable
-from borb.pdf import TableCell
-from borb.pdf import Image
-from borb.pdf import UnorderedList
+from borb.pdf.canvas.layout.image.barcode import Barcode
+from borb.pdf.canvas.layout.image.barcode import BarcodeType
+from borb.pdf.canvas.layout.layout_element import LayoutElement
+from borb.pdf.canvas.layout.shape.connected_shape import ConnectedShape
 from borb.pdf.canvas.line_art.line_art_factory import LineArtFactory
-
-import typing
-import random
+from borb.pdf.page.page_size import PageSize
 
 
 def add_gray_artwork_to_upper_right_corner(page: Page) -> None:

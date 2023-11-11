@@ -638,9 +638,12 @@ Being able to add images to your PDF is one of the core skills. It can be useful
 There are convenience classes to enable you to easily add:
 
 - Barcodes
-- QR codes
 - Charts
 - Emoji
+- Maps
+- Progressbars
+- QR codes
+
 
 In the next example, you'll be adding an `Image` to a `Page`, by specifying its URL.
 
@@ -679,6 +682,8 @@ In the next example, you'll insert an `Image` by using its path (on disk).
 
 ## 2.6 Adding line-art to a PDF using `Shape` objects
 
+### 2.6.1 Adding line-art using `LineArtFactory`
+
 One of the main goals of `borb` is to put the user first. I would like PDF to become as accessible as other digital document formats (e.g. Microsoft Words).
 
 This goal is reflected in both large and small features in `borb`. One of these small things is the line-art factory. Rather than forcing the end-user to draw complicated line-art by hand, `LineArtFactory` contains a ton of methods that enable you to easily draw the most common shapes on the `Page`.
@@ -705,6 +710,40 @@ The initial bounding box you pass to the `LineArtFactory.sticky_note` function i
 
 This ensures you can still do things with these points, should you so desire.
 
+## 2.6.2 Adding a `ProgressBar` to a PDF
+
+The `ProgressBar` (and its cousin `ProgressSquare`) represent an easy way to visualize a process/task that is **being executed** or that has executed with some **degree of success**.
+You can construct it using a `percentage` (which defaults to 0).
+
+I can imagine you might use this in testing reports, to indicate how many tests in a particular category failed/passed.
+
+Let's make a report:
+
+```commandline
+#!src/snippet_032.py
+```
+
+![enter image description here](img/snippet_032.png)
+
+## 2.6.3 Adding a `Map` to a PDF
+
+The `Map` is a kind of `Shapes` object, which represents a collection of `ConnectedShape` or `DisconnectedShape` objects.
+`borb` comes with 3 `Map` objects pre-installed:
+
+- **MapOfEurope**: This implementation of `Map` represents Europe. Europe is a continent comprising the westernmost peninsulas of Eurasia, located entirely in the Northern Hemisphere and mostly in the Eastern Hemisphere. It shares the continental landmass of Afro-Eurasia with both Africa and Asia. It is bordered by the Arctic Ocean to the north, the Atlantic Ocean to the west, the Mediterranean Sea to the south, and Asia to the east. Europe is commonly considered to be separated from Asia by the watershed of the Ural Mountains, the Ural River, the Caspian Sea, the Greater Caucasus, the Black Sea and the waterways of the Turkish straits.
+- **MapOfTheUnitedStates**: This implementation of `Map` represents the United States and its territories. The United States currently administers three territories in the Caribbean Sea and eleven in the Pacific Ocean. Five territories (American Samoa, Guam, the Northern Mariana Islands, Puerto Rico, and the U.S. Virgin Islands) are permanently inhabited, unincorporated territories; the other nine are small islands, atolls, and reefs with no native (or permanent) population. Of the nine, only one is classified as an incorporated territory (Palmyra Atoll). Two additional territories (Bajo Nuevo Bank and Serranilla Bank) are claimed by the United States but administered by Colombia.
+- **MapOfTheWorld**:
+
+You can `pop` items from a `Map` to remove them.
+And of course you can set the `fill_color` and `stroke_color` of an item to highlight it.
+In the next example we'll create a `MapOfTheWorld` and highlight Poland.
+
+```python 
+#!src/snippet_033.py
+```
+
+![enter image description here](img/snippet_033.png)
+
 <div style="page-break-before: always;"></div>
 
 ## 2.7 Adding barcodes and QR-codes to a PDF
@@ -723,10 +762,10 @@ In the next example you'll be adding an `EAN_14` code to a `Page`.
 The python script is very straightforward:
 
 ```python  
-#!src/snippet_032.py
+#!src/snippet_034.py
 ```
 
-![enter image description here](img/snippet_032.png)
+![enter image description here](img/snippet_034.png)
 
 #### 2.7.1.1 Setting the `stroke_color` and `fill_color` of a `Barcode`
 
@@ -735,10 +774,10 @@ Of course, if your company's brand color happens to be something other than blac
 In the next example, you'll be tweaking the `stroke_color` and `fill_color` of a `Barcode` to make sure it pops.
 
 ```python 
-#!src/snippet_033.py
+#!src/snippet_035.py
 ```
 
-![enter image description here](img/snippet_033.png)
+![enter image description here](img/snippet_035.png)
 
 ### 2.7.2 Adding a QR-code to the `Page`
 
@@ -752,10 +791,10 @@ In practice, QR codes often contain data for a locator, identifier, or tracker t
 The code from the previous example doesn't really change that much, other than setting a different `type`
 
 ```python 
-#!src/snippet_034.py
+#!src/snippet_036.py
 ```
 
-![enter image description here](img/snippet_034.png)
+![enter image description here](img/snippet_036.png)
 
 ### 2.7.3 Other supported barcodes
 
@@ -798,10 +837,10 @@ This example does have some extra dependencies:
 
 
 ```python 
-#!src/snippet_035.py
+#!src/snippet_037.py
 ```
 
-![enter image description here](img/snippet_035.png)
+![enter image description here](img/snippet_037.png)
 
 <div style="page-break-before: always;"></div>
 
@@ -818,10 +857,10 @@ You can achieve the same effect using `SingleColumnLayout` (or `MultiColumnLayou
 but `HeterogeneousParagraph` is not as generic as `InlineFlow`.
 
 ```python 
-#!src/snippet_036.py
+#!src/snippet_038.py
 ```
 
-![enter image description here](img/snippet_036.png)
+![enter image description here](img/snippet_038.png)
 
 <div style="page-break-before: always;"></div>
 
@@ -846,20 +885,20 @@ In this first example you'll be using the classic `Lorem Ipsum Dolor Sit Amet`.
 Keep in mind the text generated here is random, it might (most probably will) come out different on your device.
 
 ```python 
-#!src/snippet_037.py
+#!src/snippet_039.py
 ```
 
-![enter image description here](img/snippet_037.png)
+![enter image description here](img/snippet_039.png)
 
 <div style="page-break-before: always;"></div>
 
 In this next example you'll be using the more whimsical Lewis Carroll version.
 
 ```python 
-#!src/snippet_038.py
+#!src/snippet_040.py
 ```
 
-![enter image description here](img/snippet_038.png)
+![enter image description here](img/snippet_040.png)
 
 <div style="page-break-before: always;"></div>
 
@@ -872,12 +911,12 @@ You will need to provide an API key in order to ensure you have access to these 
 You can pass a desired dimension to the method. `borb` will attempt to find the `Image` whose aspect ratio best matches the one you provided. That way, if the `Image` needs to be scaled down or up, you will experience minimal distortions.
 
 ```python 
-#!src/snippet_039.py
+#!src/snippet_041.py
 ```
 
 The result should look somewhat like this. Although the actual image may differ (if Unsplash suddenly decides to serve some other image as being more relevant for the keywords in the example).
 
-![enter image description here](img/snippet_039.png)
+![enter image description here](img/snippet_041.png)
 
 <div style="page-break-before: always;"></div>
 

@@ -1,16 +1,15 @@
+from decimal import Decimal
+
+from borb.pdf import Barcode
+from borb.pdf import BarcodeType
 from borb.pdf import Document
-from borb.pdf import Page
-from borb.pdf import SingleColumnLayout
-from borb.pdf import PageLayout
-from borb.pdf import Paragraph
 from borb.pdf import PDF
-from borb.pdf.canvas.layout.emoji.emoji import Emojis
-from borb.pdf import ChunkOfText
-from borb.pdf import InlineFlow
+from borb.pdf import Page
+from borb.pdf import PageLayout
+from borb.pdf import SingleColumnLayout
 
 
 def main():
-
     # create Document
     doc: Document = Document()
 
@@ -22,13 +21,16 @@ def main():
 
     # set a PageLayout
     layout: PageLayout = SingleColumnLayout(page)
-    flow: InlineFlow = InlineFlow()
 
     # add a Paragraph
-    flow.add(ChunkOfText("Hello"))
-    flow.add(Emojis.EARTH_AMERICAS.value)
-    flow.add(ChunkOfText("!"))
-    layout.add(flow)
+    layout.add(
+        Barcode(
+            "1234567896120",
+            width=Decimal(128),
+            height=Decimal(128),
+            type=BarcodeType.QR,
+        )
+    )
 
     # store
     with open("output.pdf", "wb") as pdf_file_handle:

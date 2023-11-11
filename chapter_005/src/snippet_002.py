@@ -1,4 +1,5 @@
 import typing
+
 from borb.pdf import Document
 from borb.pdf import PDF
 

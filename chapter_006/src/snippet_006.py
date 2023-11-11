@@ -1,13 +1,13 @@
 from decimal import Decimal
 
-from borb.pdf.canvas.layout.annotation.redact_annotation import RedactAnnotation
-from borb.pdf.canvas.geometry.rectangle import Rectangle
-from borb.pdf import SingleColumnLayout
+from borb.pdf import Document
+from borb.pdf import PDF
+from borb.pdf import Page
 from borb.pdf import PageLayout
 from borb.pdf import Paragraph
-from borb.pdf import Document
-from borb.pdf import Page
-from borb.pdf import PDF
+from borb.pdf import SingleColumnLayout
+from borb.pdf.canvas.geometry.rectangle import Rectangle
+from borb.pdf.canvas.layout.annotation.redact_annotation import RedactAnnotation
 
 
 def main():

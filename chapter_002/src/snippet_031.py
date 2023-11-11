@@ -1,15 +1,14 @@
-from borb.pdf import Document
-from borb.pdf import Page
-from borb.pdf import SingleColumnLayout
-from borb.pdf import PageLayout
-from borb.pdf import PDF
-from borb.pdf import Image
-from borb.pdf.canvas.geometry.rectangle import Rectangle
-from borb.pdf import ConnectedShape
-from borb.pdf.canvas.line_art.line_art_factory import LineArtFactory
-from borb.pdf import X11Color
-
 from decimal import Decimal
+
+from borb.pdf import ConnectedShape
+from borb.pdf import Document
+from borb.pdf import PDF
+from borb.pdf import Page
+from borb.pdf import PageLayout
+from borb.pdf import SingleColumnLayout
+from borb.pdf import X11Color
+from borb.pdf.canvas.geometry.rectangle import Rectangle
+from borb.pdf.canvas.line_art.line_art_factory import LineArtFactory
 
 
 def main():

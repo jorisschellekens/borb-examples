@@ -1,14 +1,13 @@
-from borb.io.read.types import Name, String, Dictionary
-from borb.pdf import SingleColumnLayout
-from borb.pdf import PageLayout
-from borb.pdf import Paragraph
+from decimal import Decimal
+
 from borb.pdf import Document
-from borb.pdf import Page
-from borb.pdf import PDF
 from borb.pdf import HexColor
 from borb.pdf import Image
-
-from decimal import Decimal
+from borb.pdf import PDF
+from borb.pdf import Page
+from borb.pdf import PageLayout
+from borb.pdf import Paragraph
+from borb.pdf import SingleColumnLayout
 
 
 def main():

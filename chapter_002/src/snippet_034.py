@@ -1,12 +1,12 @@
-from borb.pdf import Document
-from borb.pdf import Page
-from borb.pdf import SingleColumnLayout
-from borb.pdf import PageLayout
-from borb.pdf import Paragraph
-from borb.pdf import PDF
-from borb.pdf import Barcode, BarcodeType
-
 from decimal import Decimal
+
+from borb.pdf import Barcode
+from borb.pdf import BarcodeType
+from borb.pdf import Document
+from borb.pdf import PDF
+from borb.pdf import Page
+from borb.pdf import PageLayout
+from borb.pdf import SingleColumnLayout
 
 
 def main():
@@ -28,7 +28,7 @@ def main():
             "1234567896120",
             width=Decimal(128),
             height=Decimal(128),
-            type=BarcodeType.QR,
+            type=BarcodeType.EAN_14,
         )
     )
 

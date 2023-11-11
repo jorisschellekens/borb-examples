@@ -1,9 +1,4 @@
-from decimal import Decimal
-
-from borb.pdf import HexColor
-from borb.pdf import PageLayout
 from borb.pdf import Document
-from borb.pdf import Page
 from borb.pdf import PDF
 
 

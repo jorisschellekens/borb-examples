@@ -1,9 +1,6 @@
-import typing
-from pathlib import Path
-
-from borb.pdf import PDF
 from PIL import Image as PILImage  # type: ignore [import]
-from PIL import ImageDraw, ImageFont
+from PIL import ImageDraw
+from PIL import ImageFont
 
 
 def create_image() -> PILImage:

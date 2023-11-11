@@ -1,18 +1,17 @@
+import typing
 from decimal import Decimal
 
-import typing
-from borb.pdf import HexColor, RGBColor
-from borb.pdf.canvas.geometry.rectangle import Rectangle
-from borb.pdf import ConnectedShape
 from borb.pdf import Alignment
-from borb.pdf import SingleColumnLayout
-from borb.pdf import PageLayout
-from borb.pdf import FlexibleColumnWidthTable
-from borb.pdf import Paragraph
-from borb.pdf import LineArtFactory
+from borb.pdf import ConnectedShape
 from borb.pdf import Document
-from borb.pdf import Page
+from borb.pdf import FlexibleColumnWidthTable
+from borb.pdf import LineArtFactory
 from borb.pdf import PDF
+from borb.pdf import Page
+from borb.pdf import PageLayout
+from borb.pdf import Paragraph
+from borb.pdf import SingleColumnLayout
+from borb.pdf.canvas.geometry.rectangle import Rectangle
 from borb.toolkit import ColorExtraction
 
 

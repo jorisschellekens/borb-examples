@@ -1,17 +1,15 @@
-import typing
+from decimal import Decimal
+
+from borb.io.read.types import Name
+from borb.io.read.types import String
 from borb.pdf import Document
-from borb.pdf import PDF
-from borb.io.read.types import Name, String
-from borb.pdf.canvas.geometry.rectangle import Rectangle
-from borb.pdf import SingleColumnLayout
-from borb.pdf import PageLayout
-from borb.pdf import Page
 from borb.pdf import Image
+from borb.pdf import PDF
+from borb.pdf import Page
+from borb.pdf import SingleColumnLayout
 from borb.pdf.canvas.layout.annotation.remote_go_to_annotation import (
     RemoteGoToAnnotation,
 )
-
-from decimal import Decimal
 
 
 def main():

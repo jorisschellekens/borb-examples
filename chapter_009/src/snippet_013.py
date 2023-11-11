@@ -1,6 +1,7 @@
 # New Imports
-from borb.pdf import TableCell
 import typing
+
+from borb.pdf import TableCell
 
 
 def _build_itemized_description_table(products: typing.List["Product"] = []):

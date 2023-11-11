@@ -1,5 +1,6 @@
-from borb.pdf import Image
 from decimal import Decimal
+
+from borb.pdf import Image
 
 
 def add_calculator_image(page: "Page"):

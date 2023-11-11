@@ -1,15 +1,17 @@
-from borb.pdf import Document
-from borb.pdf import Page
-from borb.pdf import SingleColumnLayout
-from borb.pdf import PageLayout
-from decimal import Decimal
-from borb.pdf import Image
-from borb.pdf import FixedColumnWidthTable
-from borb.pdf import Paragraph
-from borb.pdf import Alignment
-from borb.pdf import HexColor, X11Color
-from datetime import datetime
 import random
+from datetime import datetime
+from decimal import Decimal
+
+from borb.pdf import Alignment
+from borb.pdf import Document
+from borb.pdf import FixedColumnWidthTable
+from borb.pdf import HexColor
+from borb.pdf import Image
+from borb.pdf import Page
+from borb.pdf import PageLayout
+from borb.pdf import Paragraph
+from borb.pdf import SingleColumnLayout
+from borb.pdf import X11Color
 
 
 def _build_invoice_information():

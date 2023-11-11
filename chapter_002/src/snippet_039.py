@@ -1,20 +1,13 @@
 from borb.pdf import Document
+from borb.pdf import PDF
 from borb.pdf import Page
-from borb.pdf import SingleColumnLayout
 from borb.pdf import PageLayout
 from borb.pdf import Paragraph
-from borb.pdf import PDF
-from borb.pdf.canvas.layout.image.unsplash import Unsplash
-
-from decimal import Decimal
-import keyring
+from borb.pdf import SingleColumnLayout
+from borb.pdf.canvas.lipsum.lipsum import Lipsum
 
 
 def main():
-
-    # set the unsplash API access key
-    keyring.set_password("unsplash", "access_key", "<your access key here>")
-
     # create Document
     doc: Document = Document()
 
@@ -27,9 +20,8 @@ def main():
     # set a PageLayout
     layout: PageLayout = SingleColumnLayout(page)
 
-    # add an Image from Unsplash
-    # you can specify the keywords as well as the desired dimensions
-    layout.add(Unsplash.get_image(["cherry", "blossom"], Decimal(400), Decimal(300)))
+    # add a Paragraph
+    layout.add(Paragraph(Lipsum.generate_lipsum_text()))
 
     # store
     with open("output.pdf", "wb") as pdf_file_handle:

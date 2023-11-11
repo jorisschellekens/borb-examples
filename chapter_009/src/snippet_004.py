@@ -1,15 +1,16 @@
+from decimal import Decimal
+
+from borb.pdf import Alignment
 from borb.pdf import Document
-from borb.pdf import Page
+from borb.pdf import FlexibleColumnWidthTable
+from borb.pdf import HexColor
 from borb.pdf import PDF
-from borb.pdf import SingleColumnLayout
+from borb.pdf import Page
 from borb.pdf import PageLayout
 from borb.pdf import Paragraph
-from borb.pdf import HexColor
-from borb.pdf import FlexibleColumnWidthTable
-from borb.pdf import Table, TableCell
-from borb.pdf import Alignment
-
-from decimal import Decimal
+from borb.pdf import SingleColumnLayout
+from borb.pdf import Table
+from borb.pdf import TableCell
 
 # represent the sudoku as a plaintext str
 # every . represents an empty cell in the puzzle

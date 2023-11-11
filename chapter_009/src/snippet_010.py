@@ -1,5 +1,6 @@
 # New imports
-from borb.pdf import HexColor, X11Color
+from borb.pdf import HexColor
+from borb.pdf import X11Color
 
 
 def _build_billing_and_shipping_information():

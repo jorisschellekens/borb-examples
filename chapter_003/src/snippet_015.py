@@ -1,16 +1,16 @@
 from decimal import Decimal
 
-from borb.pdf.canvas.layout.emoji.emoji import Emojis
 from borb.pdf import Alignment
-from borb.pdf import SingleColumnLayout
-from borb.pdf import PageLayout
-from borb.pdf import TableCell
-from borb.pdf import FlexibleColumnWidthTable
-from borb.pdf import Paragraph
 from borb.pdf import Document
-from borb.pdf import Page
-from borb.pdf.page.page_size import PageSize
+from borb.pdf import FlexibleColumnWidthTable
 from borb.pdf import PDF
+from borb.pdf import Page
+from borb.pdf import PageLayout
+from borb.pdf import Paragraph
+from borb.pdf import SingleColumnLayout
+from borb.pdf import TableCell
+from borb.pdf.canvas.layout.emoji.emoji import Emojis
+from borb.pdf.page.page_size import PageSize
 
 
 def main():
