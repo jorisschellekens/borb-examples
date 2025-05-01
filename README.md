@@ -55,7 +55,7 @@ There is so much information in this book, not just about `borb` but PDF in gene
 
 ## 1.5 What you'll be able to do after reading this book
 
-This book is organized into nine main sections:
+This book is organized into eleven main sections:
 
 1. **Hello World**
    This is the classic 'Hello World' example, in `borb`. Study it, type it out, memorize it. It's the basis, and it will come back time and again in the other examples.
