@@ -187,6 +187,10 @@ By the end of this section, you’ll be proficient in combining various layout e
 
 ### 1.5.7 SmartArt
 
+SmartArt allows you to create visually compelling, data-driven layouts with minimal effort. These predesigned visual components are ideal for communicating structure, flow, or relationships—think timelines, process flows, or comparison charts.
+
+SmartArt in `borb` is built on familiar layout primitives—specifically `Table` and `List` elements. This means that the tables and lists you've already worked with are the backbone of these more advanced visuals. By leveraging your existing knowledge, you'll be able to construct SmartArt quickly and effectively.
+
 ### 1.5.8 Exploring Advanced Layouts
 
 ### 1.5.9 Using Templates for Streamlined Design
