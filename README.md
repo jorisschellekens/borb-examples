@@ -64,22 +64,22 @@ This book is organized into eleven main sections:
    We’ll begin with the basics: adding text to a PDF. This includes exploring various fonts, colors, borders, and other formatting options.
 
 3. **Working with Images and Specialized Layout Elements**  
-   Once you're comfortable with text, we’ll move on to images and related LayoutElements like Barcode, QRCode, Avatar, and more.
+   Once you're comfortable with text, we’ll move on to images and related `LayoutElement`s like `Barcode`, `QRCode`, `Avatar`, and more.
 
 4. **Using Shapes and Line-Art**  
-   Next, we’ll dive into Shape objects for creating line-art. We’ll also cover some specialized classes derived from shapes, such as Map and ProgressBar.
+   Next, we’ll dive into `Shape` objects for creating line-art. We’ll also cover some specialized classes derived from shapes, such as `Map` and `ProgressBar`.
 
 5. **Making interactive PDFs using FormElements**
    In this section we'll create interactive PDF documents using forms.
 
 6. **Combining Layout Elements with Containers**  
-   After understanding individual elements, we’ll focus on combining them. You’ll learn about containers, starting with lists (e.g., OrderedList, UnOrderedList) and culminating with tables (FlexibleColumnWidthTable, FixedColumnWidthTable).
+   After understanding individual elements, we’ll focus on combining them. You’ll learn about containers, starting with lists (e.g., `OrderedList`, `UnOrderedList`) and culminating with tables (`FlexibleColumnWidthTable`, `FixedColumnWidthTable`).
 
 7. **Using SmartArt to easily generate stunning visuals**
-   In this section we'll create visuals using SmartArt.
+   In this section we'll create visuals using `SmartArt`.
    
 8. **Exploring Advanced Layouts**  
-   So far, we’ve used SingleColumnLayout to position elements. This section introduces alternative options, including MultiColumnLayout and freeform layouts, for greater flexibility.
+   So far, we’ve used `SingleColumnLayout` to position elements. This section introduces alternative options, including `MultiColumnLayout` and freeform layouts, for greater flexibility.
 
 9. **Using Templates for Streamlined Design**  
    If you’re less concerned with the precise placement or style of content, templates can help. We’ll introduce templates like Invoice, Slideshow, Resume, and more for faster document creation.
