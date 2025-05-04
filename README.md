@@ -93,6 +93,14 @@ By the end, you’ll have a solid understanding of creating and processing PDFs 
 
 ### 1.5.1 Hello World
 
+Every programming journey begins with a "Hello World" example—and `borb` is no exception. In this initial section, we’ll guide you through building your very first PDF document using borb. While the output may be minimal—just a single line of text—the concepts it introduces are foundational to everything else you'll do in this book.
+
+You’ll learn how to create a document, add a page, and insert a paragraph. These three steps form the heart of most PDF operations in `borb`. By understanding how `borb` structures documents using layout elements and a compositional approach, you’ll start to see how scalable and flexible the library really is.
+
+The "Hello World" example also introduces you to `borb`'s idiomatic style—how it manages resources, how layout is handled, and how elements are positioned and styled. Even in this simplest example, you’ll gain familiarity with the `Document`, `Page`, and `Paragraph` classes, and begin to appreciate `borb`'s modular and object-oriented design.
+
+Although basic, this first exercise isn’t something to gloss over. Type it out manually. Run it. Modify it. Use it as your sandbox to experiment with small changes. This snippet will become your go-to template as you progress through more advanced examples involving text styling, layout composition, interactive elements, and beyond.
+
 ### 1.5.2 Adding Text to a PDF
 
 We’ll begin with the basics of working with text in PDFs. Adding text is a fundamental task that forms the foundation for many document creations. In this section, you will learn how to:
