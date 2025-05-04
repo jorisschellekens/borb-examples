@@ -154,6 +154,16 @@ By the end of this section, you’ll have the skills to use shapes for creating 
 
 ### 1.5.5 Using FormField objects to create interactive PDF documents
 
+In this section, you’ll learn how to add interactive form fields to your PDFs using borb. Form elements transform static documents into dynamic, fillable experiences—ideal for applications, surveys, checklists, and more. You’ll discover how to:
+
+- **Text Fields**: Learn how to insert single-line input fields (TextField) into your PDF. We’ll cover how to define size and placement, set placeholder and default values, and configure field names for later data extraction.
+
+- **Text Areas**: For longer user input, such as comments or descriptions, you'll use TextArea. You'll explore how to define multiline input regions with scrollable content, and control their styling and size constraints.
+
+- **Drop-Down Lists**: Discover how to offer users a fixed set of options using the DropDownList element. You'll learn to define the available options, set defaults, and position drop-downs within more complex layouts like tables or columns.
+
+- **Checkboxes**: Use CheckBox to add binary (true/false) input. Whether you're building an agreement form or a to-do list, you’ll see how to configure checked/unchecked states, labels, and group behaviors.
+
 ### 1.5.6 Combining Layout Elements with Containers
 
 After mastering individual elements, it’s time to explore how to combine them effectively using containers. This section will teach you how to use containers like lists and tables to organize and structure content within your PDFs. Key topics include:
