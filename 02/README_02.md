@@ -22,7 +22,6 @@ from borb.pdf import (
     Paragraph,
     PDF,
     SingleColumnLayout,
-    Standard14Fonts,
 )
 
 # Create an empty Document
@@ -36,7 +35,7 @@ d.append_page(p)
 l: PageLayout = SingleColumnLayout(p)
 
 # Add a Paragraph
-l.append_layout_element(Paragraph("Hello World!", font=Standard14Fonts.get("Courier")))
+l.append_layout_element(Paragraph("Hello World!", font="Courier"))
 
 # Write the PDF
 PDF.write(what=d, where_to="output.pdf")
