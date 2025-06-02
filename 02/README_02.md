@@ -958,7 +958,6 @@ from borb.pdf import (
     SingleColumnLayout,
     Paragraph,
     PDF,
-    Standard14Fonts,
     X11Color,
     Lipsum,
 )
@@ -977,7 +976,7 @@ l: PageLayout = SingleColumnLayout(p)
 l.append_layout_element(
     Paragraph(
         "Hello Larger World!",
-        font=Standard14Fonts.get("Helvetiva-Bold"),
+        font="Helvetiva-Bold",
         font_size=18,
         font_color=X11Color.YELLOW_MUNSELL,
     )
