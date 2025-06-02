@@ -28,7 +28,7 @@ PDF.write(what=d, where_to="output.pdf")
 
 ```
 
-<a href="https://colab.research.google.com/github/jorisschellekens/borb-examples/blob/main/01/ipynb/snippet_01_01.ipynb" target="_parent"><img src="https://colab.research.google.com/assets/colab-badge.svg" alt="Open In Colab"/></a>
+<a href="https://colab.research.google.com/github/jorisschellekens/borb-examples/blob/master/01/ipynb/snippet_01_01.ipynb" target="_parent"><img src="https://colab.research.google.com/assets/colab-badge.svg" alt="Open In Colab"/></a>
 
 This example generates the following PDF. To save space, only the top half of the first page is shown, while the rest is not displayed.
 
