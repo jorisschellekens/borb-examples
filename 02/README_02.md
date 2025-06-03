@@ -953,13 +953,14 @@ In this section, we bring together various features demonstrated in previous exa
 # snippet_02_20.ipynb
 from borb.pdf import (
     Document,
+    Lipsum,
     Page,
     PageLayout,
-    SingleColumnLayout,
     Paragraph,
     PDF,
+    SingleColumnLayout,
+    Standard14Fonts,
     X11Color,
-    Lipsum,
 )
 
 # Create an empty Document
