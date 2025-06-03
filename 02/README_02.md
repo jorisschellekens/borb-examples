@@ -50,7 +50,7 @@ This example demonstrates how to use one of the Standard 14 Fonts in borb. Stand
 
 - A `Document` is created and a `Page` is appended to it.  
 - A `PageLayout` is applied to define how content is structured on the page.  
-- A `Paragraph` containing the text "Hello World!" is added, with the font explicitly set to `Courier` using `Standard14Fonts.get()`.  
+- A `Paragraph` containing the text "Hello World!" is added, with the font explicitly set to `Courier`.  
 - Finally, the PDF is written to the file path `output.pdf`.
 
 This method provides an efficient way to incorporate basic, standardized fonts into your PDF documents.
