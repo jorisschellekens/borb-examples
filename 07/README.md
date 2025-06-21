@@ -1,4 +1,4 @@
-# Using `SmartArt`
+# 7. Using `SmartArt`
 
 ![enter image description here](img/undraw_mind_map.png)
 
@@ -614,7 +614,7 @@ PDF.write(what=d, where_to="output.pdf")
 
 ![enter image description here](img/snippet_07_14.png)
 
-## Section Recap
+## 7.3 Section Recap
 
 - **Displaying a Process**:
     - `bending_process`: Create a flexible process diagram with customizable colors and fonts.
