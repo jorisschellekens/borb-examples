@@ -255,8 +255,8 @@ Some examples of X11 colors:
 - `X11Color.GREEN`
 - `X11Color.HONEYDEW`
 
-1. Import X11Color from borb.pdf
-2. Use X11Color as a parameter in supported elements
+1. Import `X11Color` from `borb.pdf`
+2. Use `X11Color` as a parameter in supported elements
 3. Reference colors using dot notation (e.g., `X11Color.RED`)
 
 ---
