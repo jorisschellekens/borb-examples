@@ -1,4 +1,4 @@
-# Advanced `PageLayout`
+# 8. Advanced `PageLayout`
 
 ![enter image description here](img/undraw_grid_design.png)
 
@@ -8,7 +8,7 @@ We will introduce `MultiColumnLayout`, a powerful tool for organizing content in
 
 Additionally, we will explore how to position a `LayoutElement` at an exact location by specifying coordinates. This precise placement technique enables greater control over layout customization, ensuring elements appear exactly where needed within the design.  
 
-# Using `SingleColumnLayout`
+# 8.1 Using `SingleColumnLayout`
 
 `PageLayout` serves as the generic superclass for all systems that manage content placement on a `Page`. Each implementation follows its own design philosophy and handling preferences, offering different ways to structure and organize content.  
 
@@ -143,7 +143,7 @@ PDF.write(what=d, where_to="output.pdf")
 
 ![enter image description here](img/snippet_08_04.png)
 
-# Using `MultiColumnLayout`
+# 8.2 Using `MultiColumnLayout`
 
 `MultiColumnLayout` functions similarly to `SingleColumnLayout`, but instead of immediately creating a new `Page` when space runs out, it flows content into the next available column. This allows for a more compact and efficient use of space, especially in layouts that require multiple columns.  
 
@@ -250,7 +250,7 @@ PDF.write(what=d, where_to="output.pdf")
 
 ![enter image description here](img/snippet_08_07.png)
 
-# Placing `LayoutElement` objects manually
+# 8.3 Placing `LayoutElement` objects manually
 
 If you really want full control over the placement of a `LayoutElement` you can also opt to place it manually.
 This can be achieved by calling the `paint` method yourself:
@@ -297,7 +297,7 @@ PDF.write(what=d, where_to="output.pdf")
 Keep in mind this method is incompatible with using a `PageLayout`, since the `PageLayout` can only manage the spatial relationships of the content it placed on the `Page`.
 If you add a `LayoutElement` manually, the `PageLayout` does not know that this `LayoutElement` exists.
 
-## Section Recap
+## 8.4 Section Recap
 
 - **Understanding `PageLayout`**:
   - `PageLayout` is the superclass for managing content placement on a `Page`.
