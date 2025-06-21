@@ -568,7 +568,7 @@ PDF.write(what=d, where_to="output.pdf")
 
 ---
 
-## Section Recap
+## 6.3 Section Recap
 
 - **Working with `List`**:
     - `OrderedList`: Create a numbered list (1, 2, 3, ...).
