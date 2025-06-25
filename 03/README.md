@@ -10,6 +10,10 @@ In this section we'll handle images (and some of the derived classes).
 `borb`'s `Image` class and its related subclasses form a structured hierarchy that facilitates the integration of various types of images and graphical elements into PDF documents. Understanding this hierarchy is essential for effectively utilizing the diverse capabilities of the Image class and its derivatives. The following diagram illustrates the class hierarchy:
 
 ```mermaid
+---
+config:
+  theme: default
+---
 graph TD
     LayoutElement
     Image --> LayoutElement
@@ -23,6 +27,13 @@ graph TD
     Chart --> Image
     Emoji --> Image
 
+    %% Define classes
+    classDef gray fill:#ccc,stroke:#999,stroke-width:1px;
+    classDef highlight fill:#F1CD2E,stroke:#999,stroke-width:2px;
+
+    %% Assign classes
+    class LayoutElement highlight;
+    class Image,Barcode,QRCode,Avatar,DallE,Unsplash,Equation,Screenshot,Chart,Emoji gray;
 ```
 
 ## 3.1 Adding an `Image` to a PDF
