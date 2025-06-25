@@ -19,6 +19,14 @@ graph TD
     GenderDropDownList --> DropDownList
     Button --> FormField
     JavascriptButton --> Button
+
+    %% Define classes
+    classDef gray fill:#ccc,stroke:#999,stroke-width:1px;
+    classDef highlight fill:#F1CD2E,stroke:#999,stroke-width:2px;
+
+    %% Assign classes
+    class LayoutElement highlight;
+    class FormField,TextArea,RadioButton,DropDownList,CountryDropDownList,GenderDropDownList,Button,JavascriptButton gray;
 ```
 
 At the top level, `FormField` inherits from `LayoutElement`, meaning that all form elements are types of layout components. Various specialized elements extend `FormField`, including `TextArea`, `RadioButton`, and `DropDownList`. The `DropDownList` itself has further specialized versions, such as `CountryDropDownList` and `GenderDropDownList`. Similarly, `Button` has a specialized variant, `JavascriptButton`.
