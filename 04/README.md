@@ -22,6 +22,14 @@ graph TD
     MapOfAfrica --> Map
     MapOfSouthAmerica --> Map
     MapOfTheUnitedStatesOfAmerica --> Map
+
+    %% Define classes
+    classDef gray fill:#ccc,stroke:#999,stroke-width:1px;
+    classDef highlight fill:#F1CD2E,stroke:#999,stroke-width:2px;
+
+    %% Assign classes
+    class LayoutElement highlight;
+    class Shape,ProgressBar,ProgressSquare,Map,MapOfOceania,MapOfNorthAmerica,MapOfTheContiguousUnitedStatesOfAmerica,MapOfTheWorld,MapOfAsia,MapOfEurope,MapOfAfrica,MapOfSouthAmerica,MapOfTheUnitedStatesOfAmerica gray;
 ```
 
 ## 4.1 Specifing a `Shape` by hand
