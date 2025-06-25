@@ -568,6 +568,8 @@ PDF.write(what=doc, where_to="output.pdf")
 
 ```
 
+<a href="https://colab.research.google.com/github/jorisschellekens/borb-examples/blob/master/10/ipynb/snippet_10_07.ipynb" target="_parent"><img src="https://colab.research.google.com/assets/colab-badge.svg" alt="Open In Colab"/></a>
+
 ![enter image description here](img/snippet_10_07.png)
 
 ## 10.1 Creating a patient intake document
