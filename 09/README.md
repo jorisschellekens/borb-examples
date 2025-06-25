@@ -14,6 +14,14 @@ graph TD
     A4PortraitResume --> DocumentLayout
     A4PortraitInvoice --> DocumentLayout
 
+    %% Define classes
+    classDef gray fill:#ccc,stroke:#999,stroke-width:1px;
+    classDef highlight fill:#F1CD2E,stroke:#999,stroke-width:2px;
+
+    %% Assign classes
+    class DocumentLayout highlight;
+    class Slideshow,A4Portrait,A4PortraitResume,A4PortraitInvoice gray;
+
 ```
 
 ## Using `Slideshow`
