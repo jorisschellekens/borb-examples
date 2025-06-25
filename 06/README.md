@@ -19,6 +19,14 @@ graph TD
     UnorderedList --> List
     ABCOrderedList --> OrderedList
     RomanNumeralOrderedList --> OrderedList
+
+    %% Define classes
+    classDef gray fill:#ccc,stroke:#999,stroke-width:1px;
+    classDef highlight fill:#F1CD2E,stroke:#999,stroke-width:2px;
+
+    %% Assign classes
+    class LayoutElement highlight;
+    class List,OrderedList,UnorderedList,ABCOrderedList,RomanNumeralOrderedList gray;
 ```
 
 Each of these classes provides flexibility in structuring list-based content in PDFs. For instance, if you want a nested list with Roman numerals at the top level and bullet points at the sub-level, you can use `RomanNumeralOrderedList` with nested `UnorderedList` items.
