@@ -21,6 +21,9 @@ PDF.write(what=doc, where_to="output.pdf")
 
 ```
 
+<a href="https://colab.research.google.com/github/jorisschellekens/borb-examples/blob/master/10/ipynb/snippet_10_01.ipynb" target="_parent"><img src="https://colab.research.google.com/assets/colab-badge.svg" alt="Open In Colab"/></a>
+
+
 ![enter image description here](img/snippet_10_01.png)
 
 Before diving into the details, it's important to consider the structure of the PDF we're creating. Rather than manually positioning content, we can leverage layout mechanisms to simplify the process and maintain a clean design.
