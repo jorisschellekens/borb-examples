@@ -50,7 +50,7 @@ PDF.write(what=d, where_to="output.pdf")
 
 ```
 
-<a href="https://colab.research.google.com/github/jorisschellekens/birb-examples/blob/main/07/ipynb/snippet_07_01.ipynb" target="_parent"><img src="https://colab.research.google.com/assets/colab-badge.svg" alt="Open In Colab\"></a>
+<a href="https://colab.research.google.com/github/jorisschellekens/borb-examples/blob/master/07/ipynb/snippet_07_01.ipynb" target="_parent"><img src="https://colab.research.google.com/assets/colab-badge.svg" alt="Open In Colab\"></a>
 
 ![enter image description here](img/snippet_07_01.png)
 
@@ -106,7 +106,7 @@ PDF.write(what=d, where_to="output.pdf")
 
 ```
 
-<a href="https://colab.research.google.com/github/jorisschellekens/birb-examples/blob/main/07/ipynb/snippet_07_02.ipynb" target="_parent"><img src="https://colab.research.google.com/assets/colab-badge.svg" alt="Open In Colab\"></a>
+<a href="https://colab.research.google.com/github/jorisschellekens/borb-examples/blob/master/07/ipynb/snippet_07_02.ipynb" target="_parent"><img src="https://colab.research.google.com/assets/colab-badge.svg" alt="Open In Colab\"></a>
 
 ![enter image description here](img/snippet_07_02.png)
 
@@ -146,7 +146,7 @@ PDF.write(what=d, where_to="output.pdf")
 
 ```
 
-<a href="https://colab.research.google.com/github/jorisschellekens/birb-examples/blob/main/07/ipynb/snippet_07_03.ipynb" target="_parent"><img src="https://colab.research.google.com/assets/colab-badge.svg" alt="Open In Colab\"></a>
+<a href="https://colab.research.google.com/github/jorisschellekens/borb-examples/blob/master/07/ipynb/snippet_07_03.ipynb" target="_parent"><img src="https://colab.research.google.com/assets/colab-badge.svg" alt="Open In Colab\"></a>
 
 ![enter image description here](img/snippet_07_03.png)
 
@@ -186,7 +186,7 @@ PDF.write(what=d, where_to="output.pdf")
 
 ```
 
-<a href="https://colab.research.google.com/github/jorisschellekens/birb-examples/blob/main/07/ipynb/snippet_07_04.ipynb" target="_parent"><img src="https://colab.research.google.com/assets/colab-badge.svg" alt="Open In Colab\"></a>
+<a href="https://colab.research.google.com/github/jorisschellekens/borb-examples/blob/master/07/ipynb/snippet_07_04.ipynb" target="_parent"><img src="https://colab.research.google.com/assets/colab-badge.svg" alt="Open In Colab\"></a>
 
 ![enter image description here](img/snippet_07_04.png)
 
@@ -230,7 +230,7 @@ PDF.write(what=d, where_to="snippet_07_05.pdf")
 
 ```
 
-<a href="https://colab.research.google.com/github/jorisschellekens/birb-examples/blob/main/07/ipynb/snippet_07_05.ipynb" target="_parent"><img src="https://colab.research.google.com/assets/colab-badge.svg" alt="Open In Colab\"></a>
+<a href="https://colab.research.google.com/github/jorisschellekens/borb-examples/blob/master/07/ipynb/snippet_07_05.ipynb" target="_parent"><img src="https://colab.research.google.com/assets/colab-badge.svg" alt="Open In Colab\"></a>
 
 ![enter image description here](img/snippet_07_05.png)
 
@@ -276,7 +276,7 @@ PDF.write(what=d, where_to="output.pdf")
 
 ```
 
-<a href="https://colab.research.google.com/github/jorisschellekens/birb-examples/blob/main/07/ipynb/snippet_07_06.ipynb" target="_parent"><img src="https://colab.research.google.com/assets/colab-badge.svg" alt="Open In Colab\"></a>
+<a href="https://colab.research.google.com/github/jorisschellekens/borb-examples/blob/master/07/ipynb/snippet_07_06.ipynb" target="_parent"><img src="https://colab.research.google.com/assets/colab-badge.svg" alt="Open In Colab\"></a>
 
 ![enter image description here](img/snippet_07_06.png)
 
@@ -320,7 +320,7 @@ PDF.write(what=d, where_to="output.pdf")
 
 ```
 
-<a href="https://colab.research.google.com/github/jorisschellekens/birb-examples/blob/main/07/ipynb/snippet_07_07.ipynb" target="_parent"><img src="https://colab.research.google.com/assets/colab-badge.svg" alt="Open In Colab\"></a>
+<a href="https://colab.research.google.com/github/jorisschellekens/borb-examples/blob/master/07/ipynb/snippet_07_07.ipynb" target="_parent"><img src="https://colab.research.google.com/assets/colab-badge.svg" alt="Open In Colab\"></a>
 
 ![enter image description here](img/snippet_07_07.png)
 
@@ -360,7 +360,7 @@ PDF.write(what=d, where_to="output.pdf")
 
 ```
 
-<a href="https://colab.research.google.com/github/jorisschellekens/birb-examples/blob/main/07/ipynb/snippet_07_08.ipynb" target="_parent"><img src="https://colab.research.google.com/assets/colab-badge.svg" alt="Open In Colab\"></a>
+<a href="https://colab.research.google.com/github/jorisschellekens/borb-examples/blob/master/07/ipynb/snippet_07_08.ipynb" target="_parent"><img src="https://colab.research.google.com/assets/colab-badge.svg" alt="Open In Colab\"></a>
 
 ![enter image description here](img/snippet_07_08.png)
 
@@ -404,7 +404,7 @@ PDF.write(what=d, where_to="output.pdf")
 
 ```
 
-<a href="https://colab.research.google.com/github/jorisschellekens/birb-examples/blob/main/07/ipynb/snippet_07_09.ipynb" target="_parent"><img src="https://colab.research.google.com/assets/colab-badge.svg" alt="Open In Colab\"></a>
+<a href="https://colab.research.google.com/github/jorisschellekens/borb-examples/blob/master/07/ipynb/snippet_07_09.ipynb" target="_parent"><img src="https://colab.research.google.com/assets/colab-badge.svg" alt="Open In Colab\"></a>
 
 ![enter image description here](img/snippet_07_09.png)
 
@@ -450,7 +450,7 @@ PDF.write(what=d, where_to="output.pdf")
 
 ```
 
-<a href="https://colab.research.google.com/github/jorisschellekens/birb-examples/blob/main/07/ipynb/snippet_07_10.ipynb" target="_parent"><img src="https://colab.research.google.com/assets/colab-badge.svg" alt="Open In Colab\"></a>
+<a href="https://colab.research.google.com/github/jorisschellekens/borb-examples/blob/master/07/ipynb/snippet_07_10.ipynb" target="_parent"><img src="https://colab.research.google.com/assets/colab-badge.svg" alt="Open In Colab\"></a>
 
 ![enter image description here](img/snippet_07_10.png)
 
@@ -490,7 +490,7 @@ PDF.write(what=d, where_to="output.pdf")
 
 ```
 
-<a href="https://colab.research.google.com/github/jorisschellekens/birb-examples/blob/main/07/ipynb/snippet_07_11.ipynb" target="_parent"><img src="https://colab.research.google.com/assets/colab-badge.svg" alt="Open In Colab\"></a>
+<a href="https://colab.research.google.com/github/jorisschellekens/borb-examples/blob/master/07/ipynb/snippet_07_11.ipynb" target="_parent"><img src="https://colab.research.google.com/assets/colab-badge.svg" alt="Open In Colab\"></a>
 
 ![enter image description here](img/snippet_07_11.png)
 
@@ -530,7 +530,7 @@ PDF.write(what=d, where_to="output.pdf")
 
 ```
 
-<a href="https://colab.research.google.com/github/jorisschellekens/birb-examples/blob/main/07/ipynb/snippet_07_12.ipynb" target="_parent"><img src="https://colab.research.google.com/assets/colab-badge.svg" alt="Open In Colab\"></a>
+<a href="https://colab.research.google.com/github/jorisschellekens/borb-examples/blob/master/07/ipynb/snippet_07_12.ipynb" target="_parent"><img src="https://colab.research.google.com/assets/colab-badge.svg" alt="Open In Colab\"></a>
 
 ![enter image description here](img/snippet_07_12.png)
 
@@ -567,7 +567,7 @@ PDF.write(what=d, where_to="output.pdf")
 
 ```
 
-<a href="https://colab.research.google.com/github/jorisschellekens/birb-examples/blob/main/07/ipynb/snippet_07_13.ipynb" target="_parent"><img src="https://colab.research.google.com/assets/colab-badge.svg" alt="Open In Colab\"></a>
+<a href="https://colab.research.google.com/github/jorisschellekens/borb-examples/blob/master/07/ipynb/snippet_07_13.ipynb" target="_parent"><img src="https://colab.research.google.com/assets/colab-badge.svg" alt="Open In Colab\"></a>
 
 ![enter image description here](img/snippet_07_13.png)
 
@@ -610,7 +610,7 @@ PDF.write(what=d, where_to="output.pdf")
 
 ```
 
-<a href="https://colab.research.google.com/github/jorisschellekens/birb-examples/blob/main/07/ipynb/snippet_07_14.ipynb" target="_parent"><img src="https://colab.research.google.com/assets/colab-badge.svg" alt="Open In Colab\"></a>
+<a href="https://colab.research.google.com/github/jorisschellekens/borb-examples/blob/master/07/ipynb/snippet_07_14.ipynb" target="_parent"><img src="https://colab.research.google.com/assets/colab-badge.svg" alt="Open In Colab\"></a>
 
 ![enter image description here](img/snippet_07_14.png)
 
