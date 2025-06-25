@@ -1,6 +1,8 @@
-# Using `Templates`
+# 9. Using `Templates`
 
 ![enter image description here](img/undraw_building_websites.png)
+
+## 9.0 `DocumentLayout` hierarchy
 
 ```mermaid
 ---
@@ -24,7 +26,7 @@ graph TD
 
 ```
 
-## Using `Slideshow`
+## 9.1 Using `Slideshow`
 
 The `Slideshow` class allows you to create structured presentations with ease. Let's explore how to use it by adding an image and some text to a slideshow:
 
@@ -70,7 +72,7 @@ from borb.pdf import Lipsum, Slideshow
 
 ![enter image description here](img/snippet_09_02.png)
 
-### Key Methods in Slideshow
+### 9.1.2 Key Methods in `Slideshow`
 
 The `Slideshow` class provides various methods to add content seamlessly:
 
@@ -112,9 +114,11 @@ The `Slideshow` class provides various methods to add content seamlessly:
 - `append_unordered_list`
 - `append_unordered_list_and_text`
 
-## Using `A4Portrait`
+## 9.2 Using `A4Portrait`
 
-## Using `A4PortraitResume`
+### 9.2.1 Key Methods in `A4Portrait`
+
+## 9.3 Using `A4PortraitResume`
 
 Creating a professional resume can be a time-consuming task, especially when it comes to formatting, aligning sections, and maintaining consistency. With the `A4PortraitResume` class, borb streamlines this process by providing a comprehensive, customizable solution for creating a professional resume in A4 portrait layout. This class offers a wide range of methods to easily add various sections to your resume, such as personal information, contact details, work experience, education, skills, and more.
 
@@ -179,7 +183,7 @@ from borb.pdf import A4PortraitResume
 
 ![enter image description here](img/snippet_09_03.png)
 
-### Key Methods in `A4PortraitResume`
+### 9.3.2 Key Methods in `A4PortraitResume`
 
 - **`set_name(name: str)`**: Sets the candidate's name on the resume. This will appear prominently at the top of the resume.
 - **`set_email(email: str)`**: Sets the candidate's email address in the contact information section of the resume.
@@ -197,7 +201,7 @@ from borb.pdf import A4PortraitResume
 
 Each of these methods is designed to simplify the creation and customization of your resume, offering flexibility and allowing you to quickly add essential information such as contact details, work experience, skills, and more. This makes the `A4PortraitResume` class a valuable tool for anyone needing to create a professional resume in a standardized, easily editable format.
 
-## Using `A4PortraitInvoice`
+## 9.4 Using `A4PortraitInvoice`
 
 One of the most valuable features of `borb` is its ability to generate professional, structured invoices effortlessly. With the `A4PortraitInvoice` class, you can create polished invoices in just a few lines of code, eliminating the need for manual formatting or external design tools. Whether you're a freelancer, a small business owner, or part of a larger organization, automating invoice creation can save time and reduce errors. 
 
@@ -239,7 +243,7 @@ invoice.save("invoice.pdf")
 
 ![enter image description here](img/snippet_09_04.png)
 
-### Key Methods in `A4PortraitInvoice`
+### 9.4.2 Key Methods in `A4PortraitInvoice`
 
 The `A4PortraitInvoice` class provides a structured way to generate professional invoices in PDF format. It includes methods to set invoice details, addresses, line items, and totals, ensuring a well-formatted document. Below are the essential methods you can use:
 
@@ -261,3 +265,29 @@ The `A4PortraitInvoice` class provides a structured way to generate professional
 By using these methods, you can easily generate detailed invoices programmatically, ensuring consistency and professionalism in your documents.
 
 The `A4PortraitInvoice` class is designed to help you create professional invoices in PDF format with ease. It allows you to set key invoice details, such as the invoice number, date, due date, and currency. Additionally, you can define billing and shipping addresses, add line items, apply taxes and discounts, and include terms and conditions—all through a straightforward method-chaining approach.
+
+## 9.5 Section Recap
+
+In this chapter, you explored how borb simplifies PDF generation through prebuilt layout templates:
+
+- `Slideshow`
+  - Enables the creation of visually engaging presentations.
+  - Supports rich content types such as images, charts, avatars, quotes, and structured text.
+  - Offers over 30 append_* methods for rapid slide composition.
+  - Ideal for reports, decks, dashboards, and visual storytelling.
+
+- `A4Portrait`
+  - Section placeholder – expand with specific examples or remove if unused.
+    
+- `A4PortraitResume`
+  - Provides a clean, customizable format for professional resumes.
+  - Allows structured input of skills, languages, work experience, awards, and social profiles.
+  - Reduces time spent on formatting by handling layout automatically.
+  - Especially useful for recruiters, career coaches, and job seekers.
+
+- `A4PortraitInvoice`
+  - Automates professional invoice generation.
+  - Handles totals, taxes, line items, addresses, and terms with minimal code.
+  - Perfect for freelancers, businesses, or anyone needing quick, repeatable invoicing.
+
+Each class is built on top of DocumentLayout, allowing consistent design principles across different use cases. By leveraging these templates, you can drastically reduce boilerplate code and focus on your document’s content and logic.
