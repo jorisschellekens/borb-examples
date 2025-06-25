@@ -53,6 +53,8 @@ PDF.write(what=doc, where_to="output.pdf")
 
 ```
 
+<a href="https://colab.research.google.com/github/jorisschellekens/borb-examples/blob/master/10/ipynb/snippet_10_02.ipynb" target="_parent"><img src="https://colab.research.google.com/assets/colab-badge.svg" alt="Open In Colab"/></a>
+
 ![enter image description here](img/snippet_10_02.png)
 
 The next section of our invoice is the header, which typically contains essential details such as:
@@ -109,6 +111,8 @@ layout.append_layout_element(
 PDF.write(what=doc, where_to="output.pdf")
 
 ```
+
+<a href="https://colab.research.google.com/github/jorisschellekens/borb-examples/blob/master/10/ipynb/snippet_10_03.ipynb" target="_parent"><img src="https://colab.research.google.com/assets/colab-badge.svg" alt="Open In Colab"/></a>
 
 ![enter image description here](img/snippet_10_03.png)
 
