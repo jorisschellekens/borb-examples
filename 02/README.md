@@ -2,6 +2,36 @@
 
 ![enter image description here](img/undraw_font.png)
 
+## 2.0 The `Paragraph` hierarchy
+
+This diagram illustrates the class hierarchy for paragraph-related layout elements in borb, a PDF generation library. At the root of this hierarchy is `LayoutElement`, the base class for all elements that can be placed within a document layout. It serves as the foundational building block from which all more specialized text layout components inherit.
+
+From `LayoutElement`, the `HeterogeneousParagraph` class extends functionality by supporting a mixture of inline elements with varying styles—such as different fonts, colors, or embedded objects. Building on this, `HomogeneousParagraph` specializes in uniform formatting, and is further subclassed by `Paragraph`, the standard class used for rendering blocks of text with consistent styling. `MarkdownParagraph`, also a subclass of `HeterogeneousParagraph`, is designed to parse and render Markdown-like content
+
+The `Heading` class inherits from `Paragraph` and represents semantically significant text blocks such as titles and section headers. It often differs in appearance (e.g., larger font size or bold weight) but reuses the layout and rendering mechanisms of `Paragraph`.
+
+```mermaid
+---
+config:
+  theme: default
+---
+graph TD
+    LayoutElement
+    HeterogeneousParagraph --> LayoutElement
+    HomogeneousParagraph --> HeterogeneousParagraph
+    Paragraph --> HomogeneousParagraph
+    Heading --> Paragraph
+    MarkdownParagraph --> HeterogeneousParagraph
+
+    %% Define classes
+    classDef gray fill:#ccc,stroke:#999,stroke-width:1px;
+    classDef highlight fill:#F1CD2E,stroke:#999,stroke-width:2px;
+
+    %% Assign classes
+    class LayoutElement highlight;
+    class HeterogeneousParagraph,HomogeneousParagraph,Paragraph,Heading,MarkdownParagraph gray;
+```
+
 ## 2.1 Fonts
 
 In the previous example we used the default arguments for `Paragraph`, which includes using the default `Font` `Helvetica`.
