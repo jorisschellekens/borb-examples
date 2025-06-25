@@ -304,6 +304,15 @@ graph TD
     Table --> LayoutElement
     FixedColumnWidthTable --> Table
     FlexibleColumnWidthTable --> Table
+
+    %% Define classes
+    classDef gray fill:#ccc,stroke:#999,stroke-width:1px;
+    classDef highlight fill:#F1CD2E,stroke:#999,stroke-width:2px;
+
+    %% Assign classes
+    class LayoutElement highlight;
+    class Table,FixedColumnWidthTable,FlexibleColumnWidthTable gray;
+
 ```
 
 ### 6.2.2 Using `FixedColumnWidthTable`
