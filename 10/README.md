@@ -180,6 +180,8 @@ PDF.write(what=doc, where_to="output.pdf")
 
 ```
 
+<a href="https://colab.research.google.com/github/jorisschellekens/borb-examples/blob/master/10/ipynb/snippet_10_04.ipynb" target="_parent"><img src="https://colab.research.google.com/assets/colab-badge.svg" alt="Open In Colab"/></a>
+
 ![enter image description here](img/snippet_10_04.png)
 
 Next we're going to add the items, their price, quantity, and the total.
@@ -265,6 +267,8 @@ layout.append_layout_element(
 PDF.write(what=doc, where_to="output.pdf")
 
 ```
+
+<a href="https://colab.research.google.com/github/jorisschellekens/borb-examples/blob/master/10/ipynb/snippet_10_05.ipynb" target="_parent"><img src="https://colab.research.google.com/assets/colab-badge.svg" alt="Open In Colab"/></a>
 
 ![enter image description here](img/snippet_10_05.png)
 
@@ -368,6 +372,8 @@ We reserve the right to change these terms at any time, retroactively or otherwi
 PDF.write(what=doc, where_to="output.pdf")
 
 ```
+
+<a href="https://colab.research.google.com/github/jorisschellekens/borb-examples/blob/master/10/ipynb/snippet_10_06.ipynb" target="_parent"><img src="https://colab.research.google.com/assets/colab-badge.svg" alt="Open In Colab"/></a>
 
 ![enter image description here](img/snippet_10_06.png)
 
