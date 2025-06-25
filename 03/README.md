@@ -674,7 +674,7 @@ In this example, an equation is added to the PDF document using the Equation cla
 
 By using the Equation class from borb.pdf, you can effectively incorporate complex mathematical expressions into your PDF documents, making them suitable for academic, scientific, or technical content.
 
-## Section Recap:
+## 3.11 Section Recap:
 
 - **`Image` Class Hierarchy**:
   - Subclasses: Include `Barcode`, `QRCode`, `Avatar`, `DallE`, `Unsplash`, `Equation`, `Screenshot`, `Chart`, and `Emoji`.
